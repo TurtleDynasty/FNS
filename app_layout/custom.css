@@ -1,0 +1,68 @@
+html, body {
+	height: 100%;
+	background-color: #3b4554;
+}
+
+h1, h2, h3, h4, h5 {
+	margin: 0;
+}
+
+h3 {
+	color: #404041;
+}
+
+.main-container {
+	background-color: #3b4554;
+}
+
+.nav-button {
+	background-color: #4178be;
+}
+
+#navbar {
+	background-color: #152935;
+}
+
+.widget1 {
+	background-color: #ffffff;
+	height: 100%;
+	padding: 15px;
+}
+
+.widget2 {
+	background-color: #eff3f7;
+	height: 100%;
+	padding: 15px;
+	margin-left: 20px;
+	
+}
+
+.widget2-container, .widget2-container {
+	min-height: 523.64px;
+}
+
+@media (max-width: 992px) {
+	.widget1-container {
+		height: 200px !important;
+	}
+	.widget2-container {
+		height: 523.64px !important;
+		margin-top: 20px;
+	}
+	.widget2{
+		margin-left: 0;
+	}
+}
+
+.no-padding {
+	padding: 0;
+}
+
+.full-height{
+	height: 100%;
+}
+
+.master-container {
+	height: 100%;
+	padding: 85px 35px 35px 35px !important;
+}
