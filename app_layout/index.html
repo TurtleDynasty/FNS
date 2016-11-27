@@ -19,8 +19,10 @@
 
   <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
-        <div class="navbar-header">
-          <a id="container" class="navbar-brand" href="#">FNS Title Before Backbone Insert</a>
+        <div class="navbar-header">          
+          <div class="navbar-brand nav-button no-padding no-margin">
+            <img src="resources/logo.png" style="width:50px;height:50px; display: block; margin: auto;">
+          </div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -40,7 +42,7 @@
 
       <div class="container-fluid col-md-9 col-sm-12 no-padding full-height widget2-container">
         <div class="widget2">
-          <h3>Visualization Title</h3>
+          <h3 id="vis-title">Visualization Title</h3>
         </div>
       </div>
     </div>
@@ -57,6 +59,8 @@
   <!-- =============== -->
   <!-- Javascript code -->
   <!-- =============== -->
+  <script src="dist/spin.min.js"></script>
+  <script src="scripts/scripts.js"></script>
   <script type="text/javascript">
     var AppView = Backbone.View.extend({
       // el - stands for element. Every view has an element associated with HTML content, will be rendered.
@@ -67,11 +71,15 @@
       },
       // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello TutorialsPoint in this case.
       render: function(){
-        this.$el.html("Title Generated Via Backbone");
+        //init_spinner();
+        init_sunburst();
       }
     });
 
     var appView = new AppView();
+  </script>
+  <script type="text/javascript">
+
   </script>
 
 </body>

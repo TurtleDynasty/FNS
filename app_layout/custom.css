@@ -17,6 +17,12 @@ h3 {
 
 .nav-button {
 	background-color: #4178be;
+	width: 75px;
+	height: 50px;
+}
+
+.navbar-brand {
+float: right;
 }
 
 #navbar {
@@ -37,16 +43,19 @@ h3 {
 	
 }
 
-.widget2-container, .widget2-container {
+.widget1-container, .widget2-container {
 	min-height: 523.64px;
 }
 
 @media (max-width: 992px) {
 	.widget1-container {
+		min-height: 200px !important;
 		height: 200px !important;
+		min-width: 500px;
 	}
 	.widget2-container {
 		height: 523.64px !important;
+		min-width: 500px;
 		margin-top: 20px;
 	}
 	.widget2{
@@ -58,6 +67,10 @@ h3 {
 	padding: 0;
 }
 
+.no-margin {
+	margin: 0 !important;
+}
+
 .full-height{
 	height: 100%;
 }
@@ -65,4 +78,24 @@ h3 {
 .master-container {
 	height: 100%;
 	padding: 85px 35px 35px 35px !important;
+}
+
+#vis {
+	display: block;
+	margin: auto;
+}
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 0;
 }
