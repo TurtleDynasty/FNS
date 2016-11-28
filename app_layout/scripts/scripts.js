@@ -25,9 +25,10 @@ function init_spinner(){
     var spinner = new Spinner(opts).spin(target[0]);
 }
 
+//https://bl.ocks.org/maybelinot/5552606564ef37b5de7e47ed2b7dc099
 function init_sunburst() {
-    var width = 960,
-    height = 700,
+    var width = d3.select(".widget2").node().getBoundingClientRect().width,
+    height = d3.select(".widget2").node().getBoundingClientRect().height,
     radius = (Math.min(width, height) / 2) - 10;
 
 var formatNumber = d3.format(",d");
@@ -54,7 +55,7 @@ var arc = d3.arc()
         .classed("svg-container", true)
         .append("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0 0 960 700")
+        .attr("viewBox", "0 0 " + width + " " + height)
         .attr("id", "vis")
         .append("g")
         .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
@@ -93,3 +94,16 @@ var arc = d3.arc()
     //change vis title
     d3.select("#vis-title").html("Sunburst");
 }
+
+/*//binding to dom?
+function updateWindow(){
+    var vis = d3.select("#vis"),
+    width = d3.select("#vis").node().getBoundingClientRect().width,
+    height = d3.select("#vis").node().getBoundingClientRect().height;
+
+    d3.select("#vis > g").attr("width", width).attr("height", height);
+    //d3.select("#vis > g").attr("transform", "translate(" + 0 + "," + 0 + ")");
+    d3.select("#vis > g").attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+    console.log("[" + width + ", " + height + "]");
+}
+d3.select(window).on('resize', updateWindow);*/
