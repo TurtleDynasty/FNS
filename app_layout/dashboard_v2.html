@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>FNS App</title>
+  <!-- Bootstrap core CSS -->
+  <link href="dist/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="custom_v2.css" rel="stylesheet">
+
+  <script type="text/javascript" src="dist/d3.js"></script>
+</head>
+<body>
+  <!-- ========= -->
+  <!-- Your HTML -->
+  <!-- ========= -->
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">          
+          <div class="navbar-brand nav-button no-padding no-margin">
+            <img src="resources/logo.png" style="width:50px;height:50px; display: block; margin: auto;">
+          </div>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html">Back to FNS Homepage</a></li>
+            <li><a href="#">Messages</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid master-container col-sm-12 no-padding full-height">
+      
+
+        <div class="row full-height no-margin">
+            <div class="col-md-2 no-padding full-height">
+
+
+                <div class="container-fluid no-padding full-height widget1-container">
+                  <div class="widget1">
+                    <h3>Objects</h3>
+                  </div>   
+                </div>
+
+
+            </div>
+            <div class="col-md-10 no-padding full-height">
+                <div class="row no-margin" style="height: 80%;">
+                    <div class="col-md-12 no-padding full-height">
+
+
+                        <div class="container-fluid no-padding full-height widget2-container">
+                          <div class="widget2">
+                            <h3>Visual Ttitle</h3>
+                          </div>   
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row no-margin" style="height: 20%;">
+                    <div class="col-md-12 no-padding full-height">
+
+
+                      <div class="container-fluid no-padding full-height widget3-container">
+                        <div class="widget3">
+                          <h3>Visuals</h3>
+                        </div>  
+                      </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <!-- ========= -->
+  <!-- Libraries -->
+  <!-- ========= -->
+  <script src="dist/jquery-3.1.1.min.js" type="text/javascript"></script>
+  <script src="dist/underscore-min.js" type="text/javascript"></script>
+  <script src="dist/backbone-min.js" type="text/javascript"></script>
+  <script src="dist/bootstrap.min.js"></script>
+
+
+  <!-- =============== -->
+  <!-- Javascript code -->
+  <!-- =============== -->
+  <script src="dist/spin.min.js"></script>
+  <script src="scripts/scripts.js"></script>
+  <script type="text/javascript">
+    var AppView = Backbone.View.extend({
+      // el - stands for element. Every view has an element associated with HTML content, will be rendered.
+      el: '#container',
+      // It's the first function called when this view is instantiated.
+      initialize: function(){
+        this.render();
+      },
+      // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello TutorialsPoint in this case.
+      render: function(){
+        //init_spinner();
+        //clear_vis();
+        init_sunburst();
+      }
+    });
+
+    var appView = new AppView();
+  </script>
+  <script type="text/javascript">
+
+  </script>
+
+</body>
+</html>
