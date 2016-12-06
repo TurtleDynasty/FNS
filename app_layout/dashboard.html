@@ -9,10 +9,11 @@
 
   <!-- Custom styles for this template -->
   <link href="custom.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
   <script type="text/javascript" src="dist/d3.js"></script>
 </head>
-<body>
+<body>  
   <!-- ========= -->
   <!-- Your HTML -->
   <!-- ========= -->
@@ -38,12 +39,23 @@
       <div class="container-fluid col-md-3 col-sm-12 no-padding full-height widget1-container">
         <div class="widget1">
           <h3>Objects</h3>
+          <label for="id_label_multiple" style="width: 100%; margin-top: 20px; height: 675px">
+
+
+            <select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+          </label>
+          <div class="generate-button-container">
+            <div class="generate-button">
+              Generate
+            </div>
+            
+          </div>
         </div>      
       </div>
 
       <div class="container-fluid col-md-9 col-sm-12 no-padding full-height widget2-container">
         <div class="widget2">
-          <h3 id="vis-title">Visualization Title</h3>
+          <h3 id="vis-title">Select a Visualization</h3>
         </div>
       </div>
     </div>
@@ -54,8 +66,8 @@
   <script src="dist/jquery-3.1.1.min.js" type="text/javascript"></script>
   <script src="dist/underscore-min.js" type="text/javascript"></script>
   <script src="dist/backbone-min.js" type="text/javascript"></script>
-  <script src="dist/bootstrap.min.js"></script>
-
+  <script src="dist/bootstrap.min.js"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
   <!-- =============== -->
   <!-- Javascript code -->
@@ -74,13 +86,13 @@
       render: function(){
         //init_spinner();
         //clear_vis();
-        init_sunburst();
+        //init_sunburst();
       }
     });
 
     var appView = new AppView();
   </script>
-  <script type="text/javascript">
+  <script type="text/javascript" >
 
   </script>
 

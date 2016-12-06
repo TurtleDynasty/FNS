@@ -47,22 +47,6 @@ float: right;
 	min-height: 523.64px;
 }
 
-@media (max-width: 992px) {
-	.widget1-container {
-		min-height: 200px !important;
-		height: 200px !important;
-		min-width: 500px;
-	}
-	.widget2-container {
-		height: 523.64px !important;
-		min-width: 500px;
-		margin-top: 20px;
-	}
-	.widget2{
-		margin-left: 0;
-	}
-}
-
 .no-padding {
 	padding: 0;
 }
@@ -99,4 +83,78 @@ float: right;
     position: absolute;
     top: 10px;
     left: 0;
+}
+
+.generate-button-container{
+	position: absolute;
+	bottom: 20px;
+	left: 0;
+	display: block;
+	margin: auto;
+	padding: 5px;
+	width: 100%;
+	height: 50px;
+}
+
+.generate-button {
+	background-color: #808080;
+	width: 100%;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	vertical-align: middle;
+	color: #eff3f7;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+label {
+	margin-top: 10px !important;
+}
+
+.generate-button:hover{
+    background: #909090;    
+}
+
+.select2 {
+    width: 100% !important;
+}
+
+@media (max-width: 992px) {
+	.widget1-container {
+		min-height: 200px !important;
+		height: 200px !important;
+		min-width: 500px;
+	}
+	.widget2-container {
+		height: 523.64px !important;
+		min-width: 500px;
+		margin-top: 20px;
+	}
+	.widget2{
+		margin-left: 0;
+	}
+
+	.generate-button {
+		height: 100% !important;
+		line-height: 190px !important;
+	}
+
+	.generate-button-container{
+		position: absolute;
+		bottom: 0 !important;
+		left: auto !important;
+		right: 0 !important;
+		display: block;
+		margin: auto;
+		padding: 5px;
+		width: 110px !important;
+		height: 100% !important;
+	}
+
+	label{
+		height: 115px !important;
+		width: calc(100% - 110px) !important;
+		margin-top: 10px !important;
+	}
 }
