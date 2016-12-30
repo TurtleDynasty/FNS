@@ -6,7 +6,6 @@
 ===          Warning: This may take a very long time
 === Remark: Ignore the unknown table warnings in the console, all is well
 ================================================================================================================="""
-
 import csv
 import MySQLdb
 import os
@@ -52,7 +51,7 @@ def main():
         if file_name.endswith('.csv'):
             rollback_flag = False
             table_name = file_name[:-4]
-            print("-\n--\n--- starting on: " + table_name + ".csv")
+            print("\n-\n--\n--- starting on: " + table_name + ".csv")
             print("--- Opening CSV File")
             cursor = mydb.cursor()
             try:
@@ -101,7 +100,6 @@ def main():
                 mydb.rollback()
             sql_create = """"""
             print("---\n--\n-")
-
 def addfields(csv_headings, table_name):
     """ This helper method tokenizes takes the first row of a csv file, tokenizes it and adds each as a new column in
         a CREATE TABLE statement (returned as a string). Since no data types can be assumed from the csv, all are
@@ -127,6 +125,6 @@ def addfields(csv_headings, table_name):
     sql_create_temp += "\n);;"
     return sql_create_temp
 
-
+# Runs the program
 if __name__ == '__main__':
     main()
