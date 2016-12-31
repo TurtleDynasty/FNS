@@ -32,7 +32,7 @@ def main():
         user='',
         port=3306,
         passwd='',
-        db='TSMGUI11')
+        db='TEST')
 
     if mydb:
         print("Connection Successful")
@@ -43,63 +43,63 @@ def main():
         CHANGE THE USER NAME
         PLACE THE UNZIPPED database folder tsmgui11 in a folder called DATABASE on your desktop
     """
-    PATH1 = "C:/Users/BRD-E/Desktop/DATABASE/TSMGUI11"
-    PATH2 = "C:\Users\BRD-E\Desktop\DATABASE\TSMGUI11"
+    PATH1 = "C:/Users/BRD-E/Desktop/DATABASE/TEST"
+    PATH2 = "C:\Users\BRD-E\Desktop\DATABASE\TEST"
     #Pass over each file, importing it to the database
     #Change this path to the path of the UNCOMPRESSED tsmgui11 on your machine
     for file_name in os.listdir(PATH1):
         if file_name.endswith('.csv'):
             rollback_flag = False
             table_name = file_name[:-4]
-            print("\n-\n--\n--- starting on: " + table_name + ".csv")
-            print("--- Opening CSV File")
+            print("\n-\n--\n----\n----- starting on: " + table_name + ".csv")
+            print("----- Opening CSV File")
             cursor = mydb.cursor()
             try:
                 with open(PATH1 + '/' + file_name, 'r') as f:
                     row1 = f.readline()
                     sql_create += addfields(row1, table_name)
-                print("--- CSV Opened successfully!")
+                print("----- CSV Opened successfully!")
             except Exception as e:
-                print("--- ISSUE: Opening and adding header data!!!")
+                print("----- ISSUE: Opening and adding header data! <--")
                 print(e)
                 rollback_flag = True
             try:
                 if row1.__len__() > 0:
                     #Drop the table if it exists
-                    print("--- Dropping Table")
+                    print("----- Dropping Table")
                     cursor.execute(sql_drop.format(table_name.upper()))
                     cursor.close()
-                    print("--- Table Drop successfully!")
+                    print("----- Table Drop successfully!")
             except Exception as e:
-                print("--- ISSUE: Dropping table")
+                print("----- ISSUE: Dropping table! <--")
                 print(e)
                 rollback_flag = True
             try:
                 #Build the table creation command and execute it
-                print("--- Creating Table")
+                print("----- Creating Table")
                 cursor = mydb.cursor()
                 cursor.execute(sql_create.format(table_name, table_name))
                 cursor.close()
             except Exception as e:
-                print("--- ISSUE: Creating table")
+                print("----- ISSUE: Creating table! <--")
                 print(e)
                 rollback_flag = True
             try:
                 #Insert the CSV data into the new table
-                print("--- Filling table with data!")
+                print("----- Filling table with data")
                 cursor = mydb.cursor()
                 cursor.execute(sql_insert.format(PATH1 + '/' + file_name, table_name.lower()))
                 cursor.close()
                 mydb.commit()
-                print("--- Data was filled sucessfully!")
+                print("----- Data was filled sucessfully!")
             except Exception as e:
-                print("----- ISSUE: Filling table")
+                print("----- ISSUE: Filling table! <--")
                 print(e)
                 rollback_flag = True
             if (rollback_flag):
                 mydb.rollback()
             sql_create = """"""
-            print("---\n--\n-")
+            print("----\n---\n--\n-")
 def addfields(csv_headings, table_name):
     """ This helper method tokenizes takes the first row of a csv file, tokenizes it and adds each as a new column in
         a CREATE TABLE statement (returned as a string). Since no data types can be assumed from the csv, all are
