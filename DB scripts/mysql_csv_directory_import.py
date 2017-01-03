@@ -43,8 +43,8 @@ def main():
         CHANGE THE USER NAME
         PLACE THE UNZIPPED database folder tsmgui11 in a folder called DATABASE on your desktop
     """
-    PATH1 = "C:/Users/BRD-E/Desktop/DATABASE/TEST"
-    PATH2 = "C:\Users\BRD-E\Desktop\DATABASE\TEST"
+    PATH1 = "C:/Users/BRD-E/Desktop/DATABASE"
+    PATH2 = "C:\Users\BRD-E\Desktop\DATABASE"
     #Pass over each file, importing it to the database
     #Change this path to the path of the UNCOMPRESSED tsmgui11 on your machine
     for file_name in os.listdir(PATH1):
