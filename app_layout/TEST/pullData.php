@@ -21,6 +21,7 @@
 			- Future Ideas:
 				- host the queryList.csv in the database
 	*/
+	header('Access-Control-Allow-Origin: *');  
 	$queryNumber = $_GET["queryNumber"];
 	$format = $_GET["format"]; //OPTIONS: "CSV", "JSON", "TSV"
 	if (isset($queryNumber) == False)
