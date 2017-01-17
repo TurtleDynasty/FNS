@@ -14,24 +14,40 @@ import warnings
 import Tkinter
 import tkFileDialog
 warnings.filterwarnings("ignore")
-def showGUI():
+PATH1 = ""
+root = Tkinter.Tk(  )
+DBname = Tkinter.StringVar()
+DBname.set("non-set")
+def main():
+    showMenu()
+def startQuestions(PATH1):
+    print("PATH: " + PATH1)
+    for file_name in os.listdir(PATH1):
+        DBname.set(file_name)
+        UPLOAD(PATH1 + "/" + file_name)
+def showMenu():
+    Tkinter.Button(root, text='Browse', command = showBrowser).grid(row=0,column=0)
+    Tkinter.Label(root, textvariable=DBname, borderwidth=1 ).grid(row=1,column=0)
+    Tkinter.Button(root, text='include', borderwidth=1 ).grid(row=2,column=0)
+    Tkinter.Button(root, text='Discard', borderwidth=1 ).grid(row=2,column=1)
+    root.mainloop(  )
+def showBrowser():
     root = Tkinter.Tk()
     root.withdraw() #use to hide tkinter window
-
     currdir = os.getcwd()
     tempdir = tkFileDialog.askdirectory(parent=root, initialdir=currdir, title='Please select a directory')
     if len(tempdir) > 0:
-        return tempdir
+        PATH1 = tempdir
     else:
         print("Directory fail to be found?")
+    startQuestions(PATH1)
 def getDBName(name):
     i = name.rfind('/')
     return name[i + 1:]
-PATH1 = showGUI()
-DBname = getDBName(PATH1)
 
 
-def main():
+
+def UPLOAD(PATH1):
 
     sql_insert = """LOAD DATA LOCAL INFILE '{}'
     INTO TABLE {}
@@ -47,10 +63,10 @@ def main():
     # Make sure the database tsmgui11 is created on your MySQL space
     # Change these variables as needed
     mydb = MySQLdb.connect(host='127.0.0.1',
-        user='',
+        user='josh',
         port=3306,
-        passwd='',
-        db=DBname)
+        passwd='666666',
+        db=str(DBname.get()))
 
     if mydb:
         print("Connection Successful")
