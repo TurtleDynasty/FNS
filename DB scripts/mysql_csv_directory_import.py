@@ -21,8 +21,15 @@ def showGUI():
     currdir = os.getcwd()
     tempdir = tkFileDialog.askdirectory(parent=root, initialdir=currdir, title='Please select a directory')
     if len(tempdir) > 0:
-        print "You chose %s" % tempdir
-    return tempdir
+        return tempdir
+    else:
+        print("Directory fail to be found?")
+def getDBName(name):
+    i = name.rfind('/')
+    return name[i + 1:]
+PATH1 = showGUI()
+DBname = getDBName(PATH1)
+
 
 def main():
 
@@ -43,7 +50,7 @@ def main():
         user='',
         port=3306,
         passwd='',
-        db='TEST')
+        db=DBname)
 
     if mydb:
         print("Connection Successful")
@@ -54,7 +61,6 @@ def main():
         CHANGE THE USER NAME
         PLACE THE UNZIPPED database folder tsmgui11 in a folder called DATABASE on your desktop
     """
-    PATH1 = showGUI()
     # Example path: PATH1 = "C:/Users/BRD-E/Desktop/DATABASE"
     #Pass over each file, importing it to the database
     #Change this path to the path of the UNCOMPRESSED tsmgui11 on your machine
