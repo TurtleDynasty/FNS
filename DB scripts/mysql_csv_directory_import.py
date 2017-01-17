@@ -13,42 +13,44 @@ import string
 import warnings
 import Tkinter
 import tkFileDialog
+import time
+from threading import Thread
 warnings.filterwarnings("ignore")
-PATH1 = ""
 root = Tkinter.Tk(  )
-DBname = Tkinter.StringVar()
-DBname.set("non-set")
+PATH1 = Tkinter.StringVar()
+file_name = Tkinter.StringVar()
+
 def main():
-    showMenu()
-def startQuestions(PATH1):
-    print("PATH: " + PATH1)
-    for file_name in os.listdir(PATH1):
-        DBname.set(file_name)
-        UPLOAD(PATH1 + "/" + file_name)
-def showMenu():
     Tkinter.Button(root, text='Browse', command = showBrowser).grid(row=0,column=0)
-    Tkinter.Label(root, textvariable=DBname, borderwidth=1 ).grid(row=1,column=0)
-    Tkinter.Button(root, text='include', borderwidth=1 ).grid(row=2,column=0)
-    Tkinter.Button(root, text='Discard', borderwidth=1 ).grid(row=2,column=1)
     root.mainloop(  )
+    
 def showBrowser():
     root = Tkinter.Tk()
     root.withdraw() #use to hide tkinter window
     currdir = os.getcwd()
     tempdir = tkFileDialog.askdirectory(parent=root, initialdir=currdir, title='Please select a directory')
     if len(tempdir) > 0:
-        PATH1 = tempdir
+        PATH1.set(tempdir)
     else:
         print("Directory fail to be found?")
-    startQuestions(PATH1)
+    thread = Thread(target = startQuestions)
+    thread.start()
+def createButton(folder_name, i):
+    b1 = Tkinter.Button(root, text = folder_name, command = lambda: UPLOAD(str(PATH1.get()) + "/" + folder_name)).grid(row=i,column=0)
+def startQuestions():
+    i = 1
+    for folder_name in os.listdir(str(PATH1.get())):
+        thread = Thread(target = createButton, args = (folder_name, i))
+        thread.start()
+        i += 1
+        
 def getDBName(name):
     i = name.rfind('/')
+    print(name[i + 1:])
     return name[i + 1:]
-
-
-
+    
 def UPLOAD(PATH1):
-
+    print(PATH1)
     sql_insert = """LOAD DATA LOCAL INFILE '{}'
     INTO TABLE {}
     FIELDS TERMINATED BY ','
@@ -59,14 +61,17 @@ def UPLOAD(PATH1):
     sql_drop = """DROP TABLE IF EXISTS {};;"""
 
     sql_create = """"""
-
     # Make sure the database tsmgui11 is created on your MySQL space
     # Change these variables as needed
-    mydb = MySQLdb.connect(host='127.0.0.1',
-        user='josh',
-        port=3306,
-        passwd='666666',
-        db=str(DBname.get()))
+    try:
+        mydb = MySQLdb.connect(host='127.0.0.1',
+            user='josh',
+            port=3306,
+            passwd='666666',
+            db= getDBName(PATH1))
+    except:
+        print("DB might not have been created in xampp")
+        
 
     if mydb:
         print("Connection Successful")
@@ -133,6 +138,7 @@ def UPLOAD(PATH1):
                 mydb.rollback()
             sql_create = """"""
             print("----\n---\n--\n-")
+            
 def addfields(csv_headings, table_name):
     """ This helper method tokenizes takes the first row of a csv file, tokenizes it and adds each as a new column in
         a CREATE TABLE statement (returned as a string). Since no data types can be assumed from the csv, all are
