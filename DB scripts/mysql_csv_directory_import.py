@@ -11,7 +11,18 @@ import MySQLdb
 import os
 import string
 import warnings
+import Tkinter
+import tkFileDialog
 warnings.filterwarnings("ignore")
+def showGUI():
+    root = Tkinter.Tk()
+    root.withdraw() #use to hide tkinter window
+
+    currdir = os.getcwd()
+    tempdir = tkFileDialog.askdirectory(parent=root, initialdir=currdir, title='Please select a directory')
+    if len(tempdir) > 0:
+        print "You chose %s" % tempdir
+    return tempdir
 
 def main():
 
@@ -43,8 +54,8 @@ def main():
         CHANGE THE USER NAME
         PLACE THE UNZIPPED database folder tsmgui11 in a folder called DATABASE on your desktop
     """
-    PATH1 = "C:/Users/BRD-E/Desktop/DATABASE"
-    PATH2 = "C:\Users\BRD-E\Desktop\DATABASE"
+    PATH1 = showGUI()
+    # Example path: PATH1 = "C:/Users/BRD-E/Desktop/DATABASE"
     #Pass over each file, importing it to the database
     #Change this path to the path of the UNCOMPRESSED tsmgui11 on your machine
     for file_name in os.listdir(PATH1):

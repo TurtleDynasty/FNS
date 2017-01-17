@@ -31,7 +31,6 @@
 			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 			d3.csv("http://localhost/pullData.php?queryNumber=1&format=CSV", function(d)
 			{
-				console.log(d);
 				d.frequency = +d.frequency;
 				return d;
 			}, function(error, data) {
@@ -67,7 +66,6 @@
 				.attr("width", x.bandwidth())
 				.attr("height", function(d) { return height - y(d.frequency); });
 			});
-			console.log("/SUCCESS");
 		</script>
 	</body>
 </html>
