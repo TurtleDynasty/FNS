@@ -77,7 +77,19 @@ def UPLOAD(PATH1):
             passwd='666666',
             db= getDBName(PATH1))
     except:
-        print("DB might not have been created in xampp")
+        print("DB might not have been created in xampp, attempting now")
+        mydb = MySQLdb.connect(host='127.0.0.1',
+        user='josh',
+        port=3306,
+        passwd='666666',
+        db= '')
+        cursor = mydb.cursor()
+        cursor.execute("CREATE DATABASE " + getDBName(PATH1))
+        mydb = MySQLdb.connect(host='127.0.0.1',
+        user='josh',
+        port=3306,
+        passwd='666666',
+        db= getDBName(PATH1))  
         
 
     if mydb:
