@@ -14,6 +14,9 @@ import warnings
 import Tkinter
 import tkFileDialog
 from threading import Thread
+username = 'josh'
+password = '666666'
+portNum = 3306
 # Disables those annoying warning for clearer output
 warnings.filterwarnings("ignore")
 # Starts Tkinter, the GUI and initializes two StringVar
@@ -22,12 +25,12 @@ PATH1 = Tkinter.StringVar()
 file_name = Tkinter.StringVar()
 
 def main():
-	# Creates the browse button
+    # Creates the browse button
     Tkinter.Button(root, text='Browse', command = showBrowser).grid(row=0,column=0)
     root.mainloop(  )
     
 def showBrowser():
-	# Creates the browser window aka filesystem explorer and sets the path to the user selected path, then calls the listDatabases to display them
+    # Creates the browser window aka filesystem explorer and sets the path to the user selected path, then calls the listDatabases to display them
     root = Tkinter.Tk()
     root.withdraw() #use to hide tkinter window
     currdir = os.getcwd()
@@ -40,7 +43,7 @@ def showBrowser():
     thread.start()
 	
 def listDatabases():
-	# creates a thread to create each button so the callback command will be quick, so its a responsive UI
+    # creates a thread to create each button so the callback command will be quick, so its a responsive UI
     i = 1
     for folder_name in os.listdir(str(PATH1.get())):
         thread = Thread(target = createButton, args = (folder_name, i))
@@ -48,16 +51,15 @@ def listDatabases():
         i += 1
 		
 def createButton(folder_name, i):
-	# creates the button with folder name at row i, column 0
+    # creates the button with folder name at row i, column 0
     b1 = Tkinter.Button(root, text = folder_name, command = lambda: UPLOAD(str(PATH1.get()) + "/" + folder_name)).grid(row=i,column=0)
 	
 def getDBName(name):
     i = name.rfind('/')
-    print(name[i + 1:])
+    print("DATABASE: " + name[i + 1:])
     return name[i + 1:]
     
 def UPLOAD(PATH1):
-    print(PATH1)
     sql_insert = """LOAD DATA LOCAL INFILE '{}'
     INTO TABLE {}
     FIELDS TERMINATED BY ','
@@ -72,23 +74,23 @@ def UPLOAD(PATH1):
     # Change these variables as needed
     try:
         mydb = MySQLdb.connect(host='127.0.0.1',
-            user='josh',
-            port=3306,
-            passwd='666666',
+            user=username,
+            port=portNum,
+            passwd=password,
             db= getDBName(PATH1))
     except:
         print("DB might not have been created in xampp, attempting now")
         mydb = MySQLdb.connect(host='127.0.0.1',
-        user='josh',
-        port=3306,
-        passwd='666666',
+        user=username,
+        port=portNum,
+        passwd=password,
         db= '')
         cursor = mydb.cursor()
         cursor.execute("CREATE DATABASE " + getDBName(PATH1))
         mydb = MySQLdb.connect(host='127.0.0.1',
-        user='josh',
-        port=3306,
-        passwd='666666',
+        user=username,
+        port=portNum,
+        passwd=password,
         db= getDBName(PATH1))  
         
 
