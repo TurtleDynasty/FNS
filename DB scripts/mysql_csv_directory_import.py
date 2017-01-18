@@ -12,6 +12,7 @@ import os
 import string
 import warnings
 import Tkinter
+from Tkinter import *
 import tkFileDialog
 from threading import Thread
 username = 'josh'
@@ -21,12 +22,24 @@ portNum = 3306
 warnings.filterwarnings("ignore")
 # Starts Tkinter, the GUI and initializes two StringVar
 root = Tkinter.Tk(  )
+root.resizable(width=False, height=False)
+root.geometry('{}x{}'.format(225, 500))
 PATH1 = Tkinter.StringVar()
 file_name = Tkinter.StringVar()
 
 def main():
     # Creates the browse button
-    Tkinter.Button(root, text='Browse', command = showBrowser).grid(row=0,column=0)
+    Tkinter.Label(root, text='      ').grid(row=0,column=0,sticky=W)
+    Tkinter.Label(root, text='      ').grid(row=0,column=1,sticky=W)
+    Tkinter.Label(root, text='      ').grid(row=0,column=2,sticky=W)
+    Tkinter.Label(root, text='      ').grid(row=1,column=0,sticky=W)
+    Tkinter.Button(root, text='Browse', command = showBrowser).grid(row=1,column=1,sticky=W)
+    Tkinter.Label(root, text='      ').grid(row=1,column=2,sticky=W)
+    Tkinter.Label(root, text='      ').grid(row=2,column=0,sticky=W)
+    Tkinter.Label(root, text='      ').grid(row=2,column=1,sticky=W)
+    Tkinter.Label(root, text='      ').grid(row=2,column=2,sticky=W)
+    
+    
     root.mainloop(  )
     
 def showBrowser():
@@ -44,7 +57,7 @@ def showBrowser():
 	
 def listDatabases():
     # creates a thread to create each button so the callback command will be quick, so its a responsive UI
-    i = 1
+    i = 2
     for folder_name in os.listdir(str(PATH1.get())):
         thread = Thread(target = createButton, args = (folder_name, i))
         thread.start()
@@ -52,8 +65,7 @@ def listDatabases():
 		
 def createButton(folder_name, i):
     # creates the button with folder name at row i, column 0
-    b1 = Tkinter.Button(root, text = folder_name, command = lambda: UPLOAD(str(PATH1.get()) + "/" + folder_name)).grid(row=i,column=0)
-	
+    b1 = Tkinter.Button(root, text = folder_name, command = lambda: UPLOAD(str(PATH1.get()) + "/" + folder_name)).grid(row=i,column=1,sticky=W)	
 def getDBName(name):
     i = name.rfind('/')
     print("DATABASE: " + name[i + 1:])
