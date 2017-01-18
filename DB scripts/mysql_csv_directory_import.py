@@ -13,18 +13,21 @@ import string
 import warnings
 import Tkinter
 import tkFileDialog
-import time
 from threading import Thread
+# Disables those annoying warning for clearer output
 warnings.filterwarnings("ignore")
+# Starts Tkinter, the GUI and initializes two StringVar
 root = Tkinter.Tk(  )
 PATH1 = Tkinter.StringVar()
 file_name = Tkinter.StringVar()
 
 def main():
+	# Creates the browse button
     Tkinter.Button(root, text='Browse', command = showBrowser).grid(row=0,column=0)
     root.mainloop(  )
     
 def showBrowser():
+	# Creates the browser window aka filesystem explorer and sets the path to the user selected path, then calls the listDatabases to display them
     root = Tkinter.Tk()
     root.withdraw() #use to hide tkinter window
     currdir = os.getcwd()
@@ -33,17 +36,21 @@ def showBrowser():
         PATH1.set(tempdir)
     else:
         print("Directory fail to be found?")
-    thread = Thread(target = startQuestions)
+    thread = Thread(target = listDatabases)
     thread.start()
-def createButton(folder_name, i):
-    b1 = Tkinter.Button(root, text = folder_name, command = lambda: UPLOAD(str(PATH1.get()) + "/" + folder_name)).grid(row=i,column=0)
-def startQuestions():
+	
+def listDatabases():
+	# creates a thread to create each button so the callback command will be quick, so its a responsive UI
     i = 1
     for folder_name in os.listdir(str(PATH1.get())):
         thread = Thread(target = createButton, args = (folder_name, i))
         thread.start()
         i += 1
-        
+		
+def createButton(folder_name, i):
+	# creates the button with folder name at row i, column 0
+    b1 = Tkinter.Button(root, text = folder_name, command = lambda: UPLOAD(str(PATH1.get()) + "/" + folder_name)).grid(row=i,column=0)
+	
 def getDBName(name):
     i = name.rfind('/')
     print(name[i + 1:])
