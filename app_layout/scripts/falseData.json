@@ -1,219 +1,219 @@
 {
 
- "name": "Spectrum Protect",
+	"name": "Spectrum Protect",
 
- "children": [
+	"children": [
 
-  {
+		{
 
-   "name": "TSM GUI11",
+			"name": "TSM GUI11",
 
-   "children": [
+			"children": [
 
-    {
+				{
 
-     "name": "Disk Domain",
+					"name": "Disk Domain",
 
-     "children": [
+					"children": [
 
-      {"name": "TEST-DISK", "size": 0},
+						{"name": "TEST-DISK", "size": 0},
 
-      {"name": "PJ-TSMGUI11-0", "size": 2900},
+						{"name": "PJ-TSMGUI11-0", "size": 2900},
 
-      {"name": "PJ-TSMGUI11-1", "size": 2921},
+						{"name": "PJ-TSMGUI11-1", "size": 2921},
 
-      {"name": "PJ-TSMGUI11-2", "size": 6118}
+						{"name": "PJ-TSMGUI11-2", "size": 6118},
 
-      {"name": "PJ-TSMGUI11-3", "size": 2921},
+						{"name": "PJ-TSMGUI11-3", "size": 2921},
 
-      {"name": "PJ-TSMGUI11-4", "size": 2921},
+						{"name": "PJ-TSMGUI11-4", "size": 2921},
 
-      {"name": "PJ-TSMGUI11-5", "size": 2921}
+						{"name": "PJ-TSMGUI11-5", "size": 2921}
 
-     ]
+					]
 
-    },
+				},
 
-    {
+				{
 
-     "name": "Standard Domain",
+					"name": "Standard Domain",
 
-     "children": [
+					"children": [
 
-      {"name": "DB2+MANUFACTURING_KAPOLEI_1", "size": 0},
+						{"name": "DB2+MANUFACTURING_KAPOLEI_1", "size": 0},
 
-      {"name": "DB2+FINANCE_SPRINGDALE_1", "size": 0},
+						{"name": "DB2+FINANCE_SPRINGDALE_1", "size": 0},
 
-      {"name": "DB2+LEGAL_CHARLOTTE_1", "size": 0},
+						{"name": "DB2+LEGAL_CHARLOTTE_1", "size": 0},
 
-      {"name": "DB2&MARKETING_PATERSON_1", "size": 0}
+						{"name": "DB2&MARKETING_PATERSON_1", "size": 0}
 
-     ]
+					]
 
-    },
+				},
 
-    {
+				{
 
-     "name": "Hybrid-Cloud-1 Domain",
+					"name": "Hybrid-Cloud-1 Domain",
 
-     "children": [
+					"children": [
 
-      {"name": "TRON_POTTER", "size": 2989}
+						{"name": "TRON_POTTER", "size": 2989}
 
-     ]
+					]
 
-    }
+				}
 
-   ]
+			]
 
-  },
-    {
+		},
+		{
 
-     "name": "File Domain",
+			"name": "File Domain",
 
-     "children": [
+			"children": [
 
-      {"name": "TEST-FILENODE", "size": 2378},
+				{"name": "TEST-FILENODE", "size": 2378},
 
-      {"name": "PAYTON-1", "size": 0},
+				{"name": "PAYTON-1", "size": 0},
 
-      {"name": "TESTLDAP", "size": 0}
+				{"name": "TESTLDAP", "size": 0}
 
-     ]
+			]
 
-    },
+		},
 
-  {
+		{
 
-   "name": "TSM GUI12",
+			"name": "TSM GUI12",
 
-   "children": [
+			"children": [
 
-    {
+				{
 
-     "name": "Cloud Domain-2",
+					"name": "Cloud Domain-2",
 
-     "children": [
+					"children": [
 
-      {"name": "CLOUD-OFFPREM-1", "size": 3403}
+						{"name": "CLOUD-OFFPREM-1", "size": 3403}
 
-     ]
+					]
 
-    },
-    {
-     "name": "TAPE-JAG1",
+				},
+				{
+					"name": "TAPE-JAG1",
 
-     "children": [
+					"children": [
 
-      {"name": "TAPE-TSMGUI12-0", "size": 2667},
+						{"name": "TAPE-TSMGUI12-0", "size": 2667},
 
-      {"name": "TAPE-TSMGUI12-1", "size": 4169},
+						{"name": "TAPE-TSMGUI12-1", "size": 4169},
 
-      {"name": "TAPE-TSMGUI12-2", "size": 3328},
+						{"name": "TAPE-TSMGUI12-2", "size": 3328},
 
-      {"name": "TAPE-TSMGUI12-3", "size": 4291},
+						{"name": "TAPE-TSMGUI12-3", "size": 4291},
 
-      {"name": "TAPE-TSMGUI12-4", "size": 610},
+						{"name": "TAPE-TSMGUI12-4", "size": 610},
 
-      {"name": "TAPE-TSMGUI12-5", "size": 3333},
+						{"name": "TAPE-TSMGUI12-5", "size": 3333},
 
-      {"name": "TAPE-TSMGUI12-6", "size": 3926},
+						{"name": "TAPE-TSMGUI12-6", "size": 3926},
 
-      {"name": "TAPE-TSMGUI12-7", "size": 3556},
+						{"name": "TAPE-TSMGUI12-7", "size": 3556},
 
-      {"name": "TAPE-TSMGUI12-8", "size": 3561},
+						{"name": "TAPE-TSMGUI12-8", "size": 3561},
 
-      {"name": "TAPE-TSMGUI12-9", "size": 2667}
+						{"name": "TAPE-TSMGUI12-9", "size": 2667}
 
-     ]
+					]
 
-    },
-	{
+				},
+				{
 
-     "name": "CLEVER-1",
+					"name": "CLEVER-1",
 
-     "children": [
+					"children": [
 
-      {"name": "CLEVERSAGE1-1", "size": 3714}
+						{"name": "CLEVERSAGE1-1", "size": 3714}
 
-     ]
+					]
 
-    },
+				},
 
 
-    {"name": "ISchedulable", "size": 1041}
+				{"name": "ISchedulable", "size": 1041}
 
- 
-   ]
 
-  },
+			]
 
-  {
+		},
 
-   "name": "TSM GUI18",
+		{
 
-   "children": [
+			"name": "TSM GUI18",
 
-    {
+			"children": [
 
-     "name": "Disk Domain",
+				{
 
-     "children": [
+					"name": "Disk Domain",
 
-      {"name": "TEST-CLIENT", "size": 0},
+					"children": [
 
-      {"name": "DISKDO", "size": 3245}
+						{"name": "TEST-CLIENT", "size": 0},
 
-     ]
+						{"name": "DISKDO", "size": 3245}
 
-    },
-{
+					]
 
-     "name": "De-Duplication Domain",
+				},
+				{
 
-     "children": [
+					"name": "De-Duplication Domain",
 
-      {"name": "DEDUPDO", "size": 3268},
+					"children": [
 
-      {"name": "ADMIN_NODE_KDS7", "size": 0}
+						{"name": "DEDUPDO", "size": 3268},
 
-     ]
+						{"name": "ADMIN_NODE_KDS7", "size": 0}
 
-    },
-{
+					]
 
-     "name": "Large File Domain",
+				},
+				{
 
-     "children": [
+					"name": "Large File Domain",
 
-      {"name": "TEST-LRGFILENODE", "size": 0},
+					"children": [
 
-      {"name": "2341429-TEST-BACKUP", "size": 2154},
-  
-      {"name": "LARGEFILEDO", "size": 0},
+						{"name": "TEST-LRGFILENODE", "size": 0},
 
-      {"name": "ADMIN-NODE_GD23", "size": 0}
+						{"name": "2341429-TEST-BACKUP", "size": 2154},
 
-     ]
+						{"name": "LARGEFILEDO", "size": 0},
 
-    },
+						{"name": "ADMIN-NODE_GD23", "size": 0}
 
-    {"name": "DataField", "size": 1759},
+					]
 
-    {"name": "DataSchema", "size": 2165},
+				},
 
-    {"name": "DataSet", "size": 586},
+				{"name": "DataField", "size": 1759},
 
-    {"name": "DataSource", "size": 3331},
+				{"name": "DataSchema", "size": 2165},
 
-    {"name": "DataTable", "size": 772},
+				{"name": "DataSet", "size": 586},
 
-    {"name": "DataUtil", "size": 3322}
+				{"name": "DataSource", "size": 3331},
 
-   ]
+				{"name": "DataTable", "size": 772},
 
-  }
+				{"name": "DataUtil", "size": 3322}
 
- ]
+			]
+
+		}
+
+	]
 
 }
