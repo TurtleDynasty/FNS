@@ -29,9 +29,10 @@
 
 			var g = svg.append("g")
 			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+			var test = "letter,frequency\nAAAA,.08167\nBBBB,.01492\nCCCC,.02782"
 			d3.csv("http://localhost/pullData.php?queryNumber=1&format=CSV", function(d)
 			{
+				console.log(d)
 				d.frequency = +d.frequency;
 				return d;
 			}, function(error, data) {
