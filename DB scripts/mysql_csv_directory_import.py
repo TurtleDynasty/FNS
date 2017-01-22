@@ -15,6 +15,11 @@ import Tkinter
 from Tkinter import *
 import tkFileDialog
 from threading import Thread
+debug_flag = 1
+debug_filename = "debug.txt"
+# creates blank debug file each run
+f = open(debug_filename, 'w')
+f.close()
 username = 'josh'
 password = '666666'
 portNum = 3306
@@ -26,7 +31,7 @@ root.resizable(width=False, height=False)
 root.geometry('{}x{}'.format(225, 500))
 PATH1 = Tkinter.StringVar()
 file_name = Tkinter.StringVar()
-
+problems = []
 def main():
     # Creates the browse button
     Tkinter.Label(root, text='      ').grid(row=0,column=0,sticky=W)
@@ -131,6 +136,8 @@ def UPLOAD(PATH1):
                     sql_create += addfields(row1, table_name)
                 print("----- CSV Opened successfully!")
             except Exception as e:
+                problems.append([table_name, "Issue Opening"])
+                debugFileIO()
                 print("----- ISSUE: Opening and adding header data! <--")
                 print(e)
                 rollback_flag = True
@@ -142,16 +149,21 @@ def UPLOAD(PATH1):
                     cursor.close()
                     print("----- Table Drop successfully!")
             except Exception as e:
+                problems.append([table_name, "Issue Dropping"])
+                debugFileIO()
                 print("----- ISSUE: Dropping table! <--")
                 print(e)
                 rollback_flag = True
             try:
                 #Build the table creation command and execute it
+                
                 print("----- Creating Table")
                 cursor = mydb.cursor()
                 cursor.execute(sql_create.format(table_name, table_name))
                 cursor.close()
             except Exception as e:
+                problems.append([table_name, "Issue Creating table"])
+                debugFileIO()
                 print("----- ISSUE: Creating table! <--")
                 print(e)
                 rollback_flag = True
@@ -164,6 +176,8 @@ def UPLOAD(PATH1):
                 mydb.commit()
                 print("----- Data was filled sucessfully!")
             except Exception as e:
+                problems.append([table_name, "Issue Filling table"])
+                debugFileIO()
                 print("----- ISSUE: Filling table! <--")
                 print(e)
                 rollback_flag = True
@@ -196,7 +210,12 @@ def addfields(csv_headings, table_name):
 
     sql_create_temp += "\n);;"
     return sql_create_temp
-
+def debugFileIO():
+    f = open(debug_filename, 'a')
+    if (debug_flag == 1):
+        f.write(problems[-1][0] + " had an " + problems[-1][1] + "\n")
+    f.close()
 # Runs the program
 if __name__ == '__main__':
     main()
+    f.close()
