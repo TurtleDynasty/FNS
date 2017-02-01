@@ -1,24 +1,26 @@
 html, body {
-  height: 100%;
-  background-color: #3b4554;
+	height: 100%;
+	background-color: #3b4554;
 }
 
 h1, h2, h3, h4, h5 {
-  margin: 0;
+  display: inline-block;
+  border-bottom: 2px solid #d8dde8;
+	margin: 0;
 }
 
 h3 {
-  color: #404041;
+	color: #404041;
 }
 
 .main-container {
-  background-color: #3b4554;
+	background-color: #3b4554;
 }
 
 .nav-button {
-  background-color: #4178be;
-  width: 75px;
-  height: 50px;
+	background-color: #4178be;
+	width: 75px;
+	height: 50px;
 }
 
 .navbar-brand {
@@ -26,85 +28,32 @@ float: right;
 }
 
 #navbar {
-  background-color: #152935;
+	background-color: #152935;
 }
 
 .widget1 {
-  background-color: #ffffff;
-  height: 100%;
-  padding: 15px;
+	background-color: #ffffff;
+	height: 100%;
+	padding: 15px;
 }
 
 .widget2 {
-  background-color: #eff3f7;
-  height: 100%;
-  padding: 15px;
-  margin-left: 20px;
-  
-}
+	background-color: #eff3f7;
+	height: 100%;
+	padding: 15px;
+	margin-left: 20px;
 
-.widget3 {
-  background-color: #ffffff;
-  height: 100%;
-  padding: 15px;
-  margin-left: 20px;
-  
-}
-
-.widget1-container, .widget2-container {
-  min-height: 523.64px;
-}
-
-.widget3-container {
-  min-height: 166px;
-  padding-top: 20px !important;
-}
-
-@media (max-width: 992px) {
-  .widget1-container {
-    min-height: 200px !important;
-    height: 200px !important;
-    min-width: 500px;
-  }
-  .widget2-container {
-    height: 523.64px !important;
-    min-width: 500px;
-    margin-top: 20px;
-  }
-  .widget2{
-    margin-left: 0;
-  }
-}
-
-.no-padding {
-  padding: 0;
-}
-
-.no-margin {
-  margin: 0 !important;
-}
-
-.full-height{
-  height: 100%;
-}
-
-.height-80p {
-  height: 80% !important;
-}
-
-.height-20p  {
-  height: 20%;
 }
 
 .master-container {
-  height: 100%;
-  padding: 85px 35px 35px 35px !important;
+	height: 100%;
+	padding: 85px 35px 35px 35px !important;
 }
 
 #vis {
-  display: block;
-  margin: auto;
-  max-height: 100%;
+	display: block;
+	margin: auto;
+	max-height: 100%;
 }
 
 .svg-container {
@@ -120,4 +69,135 @@ float: right;
     position: absolute;
     top: 10px;
     left: 0;
+}
+
+.filter-button-container{
+	position: absolute;
+	bottom: 20px;
+	left: 0;
+	display: block;
+	margin: auto;
+	padding: 5px;
+	width: 100%;
+	height: 50px;
+}
+
+.filter-button {
+	background-color: #808080;
+	width: 100%;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	vertical-align: middle;
+	color: #eff3f7;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+label {
+	margin-top: 10px !important;
+}
+
+.filter-button:hover{
+    background: #909090;
+}
+
+.select2 {
+    width: 100% !important;
+}
+
+#vis-select {
+	position: absolute;
+	top: 50px;
+	width: 100%;
+	height: 125px;
+	background-color: rgba(200, 200, 200, 0.8);
+	border: 2px solid #707070;
+	z-index: 100;
+	opacity: 0.9;
+}
+
+#msg-select {
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	width: 350px;
+	height: 500px;
+	background-color: #dddddd;
+	border: 2px solid #707070;
+	z-index: 101;
+	opacity: 0.9;
+}
+
+.vis-select-item{
+	width: 90px;
+	height: 110px;
+	margin-top: 5px;
+	margin-left: 20px;
+	text-align: center;
+}
+
+.vis-select-item:hover{
+	background-color: #cccccc;
+}
+
+.vis-select-thumb{
+	width: 90px;
+	height: 90px;
+}
+
+.dtable {
+	display: table;
+}
+
+.dtablec {
+	display: table-cell;
+}
+
+.modal-dialog,
+.modal-content, .modal-body {
+    height: 80%;
+}
+
+.widget3-container {
+  padding-top: 20px;
+}
+
+@media (max-width: 992px) {
+	.widget1-container {
+		min-height: 200px !important;
+		height: 200px !important;
+		min-width: 500px;
+	}
+	.widget2-container {
+		height: 523.64px !important;
+		min-width: 500px;
+		margin-top: 20px;
+	}
+	.widget2{
+		margin-left: 0;
+	}
+
+	.filter-button {
+		height: 100% !important;
+		line-height: 190px !important;
+	}
+
+	.generate-button-container{
+		position: absolute;
+		bottom: 0 !important;
+		left: auto !important;
+		right: 0 !important;
+		display: block;
+		margin: auto;
+		padding: 5px;
+		width: 110px !important;
+		height: 100% !important;
+	}
+
+	label{
+		height: 115px !important;
+		width: calc(100% - 110px) !important;
+		margin-top: 10px !important;
+	}
 }

@@ -1,0 +1,59 @@
+/*************\
+| Padding
+\*************/
+.no-padding {
+	padding: 0;
+}
+
+.padding-left-10{
+  padding: 0 0 0 10px;
+}
+
+.padding-top-10{
+  padding: 10px 0 0 0;
+}
+
+/*************\
+| Margin
+\*************/
+.margin-top-20{
+  margin-top: 20px;
+}
+
+.no-margin {
+	margin: 0 !important;
+}
+
+/*************\
+| Height
+\*************/
+.full-height{
+	height: 100%;
+}
+
+.half-height{
+	height: 50%;
+}
+
+.half-height-20{
+	height: calc(50% - 20px);
+}
+
+.two-thirds-height-20{
+	height: calc(66% - 20px);
+}
+
+.one-third-height{
+	height: 34%;
+}
+
+/*************\
+| Positioning & Display
+\*************/
+.position-relative{
+  position: relative;
+}
+
+.display-block {
+  display: block;
+}

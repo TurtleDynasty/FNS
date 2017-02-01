@@ -9,6 +9,8 @@
 
   <!-- Custom styles for this template -->
   <link href="custom_v2.css" rel="stylesheet">
+  <link href="utility.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
   <script type="text/javascript" src="dist/d3.js"></script>
 </head>
@@ -18,75 +20,124 @@
   <!-- ========= -->
 
   <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
+      <div class="container-fluid no-padding">
         <div class="navbar-header">
-          <div class="navbar-brand nav-button no-padding no-margin">
+          <div class="navbar-brand no-padding no-margin padding-left-10">
             <img src="resources/logo.png" style="width:50px;height:50px; display: block; margin: auto;">
           </div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-left">
+            <li><a data-toggle="modal" data-target="#myModal">Visuals</a></li>
             <li><a href="index.html">Back to FNS Homepage</a></li>
-            <li><a href="#">Messages</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
+    <div id="vis-select" hidden="hidden">
+      <div class="vis-select-item">
+        <img class="vis-select-thumb"src="resources/sunburst-thumb.png" alt="">
+        <h4>Sunburst</h4>
+      </div>
+    </div>
+
+    <div id="msg-select" hidden="hidden">
+      <div class="vis-select-item">
+      </div>
+    </div>
+
     <div class="container-fluid master-container col-sm-12 no-padding full-height">
+      <div class="container-fluid col-md-3 col-sm-12 no-padding full-height widget1-container">
+        <div class="widget1 half-height-20 position-relative">
+          <h3>Filter Objects</h3>
+
+          <div class="padding-top-10">
+            <h4>Out</h4>
+            <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
+              <select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+            </label>
+          </div>
 
 
-        <div class="row full-height no-margin">
-            <div class="col-md-2 no-padding full-height">
+          <div class="padding-top-10">
+            <h4>In</h4>
+            <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
+              <select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+            </label>
+          </div>
 
+            <div class="filter-button-container">
+              <div class="filter-button">
+                Filter
+              </div>
+          </div>
+        </div>
 
-                <div class="container-fluid no-padding full-height widget1-container">
-                  <div class="widget1">
-                    <h3>Objects</h3>
-                  </div>
-                </div>
+        <div class="widget1 half-height margin-top-20">
+          <h3>Messages</h3>
+        </div>
+      </div>
 
+      <div class="container-fluid col-md-9 col-sm-12 no-padding full-height widget2-container">
+        <div class="widget2">
+          <h3 id="vis-title">Select a Visualization</h3>
+        </div>
+      </div>
+    </div>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Select a Visual</h4>
+      </div>
+      <div class="modal-body">
+        <div class="full-width">
+    <div class="row full-width">
+        <div class="modal-left col-sm-6">
+            <div class="vis-select-dropdown">
+              <div class="form-group">
+                <select class="form-control" id="sel1">
+                  <option>Backup Domains Distribution</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
             </div>
-            <div class="col-md-10 no-padding full-height">
-                <div class="row no-margin" style="height: 80%;">
-                    <div class="col-md-12 no-padding full-height">
-
-
-                        <div class="container-fluid no-padding full-height widget2-container">
-                          <div class="widget2">
-                            <h3>Visual Title</h3>
-                          </div>
-                        </div>
-
-
-                    </div>
-                </div>
-                <div class="row no-margin" style="height: 20%;">
-                    <div class="col-md-12 no-padding full-height">
-
-
-                      <div class="container-fluid no-padding full-height widget3-container">
-                        <div class="widget3">
-                          <h3>Visuals</h3>
-                        </div>
-                      </div>
-
-
-                    </div>
-                </div>
+            <div class="vis-select-desc">
+              Here is where the discription for the selected visual will be displayed.
             </div>
         </div>
+
+        <div class="modal-right col-md-6">
+            <img class="vis-select-thumb"src="resources/sunburst-thumb.png" alt="" style="display: block; margin: auto;">
+        </div>
+
     </div>
+  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary apply">Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!-- ========= -->
   <!-- Libraries -->
   <!-- ========= -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js" type="text/javascript"></script>
+  <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
   <script src="dist/underscore-min.js" type="text/javascript"></script>
   <script src="dist/backbone-min.js" type="text/javascript"></script>
   <script src="dist/bootstrap.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
   <!-- =============== -->
   <!-- Javascript code -->
@@ -103,15 +154,16 @@
       },
       // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello TutorialsPoint in this case.
       render: function(){
+        $('#myModal').modal('show');
         //init_spinner();
         //clear_vis();
-        init_sunburst();
+        //init_sunburst();
       }
     });
 
     var appView = new AppView();
   </script>
-  <script type="text/javascript">
+  <script type="text/javascript" >
 
   </script>
 
