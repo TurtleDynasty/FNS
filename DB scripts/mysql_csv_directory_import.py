@@ -43,10 +43,10 @@ def main():
     Tkinter.Label(root, text='      ').grid(row=2,column=0,sticky=W)
     Tkinter.Label(root, text='      ').grid(row=2,column=1,sticky=W)
     Tkinter.Label(root, text='      ').grid(row=2,column=2,sticky=W)
-    
-    
+
+
     root.mainloop(  )
-    
+
 def showBrowser():
     # Creates the browser window aka filesystem explorer and sets the path to the user selected path, then calls the listDatabases to display them
     root = Tkinter.Tk()
@@ -59,7 +59,7 @@ def showBrowser():
         print("Directory fail to be found?")
     thread = Thread(target = listDatabases)
     thread.start()
-	
+
 def listDatabases():
     # creates a thread to create each button so the callback command will be quick, so its a responsive UI
     i = 2
@@ -67,15 +67,15 @@ def listDatabases():
         thread = Thread(target = createButton, args = (folder_name, i))
         thread.start()
         i += 1
-		
+
 def createButton(folder_name, i):
     # creates the button with folder name at row i, column 0
-    b1 = Tkinter.Button(root, text = folder_name, command = lambda: UPLOAD(str(PATH1.get()) + "/" + folder_name)).grid(row=i,column=1,sticky=W)	
+    b1 = Tkinter.Button(root, text = folder_name, command = lambda: UPLOAD(str(PATH1.get()) + "/" + folder_name)).grid(row=i,column=1,sticky=W)
 def getDBName(name):
     i = name.rfind('/')
     print("DATABASE: " + name[i + 1:])
     return name[i + 1:]
-    
+
 def UPLOAD(PATH1):
     sql_insert = """LOAD DATA LOCAL INFILE '{}'
     INTO TABLE {}
@@ -108,8 +108,8 @@ def UPLOAD(PATH1):
         user=username,
         port=portNum,
         passwd=password,
-        db= getDBName(PATH1))  
-        
+        db= getDBName(PATH1))
+
 
     if mydb:
         print("Connection Successful")
@@ -127,7 +127,7 @@ def UPLOAD(PATH1):
         if file_name.endswith('.csv'):
             rollback_flag = False
             table_name = file_name[:-4]
-            print("\n-\n--\n----\n----- starting on: " + table_name + ".csv")
+            print("\n-\n--\n---\n----\n----- starting on: " + table_name + ".csv")
             print("----- Opening CSV File")
             cursor = mydb.cursor()
             try:
@@ -156,7 +156,7 @@ def UPLOAD(PATH1):
                 rollback_flag = True
             try:
                 #Build the table creation command and execute it
-                
+
                 print("----- Creating Table")
                 cursor = mydb.cursor()
                 cursor.execute(sql_create.format(table_name, table_name))
@@ -185,7 +185,7 @@ def UPLOAD(PATH1):
                 mydb.rollback()
             sql_create = """"""
             print("----\n---\n--\n-")
-            
+
 def addfields(csv_headings, table_name):
     """ This helper method tokenizes takes the first row of a csv file, tokenizes it and adds each as a new column in
         a CREATE TABLE statement (returned as a string). Since no data types can be assumed from the csv, all are

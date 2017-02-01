@@ -1,4 +1,0 @@
-ACTIVITY_LOG had an Issue Creating table
-ACTIVITY_LOG had an Issue Filling table
-ACTIVITY_SUMMARY had an Issue Creating table
-ACTIVITY_SUMMARY had an Issue Filling table
