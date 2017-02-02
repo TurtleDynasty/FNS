@@ -20,8 +20,8 @@ debug_filename = "debug.txt"
 # creates blank debug file each run
 f = open(debug_filename, 'w')
 f.close()
-username = 'josh'
-password = '666666'
+username = 'av638'
+password = 'Al20044921'
 portNum = 3306
 # Disables those annoying warning for clearer output
 warnings.filterwarnings("ignore")
