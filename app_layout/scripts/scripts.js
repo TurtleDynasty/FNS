@@ -153,14 +153,6 @@ $(document).ready(function(){
       placeholder: "Click Here to Select Objects"
     });
 
-    $(".apply").on("click", function(){
-        $('#myModal').modal('toggle');
-        clear_vis();
-        $("#vis-title").html("Loading Visualization...");
-        init_spinner();
-        setTimeout(init_sunburst, 1500);
-    });
-
     $(".filter-button").on("click", function(){
         clear_vis();
         $("#vis-title").html("Filtering Data...");
@@ -168,6 +160,55 @@ $(document).ready(function(){
         setTimeout(init_sunburst, 1500);
     });
 
+    //Modal elements
+    $(".generate").on("click", function(){
+        $('.widget2-container-inner').addClass('hidden');
+        $('#myModal').modal('toggle');
+        clear_vis();
+        $("#vis-title").html("Loading Visualization...");
+        init_spinner();
+        setTimeout(init_sunburst, 1500);
+    });
+
+    $(".continue").click(function () {
+      $(".back").removeClass('hidden');
+      $(".generate").removeClass('hidden');
+      $(".continue").addClass('hidden');
+
+      $(".modal-step1").addClass('hidden');
+      $(".modal-step2").removeClass('hidden');
+      $('.myModalLabel1').addClass('hidden');
+      $('.myModalLabel2').removeClass('hidden');
+    });
+
+    $(".back").click(function () {
+      $(".back").addClass('hidden');
+      $(".generate").addClass('hidden');
+      $(".continue").removeClass('hidden');
+
+      $(".modal-step1").removeClass('hidden');
+      $(".modal-step2").addClass('hidden');
+      $('.myModalLabel1').removeClass('hidden');
+      $('.myModalLabel2').addClass('hidden');
+    });
+
+    $('#myModal').on('hidden.bs.modal', function () {
+      $(".back").addClass('hidden');
+      $(".generate").addClass('hidden');
+      $(".continue").removeClass('hidden');
+
+      $(".modal-step1").removeClass('hidden');
+      $(".modal-step2").addClass('hidden');
+      $('.myModalLabel1').removeClass('hidden');
+      $('.myModalLabel2').addClass('hidden');
+    })
+
+    $(".search-icon").click(function () {
+      $('#myModal').modal('toggle');
+    });
+
+
+    /*
     $(".vis-drop").click(function () {
       if ($("#vis-select").is( ":hidden" ) ) {
         $("#vis-select").slideDown( "fast" );
@@ -182,7 +223,7 @@ $(document).ready(function(){
       } else {
         $("#msg-select").slideUp( "fast" );
       }
-    });
+    });*/
 });
 /*//binding to dom?
 function updateWindow(){
