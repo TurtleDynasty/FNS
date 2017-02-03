@@ -154,10 +154,12 @@ $(document).ready(function(){
     });
 
     $(".filter-button").on("click", function(){
+      if($(".widget2").has("svg").length > 0){
         clear_vis();
         $("#vis-title").html("Filtering Data...");
         init_spinner();
         setTimeout(init_sunburst, 1500);
+      }
     });
 
     //Modal elements
