@@ -57,3 +57,37 @@
 .display-block {
   display: block;
 }
+.display-inline-block {
+  display: inline-block;;
+}
+.display-table {
+  display: table;
+}
+
+.display-table-cell {
+  display: table-cell;
+}
+
+.hidden {
+	display: none;
+}
+
+.valign-middle {
+	vertical-align: middle;
+}
+
+.center-align {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.absolute-center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
