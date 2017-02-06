@@ -6,4 +6,6 @@ Run the latest mysql_csv_directory_import.py
 	Now click the folder called TEST
 	if your TEST isnt working for a different data set
 		check the queries list against what you are expecting
+Place the pullData.php and queryList.csv under your htdocs or similar.
 Open Test.html in your browser of choice.
+
