@@ -41,13 +41,14 @@ float: right;
 	background-color: #eff3f7;
 	height: 100%;
 	padding: 15px;
-	margin-left: 20px;
+	margin-right: 20px;
 	position: relative;
 
 }
 
 .master-container {
 	height: 100%;
+	min-height: 700px;
 	padding: 85px 35px 35px 35px !important;
 }
 
@@ -160,6 +161,10 @@ label {
     height: 80%;
 }
 
+.modal-content {
+	min-height: 595px;
+}
+
 .widget3-container {
   padding-top: 20px;
 }
@@ -180,19 +185,32 @@ label {
 	border-radius: 3px;
 }
 
+.select2-search__field {
+	min-width: 260px;
+}
+
+.filter-input-container {
+}
+
 @media (max-width: 992px) {
 	.widget1-container {
-		min-height: 200px !important;
+		margin-top: 20px;
+		min-height: 400px !important;
 		height: 200px !important;
 		min-width: 500px;
 	}
 	.widget2-container {
 		height: 523.64px !important;
 		min-width: 500px;
-		margin-top: 20px;
 	}
 	.widget2{
-		margin-left: 0;
+		margin: 0;
+	}
+
+	.filter-input-container {
+		width: 45%;
+		height: 40px;
+		display: inline-block;
 	}
 
 	.filter-button {
@@ -200,7 +218,7 @@ label {
 		line-height: 190px !important;
 	}
 
-	.generate-button-container{
+	.filter-button-container{
 		position: absolute;
 		bottom: 0 !important;
 		left: auto !important;
