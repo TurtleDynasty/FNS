@@ -12,7 +12,7 @@ Click the link below and install the software:
 	https://dev.mysql.com/get/Downloads/Connector-C/mysql-connector-c-6.1.9-win32.msi
 
 Go to the FNS>DB Scripts folder there should be a file called: MySQL_python-1.2.5-cp27-none-win32
- 	if not:
+ 	if not, go to the link below and find the file listed below:
 		http://www.lfd.uci.edu/~gohlke/pythonlibs/
 			File name: MySQL_python‑1.2.5‑cp27‑none‑win32.whl
 		Place this file in the DB Scripts folder.
