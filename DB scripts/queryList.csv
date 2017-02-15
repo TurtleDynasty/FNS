@@ -1,3 +1,4 @@
 "Query Number", "Database Name", "SQL Query", "header info"
 "1", "TEST","SELECT * FROM `test` ORDER BY `test`.`frequency` DESC ", "letter,frequency"
-"2", "tsmgui11","SELECT FSID,SUM(UNIQUE_BYTES)/1000 FROM `dedup_stats` GROUP BY FSID", "letter,frequency" 
+"2", "tsmgui11","SELECT FSID,UNIQUE_BYTES FROM `dedup_stats` GROUP BY FSID", "letter,frequency" 
+"3", "tsmgui11","SELECT FILESPACE_ID, ACTUAL_SIZE FROM `backups` GROUP BY FILESPACE_ID ORDER BY `backups`.`FILESPACE_ID` DESC ", "letter,frequency"
