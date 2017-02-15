@@ -28,7 +28,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-left">
-            <li><a data-toggle="modal" data-target="#myModal">Visuals</a></li>
+            <li><a data-toggle="modal" data-target="#myModal" style="cursor: pointer">Visuals</a></li>
             <li><a href="index.html">Back to FNS Homepage</a></li>
           </ul>
         </div>
@@ -48,20 +48,31 @@
     </div>
 
     <div class="container-fluid master-container col-sm-12 no-padding full-height">
+      <div class="container-fluid col-md-9 col-sm-12 no-padding full-height widget2-container">
+        <div class="widget2">
+          <h3 id="vis-title">Select a Visualization</h3>
+          <div class="widget2-container-inner display-table" style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0;">
+            <div class="search-icon-container center-align" style="width: 256px; vertical-align: middle;">
+              <img class="search-icon"src="resources/search.png" alt="" style="height: 256px; width: 256px; cursor: pointer">
+              <p style="border-bottom: none;">Click here to select a visual</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="container-fluid col-md-3 col-sm-12 no-padding full-height widget1-container">
         <div class="widget1 half-height-20 position-relative">
-          <h3>Filter Objects</h3>
-
-          <div class="padding-top-10">
-            <h4>Out</h4>
+          <h3>Filter Objects</h3><br/>
+          <div class="filter-input-container padding-top-10">
+            <h4>Out</h4><br/>
             <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
               <select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
             </label>
           </div>
 
 
-          <div class="padding-top-10">
-            <h4>In</h4>
+          <div class="filter-input-container padding-top-10">
+            <h4>In</h4><br/>
             <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
               <select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
             </label>
@@ -76,12 +87,16 @@
 
         <div class="widget1 half-height margin-top-20">
           <h3>Messages</h3>
-        </div>
-      </div>
-
-      <div class="container-fluid col-md-9 col-sm-12 no-padding full-height widget2-container">
-        <div class="widget2">
-          <h3 id="vis-title">Select a Visualization</h3>
+          <div class="messages-box">
+            <div class="message">
+              <img src="resources/warning.svg" alt="" style="width: 16px; height; 16px">
+              This is a warning message.
+            </div>
+            <div class="message">
+              <img src="resources/thought.svg" alt="" style="width: 16px; height; 16px">
+              This is a suggestion message.
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -92,36 +107,63 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Select a Visual</h4>
+        <h4 class="modal-title myModalLabel1">Select a Visual</h4>
+        <h4 class="modal-title myModalLabel2 hidden">Initial Filter</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body modal-step1">
         <div class="full-width">
-    <div class="row full-width">
-        <div class="modal-left col-sm-6">
-            <div class="vis-select-dropdown">
-              <div class="form-group">
-                <select class="form-control" id="sel1">
-                  <option>Backup Domains Distribution</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                </select>
+          <div class="row full-width">
+            <div class="modal-left col-sm-6">
+              <div class="vis-select-dropdown">
+                <div class="form-group">
+                  <select class="form-control" id="sel1">
+                    <option>Backup Domains Distribution</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+              </div>
+              <div class="vis-select-desc">
+                The Backup Domains Distribution visual shows proportionally where all the data is backed up and in what kinds of medium.
               </div>
             </div>
-            <div class="vis-select-desc">
-              Here is where the discription for the selected visual will be displayed.
+            <div class="modal-right col-md-6">
+                <img class="vis-select-thumb"src="resources/sunburst-thumb.png" alt="" style="display: block; margin: auto;">
             </div>
+          </div>
         </div>
-
-        <div class="modal-right col-md-6">
-            <img class="vis-select-thumb"src="resources/sunburst-thumb.png" alt="" style="display: block; margin: auto;">
+      </div>
+      <div class="modal-body modal-step2 hidden">
+        <div class="full-width">
+          <div class="row full-width">
+            <div class="modal-left col-sm-6">
+              <div class="padding-top-10">
+                <h4>Out</h4>
+                <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
+                  <select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+                </label>
+              </div>
+              <div class="padding-top-10">
+                <h4>In</h4>
+                <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
+                  <select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+                </label>
+              </div>
+              <div class="vis-select-desc">
+                Either select items to filter out of the full set or select a few items that should be in the visual.
+              </div>
+            </div>
+            <div class="modal-right col-md-6">
+                <img class="vis-select-thumb"src="resources/sunburst-thumb.png" alt="" style="display: block; margin: auto;">
+            </div>
+          </div>
         </div>
-
-    </div>
-  </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary apply">Apply</button>
+        <button type="button" class="btn btn-default back hidden">Back</button>
+        <button type="button" class="btn btn-primary continue">Continue</button>
+        <button type="button" class="btn btn-primary generate hidden">Generate</button>
       </div>
     </div>
   </div>
