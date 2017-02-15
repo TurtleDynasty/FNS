@@ -1,0 +1,3 @@
+"Query Number", "Database Name", "SQL Query", "header info"
+"1", "TEST","SELECT * FROM `test` ORDER BY `test`.`frequency` DESC ", "letter,frequency"
+"2", "tsmgui11","SELECT SUM(UNIQUE_BYTES)/1000, FSID FROM `dedup_stats` GROUP BY FSID", "letter,frequency" 
