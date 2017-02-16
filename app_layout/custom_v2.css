@@ -197,6 +197,10 @@ label {
 	width: 100%;
 }
 
+.message-icon {
+	padding-right: 3px;
+}
+
 @media (max-width: 992px) {
 	.widget1-container {
 		margin-top: 20px;
