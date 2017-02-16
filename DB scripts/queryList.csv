@@ -1,4 +1,5 @@
 "Query Number", "Database Name", "SQL Query", "header info"
 "1", "TEST","SELECT * FROM `test` ORDER BY `test`.`frequency` DESC ", "letter,frequency"
-"2", "tsmgui11","SELECT FSID,UNIQUE_BYTES FROM `dedup_stats` GROUP BY FSID", "letter,frequency" 
+"2", "tsmgui11","SELECT FSID, UNIQUE_BYTES FROM `dedup_stats` GROUP BY FSID ORDER BY `dedup_stats`.`FSID` DESC ", "letter,frequency" 
 "3", "tsmgui11","SELECT FILESPACE_ID, ACTUAL_SIZE FROM `backups` GROUP BY FILESPACE_ID ORDER BY `backups`.`FILESPACE_ID` DESC ", "letter,frequency"
+"4", "tsmgui11","SELECT NODEID, COUNT(NODEID) FROM `replicated_objects` GROUP BY NODEID","letter,frequency"
