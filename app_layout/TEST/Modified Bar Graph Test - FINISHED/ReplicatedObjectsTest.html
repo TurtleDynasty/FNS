@@ -20,7 +20,7 @@
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 		<script>
 			var svg = d3.select("svg"),
-			    margin = {top: 30, right: 40, bottom: 50, left: 110},
+			    margin = {top: 30, right: 40, bottom: 50, left: 80},
 			    width = +svg.attr("width") - margin.left - margin.right,
 			    height = +svg.attr("height") - margin.top - margin.bottom;
 
@@ -30,7 +30,7 @@
 			var g = svg.append("g")
 			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-			d3.csv("http://localhost:800/pullData.php?queryNumber=3&format=CSV", function(d)
+			d3.csv("http://localhost:800/pullData.php?queryNumber=4&format=CSV", function(d)
 			{
 				d.frequency = +d.frequency;
 				return d;
@@ -42,6 +42,8 @@
 
 				x.domain(data.map(function(d) { return d.letter; }));
 				y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+
 
 				g.append("g")
 				.attr("class", "axis axis--x")
@@ -57,7 +59,7 @@
    	.attr("x", width / 2 )
         .attr("y",  height + margin.bottom + 25)
         .style("text-anchor", "middle")
-        .text("File Space ID");
+        .text("Node ID's");
 
 				g.append("g")
 				.attr("class", "axis axis--y")
@@ -68,14 +70,13 @@
 				.attr("dy", "0.71em")
 				.attr("text-anchor", "end")
 				.text("Frequency");
-
 	svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0)
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
-        .text("Actual Size(bytes)");
+        .text("# Replicated Objects");
 
 				g.selectAll(".bar")
 				.data(data)
