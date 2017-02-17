@@ -268,9 +268,6 @@ function init_af_segments() {
         .attr("width", x.bandwidth())
         .attr("y", function(d) { return y(d.frequency); })
         .attr("height", function(d) { return height - y(d.frequency); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-
   });
 
   d3.select("#vis-title").html("AF Segments");
