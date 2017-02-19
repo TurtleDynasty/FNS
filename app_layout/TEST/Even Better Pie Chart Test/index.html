@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.arc text {
+	font: 10px sans-serif;
+	text-anchor: middle;
+}
+
+.arc path {
+	stroke: #fff;
+}
+
+</style>
+<body>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script>
+	var margin = {top: 50, right: 50, bottom: 50, left: 50};
+	var width = 1200 - margin.left - margin.right,
+	    height = 1000 - margin.top - margin.bottom;
+	radius = Math.min(width, height) / 3;
+	labelRadius = radius + 30;
+	var underLineLength = 150;
+	var color = d3.scaleOrdinal()
+	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+	var arc = d3.arc()
+	.outerRadius(radius - 30)
+	.innerRadius(150);
+
+	var labelArc = d3.arc()
+	.outerRadius(radius - 40)
+	.innerRadius(radius - 40);
+
+	var pie = d3.pie()
+	.sort(null)
+	.value(function(d) { return d.count; });
+
+	var svg = d3.select("body").append("svg")
+	.attr("width", width)
+	.attr("height", height)
+	.append("g")
+	.attr("transform", "translate(" + width / 2  + "," + height / 2 + ")");
+
+	d3.csv("data.csv", type, function(error, data)
+	{
+		if (error)
+		{
+			throw error;
+		}
+		data = parseData(data);
+		var g = svg.selectAll(".arc")
+		.data(pie(data))
+		.enter().append("g")
+		.attr("class", "arc");
+
+		g.append("path")
+		.attr("d", arc)
+		.style("fill", function(d) { return color(d.data.name); })
+		.on("mouseenter", function(d) {
+				//console.log("mousein")
+				text = g.append("text")
+					.attr("transform", arc.centroid(d))
+					.attr("dy", ".5em")
+					.style("text-anchor", "middle")
+					.style("fill", "black")
+					.style("font-size", "35px")
+					.attr("class", "on")
+					.text(d.data.count);
+		})
+
+		.on("mouseout", function(d) {
+				 text.remove();
+		});
+		// text
+		g.append("text")
+		.attr("text-anchor", "middle")
+		.attr("x", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			if (Math.cos(a) * (radius + radius*.1) > 0)
+			{
+				return Math.cos(a) * (radius + radius*.1) + underLineLength/2;
+			}
+			else
+			{
+				return Math.cos(a) * (radius + radius*.1) - underLineLength/2;
+			}
+
+		})
+		.attr("y", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.sin(a) * (radius + radius*.1) - 5;
+
+		})
+		.style("font-size", "14px")
+		.text(function(d) { return d.data.name; });
+
+		// pie2labelline
+		g.append("line")
+		.attr("x1", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.cos(a) * (2*radius/3);
+		})
+		.attr("y1", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.sin(a) * (2*radius/3);
+		})
+		.attr("x2", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.cos(a) * (radius + radius*.1);
+		})
+		.attr("y2", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.sin(a) * (radius + radius*.1);
+		})
+		.attr("stroke-width", 2)
+        .attr("stroke", "black");
+		// label underline
+		g.append("line")
+		.attr("x1", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.cos(a) * (radius + radius*.1);
+		})
+		.attr("y1", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.sin(a) * (radius + radius*.1);
+		})
+		.attr("x2", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			if (Math.cos(a) * (radius + radius*.1) > 0)
+			{
+				return Math.cos(a) * (radius + radius*.1) + underLineLength;
+			}
+			else
+			{
+				return Math.cos(a) * (radius + radius*.1) - underLineLength;
+			}
+		})
+		.attr("y2", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.sin(a) * (radius + radius*.1);
+		})
+		.attr("stroke-width", 2)
+		.attr("stroke", "black");
+
+		svg.attr("transform", "translate(" + (width/ 2 + margin.left) + "," + (height/ 2 + margin.top) + ")");
+	});
+	function parseData(data)
+	{
+		var cleaned = convertArray(data)
+		var newArray = compressArray(cleaned);
+		return newArray;
+
+	}
+	function convertArray(original)
+	{
+		var result = [];
+		for(i = 0; i < original.length; i++)
+		{
+			result.push(original[i].name);
+		}
+		return result;
+	}
+	function compressArray(original)
+	{
+
+		var compressed = [];
+		// make a copy of the input array
+		var copy = original.slice(0);
+
+		// first loop goes over every element
+		for (var i = 0; i < original.length; i++) {
+
+			var myCount = 0;
+			// loop over every element in the copy and see if it's the same
+			for (var w = 0; w < copy.length; w++) {
+				if (original[i] == copy[w]) {
+					// increase amount of times duplicate is found
+					myCount++;
+					// sets item to undefined
+					delete copy[w];
+				}
+			}
+
+			if (myCount > 0) {
+				var a = new Object();
+				a.name = original[i];
+				a.count = myCount;
+				compressed.push(a);
+			}
+		}
+
+		return compressed;
+	};
+	function type(d)
+	{
+		d.count = +d.count;
+		return d;
+	}
+
+	</script>
