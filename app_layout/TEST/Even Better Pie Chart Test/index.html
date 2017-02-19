@@ -18,19 +18,21 @@
 	var margin = {top: 50, right: 50, bottom: 50, left: 50};
 	var width = 1200 - margin.left - margin.right,
 	    height = 1000 - margin.top - margin.bottom;
-	radius = Math.min(width, height) / 3;
-	labelRadius = radius + 30;
-	var underLineLength = 150;
+	var outerRadius = Math.min(width, height) / 4;
+	var innerRadius = outerRadius - outerRadius/3
+	labelRadius = outerRadius + 30;
+	var letterLineLength = 11;
+	var lineToLabelLength = outerRadius * .2;
 	var color = d3.scaleOrdinal()
 	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 	var arc = d3.arc()
-	.outerRadius(radius - 30)
-	.innerRadius(150);
+	.outerRadius(outerRadius)
+	.innerRadius(innerRadius);
 
 	var labelArc = d3.arc()
-	.outerRadius(radius - 40)
-	.innerRadius(radius - 40);
+	.outerRadius(outerRadius)
+	.innerRadius(innerRadius);
 
 	var pie = d3.pie()
 	.sort(null)
@@ -77,19 +79,19 @@
 		.attr("text-anchor", "middle")
 		.attr("x", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			if (Math.cos(a) * (radius + radius*.1) > 0)
+			if (Math.cos(a) * (outerRadius + lineToLabelLength) > 0)
 			{
-				return Math.cos(a) * (radius + radius*.1) + underLineLength/2;
+				return Math.cos(a) * (outerRadius + lineToLabelLength) + letterLineLength*d.data.name.length/2;
 			}
 			else
 			{
-				return Math.cos(a) * (radius + radius*.1) - underLineLength/2;
+				return Math.cos(a) * (outerRadius + lineToLabelLength) - letterLineLength*d.data.name.length/2;
 			}
 
 		})
 		.attr("y", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.sin(a) * (radius + radius*.1) - 5;
+			return Math.sin(a) * (outerRadius + lineToLabelLength) - 5;
 
 		})
 		.style("font-size", "14px")
@@ -99,19 +101,19 @@
 		g.append("line")
 		.attr("x1", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.cos(a) * (2*radius/3);
+			return Math.cos(a) * (innerRadius);
 		})
 		.attr("y1", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.sin(a) * (2*radius/3);
+			return Math.sin(a) * (innerRadius);
 		})
 		.attr("x2", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.cos(a) * (radius + radius*.1);
+			return Math.cos(a) * (outerRadius + lineToLabelLength);
 		})
 		.attr("y2", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.sin(a) * (radius + radius*.1);
+			return Math.sin(a) * (outerRadius + lineToLabelLength);
 		})
 		.attr("stroke-width", 2)
         .attr("stroke", "black");
@@ -119,26 +121,26 @@
 		g.append("line")
 		.attr("x1", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.cos(a) * (radius + radius*.1);
+			return Math.cos(a) * (outerRadius + lineToLabelLength);
 		})
 		.attr("y1", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.sin(a) * (radius + radius*.1);
+			return Math.sin(a) * (outerRadius + lineToLabelLength);
 		})
 		.attr("x2", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			if (Math.cos(a) * (radius + radius*.1) > 0)
+			if (Math.cos(a) * (outerRadius + lineToLabelLength) > 0)
 			{
-				return Math.cos(a) * (radius + radius*.1) + underLineLength;
+				return Math.cos(a) * (outerRadius + lineToLabelLength) + letterLineLength*d.data.name.length;
 			}
 			else
 			{
-				return Math.cos(a) * (radius + radius*.1) - underLineLength;
+				return Math.cos(a) * (outerRadius + lineToLabelLength) - letterLineLength*d.data.name.length;
 			}
 		})
 		.attr("y2", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.sin(a) * (radius + radius*.1);
+			return Math.sin(a) * (outerRadius + lineToLabelLength);
 		})
 		.attr("stroke-width", 2)
 		.attr("stroke", "black");
