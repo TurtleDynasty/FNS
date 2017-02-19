@@ -26,7 +26,6 @@
 	.outerRadius(radius - 10)
 	.innerRadius(150);
 
-
 	var labelArc = d3.arc()
 	.outerRadius(radius - 40)
 	.innerRadius(radius - 40);
@@ -70,15 +69,12 @@
 
 		.on("mouseout", function(d) {
 				 text.remove();
-		});;
-
+		});
 		g.append("text")
 		.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
 		.attr("dy", ".35em")
 		.style("font-size", "14px")
 		.text(function(d) { return d.data.name; });
-
-
 	});
 	function parseData(data)
 	{
