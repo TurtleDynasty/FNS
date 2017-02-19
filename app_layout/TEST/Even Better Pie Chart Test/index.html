@@ -19,10 +19,10 @@
 	var width = 1200 - margin.left - margin.right,
 	    height = 1000 - margin.top - margin.bottom;
 	var outerRadius = Math.min(width, height) / 4;
-	var innerRadius = outerRadius - outerRadius/3
-	labelRadius = outerRadius + 30;
+	var innerRadius = outerRadius - outerRadius/3;
 	var letterLineLength = 11;
-	var lineToLabelLength = outerRadius * .2;
+	var lineToLabelEnd = outerRadius * .2;
+	var lineToLabelStart = outerRadius; //innerRadius + (outerRadius -innerRadius)/2;
 	var color = d3.scaleOrdinal()
 	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
@@ -43,24 +43,25 @@
 	.attr("height", height)
 	.append("g")
 	.attr("transform", "translate(" + width / 2  + "," + height / 2 + ")");
-
+	var total = 0;
 	d3.csv("data.csv", type, function(error, data)
 	{
 		if (error)
 		{
 			throw error;
 		}
+		var toggle = 0;
 		data = parseData(data);
 		var g = svg.selectAll(".arc")
 		.data(pie(data))
 		.enter().append("g")
 		.attr("class", "arc");
-
 		g.append("path")
 		.attr("d", arc)
 		.style("fill", function(d) { return color(d.data.name); })
 		.on("mouseenter", function(d) {
-				//console.log("mousein")
+			if (toggle == 0)
+			{
 				text = g.append("text")
 					.attr("transform", arc.centroid(d))
 					.attr("dy", ".5em")
@@ -68,30 +69,32 @@
 					.style("fill", "black")
 					.style("font-size", "35px")
 					.attr("class", "on")
-					.text(d.data.count);
+					.text(" ");
+				toggle += 1;
+			}
+			text.text(d.data.name + ": " + d.data.count);
 		})
-
 		.on("mouseout", function(d) {
-				 text.remove();
+				text.text("Total: " + total);
 		});
 		// text
 		g.append("text")
 		.attr("text-anchor", "middle")
 		.attr("x", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			if (Math.cos(a) * (outerRadius + lineToLabelLength) > 0)
+			if (Math.cos(a) * (outerRadius + lineToLabelEnd) > 0)
 			{
-				return Math.cos(a) * (outerRadius + lineToLabelLength) + letterLineLength*d.data.name.length/2;
+				return Math.cos(a) * (outerRadius + lineToLabelEnd) + letterLineLength*d.data.name.length/2;
 			}
 			else
 			{
-				return Math.cos(a) * (outerRadius + lineToLabelLength) - letterLineLength*d.data.name.length/2;
+				return Math.cos(a) * (outerRadius + lineToLabelEnd) - letterLineLength*d.data.name.length/2;
 			}
 
 		})
 		.attr("y", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.sin(a) * (outerRadius + lineToLabelLength) - 5;
+			return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
 
 		})
 		.style("font-size", "14px")
@@ -101,19 +104,19 @@
 		g.append("line")
 		.attr("x1", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.cos(a) * (innerRadius);
+			return Math.cos(a) * (lineToLabelStart);
 		})
 		.attr("y1", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.sin(a) * (innerRadius);
+			return Math.sin(a) * (lineToLabelStart);
 		})
 		.attr("x2", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.cos(a) * (outerRadius + lineToLabelLength);
+			return Math.cos(a) * (outerRadius + lineToLabelEnd);
 		})
 		.attr("y2", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.sin(a) * (outerRadius + lineToLabelLength);
+			return Math.sin(a) * (outerRadius + lineToLabelEnd);
 		})
 		.attr("stroke-width", 2)
         .attr("stroke", "black");
@@ -121,26 +124,26 @@
 		g.append("line")
 		.attr("x1", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.cos(a) * (outerRadius + lineToLabelLength);
+			return Math.cos(a) * (outerRadius + lineToLabelEnd);
 		})
 		.attr("y1", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.sin(a) * (outerRadius + lineToLabelLength);
+			return Math.sin(a) * (outerRadius + lineToLabelEnd);
 		})
 		.attr("x2", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			if (Math.cos(a) * (outerRadius + lineToLabelLength) > 0)
+			if (Math.cos(a) * (outerRadius + lineToLabelEnd) > 0)
 			{
-				return Math.cos(a) * (outerRadius + lineToLabelLength) + letterLineLength*d.data.name.length;
+				return Math.cos(a) * (outerRadius + lineToLabelEnd) + letterLineLength*d.data.name.length;
 			}
 			else
 			{
-				return Math.cos(a) * (outerRadius + lineToLabelLength) - letterLineLength*d.data.name.length;
+				return Math.cos(a) * (outerRadius + lineToLabelEnd) - letterLineLength*d.data.name.length;
 			}
 		})
 		.attr("y2", function(d) {
 			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			return Math.sin(a) * (outerRadius + lineToLabelLength);
+			return Math.sin(a) * (outerRadius + lineToLabelEnd);
 		})
 		.attr("stroke-width", 2)
 		.attr("stroke", "black");
