@@ -18,10 +18,11 @@
 					- JSON - NOT tested
 			- Example:
 				d3.csv(http://localhost/pullData.php?queryNumber=1&format=CSV, function(data)
+				- http://localhost/pullData.php?queryNumber=1&format=CSVFILE&filename=piechartdata
 			- Future Ideas:
 				- host the queryList.csv in the database
 	*/
-	header('Access-Control-Allow-Origin: *');  
+	header('Access-Control-Allow-Origin: *');
 	$queryNumber = $_GET["queryNumber"];
 	$format = $_GET["format"]; //OPTIONS: "CSV", "JSON", "TSV"
 	if (isset($queryNumber) == False)
@@ -34,8 +35,8 @@
 	}
 	$csv = array_map('str_getcsv', file('queryList.csv'));
 	$database = $csv[$queryNumber][1];
-	$username = "josh";
-	$password = "666666";
+	$username = "FNS";
+	$password = "datvis";
 	$host = "127.0.0.1";
 	$myquery =  $csv[$queryNumber][2];
 	$header =  $csv[$queryNumber][3];
@@ -100,6 +101,60 @@
 				if ($x < mysql_num_rows($query)-1)
 				{
 					echo "\n";
+				}
+			}
+			break;
+		}
+		case "CSVFILE":
+		{
+			$filename = $_GET["filename"];
+			if (isset($filename) == False)
+			{
+				echo "filename not set!";
+			}
+			$myfile = fopen($filename . ".csv", "w");
+			fwrite($myfile, $header . "\n");
+			for ($x = 0; $x < mysql_num_rows($query); $x++)
+			{
+				$data[] = mysql_fetch_row($query);
+				for($y = 0; $y < count($data[$x]); $y++)
+				{
+					fwrite($myfile, $data[$x][$y]);
+					if ($y < (count($data[$x])-1))
+					{
+						fwrite($myfile, ",");
+					}
+				}
+				if ($x < mysql_num_rows($query)-1)
+				{
+					fwrite($myfile, "\n");
+				}
+			}
+			break;
+		}
+		case "TSVFILE":
+		{
+			$filename = $_GET["filename"];
+			if (isset($filename) == False)
+			{
+				echo "filename not set!";
+			}
+			$myfile = fopen($filename . ".tsv", "w");
+			fwrite($myfile, $header . "\n");
+			for ($x = 0; $x < mysql_num_rows($query); $x++)
+			{
+				$data[] = mysql_fetch_row($query);
+				for($y = 0; $y < count($data[$x]); $y++)
+				{
+					fwrite($myfile, $data[$x][$y]);
+					if ($y < (count($data[$x])-1))
+					{
+						fwrite($myfile, "\t");
+					}
+				}
+				if ($x < mysql_num_rows($query)-1)
+				{
+					fwrite($myfile, "\n");
 				}
 			}
 			break;

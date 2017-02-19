@@ -40,7 +40,7 @@ float: right;
 	height: 100%;
 	padding: 15px;
 	margin-left: 20px;
-	
+
 }
 
 .widget1-container, .widget2-container {
@@ -57,6 +57,10 @@ float: right;
 
 .full-height{
 	height: 100%;
+}
+
+.half-height{
+	height: 50%;
 }
 
 .master-container {
@@ -113,11 +117,64 @@ label {
 }
 
 .generate-button:hover{
-    background: #909090;    
+    background: #909090;
 }
 
 .select2 {
     width: 100% !important;
+}
+
+#vis-select {
+	position: absolute;
+	top: 50px;
+	width: 100%;
+	height: 125px;
+	background-color: rgba(200, 200, 200, 0.8);
+	border: 2px solid #707070;
+	z-index: 100;
+	opacity: 0.9;
+}
+
+#msg-select {
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	width: 350px;
+	height: 500px;
+	background-color: #dddddd;
+	border: 2px solid #707070;
+	z-index: 101;
+	opacity: 0.9;
+}
+
+.vis-select-item{
+	width: 90px;
+	height: 110px;
+	margin-top: 5px;
+	margin-left: 20px;
+	text-align: center;
+}
+
+.vis-select-item:hover{
+	background-color: #cccccc;
+}
+
+.vis-select-thumb{
+	width: 90px;
+	height: 90px;
+}
+
+.dtable {
+	display: table;
+}
+
+.dtablec {
+	display: table-cell;
+}
+
+.modal-dialog,
+.modal-content, .modal-body {
+    height: 80%;
 }
 
 @media (max-width: 992px) {

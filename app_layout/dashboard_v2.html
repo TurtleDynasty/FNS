@@ -8,11 +8,14 @@
   <link href="dist/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="custom_v2.css" rel="stylesheet">
-  <link href="utility.css" rel="stylesheet">
+  <link href="css/custom_v2.css" rel="stylesheet">
+  <link href="css/utility.css" rel="stylesheet">
+  <link href="css/replicatedobjects.css" rel="stylesheet">
+  <link href="css/af_segments.css" rel="stylesheet">
+  <link href="css/backup_test.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-
   <script type="text/javascript" src="dist/d3.js"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 </head>
 <body>
   <!-- ========= -->
@@ -117,10 +120,10 @@
               <div class="vis-select-dropdown">
                 <div class="form-group">
                   <select class="form-control" id="sel1">
-                    <option>Backup Domains Distribution</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
+                    <option value="1">Backup Domains Distribution</option>
+                    <option value="2">Rplicated Objects By Node</option>
+                    <option value="3">AF Segments</option>
+                    <option value="4">Backup Test</option>
                   </select>
                 </div>
               </div>
@@ -172,10 +175,7 @@
   <!-- ========= -->
   <!-- Libraries -->
   <!-- ========= -->
-  <script
-  src="https://code.jquery.com/jquery-2.2.4.min.js"
-  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
   <script src="dist/underscore-min.js" type="text/javascript"></script>
   <script src="dist/backbone-min.js" type="text/javascript"></script>
   <script src="dist/bootstrap.min.js"></script>
@@ -205,17 +205,14 @@
         add_message("Warning", "This Warning was added via API.");
         add_message("Suggestion", "This Suggestion was added via API.");
         add_message("Warning", "This Warning was added via API.");
-
         //init_spinner();
         //clear_vis();
         //init_sunburst();
       }
     });
-
     var appView = new AppView();
   </script>
   <script type="text/javascript" >
-
   </script>
 
 </body>
