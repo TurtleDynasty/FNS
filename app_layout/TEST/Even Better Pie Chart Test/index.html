@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.arc text {
+	font: 10px sans-serif;
+	text-anchor: middle;
+}
+
+.arc path {
+	stroke: #fff;
+}
+
+</style>
+<body>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script>
+	var margin = {top: 50, right: 50, bottom: 50, left: 50};
+	var width = 1200 - margin.left - margin.right,
+	    height = 1000 - margin.top - margin.bottom;
+	var outerRadius = Math.min(width, height) / 4;
+	var innerRadius = outerRadius - outerRadius/3;
+	var letterLineLength = 11;
+	var lineToLabelEnd = outerRadius * .2;
+	var lineToLabelStart = outerRadius; //innerRadius + (outerRadius -innerRadius)/2;
+	var color = d3.scaleOrdinal()
+	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+	var arc = d3.arc()
+	.outerRadius(outerRadius)
+	.innerRadius(innerRadius);
+
+	var labelArc = d3.arc()
+	.outerRadius(outerRadius)
+	.innerRadius(innerRadius);
+
+	var pie = d3.pie()
+	.sort(null)
+	.value(function(d) { return d.count; });
+
+	var svg = d3.select("body").append("svg")
+	.attr("width", width)
+	.attr("height", height)
+	.append("g")
+	.attr("transform", "translate(" + width / 2  + "," + height / 2 + ")");
+	var total = 0;
+	d3.csv("data.csv", type, function(error, data)
+	{
+		if (error)
+		{
+			throw error;
+		}
+		var toggle = 0;
+		data = parseData(data);
+		var g = svg.selectAll(".arc")
+		.data(pie(data))
+		.enter().append("g")
+		.attr("class", "arc");
+		g.append("path")
+		.attr("d", arc)
+		.style("fill", function(d) { return color(d.data.name); })
+		.on("mouseenter", function(d) {
+			if (toggle == 0)
+			{
+				text = g.append("text")
+					.attr("transform", arc.centroid(d))
+					.attr("dy", ".5em")
+					.style("text-anchor", "middle")
+					.style("fill", "black")
+					.style("font-size", "35px")
+					.attr("class", "on")
+					.text(" ");
+				toggle += 1;
+			}
+			text.text(d.data.name + ": " + d.data.count);
+		})
+		.on("mouseout", function(d) {
+				text.text("Total: " + total);
+		});
+		// text
+		g.append("text")
+		.attr("text-anchor", "middle")
+		.attr("x", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			if (Math.cos(a) * (outerRadius + lineToLabelEnd) > 0)
+			{
+				return Math.cos(a) * (outerRadius + lineToLabelEnd) + letterLineLength*d.data.name.length/2;
+			}
+			else
+			{
+				return Math.cos(a) * (outerRadius + lineToLabelEnd) - letterLineLength*d.data.name.length/2;
+			}
+
+		})
+		.attr("y", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
+
+		})
+		.style("font-size", "14px")
+		.text(function(d) { return d.data.name; });
+
+		// pie2labelline
+		g.append("line")
+		.attr("x1", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.cos(a) * (lineToLabelStart);
+		})
+		.attr("y1", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.sin(a) * (lineToLabelStart);
+		})
+		.attr("x2", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.cos(a) * (outerRadius + lineToLabelEnd);
+		})
+		.attr("y2", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.sin(a) * (outerRadius + lineToLabelEnd);
+		})
+		.attr("stroke-width", 2)
+        .attr("stroke", "black");
+		// label underline
+		g.append("line")
+		.attr("x1", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.cos(a) * (outerRadius + lineToLabelEnd);
+		})
+		.attr("y1", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.sin(a) * (outerRadius + lineToLabelEnd);
+		})
+		.attr("x2", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			if (Math.cos(a) * (outerRadius + lineToLabelEnd) > 0)
+			{
+				return Math.cos(a) * (outerRadius + lineToLabelEnd) + letterLineLength*d.data.name.length;
+			}
+			else
+			{
+				return Math.cos(a) * (outerRadius + lineToLabelEnd) - letterLineLength*d.data.name.length;
+			}
+		})
+		.attr("y2", function(d) {
+			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			return Math.sin(a) * (outerRadius + lineToLabelEnd);
+		})
+		.attr("stroke-width", 2)
+		.attr("stroke", "black");
+
+		svg.attr("transform", "translate(" + (width/ 2 + margin.left) + "," + (height/ 2 + margin.top) + ")");
+	});
+	function parseData(data)
+	{
+		var cleaned = convertArray(data)
+		var newArray = compressArray(cleaned);
+		return newArray;
+
+	}
+	function convertArray(original)
+	{
+		var result = [];
+		for(i = 0; i < original.length; i++)
+		{
+			result.push(original[i].name);
+		}
+		return result;
+	}
+	function compressArray(original)
+	{
+
+		var compressed = [];
+		// make a copy of the input array
+		var copy = original.slice(0);
+
+		// first loop goes over every element
+		for (var i = 0; i < original.length; i++) {
+
+			var myCount = 0;
+			// loop over every element in the copy and see if it's the same
+			for (var w = 0; w < copy.length; w++) {
+				if (original[i] == copy[w]) {
+					// increase amount of times duplicate is found
+					myCount++;
+					// sets item to undefined
+					delete copy[w];
+				}
+			}
+
+			if (myCount > 0) {
+				var a = new Object();
+				a.name = original[i];
+				a.count = myCount;
+				total += myCount;
+				compressed.push(a);
+			}
+		}
+
+		return compressed;
+	};
+	function type(d)
+	{
+		d.count = +d.count;
+		return d;
+	}
+
+	</script>
