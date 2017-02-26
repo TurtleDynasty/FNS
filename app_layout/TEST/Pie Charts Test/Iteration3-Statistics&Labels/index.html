@@ -45,7 +45,7 @@
 	.append("g")
 	.attr("transform", "translate(" + width / 2  + "," + height / 2 + ")");
 	var total = 0;
-	d3.csv(url + "pullData.php?queryNumber=2&format=CSV", type, function(error, data)
+	d3.csv("data.csv", type, function(error, data)
 	{
 		if (error)
 		{

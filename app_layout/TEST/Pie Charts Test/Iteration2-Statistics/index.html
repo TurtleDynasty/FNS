@@ -39,7 +39,8 @@
 	.attr("height", height)
 	.append("g")
 	.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
+	
+	var total = 0;
 	d3.csv("data.csv", type, function(error, data)
 	{
 		if (error)
@@ -51,12 +52,13 @@
 		.data(pie(data))
 		.enter().append("g")
 		.attr("class", "arc");
-
+		var toggle = 0;
 		g.append("path")
 		.attr("d", arc)
 		.style("fill", function(d) { return color(d.data.name); })
 		.on("mouseenter", function(d) {
-				//console.log("mousein")
+			if (toggle == 0)
+			{
 				text = g.append("text")
 					.attr("transform", arc.centroid(d))
 					.attr("dy", ".5em")
@@ -64,11 +66,13 @@
 					.style("fill", "black")
 					.style("font-size", "35px")
 					.attr("class", "on")
-					.text(d.data.count);
+					.text(" ");
+				toggle += 1;
+			}
+			text.text(d.data.name + ": " + d.data.count);
 		})
-
 		.on("mouseout", function(d) {
-				 text.remove();
+				text.text("Total: " + total);
 		});
 		g.append("text")
 		.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
@@ -117,6 +121,7 @@
 				var a = new Object();
 				a.name = original[i];
 				a.count = myCount;
+				total += myCount;
 				compressed.push(a);
 			}
 		}
