@@ -15,6 +15,7 @@
 <body>
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<script>
+	var url = "http://localhost/";
 	var width = 960,
 	height = 500,
 	radius = Math.min(width, height) / 2;
@@ -39,7 +40,11 @@
 	.attr("height", height)
 	.append("g")
 	.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-	
+	function type(d)
+	{
+		d.count = +d.count;
+		return d;
+	}
 	var total = 0;
 	d3.csv("data.csv", type, function(error, data)
 	{
@@ -82,12 +87,13 @@
 	});
 	function parseData(data)
 	{
-		var cleaned = convertArray(data)
-		var newArray = compressArray(cleaned);
-		return newArray;
+		var stripped = convertToArray(data);
+		var compressed = compressArray(stripped);
+		var parsedData = customFilterData(compressed);
+		return parsedData;
 
 	}
-	function convertArray(original)
+	function convertToArray(original)
 	{
 		var result = [];
 		for(i = 0; i < original.length; i++)
@@ -127,11 +133,10 @@
 		}
 
 		return compressed;
-	};
-	function type(d)
-	{
-		d.count = +d.count;
-		return d;
 	}
-
+	function customFilterData(data)
+	{
+		// Custom data filters go here.
+		return data;
+	}
 	</script>
