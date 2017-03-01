@@ -95,7 +95,7 @@ var svg = d3.select("body").append("svg")
 
 svg.call(tip);
 
-d3.csv("backups.csv", type, function(error, data) {
+d3.csv("stgPool.csv", type, function(error, data) {
   x.domain(data.map(function(d) { return d.letter; }));
   y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
 
@@ -113,7 +113,7 @@ svg.append("text")      // text label for the x axis
    	.attr("x", width / 2 )
         .attr("y",  height + margin.bottom -10)
         .style("text-anchor", "middle")
-        .text("File Space");
+        .text("Storage Pool");
 
   svg.append("g")
       .attr("class", "y axis")

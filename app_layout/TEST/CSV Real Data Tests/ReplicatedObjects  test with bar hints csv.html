@@ -59,7 +59,7 @@ body {
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script>
 
-var margin = {top: 30, right: 40, bottom: 65, left: 80},
+var margin = {top: 30, right: 40, bottom: 100, left: 80},
     width = 1100 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
@@ -113,7 +113,7 @@ svg.append("text")      // text label for the x axis
    	.attr("x", width / 2 )
         .attr("y",  height + margin.bottom )
         .style("text-anchor", "middle")
-        .text("Node ID's");
+        .text("Node Names");
 
   svg.append("g")
       .attr("class", "y axis")
