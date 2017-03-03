@@ -106,7 +106,8 @@
 
 		})
 		.style("font-size", "14px")
-		.text(function(d) { return d.data.name; });
+		.text(function(d) { return d.data.name; })
+		.call(wrap, 10);
 
 		// pie2labelline
 		g.append("line")
@@ -176,11 +177,13 @@
 				if (original[i].name == copy[j].name)
 				{
 					notFound = false;
+					total += original[i].count;
 					copy[j].count += original[i].count;
 				}
 			}
 			if (notFound)
 			{
+				total += original[i].count;
 				copy.push(original[i]);
 			}
 		}
@@ -194,7 +197,11 @@
 		{
 			// Filter goes here. console.log(data[i]) to know the poperties of said data
 			console.log(data[i]);
-			copy.push(data[i]);
+			if (data[i].count > 0)
+			{
+				copy.push(data[i]);
+			}
+
 		}
 		return copy;
 	}

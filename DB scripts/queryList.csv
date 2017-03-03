@@ -5,4 +5,4 @@
 "4", "tsmgui11","SELECT NODEID, COUNT(NODEID) FROM `replicated_objects` GROUP BY NODEID","letter,frequency"
 "5", "tsmgui11","SELECT VOLID, SEGSIZE/1000000 from `af_segments` GROUP BY VOLID ORDER BY `af_segments`.`VOLID`","letter,frequency"
 "6", "tsmgui11","SELECT `nodes`.`NODENAME`, COUNT(`replicated_objects`.`NODEID`) FROM `replicated_objects` INNER JOIN `nodes` ON `replicated_objects`.`NODEID` = `nodes`.`NODEID` GROUP BY `replicated_objects`.`NODEID`","letter,frequency"
-"7", "tsmgui11","SELECT `STGPOOL_NAME` , `OBJECT_COUNT` FROM `containers`", "name, count"
+"7", "tsmgui11","SELECT `STGPOOL_NAME` , `OBJECT_COUNT` FROM `containers`", "name,count"
