@@ -201,6 +201,14 @@ label {
 	padding-right: 3px;
 }
 
+.arc text {
+	font: 10px sans-serif;
+	text-anchor: middle;
+}
+.arc path {
+	stroke: #fff;
+}
+
 @media (max-width: 992px) {
 	.widget1-container {
 		margin-top: 20px;
