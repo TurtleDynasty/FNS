@@ -52,7 +52,7 @@
 	}
 
 	var total = 0;
-	d3.csv(url + "pullData.php?queryNumber=7&format=CSV", type, function(error, data)
+	d3.csv("ObjCount.csv", type, function(error, data)
 	{
 		if (error)
 		{
