@@ -160,52 +160,31 @@
 	});
 	function parseData(data)
 	{
-		var stripped = convertToArray(data);
-		var compressed = compressArray(stripped);
+		var compressed = compressArray(data);
 		var parsedData = customFilterData(compressed);
 		return parsedData;
 
 	}
-	function convertToArray(original)
-	{
-		var result = [];
-		for(i = 0; i < original.length; i++)
-		{
-			result.push(original[i].name);
-		}
-		return result;
-	}
 	function compressArray(original)
 	{
-
-		var compressed = [];
-		// make a copy of the input array
-		var copy = original.slice(0);
-
-		// first loop goes over every element
-		for (var i = 0; i < original.length; i++) {
-
-			var myCount = 0;
-			// loop over every element in the copy and see if it's the same
-			for (var w = 0; w < copy.length; w++) {
-				if (original[i] == copy[w]) {
-					// increase amount of times duplicate is found
-					myCount++;
-					// sets item to undefined
-					delete copy[w];
+		var copy = [original[0]]
+		for(i = 1; i < original.length; i++)
+		{
+			var notFound = true;
+			for (j = 0; j < copy.length; j ++)
+			{
+				if (original[i].name == copy[j].name)
+				{
+					notFound = false;
+					copy[j].count += original[i].count;
 				}
 			}
-
-			if (myCount > 0) {
-				var a = new Object();
-				a.name = original[i];
-				a.count = myCount;
-				total += myCount;
-				compressed.push(a);
+			if (notFound)
+			{
+				copy.push(original[i]);
 			}
 		}
-
-		return compressed;
+		return copy;
 	}
 	function customFilterData(data)
 	{
