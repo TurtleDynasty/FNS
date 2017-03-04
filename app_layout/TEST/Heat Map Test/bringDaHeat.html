@@ -27,15 +27,18 @@ var maxColor = 0;
 var minColor = 9999999999999;
 d3.csv("flare.csv", function(d) {
 	d.value = +d.value;
-	if (d.value < minColor)
+	if (d.value > 1)
 	{
-		minColor = d.value;
+		if (d.value < minColor)
+		{
+			minColor = d.value;
+		}
+		if (d.value > maxColor)
+		{
+			maxColor = d.value;
+		}
+		return d;
 	}
-	if (d.value > maxColor)
-	{
-		maxColor = d.value;
-	}
-	if (d.value) return d;
 }, function(error, classes) {
 	if (error) throw error;
 
