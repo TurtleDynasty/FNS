@@ -64,7 +64,7 @@ d3.csv("flare.csv", function(d) {
 	node.append("circle")
 	.attr("id", function(d) { return d.id; })
 	.attr("r", function(d) { return d.r; })
-	.style("fill", function(d) { console.log(d); return color(d.value); });
+	.style("fill", function(d) { return color(d.value); });
 
 	node.append("clipPath")
 	.attr("id", function(d) { return "clip-" + d.id; })
