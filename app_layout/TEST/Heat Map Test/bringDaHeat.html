@@ -23,17 +23,17 @@ var color = d3.scaleOrdinal(d3.schemeCategory20c);
 var pack = d3.pack()
 .size([width, width])
 .padding(1.5);
-var max = 0;
-var min = 9999999999999;
+var maxColor = 0;
+var minColor = 9999999999999;
 d3.csv("flare.csv", function(d) {
 	d.value = +d.value;
-	if (d.value < min)
+	if (d.value < minColor)
 	{
-		min = d.value;
+		minColor = d.value;
 	}
-	if (d.value > max)
+	if (d.value > maxColor)
 	{
-		max = d.value;
+		maxColor = d.value;
 	}
 	if (d.value) return d;
 }, function(error, classes) {
@@ -50,7 +50,7 @@ d3.csv("flare.csv", function(d) {
 		}
 	});
 
-	var ramp= d3.scaleLinear().domain([min,max]).range(["blue", "red"]);
+	var color = d3.scaleLinear().domain([minColor,maxColor]).range(["blue", "red"]);
 
 	var node = svg.selectAll(".node")
 	.data(pack(root).leaves())
@@ -61,7 +61,7 @@ d3.csv("flare.csv", function(d) {
 	node.append("circle")
 	.attr("id", function(d) { return d.id; })
 	.attr("r", function(d) { return d.r; })
-	.style("fill", function(d) { console.log(d); return ramp(d.value); });
+	.style("fill", function(d) { console.log(d); return color(d.value); });
 
 	node.append("clipPath")
 	.attr("id", function(d) { return "clip-" + d.id; })
