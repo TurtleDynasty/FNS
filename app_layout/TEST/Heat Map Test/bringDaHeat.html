@@ -71,7 +71,11 @@ d3.csv("flare.csv", function(d) {
 	node.append("circle")
 	.attr("id", function(d) { return d.id; })
 	.attr("r", function(d) { return d.r; })
+<<<<<<< HEAD
 	.style("fill", function(d) { return grabColor(d.value, minColor, maxColor); });
+=======
+	.style("fill", function(d) { return color(d.value); });
+>>>>>>> origin/master
 
 	node.append("clipPath")
 	.attr("id", function(d) { return "clip-" + d.id; })
