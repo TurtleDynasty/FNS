@@ -31,8 +31,12 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <div class="location-buttons">
-            <button class="btn btn-outline-success mynav-button build">Select Another Visualization</button>
+            <button class="btn btn-outline-success mynav-button build noselect">Select Another Visualization</button>
           </div>
+          <ul class="nav navbar-nav navbar-right">
+            <li><button class="btn btn-outline-success mynav-button user-settings noselect">User Settings</button></li>
+            <li><button class="btn btn-outline-success mynav-button logout noselect">Sign Out</button></li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -58,7 +62,7 @@
             <div class="vis-select-container" value="2">Objects Replicated by Storage Pool</div>
             <div class="vis-select-container" value="3">AF Segments</div>
             <div class="vis-select-container" value="4">Backup Test</div>
-            <div class="vis-select-container" value="5">Pie Chart Test</div>
+            <div class="vis-select-container" value="5">Object Count by Container</div>
             <div class="vis-select-container" value="6">Storage Pool Test</div>
           </div>
         </div>
@@ -70,7 +74,7 @@
           <div class="build-widget-content">
             <img class="overview-icon" src="resources/sunburst-thumb.png" alt="" style="height:200px;width:200px;">
             <div class="overview-description">
-              This is a discription for the visualization. Above is an icon that communicates visually what type of graphic will be used. It will also explain any options that are availible.
+              This is a discription for the visualization. Above is an icon that communicates visually what type of graphic will be used. It will also explain any options that are availible. These as well as the options to the right will be switched out depending on what visual is selected.
             </div>
           </div>
         </div>
@@ -80,7 +84,7 @@
         <div class="build-widget3">
           <h3>Options</h3>
           <div class="build-widget-content">
-            <h4>Dropdown</h4>
+            <h4>Dropdown Option</h4>
             <select class="form-control" id="sel1">
               <option value=""></option>
               <option value="1">Option 1</option>
@@ -88,9 +92,12 @@
               <option value="3">Option 3</option>
               <option value="4">Option 4</option>
             </select>
+
+            <h4>Checkbox Option</h4>
+            <input type="checkbox" id="checkbox-option" value="checkbox-option" class="options-checkbox">
           </div>
           <div class="generate-button-container">
-            <div class="generate-button generate">
+            <div class="generate-button generate noselect">
               Generate
             </div>
           </div>
@@ -130,7 +137,7 @@
           </div>
 
             <div class="filter-button-container">
-              <div class="filter-button">
+              <div class="filter-button noselect">
                 Filter
               </div>
           </div>
@@ -143,6 +150,37 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title myModalLabel1">User Settings</h4>
+          </div>
+          <div class="modal-body modal-step1">
+            <div class="full-width">
+              <div class="row full-width">
+                <div class="modal-left col-sm-12">
+                  <div class="form-group">
+                    <label for="settings-email" class="label-settings">Send Email Notifications</label>
+                    <input type="checkbox" id="settings-email" value="first_checkbox" class="settings-input">
+                  </div>
+                  <div class="form-group">
+                    <label for="settings-messages" class="label-settings">Display Messages</label>
+                    <input type="checkbox" id="settings-messages" value="second_checkbox" class="settings-input">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-success save noselect">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   <!-- ========= -->
   <!-- Libraries -->
@@ -157,6 +195,7 @@
   <!-- Javascript code -->
   <!-- =============== -->
   <script src="dist/spin.min.js"></script>
+    <script src="scripts/shake.js"></script>
   <script src="scripts/scripts_v3.js"></script>
   <script type="text/javascript">
     var AppView = Backbone.View.extend({
