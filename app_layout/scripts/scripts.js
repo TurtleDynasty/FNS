@@ -709,4 +709,5 @@ function type(d) {
   return d;
 }
 
+d3.select("#vis-title").html("Storage Pool Test");
 }
