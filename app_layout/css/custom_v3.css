@@ -14,6 +14,11 @@ h4 {
 	margin-bottom: 3px;
 }
 
+input[type="checkbox"]{
+	height: 22px;
+	width: 22px;
+}
+
 .main-container {
 	background-color: #3b4554;
 }
@@ -87,23 +92,23 @@ float: right;
 }
 
 .filter-button, .generate-button {
-	background-color: #808080;
+	color: #ffffff;
+	background-color: #4178be;
 	width: 100%;
 	height: 60px;
 	line-height: 60px;
 	text-align: center;
 	vertical-align: middle;
-	color: #eff3f7;
 	border-radius: 3px;
 	cursor: pointer;
 }
 
-label {
-	margin-top: 10px !important;
+.filter-button:hover, .generate-button:hover {
+	color: #dddddd;
 }
 
-.filter-button:hover{
-    background: #909090;
+label {
+	margin-top: 10px !important;
 }
 
 .select2 {
@@ -140,13 +145,8 @@ label {
 	display: table-cell;
 }
 
-.modal-dialog,
-.modal-content, .modal-body {
-    height: 80%;
-}
-
-.modal-content {
-	min-height: 595px;
+.modal-dialog {
+	width: 400px;
 }
 
 .widget3-container {
@@ -221,6 +221,7 @@ label {
 	margin-bottom: 7px;
 	vertical-align: middle;
 	transition: all 0.1s ease;
+	cursor: pointer;
 }
 
 .vis-select-container:hover:not(.vis-list-selected){
@@ -251,21 +252,40 @@ label {
 }
 
 .mynav-button{
-	position: absolute;
-	top: -200px;
-	margin: 8px 0 0 20px;
-	margin-right: 100px;
-	width: 300px;
+	margin: 8px 30px 0 0;
 	color: #ffffff;
 	background-color: #4178be;
 }
 
-.mynav-button:hover{
+.mynav-button.build{
+	position: absolute;
+	top: -200px;
+	width: 300px;
+	margin: 8px 100px 0 20px;
+}
+
+.mynav-button:hover, .save:hover{
 	color: #dddddd;
 }
 
 .btn:focus,.btn:active {
    outline: none !important;
+}
+
+.save {
+	color: #ffffff;
+	background-color: #4178be;
+}
+
+.label-settings {
+	margin-top: 0 !important;
+	margin: 0;
+	position: relative;
+	top: -7px;
+}
+
+input[type="checkbox"].settings-input {
+	margin-left: 10px !important;
 }
 
 @media (max-width: 992px) {

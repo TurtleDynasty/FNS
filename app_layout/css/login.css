@@ -1,0 +1,50 @@
+body {
+  background-color: #3b4554;
+}
+
+form {
+  margin: .15cm;
+}
+
+.field {
+  padding-top: 3px;
+}
+
+label {
+  font-size: 16px;
+  font-family: Arial;
+  margin: 0 !important;
+  height: auto !important;
+}
+
+#submit {
+  padding-top: 3px;
+  width: 100%;
+}
+
+.center {
+  border: 2px solid #152935;
+  border-radius: 8px;
+  background-color: #eff3f7;
+  margin: auto;
+  padding: .10cm 0;
+}
+
+.navAlign {
+  background-color: #152935;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+input{
+  width: 100%;
+}
+
+fieldset {
+  padding: 10px !important;
+  width: 275px !important;
+  opacity: 0;
+  transition: all 0.15s ease;
+}
