@@ -16,20 +16,28 @@
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<script>
 	var url = "http://localhost/";
-	var width = 960,
-	height = 500,
-	radius = Math.min(width, height) / 2;
+	var width = 960;
+	var height = 500;
+	var innerRadius = Math.min(width, height) / 3;
+	var outerRadius = Math.min(width, height) / 2;
 
+	// ---- Inner Text STUFF
+	var topXOffset = "0em";
+	var topYOffset = ".5em";
+
+	var bottomXOffset = "0em";
+	var bottomYOffset = "1.5em";
+	// --------------------
 	var color = d3.scaleOrdinal()
 	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 	var arc = d3.arc()
-	.outerRadius(radius - 10)
-	.innerRadius(150);
+	.outerRadius(outerRadius)
+	.innerRadius(innerRadius);
 
 	var labelArc = d3.arc()
-	.outerRadius(radius - 40)
-	.innerRadius(radius - 40);
+	.outerRadius(outerRadius)
+	.innerRadius(innerRadius);
 
 	var pie = d3.pie()
 	.sort(null)
@@ -66,12 +74,22 @@
 			{
 				text = g.append("text")
 					.attr("transform", arc.centroid(d))
-					.attr("dy", ".5em")
+					.attr("dx", topXOffset)
+					.attr("dy", topYOffset)
 					.style("text-anchor", "middle")
 					.style("fill", "black")
 					.style("font-size", "35px")
 					.attr("class", "on")
 					.text(" ");
+
+				var bottomText = g.append("text")
+				.attr("dx", bottomXOffset)
+				.attr("dy", bottomYOffset)
+				.style("text-anchor", "middle")
+				.style("fill", "black")
+				.style("font-size", "35px")
+				.attr("class", "on")
+				.text("TEST");
 				toggle += 1;
 			}
 			text.text(d.data.name + ": " + d.data.count);
