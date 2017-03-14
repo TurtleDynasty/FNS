@@ -20,8 +20,12 @@
 	var height = 500;
 	var innerRadius = Math.min(width, height) / 3;
 	var outerRadius = Math.min(width, height) / 2;
-
+	// ---- label Text STUFF
+	var labelFontSize = "17px"
+	//
 	// ---- Inner Text STUFF
+	var innerFontSize = "35px";
+
 	var topXOffset = "0em";
 	var topYOffset = ".5em";
 
@@ -78,7 +82,7 @@
 					.attr("dy", topYOffset)
 					.style("text-anchor", "middle")
 					.style("fill", "black")
-					.style("font-size", "35px")
+					.style("font-size", innerFontSize)
 					.attr("class", "on")
 					.text(" ");
 
@@ -87,7 +91,7 @@
 				.attr("dy", bottomYOffset)
 				.style("text-anchor", "middle")
 				.style("fill", "black")
-				.style("font-size", "35px")
+				.style("font-size", innerFontSize)
 				.attr("class", "on")
 				.text("TEST");
 				toggle += 1;
@@ -100,7 +104,7 @@
 		g.append("text")
 		.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
 		.attr("dy", ".35em")
-		.style("font-size", "14px")
+		.style("font-size", labelFontSize)
 		.text(function(d) { return d.data.name; });
 	});
 	function parseData(data)
