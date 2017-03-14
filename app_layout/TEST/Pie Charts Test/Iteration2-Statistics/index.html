@@ -20,11 +20,17 @@
 	var height = 500;
 	var innerRadius = Math.min(width, height) / 3;
 	var outerRadius = Math.min(width, height) / 2;
+
 	// ---- label Text STUFF
 	var labelFontSize = "17px"
 	//
 	// ---- Inner Text STUFF
+	var units = "objects";
+
 	var innerFontSize = "35px";
+
+	var labelXOffset = "0em";
+	var labelYOffset = "-.5em";
 
 	var topXOffset = "0em";
 	var topYOffset = ".5em";
@@ -86,27 +92,51 @@
 					.attr("class", "on")
 					.text(" ");
 
-				var bottomText = g.append("text")
+				bottomText = g.append("text")
 				.attr("dx", bottomXOffset)
 				.attr("dy", bottomYOffset)
 				.style("text-anchor", "middle")
 				.style("fill", "black")
 				.style("font-size", innerFontSize)
 				.attr("class", "on")
-				.text("TEST");
+				.text(" ");
+
+				labelText = g.append("text")
+				.attr("dx", labelXOffset)
+				.attr("dy", labelYOffset)
+				.style("text-anchor", "middle")
+				.style("fill", "black")
+				.style("font-size", innerFontSize)
+				.attr("class", "on")
+				.text(" ");
 				toggle += 1;
 			}
-			text.text(d.data.name + ": " + d.data.count);
+			innerLabelEnter(d);
 		})
 		.on("mouseout", function(d) {
-				text.text("Total: " + total);
+				innerLabelExit(d);
 		});
 		g.append("text")
 		.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
 		.attr("dy", ".35em")
 		.style("font-size", labelFontSize)
-		.text(function(d) { return d.data.name; });
+		.text(function(d) { return d.data.name; })
+		.on("mouseenter", function(d) {
+			innerLabelEnter(d);
+		});
 	});
+	function innerLabelEnter(d)
+	{
+		text.text(d.data.count + "/" + total + " " + units);
+		bottomText.text((d.data.count/total).toFixed(2) + "%");
+		labelText.text(d.data.name);
+	}
+	function innerLabelExit(d)
+	{
+		text.text(total + " " + units);
+		bottomText.text("");
+		labelText.text("");
+	}
 	function parseData(data)
 	{
 		var stripped = convertToArray(data);
