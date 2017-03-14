@@ -16,14 +16,38 @@
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<script>
 	var url = "http://localhost/";
+
 	var margin = {top: 50, right: 50, bottom: 50, left: 50};
-	var width = 1200 - margin.left - margin.right,
-	    height = 1000 - margin.top - margin.bottom;
-	var outerRadius = Math.min(width, height) / 4;
-	var innerRadius = outerRadius - outerRadius/3;
+
+	var width = 900 - margin.left - margin.right;
+	var height = 700 - margin.top - margin.bottom;
+
+	var innerRadius = Math.min(width, height) / 4;
+	var outerRadius = Math.min(width, height) / 3;
+
+	// ---- label Text STUFF
+	var labelFontSize = "20px"
+	// -------------------
+	// ---- Inner Text STUFF
+	var units = "objects";
+
+	var innerFontSize = "35px";
+
+	var labelXOffset = "0em";
+	var labelYOffset = "-.5em";
+
+	var topXOffset = "0em";
+	var topYOffset = ".5em";
+
+	var bottomXOffset = "0em";
+	var bottomYOffset = "1.5em";
+	// --------------------
+	// --- linelabels STUFF
 	var letterLineLength = 11;
 	var lineToLabelEnd = outerRadius * .2;
-	var lineToLabelStart = outerRadius; //innerRadius + (outerRadius -innerRadius)/2;
+	var lineToLabelStart = outerRadius;
+
+	// --------------------
 	var color = d3.scaleOrdinal()
 	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
@@ -72,18 +96,37 @@
 			{
 				text = g.append("text")
 					.attr("transform", arc.centroid(d))
-					.attr("dy", ".5em")
+					.attr("dx", topXOffset)
+					.attr("dy", topYOffset)
 					.style("text-anchor", "middle")
 					.style("fill", "black")
-					.style("font-size", "35px")
+					.style("font-size", innerFontSize)
 					.attr("class", "on")
 					.text(" ");
+
+				bottomText = g.append("text")
+				.attr("dx", bottomXOffset)
+				.attr("dy", bottomYOffset)
+				.style("text-anchor", "middle")
+				.style("fill", "black")
+				.style("font-size", innerFontSize)
+				.attr("class", "on")
+				.text(" ");
+
+				labelText = g.append("text")
+				.attr("dx", labelXOffset)
+				.attr("dy", labelYOffset)
+				.style("text-anchor", "middle")
+				.style("fill", "black")
+				.style("font-size", innerFontSize)
+				.attr("class", "on")
+				.text(" ");
 				toggle += 1;
 			}
-			text.text(d.data.name + ": " + d.data.count);
+			innerLabelEnter(d);
 		})
 		.on("mouseout", function(d) {
-				text.text("Total: " + total);
+				innerLabelExit(d);
 		});
 		// text
 		g.append("text")
@@ -105,7 +148,7 @@
 			return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
 
 		})
-		.style("font-size", "14px")
+		.style("font-size", labelFontSize)
 		.text(function(d) { return d.data.name; });
 
 		// pie2labelline
@@ -158,6 +201,18 @@
 
 		svg.attr("transform", "translate(" + (width/ 2 + margin.left) + "," + (height/ 2 + margin.top) + ")");
 	});
+	function innerLabelEnter(d)
+{
+	text.text(d.data.count + "/" + total + " " + units);
+	bottomText.text((d.data.count/total).toFixed(2) + "%");
+	labelText.text(d.data.name);
+}
+function innerLabelExit(d)
+{
+	text.text(total + " " + units);
+	bottomText.text("");
+	labelText.text("");
+}
 	function parseData(data)
 	{
 		var stripped = convertToArray(data);
