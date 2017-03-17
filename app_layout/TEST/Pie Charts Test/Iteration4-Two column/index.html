@@ -134,19 +134,12 @@
 		g.append("text")
 		.attr("text-anchor", "middle")
 		.attr("x", function(d) {
-			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			if (Math.cos(a) * (outerRadius + lineToLabelEnd) > 0)
-			{
-				return Math.cos(a) * (outerRadius + lineToLabelEnd) + letterLineLength*d.data.name.length/2;
-			}
-			else
-			{
-				return Math.cos(a) * (outerRadius + lineToLabelEnd) - letterLineLength*d.data.name.length/2;
-			}
-
+			var a = calculateAngle(d);
+			var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
+			return quadrantCalculator(quadrant, letterLineLength*d.data.name.length/2);
 		})
 		.attr("y", function(d) {
-			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			var a = calculateAngle(d);
 			return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
 
 		})
@@ -156,19 +149,19 @@
 		// pie2labelline
 		g.append("line")
 		.attr("x1", function(d) {
-			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			var a = calculateAngle(d);
 			return Math.cos(a) * (lineToLabelStart);
 		})
 		.attr("y1", function(d) {
-			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			var a = calculateAngle(d);
 			return Math.sin(a) * (lineToLabelStart);
 		})
 		.attr("x2", function(d) {
-			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			var a = calculateAngle(d);
 			return Math.cos(a) * (outerRadius + lineToLabelEnd);
 		})
 		.attr("y2", function(d) {
-			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			var a = calculateAngle(d);
 			return Math.sin(a) * (outerRadius + lineToLabelEnd);
 		})
 		.attr("stroke-width", 2)
@@ -176,26 +169,20 @@
 		// label underline
 		g.append("line")
 		.attr("x1", function(d) {
-			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			var a = calculateAngle(d);
 			return Math.cos(a) * (outerRadius + lineToLabelEnd);
 		})
 		.attr("y1", function(d) {
-			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			var a = calculateAngle(d);
 			return Math.sin(a) * (outerRadius + lineToLabelEnd);
 		})
 		.attr("x2", function(d) {
-			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-			if (Math.cos(a) * (outerRadius + lineToLabelEnd) > 0)
-			{
-				return Math.cos(a) * (outerRadius + lineToLabelEnd) + letterLineLength*d.data.name.length;
-			}
-			else
-			{
-				return Math.cos(a) * (outerRadius + lineToLabelEnd) - letterLineLength*d.data.name.length;
-			}
+			var a = calculateAngle(d);
+			var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
+			return quadrantCalculator(quadrant, letterLineLength*d.data.name.length);
 		})
 		.attr("y2", function(d) {
-			var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+			var a = calculateAngle(d);
 			return Math.sin(a) * (outerRadius + lineToLabelEnd);
 		})
 		.attr("stroke-width", 2)
@@ -203,10 +190,25 @@
 
 		svg.attr("transform", "translate(" + (width/ 2 + margin.left) + "," + (height/ 2 + margin.top) + ")");
 	});
+	function quadrantCalculator(quadrant, offset)
+	{
+		if (quadrant > 0)
+		{
+			return quadrant + offset;
+		}
+		else
+		{
+			return quadrant - offset;
+		}
+	}
+	function calculateAngle(data)
+	{
+		return data.startAngle + (data.endAngle - data.startAngle)/2 - Math.PI/2;
+	}
 	function innerLabelEnter(d)
 	{
 		text.text(d.data.count + "/" + total + " " + units);
-		bottomText.text((d.data.count/total).toFixed(numDecimalPlaces) + "%");
+		bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
 		labelText.text(d.data.name);
 	}
 	function innerLabelExit(d)

@@ -134,7 +134,7 @@
 	function innerLabelEnter(d)
 	{
 		text.text(d.data.count + "/" + total + " " + units);
-		bottomText.text((d.data.count/total).toFixed(numDecimalPlaces) + "%");
+		bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
 		labelText.text(d.data.name);
 	}
 	function innerLabelExit(d)
