@@ -75,8 +75,6 @@ d3.csv("flare.csv", function(d) {
 		}
 	});
 
-	var color = d3.scaleLinear().domain([minColor,maxColor]).range(["blue", "red"]);
-
 	var node = svg.selectAll(".node")
 	.data(pack(root).leaves())
 	.enter().append("g")
