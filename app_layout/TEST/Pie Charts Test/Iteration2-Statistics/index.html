@@ -77,50 +77,21 @@
 			throw error;
 		}
 		data = parseData(data);
-		var g = svg.selectAll(".arc")
+		g = svg.selectAll(".arc")
 		.data(pie(data))
 		.enter().append("g")
 		.attr("class", "arc");
 		var toggle = 0;
+		createTextBoxes(g);
+
 		g.append("path")
 		.attr("d", arc)
-		.style("fill", function(d) { return color(d.data.name); })
+		.style("fill", function(d) {  return color(d.data.name); })
 		.on("mouseenter", function(d) {
-			if (toggle == 0)
-			{
-				text = g.append("text")
-					.attr("transform", arc.centroid(d))
-					.attr("dx", topXOffset)
-					.attr("dy", topYOffset)
-					.style("text-anchor", "middle")
-					.style("fill", "black")
-					.style("font-size", innerFontSize)
-					.attr("class", "on")
-					.text(" ");
-
-				bottomText = g.append("text")
-				.attr("dx", bottomXOffset)
-				.attr("dy", bottomYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
-				.text(" ");
-
-				labelText = g.append("text")
-				.attr("dx", labelXOffset)
-				.attr("dy", labelYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
-				.text(" ");
-				toggle += 1;
-			}
 			innerLabelEnter(d);
 		})
 		.on("mouseout", function(d) {
-				innerLabelExit(d);
+			innerLabelExit(d);
 		});
 		g.append("text")
 		.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
@@ -130,7 +101,42 @@
 		.on("mouseenter", function(d) {
 			innerLabelEnter(d);
 		});
+		setTextBoxes(data);
 	});
+	function createTextBoxes(g)
+	{
+		text = g.append("text")
+			.attr("transform", 0)
+			.attr("dx", topXOffset)
+			.attr("dy", topYOffset)
+			.style("text-anchor", "middle")
+			.style("fill", "black")
+			.style("font-size", innerFontSize)
+			.attr("class", "on")
+			.text(" ");
+
+		bottomText = g.append("text")
+		.attr("dx", bottomXOffset)
+		.attr("dy", bottomYOffset)
+		.style("text-anchor", "middle")
+		.style("fill", "black")
+		.style("font-size", innerFontSize)
+		.attr("class", "on")
+		.text(" ");
+
+		labelText = g.append("text")
+		.attr("dx", labelXOffset)
+		.attr("dy", labelYOffset)
+		.style("text-anchor", "middle")
+		.style("fill", "black")
+		.style("font-size", innerFontSize)
+		.attr("class", "on")
+		.text(" ");
+	}
+	function setTextBoxes(data)
+	{
+		text.text(total + " " + units);
+	}
 	function innerLabelEnter(d)
 	{
 		text.text(d.data.count + "/" + total + " " + units);
