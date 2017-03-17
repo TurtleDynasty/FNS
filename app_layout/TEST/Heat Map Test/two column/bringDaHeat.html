@@ -11,7 +11,6 @@ text {
 <svg width="1000" height="1000"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
-var url = "http://localhost/";
 var colors = ["darkblue", "blue", "green", "seagreen", "greenyellow" , "yellow", "orange", "orangered", "red"];
 var svg = d3.select("svg");
 var width = +svg.attr("width");
@@ -35,7 +34,10 @@ function createColorTable()
 }
 function grabColor(number, min, max)
 {
+
+
 	var divideColor = d3.scaleLinear().domain([min, max]).range([0, 1]);
+
 	var pickColor = d3.scaleLinear().domain([.1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
 	var color = divideColor(number);
 	return pickColor(color);
