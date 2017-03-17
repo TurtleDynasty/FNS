@@ -46,5 +46,5 @@ fieldset {
   padding: 10px !important;
   width: 275px !important;
   opacity: 0;
-  transition: all 0.15s ease;
+  transition: all 0.25s ease;
 }
