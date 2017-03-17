@@ -37,6 +37,11 @@ label {
 	padding: 85px 35px 35px 35px !important;
 }
 
+text{
+	font: 10px sans-serif;
+	text-anchor: middle;
+}
+
 /***************
 * Navigation
 ***************/
