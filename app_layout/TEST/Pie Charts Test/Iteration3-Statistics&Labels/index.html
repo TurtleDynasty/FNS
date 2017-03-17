@@ -84,51 +84,23 @@
 		{
 			throw error;
 		}
-		var toggle = 0;
+
 		data = parseData(data);
-		var g = svg.selectAll(".arc")
+		g = svg.selectAll(".arc")
 		.data(pie(data))
 		.enter().append("g")
 		.attr("class", "arc");
+
+		createTextBoxes(g);
+
 		g.append("path")
 		.attr("d", arc)
 		.style("fill", function(d) { return color(d.data.name); })
 		.on("mouseenter", function(d) {
-			if (toggle == 0)
-			{
-				text = g.append("text")
-					.attr("transform", arc.centroid(d))
-					.attr("dx", topXOffset)
-					.attr("dy", topYOffset)
-					.style("text-anchor", "middle")
-					.style("fill", "black")
-					.style("font-size", innerFontSize)
-					.attr("class", "on")
-					.text(" ");
-
-				bottomText = g.append("text")
-				.attr("dx", bottomXOffset)
-				.attr("dy", bottomYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
-				.text(" ");
-
-				labelText = g.append("text")
-				.attr("dx", labelXOffset)
-				.attr("dy", labelYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
-				.text(" ");
-				toggle += 1;
-			}
 			innerLabelEnter(d);
 		})
 		.on("mouseout", function(d) {
-				innerLabelExit(d);
+			innerLabelExit(d);
 		});
 		// text
 		g.append("text")
@@ -189,7 +161,42 @@
 		.attr("stroke", "black");
 
 		svg.attr("transform", "translate(" + (width/ 2 + margin.left) + "," + (height/ 2 + margin.top) + ")");
+		setTextBoxes(data);
 	});
+	function createTextBoxes(g)
+	{
+		text = g.append("text")
+			.attr("transform", 0)
+			.attr("dx", topXOffset)
+			.attr("dy", topYOffset)
+			.style("text-anchor", "middle")
+			.style("fill", "black")
+			.style("font-size", innerFontSize)
+			.attr("class", "on")
+			.text(" ");
+
+		bottomText = g.append("text")
+		.attr("dx", bottomXOffset)
+		.attr("dy", bottomYOffset)
+		.style("text-anchor", "middle")
+		.style("fill", "black")
+		.style("font-size", innerFontSize)
+		.attr("class", "on")
+		.text(" ");
+
+		labelText = g.append("text")
+		.attr("dx", labelXOffset)
+		.attr("dy", labelYOffset)
+		.style("text-anchor", "middle")
+		.style("fill", "black")
+		.style("font-size", innerFontSize)
+		.attr("class", "on")
+		.text(" ");
+	}
+	function setTextBoxes(data)
+	{
+		text.text(total + " " + units);
+	}
 	function quadrantCalculator(quadrant, offset)
 	{
 		if (quadrant > 0)

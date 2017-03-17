@@ -81,9 +81,8 @@
 		.data(pie(data))
 		.enter().append("g")
 		.attr("class", "arc");
-		var toggle = 0;
-		createTextBoxes(g);
 
+		createTextBoxes(g);
 		g.append("path")
 		.attr("d", arc)
 		.style("fill", function(d) {  return color(d.data.name); })
