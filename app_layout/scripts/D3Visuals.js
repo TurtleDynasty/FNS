@@ -623,7 +623,7 @@ d3.select("#vis-title").html("Storage Pool Test");
 
 function init_heatmap() {
   var colors = ["darkblue", "blue", "green", "seagreen", "greenyellow" , "yellow", "orange", "orangered", "red"];
-  d3.select(".widget2").append("div").classed("svg-container", true).append("svg").classed("heatmap", true).attr("width", 1336).attr("height", 768);
+  d3.select(".widget2").append("div").classed("svg-container", true).append("svg").classed("heatmap", true).attr("width", 1337).attr("height", 930);
   var svg = d3.select("svg");
   var width = +svg.attr("width");
   var height = +svg.attr("height");
@@ -639,7 +639,7 @@ function init_heatmap() {
   			.attr("x", x)
   			.attr("y", height * .8)
   			.attr("width", width * .90)
-  			.attr("height", height * .2)
+  			.attr("height", height * .03)
   			.attr("fill", element);
   			x += width / colors.length;
   	});
