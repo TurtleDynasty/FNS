@@ -8,10 +8,14 @@
   <link href="dist/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="custom.css" rel="stylesheet">
+  <link href="css/dashboard.css" rel="stylesheet">
+  <link href="css/utility.css" rel="stylesheet">
+  <link href="css/replicatedobjects.css" rel="stylesheet">
+  <link href="css/af_segments.css" rel="stylesheet">
+  <link href="css/backup_test.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-
   <script type="text/javascript" src="dist/d3.js"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 </head>
 <body>
   <!-- ========= -->
@@ -19,51 +23,169 @@
   <!-- ========= -->
 
   <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
+      <div class="container-fluid no-padding">
         <div class="navbar-header">
-          <div class="navbar-brand nav-button no-padding no-margin">
-            <img src="resources/logo.png" style="width:50px;height:50px; display: block; margin: auto;">
+          <div class="navbar-brand no-padding no-margin padding-left-10">
+            <img src="resources/logo.png" style="width:50px;height:50px; display: block; margin: auto;" id="brand">
           </div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+          <div class="location-buttons">
+            <button class="btn btn-outline-success mynav-button return-to-selection noselect">Select Another Visualization</button>
+          </div>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="index.html">Back to FNS Homepage</a></li>
-            <li><a href="#">Visuals</a></li>
-            <li><a href="#">Messages</a></li>
+            <li><button class="btn btn-outline-success mynav-button user-settings noselect">User Settings</button></li>
+            <li><button class="btn btn-outline-success mynav-button logout noselect">Sign Out</button></li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <div class="container-fluid master-container col-sm-12 no-padding full-height">
-      <div class="container-fluid col-md-3 col-sm-12 no-padding full-height widget1-container">
-        <div class="widget1">
-          <h3>Objects</h3>
-          <label for="id_label_multiple" style="width: 100%; margin-top: 20px; height: 675px">
+    <div id="vis-select" hidden="hidden">
+      <div class="vis-select-item">
+        <img class="vis-select-thumb"src="resources/sunburst-thumb.png" alt="">
+        <h4>Sunburst</h4>
+      </div>
+    </div>
 
+    <div id="msg-select" hidden="hidden">
+      <div class="vis-select-item">
+      </div>
+    </div>
 
-            <select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
-          </label>
-          <div class="generate-button-container">
-            <div class="generate-button">
-              Generate
-            </div>
-
+    <div class="container-fluid master-container col-sm-12 no-padding full-height" id="buildsection">
+      <div class="container-fluid col-md-4 col-sm-12 no-padding full-height build-widget1-container">
+        <div class="build-widget1">
+          <h3>Select a Visualization</h3>
+          <div class="build-widget-content">
+            <div class="vis-select-container" value="1">Backup Domains Distribution</div>
+            <div class="vis-select-container" value="2">Objects Replicated by Storage Pool</div>
+            <div class="vis-select-container" value="3">AF Segments</div>
+            <div class="vis-select-container" value="4">Backup Test</div>
+            <div class="vis-select-container" value="5">Object Count by Container</div>
+            <div class="vis-select-container" value="6">Storage Pool Test</div>
           </div>
         </div>
       </div>
 
-      <div class="container-fluid col-md-9 col-sm-12 no-padding full-height widget2-container">
-        <div class="widget2">
-          <h3 id="vis-title">Select a Visualization</h3>
+      <div class="container-fluid col-md-4 col-sm-12 no-padding full-height build-widget2-container">
+        <div class="build-widget2">
+          <h3>Overview</h3>
+          <div class="build-widget-content">
+            <img class="overview-icon" src="resources/sunburst-thumb.png" alt="" style="height:200px;width:200px;">
+            <div class="overview-description">
+              This is a discription for the visualization. Above is an icon that communicates visually what type of graphic will be used. It will also explain any options that are availible. These as well as the options to the right will be switched out depending on what visual is selected.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid col-md-4 col-sm-12 no-padding full-height build-widget3-container">
+        <div class="build-widget3">
+          <h3>Options</h3>
+          <div class="build-widget-content">
+            <h4>Dropdown Option</h4>
+            <select class="form-control" id="sel1">
+              <option value=""></option>
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+              <option value="4">Option 4</option>
+            </select>
+
+            <h4>Checkbox Option</h4>
+            <input type="checkbox" id="checkbox-option" value="checkbox-option" class="options-checkbox">
+          </div>
+          <div class="generate-button-container">
+            <div class="generate-button generate noselect">
+              Generate
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
+    <div class="container-fluid master-container col-sm-12 no-padding full-height" id="viewsection" hidden="hidden">
+      <div class="container-fluid col-md-9 col-sm-12 no-padding full-height widget2-container">
+        <div class="widget2">
+          <h3 id="vis-title">Select a Visualization</h3>
+          <div class="widget2-container-inner display-table" style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0;">
+            <div class="search-icon-container center-align" style="width: 256px; vertical-align: middle;">
+              <img class="search-icon"src="resources/search.png" alt="" style="height: 256px; width: 256px; cursor: pointer">
+              <p style="border-bottom: none;">Click here to select a visual</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid col-md-3 col-sm-12 no-padding full-height widget1-container">
+        <div class="widget1 half-height-20 position-relative">
+          <h3>Filter Objects</h3>
+          <div class="filter-input-container padding-top-10">
+            <h4>Out</h4>
+            <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
+              <select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+            </label>
+          </div>
+
+
+          <div class="filter-input-container padding-top-10">
+            <h4>In</h4>
+            <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
+              <select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+            </label>
+          </div>
+
+            <div class="filter-button-container">
+              <div class="filter-button noselect">
+                Filter
+              </div>
+          </div>
+        </div>
+
+        <div class="widget1 half-height margin-top-20">
+          <h3>Messages</h3>
+          <div class="messages-box">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title myModalLabel1">User Settings</h4>
+          </div>
+          <div class="modal-body modal-step1">
+            <div class="full-width">
+              <div class="row full-width">
+                <div class="modal-left col-sm-12">
+                  <div class="form-group">
+                    <label for="settings-email" class="label-settings">Send Email Notifications</label>
+                    <input type="checkbox" id="settings-email" value="first_checkbox" class="settings-input">
+                  </div>
+                  <div class="form-group">
+                    <label for="settings-messages" class="label-settings">Display Messages</label>
+                    <input type="checkbox" id="settings-messages" value="second_checkbox" class="settings-input">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-success save noselect">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   <!-- ========= -->
   <!-- Libraries -->
   <!-- ========= -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js" type="text/javascript"></script>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
   <script src="dist/underscore-min.js" type="text/javascript"></script>
   <script src="dist/backbone-min.js" type="text/javascript"></script>
   <script src="dist/bootstrap.min.js"></script>
@@ -73,7 +195,9 @@
   <!-- Javascript code -->
   <!-- =============== -->
   <script src="dist/spin.min.js"></script>
-  <script src="scripts/scripts.js"></script>
+  <script src="scripts/UITools.js"></script>
+  <script src="scripts/dashboard.js"></script>
+  <script src="scripts/D3Visuals.js"></script>
   <script type="text/javascript">
     var AppView = Backbone.View.extend({
       // el - stands for element. Every view has an element associated with HTML content, will be rendered.
@@ -84,16 +208,18 @@
       },
       // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello TutorialsPoint in this case.
       render: function(){
+        //$('#myModal').modal('show');
+        clear_messages();
+        add_message("Warning", "This Warning was added via API.");
+        add_message("Suggestion", "This Suggestion was added via API.");
         //init_spinner();
         //clear_vis();
         //init_sunburst();
       }
     });
-
     var appView = new AppView();
   </script>
   <script type="text/javascript" >
-
   </script>
 
 </body>

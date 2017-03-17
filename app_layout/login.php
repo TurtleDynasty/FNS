@@ -13,7 +13,7 @@
   <link href="dist/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="css/custom_v3.css" rel="stylesheet">
+  <link href="css/dashboard.css" rel="stylesheet">
   <link href="css/utility.css" rel="stylesheet">
   <link href="css/login.css" rel="stylesheet">
 </head>
@@ -33,7 +33,7 @@
     </nav>
     <fieldset class="center">
             <h3 class="noselect">Spectrum Protect Login</h3>
-     <form action="dashboard_v3.html" method="POST">
+     <form action="dashboard.html" method="POST">
          <?php
            /* Loop that displays the form fields */
            foreach ($labels as $field => $label) { //This loop will go through the array looking at each key in order to create the fields
@@ -73,8 +73,6 @@
   <!-- =============== -->
   <!-- Javascript code -->
   <!-- =============== -->
-  <script src="dist/spin.min.js"></script>
-  <script src="scripts/scripts_v3.js"></script>
   <script type="text/javascript">
     var AppView = Backbone.View.extend({
       // el - stands for element. Every view has an element associated with HTML content, will be rendered.
@@ -85,7 +83,7 @@
       },
       // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello TutorialsPoint in this case.
       render: function(){
-        $("fieldset").css("margin-top", window.innerHeight/2 - 170 + "px").animate({marginTop: (window.innerHeight/2 - 150) + "px"}, {queue: true, duration: 150}).animate({opacity: "1"}, {queue: true, duration: 150});
+        $("fieldset").css("margin-top", window.innerHeight/2 - 200 + "px").animate({marginTop: (window.innerHeight/2 - 150) + "px"}, {queue: true, duration: 250}).animate({opacity: "1"}, {queue: true, duration: 250});
         $("input[type='text']").focus();
       }
     });
