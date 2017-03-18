@@ -19,6 +19,8 @@ var width = +svg.attr("width");
 var height = +svg.attr("height");
 var bubblePadding = 1;
 var format = d3.format(",d");
+var legendTileSize = 18;
+var legendXTextPadding = -5; // Negative shifts text to the left.
 function createLegend()
 {
 	var legend = svg.selectAll(".legend")
@@ -29,13 +31,13 @@ function createLegend()
 
 	var index = -1;
     legend.append("rect")
-        .attr("x", width - 18)
-        .attr("width", 18)
-        .attr("height", 18)
+        .attr("x", width - legendTileSize)
+        .attr("width", legendTileSize)
+        .attr("height", legendTileSize)
         .style("fill",  function(d) { index += 1; return colors[index];});
 	var index = -1;
     legend.append("text")
-        .attr("x", width - 24)
+        .attr("x", width - legendTileSize + legendXTextPadding)
         .attr("y", 9)
         .attr("dy", ".35em")
         .style("text-anchor", "end")
