@@ -17,21 +17,6 @@ var width = +svg.attr("width");
 var height = +svg.attr("height");
 var bubblePadding = 1;
 var format = d3.format(",d");
-createColorTable();
-function createColorTable()
-{
-	var x = 0;
-	colors.forEach(function(element)
-	{
-		var rectangle = svg.append("rect")
-			.attr("x", x)
-			.attr("y", height * .8)
-			.attr("width", width * .90)
-			.attr("height", height * .2)
-			.attr("fill", element);
-			x += width / colors.length;
-	});
-}
 function createLegend()
 {
 	var index = -1;
