@@ -12,6 +12,7 @@ text {
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 var colors = ["darkblue", "blue", "green", "seagreen", "greenyellow" , "yellow", "orange", "orangered", "red"];
+var distro = ["0 - 10", "10 - 20", "20 - 30", "30 - 40", "40 - 50", "50 - 60", "60 - 70", "70 - 80", "80 - 90", "90 - 100"];
 var svg = d3.select("svg");
 var width = +svg.attr("width");
 var height = +svg.attr("height");
@@ -19,34 +20,31 @@ var bubblePadding = 1;
 var format = d3.format(",d");
 function createLegend()
 {
-	var index = -1;
 	var legend = svg.selectAll(".legend")
         .data(colors)
       .enter().append("g")
         .attr("class", "legend")
         .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
+	var index = -1;
     legend.append("rect")
         .attr("x", width - 18)
         .attr("width", 18)
         .attr("height", 18)
         .style("fill",  function(d) { index += 1; return colors[index];});
-
+	var index = -1;
     legend.append("text")
         .attr("x", width - 24)
         .attr("y", 9)
         .attr("dy", ".35em")
         .style("text-anchor", "end")
-        .text(function(d) { return d; });
+        .text(function(d) { index += 1; return distro[index]; });
 
 }
 createLegend();
 function grabColor(number, min, max)
 {
-
-
 	var divideColor = d3.scaleLinear().domain([min, max]).range([0, 1]);
-
 	var pickColor = d3.scaleLinear().domain([.1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
 	var color = divideColor(number);
 	return pickColor(color);
