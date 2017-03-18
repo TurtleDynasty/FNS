@@ -32,6 +32,30 @@ function createColorTable()
 			x += width / colors.length;
 	});
 }
+function createLegend()
+{
+	var index = -1;
+	var legend = svg.selectAll(".legend")
+        .data(colors)
+      .enter().append("g")
+        .attr("class", "legend")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+    legend.append("rect")
+        .attr("x", width - 18)
+        .attr("width", 18)
+        .attr("height", 18)
+        .style("fill",  function(d) { index += 1; return colors[index];});
+
+    legend.append("text")
+        .attr("x", width - 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d) { return d; });
+
+}
+createLegend();
 function grabColor(number, min, max)
 {
 
@@ -103,5 +127,4 @@ d3.csv("flare.csv", function(d) {
 	node.append("title")
 	.text(function(d) { return d.id + "\n" + format(d.value); });
 });
-
 </script>
