@@ -32,9 +32,10 @@ label {
 }
 
 .master-container {
+	position: absolute;
 	height: 100%;
-	min-height: 700px;
-	padding: 85px 35px 35px 35px !important;
+	min-height: 720px;
+	padding: 85px 35px 35px 35px;
 }
 
 text{
@@ -271,6 +272,14 @@ input[type="checkbox"].settings-input {
 	margin: 0;
 	position: relative;
 	top: -7px;
+}
+
+.shrink-hide {
+	min-height: 0;
+	height: 0;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
 }
 
 
