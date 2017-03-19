@@ -4,6 +4,9 @@ $(document).ready(function(){
     document.documentElement.style.overflow = 'hidden';  // firefox, chrome
     document.body.scroll = "no"; // ie only
 
+    $("#buildsection").css("top", 0);
+    $("#viewsection").css("top", window.innerHeight + 'px').hide();
+
     //populate filter selects
     var sample = [{ id: 0, text: 'TSMGUI12' }, { id: 1, text: 'TSMGUI11' }, { id: 2, text: 'File Domain' }, { id: 3, text: 'TSMGUI18' }];
     $(".select-objects").select2({
@@ -23,20 +26,19 @@ $(document).ready(function(){
 
     //Load in visualization and slide dashboard up
     $(".generate").on("click", function(){
-      console.log("debug1");
+      $("#viewsection").show();
       var selected = d3.select(".vis-select-container.vis-list-selected");
-      console.log("debug2");
       if (!selected.empty()){
-        console.log(selected);
         var value = selected.attr("value");
         clear_vis();
-        $("#buildsection").animate({top:'-' + window.innerHeight + 'px'}, {queue: true, duration: 500});
-        $("#viewsection").animate({top:'-' + window.innerHeight + 'px'}, {queue: true, duration: 500});
+        $("#viewsection").attr("hidden", null);
+        $("#buildsection").animate({top:'-' + window.innerHeight + 'px'}, 500);
+        $("#viewsection").animate({top: 0 }, 500, function(){
+          $("#viewsection").css("top", 0);
+          //workaround for hide() and attr.(hidden) causing animation problems
+          $("#buildsection").hide();
+        });
 
-
-        d3.select("#viewsection").attr("hidden", null);
-
-        $('.widget2-container-inner').addClass('hidden');
         clear_vis();
         $("#vis-title").html("Loading Visualization...");
         init_spinner();
@@ -59,6 +61,9 @@ $(document).ready(function(){
         else if (value == 6) {
           setTimeout(init_pool_test, 1500)
         }
+        else if (value == 7) {
+          setTimeout(init_heatmap, 1500)
+        }
 
         setTimeout(function(){
           $(".return-to-selection ").animate({top: '0px'}, {queue: true, duration: 500});
@@ -71,14 +76,14 @@ $(document).ready(function(){
 
     //Back to Selection button animations
     $(".return-to-selection").on("click", function(){
-      if (d3.select("#viewsection").attr("hidden") != "hidden"){
-        $("#viewsection").animate({top: '0px'}, {queue: true, duration: 500});
-        $("#buildsection").animate({top: '0px'}, {queue: true, duration: 500});
-        setTimeout(function(){
-          $(".return-to-selection").animate({top: '-200px'}, {queue: true, duration: 500});
-          d3.select("#viewsection").attr("hidden", "hidden");
-        }, 500);
-      }
+      $("#buildsection").show();
+      $("#viewsection").animate({top: window.innerHeight + 'px'}, 500);
+      $("#buildsection").animate({ top: 0 }, 500, function (){
+        $("#viewsection").hide();
+      });
+      setTimeout(function(){
+        $(".return-to-selection").animate({top: '-200px'}, {queue: true, duration: 500});
+      }, 500);
     });
 
     $(".logout").on("click", function(){
