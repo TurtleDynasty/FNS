@@ -38,6 +38,13 @@ label {
 	padding: 85px 35px 35px 35px;
 }
 
+#loader-section{
+	position:absolute;
+	background-color: #3b4554;
+	top: 0;
+	z-index: 100;
+}
+
 text{
 	font: 10px sans-serif;
 	text-anchor: middle;
@@ -82,6 +89,10 @@ float: right;
 /***************
 * Build Screen
 ***************/
+#buildsection {
+	top: 0;
+}
+
 .build-widget1, .build-widget2 {
 	margin-right: 20px;
 }
@@ -143,6 +154,8 @@ float: right;
 /***************
 * View Screen
 ***************/
+#viewsection {
+}
 
 .widget1 {
 	background-color: #ffffff;

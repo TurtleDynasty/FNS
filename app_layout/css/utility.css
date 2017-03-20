@@ -32,11 +32,11 @@
 }
 
 .half-height{
-	height: 50%;
+	height: 50% !important;
 }
 
 .half-height-20{
-	height: calc(50% - 20px);
+	height: calc(50% - 20px) !important;
 }
 
 .two-thirds-height-20{
@@ -100,4 +100,11 @@
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
 }
