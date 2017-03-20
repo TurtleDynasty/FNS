@@ -320,8 +320,8 @@ function init_sunburst() {
 function init_pie_test() {
   var url = "http://localhost/";
   	var margin = {top: 50, right: 50, bottom: 50, left: 50};
-  	var width = 1000 - margin.left - margin.right;
-  	var height = 900 - margin.top - margin.bottom;
+    var width = parseInt(d3.select(".widget2").style("width"));
+    var height = parseInt(d3.select(".widget2").style("height"));
   	var innerRadius = Math.min(width, height) / 4;
   	var outerRadius = Math.min(width, height) / 3;
   	// ---- label Text STUFF
@@ -623,7 +623,9 @@ d3.select("#vis-title").html("Storage Pool Test");
 
 function init_heatmap() {
   var colors = ["darkblue", "blue", "green", "seagreen", "greenyellow" , "yellow", "orange", "orangered", "red"];
-  d3.select(".widget2").append("div").classed("svg-container", true).append("svg").classed("heatmap", true).attr("width", 1337).attr("height", 930);
+  var widgetwidth = parseInt(d3.select(".widget2").style("width"));
+  var widgetheight = parseInt(d3.select(".widget2").style("height"));
+  d3.select(".widget2").append("div").classed("svg-container", true).append("svg").classed("heatmap", true).attr("width", widgetwidth - 32).attr("height", widgetheight + 87);
   var svg = d3.select("svg");
   var width = +svg.attr("width");
   var height = +svg.attr("height");

@@ -1,10 +1,11 @@
+/** This function is executed when the page is odne loading*/
 $(document).ready(function(){
 
     //disable scroll bars
     document.documentElement.style.overflow = 'hidden';  // firefox, chrome
     document.body.scroll = "no"; // ie only
 
-    $("#buildsection").css("top", 0);
+    //set initial position for second section
     $("#viewsection").css("top", window.innerHeight + 'px').hide();
 
     //populate filter selects
@@ -19,100 +20,124 @@ $(document).ready(function(){
       $(this).shake();
     });
 
-    //Back to schedule page, address may be different on your machine
-    $("#brand").on("click", function(){
-      window.location.href = "index.html";
-    });
-
-    //Load in visualization and slide dashboard up
-    $(".generate").on("click", function(){
-      $("#viewsection").show();
-      var selected = d3.select(".vis-select-container.vis-list-selected");
-      if (!selected.empty()){
-        var value = selected.attr("value");
-        clear_vis();
-        $("#viewsection").attr("hidden", null);
-        $("#buildsection").animate({top:'-' + window.innerHeight + 'px'}, 500);
-        $("#viewsection").animate({top: 0 }, 500, function(){
-          $("#viewsection").css("top", 0);
-          //workaround for hide() and attr.(hidden) causing animation problems
-          $("#buildsection").hide();
-        });
-
-        clear_vis();
-        $("#vis-title").html("Loading Visualization...");
-        init_spinner();
-        //setTimeout(init_sunburst, 1500);
-        setTimeout(clear_vis, 1500);
-        if (value == 1)
-          setTimeout(init_sunburst, 1500)
-        else if (value == 2) {
-          setTimeout(init_replicated_objects, 1500)
-        }
-        else if (value == 3) {
-          setTimeout(init_af_segments, 1500)
-        }
-        else if (value == 4) {
-          setTimeout(init_backup_test, 1500)
-        }
-        else if (value == 5) {
-          setTimeout(init_pie_test, 1500)
-        }
-        else if (value == 6) {
-          setTimeout(init_pool_test, 1500)
-        }
-        else if (value == 7) {
-          setTimeout(init_heatmap, 1500)
-        }
-
-        setTimeout(function(){
-          $(".return-to-selection ").animate({top: '0px'}, {queue: true, duration: 500});
-        }, 500);
-      } else {
-        $(this).shake();
-        //$(this).animate({backgroundColor: "#c94e36" }, {queue: false, duration: 200});
-      }
-    });
-
-    //Back to Selection button animations
-    $(".return-to-selection").on("click", function(){
-      $("#buildsection").show();
-      $("#viewsection").animate({top: window.innerHeight + 'px'}, 500);
-      $("#buildsection").animate({ top: 0 }, 500, function (){
-        $("#viewsection").hide();
-      });
-      setTimeout(function(){
-        $(".return-to-selection").animate({top: '-200px'}, {queue: true, duration: 500});
-      }, 500);
-    });
-
-    $(".logout").on("click", function(){
-      window.location.href = "login.php";
-    });
-
-    $(".user-settings").click(function () {
-      $('#myModal').modal('toggle');
-    });
-    $(".save").click(function () {
-      //update user settings here if changed
-      $('#myModal').modal('toggle');
-    });
-
-    //
-    $(".vis-select-container").click(function () {
-      $(".vis-select-container").removeClass("vis-list-selected");
-      $(this).addClass("vis-list-selected");
-    });
+    $("#loader-section").fadeOut("fast");
 });
+
+//On click events
+//Slide dashboard up and load in visualization
+$(".generate").on("click", function(){
+  var selected = d3.select(".vis-select-container.vis-list-selected");
+  if (!selected.empty()){
+    clear_vis();
+    goto_view();
+    init_spinner();
+    change_vis_title("Loading Visualization...");
+
+    var value = selected.attr("value");
+    //placeholder loading till data retreived from the database
+    setTimeout(clear_vis, 1500);
+    load_vis(value);
+  } else {
+    $(this).shake();
+  }
+});
+
+//Back to Selection button animations
+$(".return-to-selection").on("click", function(){
+  goto_build();
+});
+
+//Back to schedule page, address may be different on your machine
+$("#brand").on("click", function(){
+  window.location.href = "index.html";
+});
+
+$(".logout").on("click", function(){
+  window.location.href = "login.php";
+});
+
+//User settings modal
+$(".user-settings").click(function () {
+  $('#myModal').modal('toggle');
+});
+$(".save").click(function () {
+  $('#myModal').modal('toggle');
+});
+
+//Selection list on the build section
+$(".vis-select-container").click(function () {
+  $(".vis-select-container").removeClass("vis-list-selected");
+  $(this).addClass("vis-list-selected");
+});
+
 
 function clear_vis(){
     $( ".spinner" ).remove();
     $( ".svg-container" ).remove();
-    $("#vis-title").html("Select a Visualization");
+}
+
+function goto_view(){
+  $("#viewsection").show();
+  $("#buildsection").animate({top:'-' + window.innerHeight + 'px'}, 500);
+  $("#viewsection").animate({top: 0 }, 500, function(){
+    $("#viewsection").css("top", 0);
+    //workaround for hide() and attr.(hidden) causing animation problems
+    $("#buildsection").hide();
+  });
+
+  setTimeout(function(){
+    $(".return-to-selection ").animate({top: '0px'}, {queue: true, duration: 500});
+  }, 500);
+}
+
+function goto_build(){
+  $("#buildsection").show();
+  $("#viewsection").animate({top: window.innerHeight + 'px'}, 500);
+  $("#buildsection").animate({ top: 0 }, 500, function (){
+    $("#viewsection").hide();
+  });
+  setTimeout(function(){
+    $(".return-to-selection").animate({top: '-200px'}, {queue: true, duration: 500});
+  }, 500);
+}
+
+function change_vis_title(title){
+  if ((typeof title === 'string' || title instanceof String) && title.length < 50){
+    $("#vis-title").html(title);
+  }
+  else {
+    $("#vis-title").html("There was an issue changing this title...");
+  }
 }
 
 function clear_messages(){
   $(".messages-box").html("");
+}
+
+function load_vis(value){
+  if (value == 1)
+    setTimeout(init_sunburst, 1500)
+  else if (value == 2) {
+    setTimeout(init_replicated_objects, 1500)
+  }
+  else if (value == 3) {
+    setTimeout(init_af_segments, 1500)
+  }
+  else if (value == 4) {
+    setTimeout(init_backup_test, 1500)
+  }
+  else if (value == 5) {
+    setTimeout(init_pie_test, 1500)
+  }
+  else if (value == 6) {
+    setTimeout(init_pool_test, 1500)
+  }
+  else if (value == 7) {
+    setTimeout(init_heatmap, 1500)
+  }
+  else {
+    change_vis_title("A visualization with that index could not be found...");
+  }
 }
 
 function add_message(type, text){
