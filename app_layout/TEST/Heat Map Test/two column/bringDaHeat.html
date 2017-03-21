@@ -19,33 +19,33 @@ var width = +svg.attr("width");
 var height = +svg.attr("height");
 var bubblePadding = 1;
 var format = d3.format(",d");
-var legendTileSize = 18;
+var legendTileSize = 50;
+
 var legendXTextPadding = -5; // Negative shifts text to the left.
 function createLegend()
 {
-	var legend = svg.selectAll(".legend")
-        .data(colors)
-      .enter().append("g")
-        .attr("class", "legend")
-        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-	var index = -1;
-    legend.append("rect")
-        .attr("x", width - legendTileSize)
-        .attr("width", legendTileSize)
-        .attr("height", legendTileSize)
-        .style("fill",  function(d) { index += 1; return colors[index];});
-	var index = -1;
-    legend.append("text")
-        .attr("x", width - legendTileSize + legendXTextPadding)
-        .attr("y", 9)
-        .attr("dy", ".35em")
-        .style("text-anchor", "end")
-        .text(function(d) { index += 1; return distro[index]; });
-
+	for(i = 0; i < colors.length; i++)
+	{
+		// Colored rectangles for legend
+		svg.append("rect")
+		.attr("x", width - legendTileSize)
+		.attr("y", legendTileSize * i)
+		.attr("width", legendTileSize)
+		.attr("height", legendTileSize)
+		.style("fill", colors[i])
+		// Text labels for the colored rectangles.
+		svg.append("text")
+		.attr("x", width - legendTileSize + legendXTextPadding)
+		.attr("y", (legendTileSize * i) + legendTileSize/2)
+		.attr("dy", ".5em")
+		.attr("width", legendTileSize)
+		.attr("height", legendTileSize)
+		.style("text-anchor", "end")
+		.text(distro[i]);
+	}
 }
 createLegend();
-function grabColor(number, min, max)
+function grabCicleColor(number, min, max)
 {
 	var divideColor = d3.scaleLinear().domain([min, max]).range([0, 1]);
 	var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
@@ -98,7 +98,7 @@ d3.csv("flare.csv", function(d) {
 		node.append("circle")
 		.attr("id", function(d) { return d.id; })
 		.attr("r", function(d) { return d.r; })
-		.style("fill", function(d) { return grabColor(d.value, minColor, maxColor); });
+		.style("fill", function(d) { return grabCicleColor(d.value, minColor, maxColor); });
 
 		node.append("clipPath")
 		.attr("id", function(d) { return "clip-" + d.id; })
