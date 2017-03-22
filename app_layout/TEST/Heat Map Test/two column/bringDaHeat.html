@@ -122,9 +122,12 @@ d3.csv("flare.csv", function(d) {
 		.on("mouseover", function(d) {
 			console.log(d.r);
 		  d3.select(this).attr("r", d.r + bubblePadding)
+		  .style("stroke", "black")
+		  .style("stroke-width", 2);
 		})
 		.on("mouseout", function(d) {
 		  d3.select(this).attr("r", d.r)
+		  .style("stroke-width", 0);
 		});
 
 		node.append("clipPath")
