@@ -49,18 +49,16 @@ function moveCircle(offset)
 }
 function moveText(offset)
 {
-	objectName.attr("transform", function(d) {
-		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"];
-		var y = d3.select(this)["_groups"][0][0]["y"]["baseVal"][0]["value"];
-		console.log("(" + x + "," + y + ")");
-		return "translate(" + offset + "," + 0 + ")";
+	console.log("moveText");
+	objectValue.attr("x", function (d) {
+		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"] + offset;
+		return x;
+	})
+	objectName.attr("x", function(d) {
+		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"] + offset;
+		return x;
 	});
-	objectValue.attr("transform", function(d) {
-		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"];
-		var y = d3.select(this)["_groups"][0][0]["y"]["baseVal"][0]["value"];
-		console.log("(" + x + "," + y + ")");
-		return "translate(" + offset + "," + 0 + ")";
-	});
+	console.log("/moveCircle");
 
 }
 function createInfoLegend(offset)
