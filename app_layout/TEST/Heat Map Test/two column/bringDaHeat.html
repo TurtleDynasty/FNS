@@ -17,7 +17,7 @@ var distro = ["0 - 10", "10 - 20", "20 - 30", "30 - 40", "40 - 50", "50 - 60", "
 var svg = d3.select("svg");
 var width = +svg.attr("width");
 var height = +svg.attr("height");
-var bubblePadding = 2.5;
+var bubblePadding = 3;
 var format = d3.format(",d");
 var legendTileSize = 80;
 
@@ -120,7 +120,8 @@ d3.csv("flare.csv", function(d) {
 			infoRect.style("fill", grabCicleColor(d.value));
 		})
 		.on("mouseover", function(d) {
-		  d3.select(this).attr("r", d.r*1.1)
+			console.log(d.r);
+		  d3.select(this).attr("r", d.r + bubblePadding)
 		})
 		.on("mouseout", function(d) {
 		  d3.select(this).attr("r", d.r)
