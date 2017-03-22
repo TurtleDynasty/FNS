@@ -8,7 +8,7 @@ text {
 }
 
 </style>
-<svg width="1000" height="1000"></svg>
+<svg width="1500" height="1000"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 var svg = d3.select("svg");
@@ -18,12 +18,12 @@ var legendTileSize = 80;
 var infoBubblePadding = 15;
 var infoBubbleFontSize = "25px";
 var legendXTextPadding = -5; // Negative shifts text to the left.
-var colors = ["red", "black"];
+var colors = ["green", "red", "blue"];
 var index = 0;
 var r = 100;
 var offset = 100;
-var x = r + offset;
-var y = height * .15;
+var x = r + 1;
+var y = height * .25;
 button = svg.append("rect")
 	.attr("x", 25)
 	.attr("y", 25)
@@ -36,42 +36,78 @@ button = svg.append("rect")
 		index += 1;
 		moveCircle(offset);
 		moveText(offset);
-		button.style("fill", colors[index%2]);
-	})
+		addCircle();
+		button.style("fill", colors[index%3]);
+	});
+function addCircle()
+{
+	svg.append("circle")
+		.attr("r", r)
+		.style("fill", colors[index%3])
+		.style("stroke", "black")
+		.style("stroke-width", 2)
+		.attr("transform", function(d) {
+			return "translate(" + r + "," + y + ")";
+		})
+		.attr("class", "bubbleCircle");
+
+
+	svg.append("text")
+		.attr("x", x)
+		.attr("y", y)
+		.attr("dy", - infoBubblePadding)
+		.attr("width", legendTileSize)
+		.attr("height", legendTileSize)
+		.style("text-anchor", "middle")
+		.style("font-size", infoBubbleFontSize)
+		.text(index)
+		.attr("class", "bubbleText");
+
+	svg.append("text")
+		.attr("x", x)
+		.attr("y", y)
+		.attr("dy", infoBubblePadding)
+		.attr("width", legendTileSize)
+		.attr("height", legendTileSize)
+		.style("text-anchor", "middle")
+		.style("font-size", infoBubbleFontSize)
+		.text(index)
+		.attr("class", "bubbleText");
+	console.log("/addCircle");
+}
 function moveCircle(offset)
 {
-	infoCircle.attr("transform", function(d) {
+
+	console.log("moveCircle");
+	d3.selectAll(".bubbleCircle").attr("transform", function(d) {
+
 		var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
-		var y = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["f"];
-		console.log("---(" + x + "," + y + ")---");
-		return "translate(" + (x + offset) + "," + y + ")";
+		console.log(x);
+		return "translate(" + (x + 2*offset) + "," + y + ")";
 	});
+	console.log("/moveCircle");
 }
 function moveText(offset)
 {
 	console.log("moveText");
-	objectValue.attr("x", function (d) {
-		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"] + offset;
+	d3.selectAll(".bubbleText").attr("x", function (d) {
+		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"] + 2*offset;
 		return x;
 	})
-	objectName.attr("x", function(d) {
-		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"] + offset;
-		return x;
-	});
-	console.log("/moveCircle");
+	console.log("/moveText");
 
 }
 function createInfoLegend(offset)
 {
 	infoCircle = svg.append("circle")
-		.attr("class", "infoCircle")
 		.attr("r", r)
 		.style("fill", "orange")
 		.style("stroke", "black")
 		.style("stroke-width", 2)
 		.attr("transform", function(d) {
 			return "translate(" + x + "," + y + ")";
-		});
+		})
+		.attr("class", "bubbleCircle");
 
 
 	objectName = svg.append("text")
@@ -82,7 +118,8 @@ function createInfoLegend(offset)
 		.attr("height", legendTileSize)
 		.style("text-anchor", "middle")
 		.style("font-size", infoBubbleFontSize)
-		.text("test");
+		.text("test")
+		.attr("class", "bubbleText");
 
 	objectValue = svg.append("text")
 		.attr("x", x)
@@ -92,7 +129,8 @@ function createInfoLegend(offset)
 		.attr("height", legendTileSize)
 		.style("text-anchor", "middle")
 		.style("font-size", infoBubbleFontSize)
-		.text("test");
+		.text("test")
+		.attr("class", "bubbleText");
 }
 createInfoLegend(200);
 </script>
