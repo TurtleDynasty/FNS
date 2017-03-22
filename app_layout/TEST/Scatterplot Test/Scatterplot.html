@@ -38,7 +38,7 @@
 			width = 960 - margin.left - margin.right,
 			height = 500 - margin.top - margin.bottom;
 
-		// setup x 
+		// setup x
 		var xValue = function(d) { return d.Calories;}, // data -> value
     		xScale = d3.scaleLinear().range([0, width]), // value -> display
     		xMap = function(d) { return xScale(xValue(d));}; // data -> display
@@ -75,7 +75,7 @@
 			d.Calories = +d.Calories;
 			d["Protein (g)"] = +d["Protein (g)"];
 		// comment out this line before going live
-		console.log(d);
+
 		});
 
  		// don't want dots overlapping axis, so add in buffer to data domain
@@ -83,6 +83,7 @@
 		yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
 
 		// x-axis
+<<<<<<< HEAD
 		// svg.append("g")
 		// 	.attr("class", "x axis")
 		// 	.attr("transform", "translate(0," + height + ")")
@@ -105,6 +106,30 @@
 		// 	.attr("dy", ".71em")
 		// 	.style("text-anchor", "end")
 		// 	.text("Protein (g)");
+=======
+		svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(xScale))
+			.append("text")
+			.attr("class", "label")
+			.attr("x", width)
+			.attr("y", -6)
+			.style("text-anchor", "end")
+			.text("Calories");
+
+		// y-axis
+		svg.append("g")
+			.attr("class", "y axis")
+			.call(d3.axisLeft(yScale))
+			.append("text")
+			.attr("class", "label")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 6)
+			.attr("dy", ".71em")
+			.style("text-anchor", "end")
+			.text("Protein (g)");
+>>>>>>> origin/master
 
 		// draw dots
 		svg.selectAll(".dot")
@@ -112,9 +137,9 @@
 			.enter().append("circle")
 			.attr("class", "dot")
 			.attr("r", 3.5)
-			.attr("cx", xMap)
-			.attr("cy", yMap)
-			.style("fill", function(d) { return color(cValue(d));}) 
+			.attr("cx", 100)
+			.attr("cy", 100)
+			.style("fill", function(d) { return color(cValue(d));})
 			.on("mouseover", function(d) {
 				tooltip.transition()
 					.duration(200)
