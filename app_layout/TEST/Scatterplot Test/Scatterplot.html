@@ -38,7 +38,7 @@
 			width = 960 - margin.left - margin.right,
 			height = 500 - margin.top - margin.bottom;
 
-		// setup x 
+		// setup x
 		var xValue = function(d) { return d.Calories;}, // data -> value
     		xScale = d3.scaleLinear().range([0, width]), // value -> display
     		xMap = function(d) { return xScale(xValue(d));}; // data -> display
@@ -75,7 +75,7 @@
 			d.Calories = +d.Calories;
 			d["Protein (g)"] = +d["Protein (g)"];
 		// comment out this line before going live
-		console.log(d);
+
 		});
 
  		// don't want dots overlapping axis, so add in buffer to data domain
@@ -86,7 +86,7 @@
 		svg.append("g")
 			.attr("class", "x axis")
 			.attr("transform", "translate(0," + height + ")")
-			.call(d3.axisBottom(x))
+			.call(d3.axisBottom(xScale))
 			.append("text")
 			.attr("class", "label")
 			.attr("x", width)
@@ -97,7 +97,7 @@
 		// y-axis
 		svg.append("g")
 			.attr("class", "y axis")
-			.call(d3.axisLeft(y))
+			.call(d3.axisLeft(yScale))
 			.append("text")
 			.attr("class", "label")
 			.attr("transform", "rotate(-90)")
@@ -112,9 +112,9 @@
 			.enter().append("circle")
 			.attr("class", "dot")
 			.attr("r", 3.5)
-			.attr("cx", xMap)
-			.attr("cy", yMap)
-			.style("fill", function(d) { return color(cValue(d));}) 
+			.attr("cx", 100)
+			.attr("cy", 100)
+			.style("fill", function(d) { return color(cValue(d));})
 			.on("mouseover", function(d) {
 				tooltip.transition()
 					.duration(200)
