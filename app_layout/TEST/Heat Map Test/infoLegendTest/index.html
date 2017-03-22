@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+text {
+	font: 10px sans-serif;
+	text-anchor: middle;
+}
+
+</style>
+<svg width="1000" height="1000"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+var circleColors = ["darkblue", "blue", "seagreen", "Turquoise", "SpringGreen", "greenyellow", "yellow", "orange", "orangered", "red"];
+var textColors = ["white", "white", "black", "black", "black", "black", "black", "black", "black", "black"];
+var distro = ["0 - 10", "10 - 20", "20 - 30", "30 - 40", "40 - 50", "50 - 60", "60 - 70", "70 - 80", "80 - 90", "90 - 100"];
+var svg = d3.select("svg");
+var width = +svg.attr("width");
+var height = +svg.attr("height");
+var bubblePadding = 3;
+var format = d3.format(",d");
+var legendTileSize = 80;
+var infoBubblePadding = 15;
+var infoBubbleFontSize = "25px";
+var legendXTextPadding = -5; // Negative shifts text to the left.
+var currentBubble = 0;
+var bubbleArray = [];
+var r = 100;
+function createInfoLegend(offset)
+{
+	var r = 100;
+	var x = r + offset;
+	var y = height * .15;
+	infoRect = svg.append("circle")
+		.attr("r", r)
+		.style("fill", "orange")
+		.style("stroke", "black")
+		.style("stroke-width", 2)
+		.attr("transform", function(d) {
+			return "translate(" + x + "," + y + ")";
+		})
+
+
+	objectName = svg.append("text")
+		.attr("x", x)
+		.attr("y", y)
+		.attr("dy", - infoBubblePadding)
+		.attr("width", legendTileSize)
+		.attr("height", legendTileSize)
+		.style("text-anchor", "middle")
+		.style("font-size", infoBubbleFontSize)
+		.text("test");
+
+	objectValue = svg.append("text")
+		.attr("x", x)
+		.attr("y", y)
+		.attr("dy", infoBubblePadding)
+		.attr("width", legendTileSize)
+		.attr("height", legendTileSize)
+		.style("text-anchor", "middle")
+		.style("font-size", infoBubbleFontSize)
+		.text("test");
+	object = [infoRect, objectName, objectValue];
+	bubbleArray[currentBubble++] = object;
+}
+createInfoLegend(200);
+</script>
