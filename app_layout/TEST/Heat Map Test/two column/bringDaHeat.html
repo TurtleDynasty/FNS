@@ -118,6 +118,12 @@ d3.csv("flare.csv", function(d) {
 			objectName.text(d.id);
 			objectValue.text(d.value);
 			infoRect.style("fill", grabCicleColor(d.value));
+		})
+		.on("mouseover", function(d) {
+		  d3.select(this).attr("r", d.r*1.1)
+		})
+		.on("mouseout", function(d) {
+		  d3.select(this).attr("r", d.r)
 		});
 
 		node.append("clipPath")
