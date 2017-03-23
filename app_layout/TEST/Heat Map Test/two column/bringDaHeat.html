@@ -8,7 +8,7 @@ text {
 }
 
 </style>
-<svg width="900" height="900"></svg>
+<svg width="899" height="900"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 var circleColors = ["darkblue", "blue", "seagreen", "Turquoise", "SpringGreen", "greenyellow", "yellow", "orange", "orangered", "red"];
@@ -65,7 +65,10 @@ function addCircle(d)
 }
 function moveCircle(offset)
 {
-	d3.selectAll(".bubbleCircle").attr("transform", function(d) {
+	d3.selectAll(".bubbleCircle")
+	.transition()
+  	.delay(100)
+	.attr("transform", function(d) {
 
 		var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
 		return "translate(" + (x + 2*offset) + "," + y + ")";
@@ -73,7 +76,10 @@ function moveCircle(offset)
 }
 function moveText(offset)
 {
-	d3.selectAll(".bubbleText").attr("x", function (d) {
+	d3.selectAll(".bubbleText")
+	.transition()
+	.delay(100)
+	.attr("x", function (d) {
 		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"] + 2*offset;
 		return x;
 	})
