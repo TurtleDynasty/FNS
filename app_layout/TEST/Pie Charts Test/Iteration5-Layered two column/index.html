@@ -76,7 +76,8 @@
 		d.count = +d.count;
 		return d;
 	}
-
+	
+	//outer most circle
 	svg.append("circle")
 		.attr("r", outerRadius + 15)
 		.style("fill", "black")
@@ -85,6 +86,7 @@
 		.attr("transform", function(d) {
 			return "translate(" + 0 + "," + 0 + ")";
 		});
+	//white circle within the pie
 	svg.append("circle")
 		.attr("r", innerRadius + 1)
 		.style("fill", "white")
