@@ -42,6 +42,8 @@
 		var width = 960 - margin.left - margin.right;
 		var height = 500 - margin.top - margin.bottom;
 		var tickPadding = "10";
+		var xLabel = "Calories";
+		var yLabel = "Protein (g)";
 
 		// setup x
 		var xValue = function(d) { return d.Calories;}, // data -> value
@@ -102,7 +104,7 @@
 			.attr("x", width/2)
 			.attr("dy", "1em")
 			.style("text-anchor", "middle")
-			.text("Calories");
+			.text(xLabel);
 
 		// y-axis
 		svg.append("g")
@@ -115,7 +117,7 @@
 			.attr("x", 0 - (height / 2) - 5)
 			.attr("dy", "1em")
 			.style("text-anchor", "middle")
-			.text("Protein (g)");
+			.text(yLabel);
 
 		// draw dots
 		svg.selectAll(".dot")
