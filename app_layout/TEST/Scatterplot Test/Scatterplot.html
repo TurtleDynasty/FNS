@@ -41,6 +41,7 @@
 		var margin = {top: 20, right: 20, bottom: 30, left: 50};
 		var width = 960 - margin.left - margin.right;
 		var height = 500 - margin.top - margin.bottom;
+		var tickPadding = "10";
 
 		// setup x
 		var xValue = function(d) { return d.Calories;}, // data -> value
@@ -89,27 +90,31 @@
 		xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
 		yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
 
+		// x-axis
 		svg.append("g")
 			.attr("class", "x axis")
 			.attr("transform", "translate(0," + height + ")")
 			.call(d3.axisBottom(xScale))
-			.append("text")
+		svg.append("text")
 			.attr("class", "label")
-			.attr("x", width)
-			.attr("y", -6)
-			.style("text-anchor", "end")
+			.attr("transform", "rotate(0)")
+			.attr("y", height + 20)
+			.attr("x", width/2)
+			.attr("dy", "1em")
+			.style("text-anchor", "middle")
 			.text("Calories");
 
 		// y-axis
 		svg.append("g")
-			.attr("class", "y axis")
-			.call(d3.axisLeft(yScale))
-			.append("text")
+			.call(d3.axisLeft(yScale).tickPadding(["10"]))
+			.attr("class", "y axis");
+		svg.append("text")
 			.attr("class", "label")
 			.attr("transform", "rotate(-90)")
-			.attr("y", 6)
-			.attr("dy", ".71em")
-			.style("text-anchor", "end")
+			.attr("y", 0 - margin.left)
+			.attr("x", 0 - (height / 2) - 5)
+			.attr("dy", "1em")
+			.style("text-anchor", "middle")
 			.text("Protein (g)");
 
 		// draw dots
