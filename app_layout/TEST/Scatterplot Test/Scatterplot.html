@@ -31,12 +31,16 @@
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 
 	<script>
+		// scroll-over circle enlargement
+		var dotSize = 3.5;
+		var dotPadding = 5;
 		// setup margin
-		var margin = {top: 20, right: 20, bottom: 30, left: 50},
-			width = 960 - margin.left - margin.right,
-			height = 500 - margin.top - margin.bottom;var margin = {top: 20, right: 20, bottom: 30, left: 50},
-			width = 960 - margin.left - margin.right,
-			height = 500 - margin.top - margin.bottom;
+		var margin = {top: 20, right: 20, bottom: 30, left: 50};
+		var width = 960 - margin.left - margin.right;
+		var height = 500 - margin.top - margin.bottom;
+		var margin = {top: 20, right: 20, bottom: 30, left: 50};
+		var width = 960 - margin.left - margin.right;
+		var height = 500 - margin.top - margin.bottom;
 
 		// setup x
 		var xValue = function(d) { return d.Calories;}, // data -> value
@@ -68,7 +72,10 @@
 
 		// load data
 		d3.csv("cereal.csv", function(error, data) {
-			if (error) throw error;
+			if (error)
+			{
+				throw error;
+			}
 
 		// change string (from CSV) into number format
 		data.forEach(function(d) {
@@ -110,11 +117,12 @@
 			.data(data)
 			.enter().append("circle")
 			.attr("class", "dot")
-			.attr("r", 3.5)
-			.attr("cx", function(d) { console.log("(" + xScale(d.Calories) + "," + yScale(d.Protein) + ")"); return xScale(d.Calories);})
+			.attr("r", dotSize)
+			.attr("cx", function(d) { return xScale(d.Calories);})
 			.attr("cy", function(d) { return yScale(d.Protein);})
-			.style("fill", function(d) {console.log(d); return color(cValue(d));})
+			.style("fill", function(d) { return color(cValue(d));})
 			.on("mouseover", function(d) {
+				d3.select(this).attr("r", dotSize + dotPadding);
 				tooltip.transition()
 					.duration(200)
 					.style("opacity", .9);
@@ -123,6 +131,7 @@
 					.style("top", (d3.event.pageY - 28) + "px");
 			})
 			.on("mouseout", function(d) {
+				d3.select(this).attr("r", dotSize);
 				tooltip.transition()
 					.duration(500)
 					.style("opacity", 0);
