@@ -622,9 +622,9 @@ function init_heatmap() {
   var infoBubbleFontSize = "10px";
   var legendXTextPadding = -5; // Negative shifts text to the left.
   var r = 75;
-  var offset = 150;
+  var offset = r + 10;
   var x = r + 1;
-  var y = widgetheight * .9;
+  var y = widgetheight * .95;
   function addCircle(d)
   {
   	svg.append("circle")
@@ -661,7 +661,7 @@ function init_heatmap() {
   {
   	d3.selectAll(".bubbleCircle")
   	.transition()
-    	.delay(100)
+    .duration(100)
   	.attr("transform", function(d) {
   		var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
   		return "translate(" + (x + 2*offset) + "," + y + ")";
@@ -671,7 +671,7 @@ function init_heatmap() {
   {
   	d3.selectAll(".bubbleText")
   	.transition()
-  	.delay(100)
+  	.duration(100)
   	.attr("x", function (d) {
   		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"] + 2*offset;
   		return x;
