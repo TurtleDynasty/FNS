@@ -104,7 +104,7 @@ var pack = d3.pack()
 .padding(bubblePadding);
 var maxColor = 0;
 var minColor = 9999999999999;
-d3.csv("flare.csv", function(d) {
+d3.csv("heatmap.csv", function(d) {
 	d.value = +d.value;
 	if (d.value > 1)
 	{

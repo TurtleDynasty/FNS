@@ -696,7 +696,7 @@ function init_heatmap() {
   .padding(bubblePadding);
   var maxColor = 0;
   var minColor = 9999999999999;
-  d3.csv("csvs/heatmap	.csv", function(d) {
+  d3.csv("csvs/heatmap.csv", function(d) {
   	d.value = +d.value;
   	if (d.value > 1)
   	{
