@@ -22,6 +22,7 @@
 			- Future Ideas:
 				- host the queryList.csv in the database
 	*/
+	ini_set('memory_limit', '512M');
 	header('Access-Control-Allow-Origin: *');
 	$queryNumber = $_GET["queryNumber"];
 	$format = $_GET["format"]; //OPTIONS: "CSV", "JSON", "TSV"
