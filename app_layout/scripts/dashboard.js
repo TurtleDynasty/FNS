@@ -68,6 +68,11 @@ $(".save").click(function () {
 $(".vis-select-container").click(function () {
   $(".vis-select-container").removeClass("vis-list-selected");
   $(this).addClass("vis-list-selected");
+  var selected = d3.select(".vis-select-container.vis-list-selected");
+  var value = selected.attr("value") - 1;
+  $(".overview.overview-selected").show().hide();
+  $(".overview:eq(" + value +")").show().addClass("overview-selected");
+
 });
 
 
