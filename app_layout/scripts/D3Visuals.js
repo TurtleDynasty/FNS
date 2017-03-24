@@ -6,8 +6,9 @@ function type(d) {
 function init_replicated_objects(){
   clear_vis();
   var margin = {top: 30, right: 40, bottom: 65, left: 80},
-      width = 1100 - margin.left - margin.right,
-      height = 600 - margin.top - margin.bottom;
+  container = d3.select(".widget2").append("div").classed("svg-container", true),
+  width = parseInt(d3.select(".svg-container").style("width")),
+  height = parseInt(d3.select(".svg-container").style("height"));
 
   var formatPercent = d3.format("");
 
@@ -25,11 +26,7 @@ function init_replicated_objects(){
       .scale(y)
       .tickFormat(formatPercent);
 
-  var svg = d3.select(".widget2").append("div")
-          .classed("svg-container", true)
-          .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
+  var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -87,8 +84,9 @@ function init_replicated_objects(){
 
 function init_af_segments() {
   var margin = {top: 30, right: 40, bottom: 65, left: 80},
-      width = 1100 - margin.left - margin.right,
-      height = 600 - margin.top - margin.bottom;
+  container = d3.select(".widget2").append("div").classed("svg-container", true),
+  width = parseInt(d3.select(".svg-container").style("width")),
+  height = parseInt(d3.select(".svg-container").style("height"));
 
   var formatPercent = d3.format("");
 
@@ -107,11 +105,7 @@ function init_af_segments() {
       .tickFormat(formatPercent);
 
 
-      var svg = d3.select(".widget2").append("div")
-              .classed("svg-container", true)
-              .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
+  var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -168,8 +162,9 @@ function init_af_segments() {
 
 function init_backup_test(){
   var margin = {top: 30, right: 40, bottom: 65, left: 80},
-      width = 1100 - margin.left - margin.right,
-      height = 600 - margin.top - margin.bottom;
+  container = d3.select(".widget2").append("div").classed("svg-container", true),
+  width = parseInt(d3.select(".svg-container").style("width")),
+  height = parseInt(d3.select(".svg-container").style("height"));
 
   var formatPercent = d3.format("");
 
@@ -187,11 +182,7 @@ function init_backup_test(){
       .scale(y)
       .tickFormat(formatPercent);
 
-      var svg = d3.select(".widget2").append("div")
-              .classed("svg-container", true)
-              .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
+  var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -249,8 +240,9 @@ function init_backup_test(){
 //https://bl.ocks.org/maybelinot/5552606564ef37b5de7e47ed2b7dc099
 function init_sunburst() {
     clear_vis();
-    var width = d3.select(".widget2").node().getBoundingClientRect().width,
-    height = d3.select(".widget2").node().getBoundingClientRect().height,
+    var container = d3.select(".widget2").append("div").classed("svg-container", true),
+    width = parseInt(d3.select(".svg-container").style("width")),
+    height = parseInt(d3.select(".svg-container").style("height")),
     radius = (Math.min(width, height) / 2) - 10;
 
     var formatNumber = d3.format(",d");
@@ -272,12 +264,7 @@ function init_sunburst() {
     .outerRadius(function(d) { return Math.max(0, y(d.y1)); });
 
 
-    var svg = d3.select(".widget2")
-        .append("div")
-        .classed("svg-container", true)
-        .append("svg")
-        .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0 0 " + width + " " + height)
+    var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
         .attr("id", "vis")
         .append("g")
         .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
@@ -311,7 +298,6 @@ function init_sunburst() {
     }
 
     d3.select(self.frameElement).style("height", height + "px");
-    d3.select("#vis").style("margin-top", "-25px");
 
     //change vis title
     d3.select("#vis-title").html("Backup Domains Distribution");
@@ -320,8 +306,9 @@ function init_sunburst() {
 function init_pie_test() {
   var url = "http://localhost/";
   	var margin = {top: 50, right: 50, bottom: 50, left: 50};
-    var width = parseInt(d3.select(".widget2").style("width"));
-    var height = parseInt(d3.select(".widget2").style("height"));
+    var container = d3.select(".widget2").append("div").classed("svg-container", true);
+    var width = parseInt(d3.select(".svg-container").style("width"));
+    var height = parseInt(d3.select(".svg-container").style("height"));
   	var innerRadius = Math.min(width, height) / 4;
   	var outerRadius = Math.min(width, height) / 3;
   	// ---- label Text STUFF
@@ -354,11 +341,7 @@ function init_pie_test() {
   	var pie = d3.pie()
   	.sort(null)
   	.value(function(d) { return d.count; });
-    var svg = d3.select(".widget2").append("div")
-            .classed("svg-container", true)
-            .append("svg")
-  	.attr("width", width)
-  	.attr("height", height)
+    var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
   	.append("g")
   	.attr("transform", "translate(" + width / 2  + "," + height / 2 + ")");
   	function type(d)
@@ -566,12 +549,13 @@ function init_pool_test() {
 
     var partition = d3.partition();
 
-var svg = d3.select(".widget2").append("div")
-        .classed("svg-container", true).append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var container = d3.select(".widget2").append("div").classed("svg-container", true);
+    var widgetwidth = parseInt(d3.select(".svg-container").style("width"));
+    var widgetheight = parseInt(d3.select(".svg-container").style("height"));
+    var svg = container.append("svg").attr("width", widgetwidth).attr("height", widgetheight).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (widgetwidth+100) + " " + (widgetheight+100))
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 
 d3.csv("csvs/stgPool.csv", type, function(error, data) {
   x.domain(data.map(function(d) { return d.letter; }));
@@ -622,43 +606,97 @@ d3.select("#vis-title").html("Storage Pool Test");
 }
 
 function init_heatmap() {
-  var colors = ["darkblue", "blue", "green", "seagreen", "greenyellow" , "yellow", "orange", "orangered", "red"];
-  var widgetwidth = parseInt(d3.select(".widget2").style("width"));
-  var widgetheight = parseInt(d3.select(".widget2").style("height"));
-  d3.select(".widget2").append("div").classed("svg-container", true).append("svg").classed("heatmap", true).attr("width", widgetwidth - 32).attr("height", widgetheight + 87);
+  var circleColors = ["darkblue", "blue", "seagreen", "Turquoise", "SpringGreen", "greenyellow", "yellow", "orange", "orangered", "red"];
+  var textColors = ["white", "white", "black", "black", "black", "black", "black", "black", "black", "black"];
+  var distro = ["0 - 10", "10 - 20", "20 - 30", "30 - 40", "40 - 50", "50 - 60", "60 - 70", "70 - 80", "80 - 90", "90 - 100"];
+  var container = d3.select(".widget2").append("div").classed("svg-container", true);
+  var widgetwidth = parseInt(d3.select(".svg-container").style("width"));
+  var widgetheight = parseInt(d3.select(".svg-container").style("height"));
+  container.append("svg").classed("heatmap", true).attr("width", widgetwidth).attr("height", widgetheight).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (widgetwidth+100) + " " + (widgetheight+100));
+  //.attr("width", widgetwidth - 32).attr("height", widgetheight + 87)
   var svg = d3.select("svg");
-  var width = +svg.attr("width");
-  var height = +svg.attr("height");
-  var bubblePadding = 1;
+  var bubblePadding = 3;
   var format = d3.format(",d");
-  createColorTable();
-  function createColorTable()
+  var legendTileSize = 50;
+  var infoBubblePadding = 15;
+  var infoBubbleFontSize = "10px";
+  var legendXTextPadding = -5; // Negative shifts text to the left.
+  var r = 75;
+  var offset = 150;
+  var x = r + 1;
+  var y = widgetheight * .9;
+  function addCircle(d)
   {
-  	var x = 0;
-  	colors.forEach(function(element)
-  	{
-  		var rectangle = svg.append("rect")
-  			.attr("x", x)
-  			.attr("y", height * .8)
-  			.attr("width", width * .90)
-  			.attr("height", height * .03)
-  			.attr("fill", element);
-  			x += width / colors.length;
+  	svg.append("circle")
+  		.attr("r", r)
+  		.style("fill", grabCicleColor(d.value))
+  		.style("stroke", "black")
+  		.style("stroke-width", 2)
+  		.attr("transform", function(d) {
+  			return "translate(" + r + "," + y + ")";
+  		})
+  		.attr("class", "bubbleCircle");
+  	svg.append("text")
+  		.attr("x", x)
+  		.attr("y", y)
+  		.attr("dy", - infoBubblePadding)
+  		.attr("width", legendTileSize)
+  		.attr("height", legendTileSize)
+  		.style("text-anchor", "middle")
+  		.style("font-size", infoBubbleFontSize)
+  		.text(d.class)
+  		.attr("class", "bubbleText");
+  	svg.append("text")
+  		.attr("x", x)
+  		.attr("y", y)
+  		.attr("dy", infoBubblePadding)
+  		.attr("width", legendTileSize)
+  		.attr("height", legendTileSize)
+  		.style("text-anchor", "middle")
+  		.style("font-size", infoBubbleFontSize)
+  		.text(d.value)
+  		.attr("class", "bubbleText");
+  }
+  function moveCircle(offset)
+  {
+  	d3.selectAll(".bubbleCircle")
+  	.transition()
+    	.delay(100)
+  	.attr("transform", function(d) {
+  		var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
+  		return "translate(" + (x + 2*offset) + "," + y + ")";
   	});
   }
-  function grabColor(number, min, max)
+  function moveText(offset)
   {
-  	var divideColor = d3.scaleLinear().domain([min, max]).range([0, 1]);
-  	var pickColor = d3.scaleLinear().domain([.1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
+  	d3.selectAll(".bubbleText")
+  	.transition()
+  	.delay(100)
+  	.attr("x", function (d) {
+  		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"] + 2*offset;
+  		return x;
+  	})
+  }
+  function grabTextColor(number)
+  {
+  	var divideColor = d3.scaleLinear().domain([minColor, maxColor]).range([0, 1]);
+  	var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(textColors);
+  	var color = divideColor(number);
+  	return pickColor(color);
+  }
+  function grabCicleColor(number)
+  {
+  	var divideColor = d3.scaleLinear().domain([minColor, maxColor]).range([0, 1]);
+  	var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(circleColors);
   	var color = divideColor(number);
   	return pickColor(color);
   }
   var pack = d3.pack()
-  .size([width, height*.8])
+  .size([widgetwidth, widgetheight*.8])
   .padding(bubblePadding);
   var maxColor = 0;
   var minColor = 9999999999999;
-  d3.csv("csvs/heatmap.csv", function(d) {
+  d3.csv("csvs/heatmap	.csv", function(d) {
   	d.value = +d.value;
   	if (d.value > 1)
   	{
@@ -672,128 +710,76 @@ function init_heatmap() {
   		}
   		return d;
   	}
-  }, function(error, classes) {
-  	if (error) throw error;
-  	var root = d3.hierarchy({children: classes})
-  	.sum(function(d) { return d.value; })
-  	.each(function(d) {
-  		if (id = d.data.id) {
-  			var id, i = id.lastIndexOf(".");
-  			d.id = id;
-  			d.package = id.slice(0, i);
-  			d.class = id.slice(i + 1);
-  		}
+  }, function(error, classes)
+  	{
+  		if (error)
+  		{
+  			throw error;
+  	 	}
+  		var root = d3.hierarchy({children: classes})
+  		.sum(function(d) { return d.value; })
+  		.each(function(d) {
+  			if (id = d.data.id) {
+  				var id, i = id.lastIndexOf(".");
+  				d.id = id;
+  				d.package = id.slice(0, i);
+  				d.class = id.slice(i + 1);
+  			}
+  		});
+  		var node = svg.selectAll(".node")
+  		.data(pack(root).leaves())
+  		.enter().append("g")
+  		.attr("class", "node")
+  		.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+  		node.append("circle")
+  		.attr("id", function(d) { return d.id; })
+  		.attr("r", function(d) { return d.r; })
+  		.style("fill", function(d) { return grabCicleColor(d.value); })
+  		.on("click", function(d) {
+  			moveCircle(offset);
+  			moveText(offset);
+  			addCircle(d);
+  		})
+  		.on("mouseover", function(d) {
+  		  d3.select(this).attr("r", d.r + bubblePadding)
+  		  .style("stroke", "black")
+  		  .style("stroke-width", 2);
+  		})
+  		.on("mouseout", function(d) {
+  		  d3.select(this).attr("r", d.r)
+  		  .style("stroke-width", 0);
+  		});
+  		node.append("clipPath")
+  		.attr("id", function(d) { return "clip-" + d.id; })
+  		.append("use")
+  		.attr("xlink:href", function(d) { return "#" + d.id; });
+  		node.append("title")
+  		.text(function(d) { return d.id + "\n" + format(d.value); });
+  		createColorLegend();
   	});
-  	var node = svg.selectAll(".node")
-  	.data(pack(root).leaves())
-  	.enter().append("g")
-  	.attr("class", "node")
-  	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-  	node.append("circle")
-  	.attr("id", function(d) { return d.id; })
-  	.attr("r", function(d) { return d.r; })
-  	.style("fill", function(d) { return grabColor(d.value, minColor, maxColor); });
-  	node.append("clipPath")
-  	.attr("id", function(d) { return "clip-" + d.id; })
-  	.append("use")
-  	.attr("xlink:href", function(d) { return "#" + d.id; });
-  	node.append("text")
-  	.attr("clip-path", function(d) { return "url(#clip-" + d.id + ")"; })
-  	.selectAll("tspan")
-  	.data(function(d) { return d.class.split(/(?=[A-Z][^A-Z])/g); })
-  	.enter().append("tspan")
-  	.attr("x", 0)
-  	.attr("y", function(d, i, nodes) { return 13 + (i - nodes.length / 2 - 0.5) * 10; })
-  	.text(function(d) { return d; });
-  	node.append("title")
-  	.text(function(d) { return d.id + "\n" + format(d.value); });
-  });
-
+  	function createColorLegend()
+  	{
+  		for(i = 0; i < circleColors.length; i++)
+  		{
+  			var offset = 20;
+  			// Colored rectangles for legend
+  			svg.append("rect")
+  			.attr("x", widgetwidth - legendTileSize)
+  			.attr("y", legendTileSize * i)
+  			.attr("width", legendTileSize)
+  			.attr("height", legendTileSize)
+  			.style("fill", circleColors[i])
+  			// Text labels for the colored rectangles.
+  			svg.append("text")
+  			.attr("x", widgetwidth - legendTileSize + legendXTextPadding)
+  			.attr("y", (legendTileSize * i) + legendTileSize/2)
+  			.attr("dy", ".5em")
+  			.attr("width", legendTileSize)
+  			.attr("height", legendTileSize)
+  			.style("text-anchor", "end")
+  			.text(distro[i] + "%");
+  		}
+  	}
 
   d3.select("#vis-title").html("Heat Map Test");
 }
-/*
-var colors = ["darkblue", "blue", "green", "seagreen", "greenyellow" , "yellow", "orange", "orangered", "red"];
-var svg = d3.select("svg");
-var width = +svg.attr("width");
-var height = +svg.attr("height");
-var bubblePadding = 1;
-var format = d3.format(",d");
-createColorTable();
-function createColorTable()
-{
-	var x = 0;
-	colors.forEach(function(element)
-	{
-		var rectangle = svg.append("rect")
-			.attr("x", x)
-			.attr("y", height * .8)
-			.attr("width", width * .90)
-			.attr("height", height * .2)
-			.attr("fill", element);
-			x += width / colors.length;
-	});
-}
-function grabColor(number, min, max)
-{
-	var divideColor = d3.scaleLinear().domain([min, max]).range([0, 1]);
-	var pickColor = d3.scaleLinear().domain([.1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
-	var color = divideColor(number);
-	return pickColor(color);
-}
-var pack = d3.pack()
-.size([width, height*.8])
-.padding(bubblePadding);
-var maxColor = 0;
-var minColor = 9999999999999;
-d3.csv("flare.csv", function(d) {
-	d.value = +d.value;
-	if (d.value > 1)
-	{
-		if (d.value < minColor)
-		{
-			minColor = d.value;
-		}
-		if (d.value > maxColor)
-		{
-			maxColor = d.value;
-		}
-		return d;
-	}
-}, function(error, classes) {
-	if (error) throw error;
-	var root = d3.hierarchy({children: classes})
-	.sum(function(d) { return d.value; })
-	.each(function(d) {
-		if (id = d.data.id) {
-			var id, i = id.lastIndexOf(".");
-			d.id = id;
-			d.package = id.slice(0, i);
-			d.class = id.slice(i + 1);
-		}
-	});
-	var node = svg.selectAll(".node")
-	.data(pack(root).leaves())
-	.enter().append("g")
-	.attr("class", "node")
-	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-	node.append("circle")
-	.attr("id", function(d) { return d.id; })
-	.attr("r", function(d) { return d.r; })
-	.style("fill", function(d) { return grabColor(d.value, minColor, maxColor); });
-	node.append("clipPath")
-	.attr("id", function(d) { return "clip-" + d.id; })
-	.append("use")
-	.attr("xlink:href", function(d) { return "#" + d.id; });
-	node.append("text")
-	.attr("clip-path", function(d) { return "url(#clip-" + d.id + ")"; })
-	.selectAll("tspan")
-	.data(function(d) { return d.class.split(/(?=[A-Z][^A-Z])/g); })
-	.enter().append("tspan")
-	.attr("x", 0)
-	.attr("y", function(d, i, nodes) { return 13 + (i - nodes.length / 2 - 0.5) * 10; })
-	.text(function(d) { return d; });
-	node.append("title")
-	.text(function(d) { return d.id + "\n" + format(d.value); });
-});
-*/
