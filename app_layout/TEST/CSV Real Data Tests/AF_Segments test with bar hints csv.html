@@ -62,9 +62,10 @@ body {
 var margin = {top: 30, right: 40, bottom: 65, left: 80};
 var width = 1100 - margin.left - margin.right;
 var height = 600 - margin.top - margin.bottom;
-var xLabel = "Volume ID";
-var unit = "MB";
-var yLabel = "Segment Size (" + unit + ")";
+var xUnit = "";
+var xLabel = "Volume ID" + xUnit;
+var yUnit = "MB";
+var yLabel = "Segment Size (" + yUnit + ")";
 
 var formatPercent = d3.format("");
 
