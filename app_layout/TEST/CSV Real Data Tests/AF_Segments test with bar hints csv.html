@@ -59,9 +59,12 @@ body {
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script>
 
-var margin = {top: 30, right: 40, bottom: 65, left: 80},
-    width = 1100 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+var margin = {top: 30, right: 40, bottom: 65, left: 80};
+var width = 1100 - margin.left - margin.right;
+var height = 600 - margin.top - margin.bottom;
+var xLabel = "Volume ID";
+var unit = "MB";
+var yLabel = "Segment Size (" + unit + ")";
 
 var formatPercent = d3.format("");
 
@@ -84,7 +87,7 @@ var tip = d3.tip()// this is where you change the name of the tip
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong>Seg Size:</strong> <span style='color:red'>" + d.frequency + "</span>";
+    return "<strong>Seg Size:</strong> <span style='color:red'>" + d.frequency + " " + unit + "</span>";
   })
 
 var svg = d3.select("body").append("svg")
@@ -108,12 +111,12 @@ d3.csv("af_segments.csv", type, function(error, data) {
 	.attr("dx", "-.8em")
 	.attr("dy", ".15em")
 	.attr("transform", "rotate(-45)");
-	
+
 svg.append("text")      // text label for the x axis
    	.attr("x", width / 2 )
         .attr("y",  height + margin.bottom )
         .style("text-anchor", "middle")
-        .text("Volume ID's");
+        .text(xLabel);
 
   svg.append("g")
       .attr("class", "y axis")
@@ -123,15 +126,15 @@ svg.append("text")      // text label for the x axis
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end");
-	
+
 svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0-60)
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
-        .text("Segment Size (MB)");
-  
+        .text(yLabel);
+
 svg.selectAll(".bar")
       .data(data)
     .enter().append("rect")
