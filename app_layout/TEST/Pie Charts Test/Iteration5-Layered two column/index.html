@@ -46,6 +46,9 @@
 	var lineToLabelEnd = outerRadius * .2;
 	var lineToLabelStart = outerRadius;
 
+	var pieSegmentPullOut = 5;
+	var piePullOutDuration = 500;
+
 	// --------------------
 	var color = d3.scaleOrdinal()
 	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
@@ -56,7 +59,7 @@
 
 	var arcOver = d3.arc()
 	.innerRadius(innerRadius)
-	.outerRadius(outerRadius+5);
+	.outerRadius(outerRadius + pieSegmentPullOut);
 
 	var labelArc = d3.arc()
 	.innerRadius(innerRadius)
@@ -80,10 +83,8 @@
 
 	//outer most circle
 	svg.append("circle")
-		.attr("r", outerRadius + 15)
-		.style("fill", "blue")
-		.style("stroke", "black")
-		.style("stroke-width", 2)
+		.attr("r", outerRadius + pieSegmentPullOut)
+		.style("fill", "white")
 		.attr("transform", function(d) {
 			return "translate(" + 0 + "," + 0 + ")";
 		});
@@ -96,39 +97,47 @@
 		.attr("transform", function(d) {
 			return "translate(" + 0 + "," + 0 + ")";
 		});
-
-	var total = 0;
-	d3.csv("data.csv", type, function(error, data)
+	function changeArc(className, arc)
 	{
-		if (error)
-		{
-			throw error;
-		}
-		data = parseData(data);
-		g = svg.selectAll(".arc")
-		.data(pie(data))
-		.enter().append("g")
-		.attr("class", "arc");
-
-		createTextBoxes(g);
+		d3.select(className)
+			.transition()
+			.duration(piePullOutDuration)
+			.attr("d", arc);
+	}
+	function changeLine(d, offset)
+	{
+		className = "." + d.data.name;
+		d3.select(className)
+			.transition()
+			.duration(piePullOutDuration)
+			.attr("x1", function(d) {
+				var a = calculateAngle(d);
+				return Math.cos(a) * (lineToLabelStart + offset);
+			})
+			.attr("y1", function(d) {
+				var a = calculateAngle(d);
+				return Math.sin(a) * (lineToLabelStart + offset);
+			})
+	}
+	function addPieSegments()
+	{
+		console.log("here");
 		g.append("path")
 		.attr("d", arc)
 		.style("fill", function(d) { return color(d.data.name); })
 		.on("mouseenter", function(d) {
 			innerLabelEnter(d);
-			d3.select(this)
-				.transition()
-			    .duration(100)
-				.attr("d", arcOver);
-
+			changeArc(this, arcOver);
+			changeLine(d, pieSegmentPullOut);
 		})
 		.on("mouseout", function(d) {
 			innerLabelExit(d);
-			d3.select(this)
-				.transition()
-				.duration(100)
-				.attr("d", arc);
+			changeArc(this, arc);
+			changeLine(d, 0);
 		});
+	}
+	function addLabel()
+	{
 		// text
 		g.append("text")
 		.attr("text-anchor", "middle")
@@ -144,9 +153,14 @@
 		})
 		.style("font-size", labelFontSize)
 		.text(function(d) { return d.data.name; });
-
+	}
+	function addPieToLabelLine()
+	{
 		// pie2labelline
 		g.append("line")
+		.attr("class", function (d) {
+			return d.data.name;
+		})
 		.attr("x1", function(d) {
 			var a = calculateAngle(d);
 			return Math.cos(a) * (lineToLabelStart);
@@ -164,7 +178,14 @@
 			return Math.sin(a) * (outerRadius + lineToLabelEnd);
 		})
 		.attr("stroke-width", 2)
-        .attr("stroke", "black");
+		.attr("stroke", "black");
+	}
+	function moveGraphToCenter()
+	{
+		svg.attr("transform", "translate(" + (width/ 2 + margin.left) + "," + (height/ 2 + margin.top) + ")");
+	}
+	function addPieLabelUnderLine()
+	{
 		// label underline
 		g.append("line")
 		.attr("x1", function(d) {
@@ -186,8 +207,26 @@
 		})
 		.attr("stroke-width", 2)
 		.attr("stroke", "black");
+	}
+	var total = 0;
+	d3.csv("data.csv", type, function(error, data)
+	{
+		if (error)
+		{
+			throw error;
+		}
+		data = parseData(data);
+		g = svg.selectAll(".arc")
+		.data(pie(data))
+		.enter().append("g")
+		.attr("class", "arc");
 
-		svg.attr("transform", "translate(" + (width/ 2 + margin.left) + "," + (height/ 2 + margin.top) + ")");
+		createTextBoxes(g);
+		addPieSegments();
+		addLabel();
+		addPieToLabelLine();
+		addPieLabelUnderLine();
+		moveGraphToCenter();
 		setTextBoxes(data);
 	});
 	function createTextBoxes(g)
