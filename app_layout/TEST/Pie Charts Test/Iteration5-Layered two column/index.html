@@ -57,6 +57,10 @@
 	.outerRadius(outerRadius)
 	.innerRadius(innerRadius);
 
+	var arcOver = d3.arc()
+	.innerRadius(innerRadius)
+	.outerRadius(outerRadius+5);
+
 	var labelArc = d3.arc()
 	.outerRadius(outerRadius)
 	.innerRadius(innerRadius);
@@ -76,11 +80,11 @@
 		d.count = +d.count;
 		return d;
 	}
-	
+
 	//outer most circle
 	svg.append("circle")
 		.attr("r", outerRadius + 15)
-		.style("fill", "black")
+		.style("fill", "blue")
 		.style("stroke", "black")
 		.style("stroke-width", 2)
 		.attr("transform", function(d) {
@@ -115,9 +119,18 @@
 		.style("fill", function(d) { return color(d.data.name); })
 		.on("mouseenter", function(d) {
 			innerLabelEnter(d);
+			d3.select(this)
+				.transition()
+			    .duration(100)
+				.attr("d", arcOver);
+
 		})
 		.on("mouseout", function(d) {
 			innerLabelExit(d);
+			d3.select(this)
+				.transition()
+				.duration(100)
+				.attr("d", arc);
 		});
 		// text
 		g.append("text")

@@ -24,8 +24,12 @@
 	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 	var arc = d3.arc()
-	.outerRadius(radius - 10)
+	.outerRadius(radius)
 	.innerRadius(5);
+
+	var arcOver = d3.arc()
+	.innerRadius(5)
+	.outerRadius(radius + 5);
 
 	var labelArc = d3.arc()
 	.outerRadius(radius - 40)
@@ -59,7 +63,20 @@
 
 		g.append("path")
 		.attr("d", arc)
-		.style("fill", function(d) { return color(d.data.name); });
+		.style("fill", function(d) { return color(d.data.name); })
+		.on("mouseenter", function(d) {
+			d3.select(this)
+				.transition()
+				.duration(100)
+				.attr("d", arcOver);
+
+		})
+		.on("mouseout", function(d) {
+			d3.select(this)
+				.transition()
+				.duration(100)
+				.attr("d", arc);
+		});;
 
 		g.append("text")
 		.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
