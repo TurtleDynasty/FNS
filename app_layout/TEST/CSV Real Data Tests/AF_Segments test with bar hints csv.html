@@ -14,49 +14,32 @@ body {
 }
 
 .bar {
-  fill: purple;
+  fill: steelblue;
 }
 
 .bar:hover {
-  fill: steelblue;
+  fill: maroon;
 }
 
 .x.axis path {
   display: none;
 }
 
-.d3-tip {
-  line-height: 1;
-  font-weight: bold;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 2px;
-}
-
-/* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
+.tooltip {
   position: absolute;
   text-align: center;
-}
-
-/* Style northward tooltips differently */
-.d3-tip.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
 }
 </style>
 <body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="http://d3js.org/d3.v4.min.js"></script>
 <script>
 
 var margin = {top: 30, right: 40, bottom: 65, left: 80};
@@ -67,37 +50,29 @@ var xLabel = "Volume ID" + xUnit;
 var yUnit = "MB";
 var yLabel = "Segment Size (" + yUnit + ")";
 
+var tooltipBox = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
 var formatPercent = d3.format("");
 
-var x = d3.scale.ordinal()
-    .rangeRoundBands([0, width], .1);
+var x = d3.scaleBand()
+    .rangeRound([0, width])
+	.padding(0.1);
 
-var y = d3.scale.linear()
+var y = d3.scaleLinear()
     .range([height, 0]);
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
+var xAxis = d3.axisBottom(x);
 
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
+var yAxis = d3.axisLeft(y)
     .tickFormat(formatPercent);
-
-var tip = d3.tip()// this is where you change the name of the tip
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) {
-    return "<strong>Seg Size:</strong> <span style='color:red'>" + d.segmentSize + " " + yUnit + "</span>";
-  })
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-svg.call(tip);
 
 d3.csv("af_segments.csv", type, function(error, data) {
   x.domain(data.map(function(d) { return d.volID; }));
@@ -141,11 +116,24 @@ svg.selectAll(".bar")
     .enter().append("rect")
       .attr("class", "bar")
       .attr("x", function(d) { return x(d.volID); })
-      .attr("width", x.rangeBand())
+      .attr("width", x.bandwidth())
       .attr("y", function(d) { return y(d.segmentSize); })
       .attr("height", function(d) { return height - y(d.segmentSize); })
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide)
+	  .on('mouseover', function(d) {
+		tooltipBox
+			.transition()
+		  	.duration(200)
+  			.style("top", d3.select(this).attr("y") + "px")
+			.style("left", d3.select(this).attr("x") + "px")
+			.style("opacity", .9)
+			.text(d.segmentSize + " " + yUnit)
+	  })
+      .on('mouseout', function(d) {
+		tooltipBox
+		    .transition()
+		  	.duration(500)
+			.style("opacity", 0)
+	  });
 
 });
 
