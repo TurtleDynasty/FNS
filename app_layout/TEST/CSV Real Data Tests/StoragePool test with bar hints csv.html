@@ -25,6 +25,19 @@ body {
   display: none;
 }
 
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
 </style>
 <body>
 <script src="http://d3js.org/d3.v4.min.js"></script>
@@ -36,7 +49,11 @@ var height = 600 - margin.top - margin.bottom;
 var xUnit = "";
 var xLabel = "Storage Pool" + xUnit;
 var yUnit = "MB"
-var yLabel = "Actual Size" + "(" + yUnit + ")";
+var yLabel = "Actual Size" + " " + "(" + yUnit + ")";
+
+var tooltipBox = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
 var formatPercent = d3.format("");
 
@@ -103,6 +120,21 @@ svg.selectAll(".bar")
       .attr("width", x.bandwidth())
       .attr("y", function(d) { return y(d.frequency); })
       .attr("height", function(d) { return height - y(d.frequency); })
+	  .on('mouseover', function(d) {
+		tooltipBox
+			.transition()
+			.duration(200)
+				.style("top", d3.select(this).attr("y") + "px")
+			.style("left", d3.select(this).attr("x") + "px")
+			.style("opacity", .9)
+			.text(d.frequency + " " + yUnit)
+	  })
+		.on('mouseout', function(d) {
+		tooltipBox
+			.transition()
+			.duration(500)
+			.style("opacity", 0)
+	  });
 
 });
 
