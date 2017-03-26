@@ -48,12 +48,16 @@
 	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 	var arc = d3.arc()
-	.outerRadius(outerRadius)
-	.innerRadius(innerRadius);
+	.innerRadius(innerRadius)
+	.outerRadius(outerRadius);
+
+	var arcOver = d3.arc()
+	.innerRadius(innerRadius)
+	.outerRadius(outerRadius+5);
 
 	var labelArc = d3.arc()
-	.outerRadius(outerRadius)
-	.innerRadius(innerRadius);
+	.innerRadius(innerRadius)
+	.outerRadius(outerRadius);
 
 	var pie = d3.pie()
 	.sort(null)
@@ -88,9 +92,18 @@
 		.style("fill", function(d) {  return color(d.data.name); })
 		.on("mouseenter", function(d) {
 			innerLabelEnter(d);
+			d3.select(this)
+				.transition()
+			    .duration(100)
+				.attr("d", arcOver);
+
 		})
 		.on("mouseout", function(d) {
 			innerLabelExit(d);
+			d3.select(this)
+				.transition()
+				.duration(100)
+				.attr("d", arc);
 		});
 		g.append("text")
 		.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
