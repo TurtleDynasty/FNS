@@ -249,9 +249,9 @@ d3.csv("heatmap.csv", function(d) {
 		createColorLegend();
 
 	});
-	function applyBoader(data, className, strokeWidth)
+	function applyBoader(data, className, strokeWidth, offset)
 	{
-		d3.select(className).attr("r", data.r + bubblePadding)
+		d3.select(className).attr("r", data.r + offset)
 		.style("stroke", "black")
 		.style("stroke-width", strokeWidth);
 	}
@@ -275,10 +275,11 @@ d3.csv("heatmap.csv", function(d) {
 			addCircle(d);
 		})
 		.on("mouseover", function(d) {
-			applyBoader(d, this, 2);
+			applyBoader(d, this, 2, bubblePadding);
+			d3.select(this)
 		})
 		.on("mouseout", function(d) {
-			applyBoader(d, this, 0);
+			applyBoader(d, this, 0, 0);
 		});
 	}
 	function createColorLegend()
