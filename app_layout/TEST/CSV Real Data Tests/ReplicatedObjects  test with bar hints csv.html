@@ -28,7 +28,7 @@ body {
 .tooltip {
   position: absolute;
   text-align: center;
-  width: 60px;
+  width: 70px;
   height: 28px;
   padding: 2px;
   font: 12px sans-serif;
@@ -123,9 +123,9 @@ svg.selectAll(".bar")
       .on('mouseover', function(d) {
 		tooltipBox
 			.transition()
-		  	.duration(200)
+		  	.duration(20)
   			.style("top", d3.select(this).attr("y") + "px")
-			.style("left", d3.select(this).attr("x") + "px")
+			.style("left", d3.event.pageX + "px")
 			.style("opacity", .9)
 			.text(d.replCount + " " + "replicated")
 	  })
