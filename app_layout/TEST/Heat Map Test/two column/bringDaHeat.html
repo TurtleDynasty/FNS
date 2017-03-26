@@ -11,16 +11,16 @@ text {
 <svg width="1000" height="1200"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
-var circleInView = {"darkblue": true,
-					"blue": true,
-					"seagreen": true,
-					"Turquoise": true,
-					"SpringGreen": true,
-					"greenyellow": true,
-					"yellow": true,
-					"orange": true,
-					"orangered":true,
-					"red": true};
+var circleInView = {"darkblue": false,
+					"blue": false,
+					"seagreen": false,
+					"Turquoise": false,
+					"SpringGreen": false,
+					"greenyellow": false,
+					"yellow": false,
+					"orange": false,
+					"orangered":false,
+					"red": false};
 
 var circleColors = ["darkblue",
 					"blue",
@@ -249,6 +249,12 @@ d3.csv("heatmap.csv", function(d) {
 		createColorLegend();
 
 	});
+	function applyBoader(data, className, strokeWidth)
+	{
+		d3.select(className).attr("r", data.r + bubblePadding)
+		.style("stroke", "black")
+		.style("stroke-width", strokeWidth);
+	}
 	function addDataCircles(root)
 	{
 		var node = svg.selectAll(".node")
@@ -262,19 +268,17 @@ d3.csv("heatmap.csv", function(d) {
 		.attr("r", function(d) { return d.r; })
 		.attr("class", function(d) { return grabClassColor(d.value); })
 		.style("fill", function(d) { return grabColor(d.value, circleColors); })
+		.style("opacity", 1)
 		.on("click", function(d) {
 			moveCircle(offset, 0);
 			moveText(offset, 0);
 			addCircle(d);
 		})
 		.on("mouseover", function(d) {
-		  d3.select(this).attr("r", d.r + bubblePadding)
-		  .style("stroke", "black")
-		  .style("stroke-width", 2);
+			applyBoader(d, this, 2);
 		})
 		.on("mouseout", function(d) {
-		  d3.select(this).attr("r", d.r)
-		  .style("stroke-width", 0);
+			applyBoader(d, this, 0);
 		});
 	}
 	function createColorLegend()
@@ -306,20 +310,19 @@ d3.csv("heatmap.csv", function(d) {
 	}
 	function toggleColor(data, color)
 	{
-		// Toggles whether a color is visible or not. aka moves offscreen.
-		// TODO research into changing the opacity vs moving the objects. Havn't thought about it TBH
+		// Toggles whether a color is visible or not. aka makes it invisible
 		subColor = color.substring(1);
 		circleInView[subColor] = !circleInView[subColor];
 		d3.selectAll(color)
-		.attr("transform", function(d) {
+		.style("opacity", function(d) {
 
 			if (circleInView[subColor])
 			{
-				return "translate(" + 0 + ")";
+				return 0;
 			}
 			else
 			{
-				return "translate(" + 10000 + ")";
+				return 1;
 			}
 
 		})
