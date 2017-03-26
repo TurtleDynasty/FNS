@@ -28,8 +28,11 @@
 			var x = d3.scaleBand().rangeRound([0, width]).padding(0.1);
 			var y = d3.scaleLinear().rangeRound([height, 0]);
 
-			var xAxisLabel = "File Space ID";
-			var yAxisLabel = "Actual Size(bytes)";
+			var xUnit = "";
+			var xAxisLabel = "File Space ID" + xUnit;
+			var yUnit = "bytes";
+			var yAxisLabel = "Actual Size (" + yUnit + ")";
+
 
 			var g = svg.append("g")
 			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
