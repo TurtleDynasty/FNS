@@ -50,6 +50,7 @@ var xUnit = "";
 var xLabel = "Storage Pool" + xUnit;
 var yUnit = "MB"
 var yLabel = "Actual Size" + " " + "(" + yUnit + ")";
+var tickPadding = "6";
 
 var tooltipBox = d3.select("body").append("div")
     .attr("class", "tooltip")
@@ -67,7 +68,8 @@ var y = d3.scaleLinear()
 var xAxis = d3.axisBottom(x);
 
 var yAxis = d3.axisLeft(y)
-    .tickFormat(formatPercent);
+    .tickFormat(formatPercent)
+	.tickPadding(tickPadding);
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
