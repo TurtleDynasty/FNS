@@ -16,12 +16,9 @@
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<script>
 	var url = "http://localhost/";
-
 	var margin = {top: 50, right: 50, bottom: 50, left: 50};
-
 	var width = 1000 - margin.left - margin.right;
 	var height = 900 - margin.top - margin.bottom;
-
 	var innerRadius = Math.min(width, height) / 4;
 	var outerRadius = Math.min(width, height) / 3;
 
@@ -54,16 +51,16 @@
 	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 	var arc = d3.arc()
-	.outerRadius(outerRadius)
-	.innerRadius(innerRadius);
+	.innerRadius(innerRadius)
+	.outerRadius(outerRadius);
 
 	var arcOver = d3.arc()
 	.innerRadius(innerRadius)
 	.outerRadius(outerRadius+5);
 
 	var labelArc = d3.arc()
-	.outerRadius(outerRadius)
-	.innerRadius(innerRadius);
+	.innerRadius(innerRadius)
+	.outerRadius(outerRadius);
 
 	var pie = d3.pie()
 	.sort(null)
