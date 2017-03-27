@@ -1,96 +1,107 @@
 <!DOCTYPE html>
-<style>
+<meta charset="utf-8">
+<style> /* set the CSS */
 
-.axis .domain {
-  display: none;
-}
+.bar { fill: steelblue; }
 
 </style>
-<svg width="960" height="500"></svg>
+<body>
+
+<!-- load the d3.js library -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 
-var svg = d3.select("svg"),
-    margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom,
-    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// set the dimensions and margins of the graph
+var margin = {top: 50, right: 50, bottom: 50, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
+// set the ranges
 var x = d3.scaleBand()
-    .rangeRound([0, width])
-    .paddingInner(0.05)
-    .align(0.1);
-
+          .range([0, width])
+          .padding(0.1);
 var y = d3.scaleLinear()
-    .rangeRound([height, 0]);
+          .range([height, 0]);
 
-var z = d3.scaleOrdinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+// append the svg object to the body of the page
+// append a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("data.csv", function(d, i, columns) {
-  for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
-  d.total = t;
-  return d;
-}, function(error, data) {
+// get the data
+d3.csv("data.csv", function(error, data) {
   if (error) throw error;
 
-  var keys = data.columns.slice(1);
+  // format the data
+  data.forEach(function(d) {
+    d.value1 = +d.value1;
+	d.value2 = +d.value2;
+	d.value3 = +d.value3;
+  });
 
-  data.sort(function(a, b) { return b.total - a.total; });
-  x.domain(data.map(function(d) { return d.State; }));
-  y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
-  z.domain(keys);
+  // Scale the range of the data in the domains
+  x.domain(data.map(function(d) { return d.name; }));
+  y.domain([0, d3.max(data, function(d) { return d.value3; })]);
 
-  g.append("g")
-    .selectAll("g")
-    .data(d3.stack().keys(keys)(data))
-    .enter().append("g")
-      .attr("fill", function(d) { return z(d.key); })
-    .selectAll("rect")
-    .data(function(d) { return d; })
-    .enter().append("rect")
-      .attr("x", function(d) { return x(d.data.State); })
-      .attr("y", function(d) { return y(d[1]); })
-      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-      .attr("width", x.bandwidth());
+  // append the rectangles for the bar chart
+  var bar1 = svg.selectAll(".bar")
+      .data(data)
+    .enter()
+	bar1.append("rect")
+		.attr("class", "bar")
+		.attr("x", function(d) {
+			return x(d.name);
+		})
+		.attr("width", x.bandwidth())
+		.attr("y", function(d) {
+			return y(d.value3);
+		})
+		.attr("height", function(d) {
+			console.log(y(d.value1)-y(d.value2));
+			console.log(y(d.value2)-y(d.value3));
+			return y(d.value2)-y(d.value3);
+		})
+		.style("fill", "cyan");
+	bar1.append("rect")
+		.attr("class", "bar")
+		.attr("x", function(d) {
+			return x(d.name);
+		})
+		.attr("width", x.bandwidth())
+		.attr("y", function(d) {
+			return y(d.value2);
+		})
+		.attr("height", function(d) {
+			return y(d.value1)-y(d.value2);
+		});
+	bar1.append("rect")
+			.attr("class", "bar")
+			.attr("x", function(d) {
+				return x(d.name);
+			})
+			.attr("width", x.bandwidth())
+			.attr("y", function(d) {
+				return y(d.value1);
+			})
+			.attr("height", function(d) {
+				return height - y(d.value1);
+			})
+			.style("fill", "red");
 
-  g.append("g")
-      .attr("class", "axis")
+  svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
 
-  g.append("g")
-      .attr("class", "axis")
-      .call(d3.axisLeft(y).ticks(null, "s"))
-    .append("text")
-      .attr("x", 2)
-      .attr("y", y(y.ticks().pop()) + 0.5)
-      .attr("dy", "0.32em")
-      .attr("fill", "#000")
-      .attr("font-weight", "bold")
-      .attr("text-anchor", "start")
-      .text("Population");
+  // add the y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y));
 
-  var legend = g.append("g")
-      .attr("font-family", "sans-serif")
-      .attr("font-size", 10)
-      .attr("text-anchor", "end")
-    .selectAll("g")
-    .data(keys.slice().reverse())
-    .enter().append("g")
-      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-  legend.append("rect")
-      .attr("x", width - 19)
-      .attr("width", 19)
-      .attr("height", 19)
-      .attr("fill", z);
-
-  legend.append("text")
-      .attr("x", width - 24)
-      .attr("y", 9.5)
-      .attr("dy", "0.32em")
-      .text(function(d) { return d; });
 });
 
 </script>
+</body>
