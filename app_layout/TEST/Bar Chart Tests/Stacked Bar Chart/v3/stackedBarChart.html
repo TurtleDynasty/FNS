@@ -10,7 +10,10 @@
 <!-- load the d3.js library -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
-
+var xUnit = "";
+var xAxisLabel = "File Space ID" + xUnit;
+var yUnit = "bytes";
+var yAxisLabel = "Actual Size (" + yUnit + ")";
 // set the dimensions and margins of the graph
 var margin = {top: 50, right: 50, bottom: 50, left: 50},
     width = 960 - margin.left - margin.right,
@@ -98,13 +101,34 @@ d3.csv("data.csv", function(error, data) {
 			})
 			.style("fill", "red");
 
-  svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+	// add the X Axis
+	svg.append("g")
+	  .attr("transform", "translate(0," + height + ")")
+	  .call(d3.axisBottom(x));
 
-  // add the y Axis
-  svg.append("g")
-      .call(d3.axisLeft(y));
+	// add X Axis label
+	svg.append("text")
+	  .attr("class", "label")
+	  .attr("transform", "rotate(0)")
+	  .attr("y", height + 20)
+	  .attr("x", width/2)
+	  .attr("dy", "1em")
+	  .style("text-anchor", "middle")
+	  .text(xAxisLabel);
+
+	// add the Y Axis
+	svg.append("g")
+	  .call(d3.axisLeft(y));
+
+	// add Y Axis label
+	svg.append("text")
+	  .attr("class", "label")
+	  .attr("transform", "rotate(-90)")
+	  .attr("y", 0 - margin.left)
+	  .attr("x", 0 - (height / 2) - 5)
+	  .attr("dy", "1em")
+	  .style("text-anchor", "middle")
+	  .text(yAxisLabel);
 
 });
 // svg.selectAll(".class1, class2, #id2")

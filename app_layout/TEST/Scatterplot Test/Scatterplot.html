@@ -42,8 +42,11 @@
 		var width = 960 - margin.left - margin.right;
 		var height = 500 - margin.top - margin.bottom;
 		var tickPadding = "10";
-		var xLabel = "Calories";
-		var yLabel = "Protein (g)";
+
+		var xUnit = "";
+		var xAxisLabel = "File Space ID" + xUnit;
+		var yUnit = "bytes";
+		var yAxisLabel = "Actual Size (" + yUnit + ")";
 
 		// setup x
 		var xValue = function(d) { return d.X;}, // data -> value
@@ -137,7 +140,7 @@
 			.attr("x", width/2)
 			.attr("dy", "1em")
 			.style("text-anchor", "middle")
-			.text(xLabel);
+			.text(xAxisLabel);
 	}
 	function createYAxis()
 	{
@@ -152,7 +155,7 @@
 			.attr("x", 0 - (height / 2) - 5)
 			.attr("dy", "1em")
 			.style("text-anchor", "middle")
-			.text(yLabel);
+			.text(yAxisLabel);
 	}
 	function drawDots(data)
 	{
