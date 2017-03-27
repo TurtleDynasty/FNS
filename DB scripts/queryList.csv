@@ -6,4 +6,6 @@
 "5", "tsmgui11","SELECT VOLID, SEGSIZE/1000000 from `af_segments` WHERE SEGSIZE NOT LIKE '' GROUP BY VOLID ORDER BY `af_segments`.`VOLID`","letter,frequency"
 "6", "tsmgui11","SELECT `nodes`.`NODENAME`, COUNT(`replicated_objects`.`NODEID`) FROM `replicated_objects` INNER JOIN `nodes` ON `replicated_objects`.`NODEID` = `nodes`.`NODEID` GROUP BY `replicated_objects`.`NODEID`","letter,frequency"
 "7", "tsmgui11","SELECT `STGPOOL_NAME` , SUM(`OBJECT_COUNT`) FROM `containers` WHERE OBJECT_COUNT NOT LIKE '' GROUP BY `STGPOOL_NAME`", "name,count"
-"8", "tsmgui11","SELECT `CHUNKID` , `REFCOUNT` FROM `sd_chunk_locations`", "id,value"
+"8", "tsmgui11","SELECT `POOLID` , SUM(`REFCOUNT`) FROM `sd_chunk_locations` WHERE `REFCOUNT` NOT LIKE '' GROUP BY `POOLID`", "id,value"
+"9", "tsmgui11","SELECT `CHUNKID` , SUM(`REFCOUNT`) FROM `sd_chunk_locations` WHERE `REFCOUNT` NOT LIKE '' GROUP BY `CHUNKID`","id,value"
+"10","vcloud362","SELECT `CNTRID` , SUM(`REFCOUNT`) FROM `sd_chunk_locations` WHERE `REFCOUNT` NOT LIKE '' GROUP BY `CNTRID`","id,value"
