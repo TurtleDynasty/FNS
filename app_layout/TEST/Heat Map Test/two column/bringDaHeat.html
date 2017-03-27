@@ -117,15 +117,26 @@ function moveText(offset, xCord)
 		}
 	});
 }
-function addCircle(d)
+function addCircle(d, className)
 {
-	addLargeCircle(d);
-	addDeletionCircle(d);
-	addTextBackground(d)
-	addTopText(d);
-	addBottomText(d);
+	addLargeCircle(d, className);
+	addDeletionCircle(d, className);
+	addTextBackground(d, className)
+	addTopText(d, className);
+	addBottomText(d, className);
 }
-function addLargeCircle(d)
+function highlightCircle(className)
+{
+	var originalColor = d3.select(className)["_groups"][0][0]["style"]["fill"];
+	d3.select(className)
+	.style("opacity", 0)
+	.transition()
+	.duration(200)
+	.style("opacity", 1)
+	.transition()
+	.duration(300);
+}
+function addLargeCircle(d, className)
 {
 	svg.append("circle")
 		.attr("r", r)
@@ -135,9 +146,12 @@ function addLargeCircle(d)
 		.attr("transform", function(d) {
 			return "translate(" + r + "," + y + ")";
 		})
-		.attr("class", "bubbleCircle");
+		.attr("class", "bubbleCircle")
+		.on("click", function(d) {
+			highlightCircle(className);
+		});
 }
-function addDeletionCircle(d)
+function addDeletionCircle(d, className)
 {
 	svg.append("circle")
 		.attr("r", 10)
@@ -154,7 +168,7 @@ function addDeletionCircle(d)
 					moveText(-offset, x);
 				});
 }
-function addTextBackground(d)
+function addTextBackground(d, className)
 {
 	svg.append("circle")
 		.attr("r", r - 10)
@@ -164,9 +178,12 @@ function addTextBackground(d)
 		.attr("transform", function(d) {
 			return "translate(" + r + "," + y + ")";
 		})
-		.attr("class", "bubbleCircle");
+		.attr("class", "bubbleCircle")
+		.on("click", function(d) {
+			highlightCircle(className);
+		});
 }
-function addTopText(d)
+function addTopText(d, className)
 {
 	svg.append("text")
 		.attr("x", x)
@@ -179,9 +196,12 @@ function addTopText(d)
 		.style("font-size", infoBubbleFontSize)
 		.text(d.class)
 		.style("fill", "black")
-		.attr("class", "bubbleText");
+		.attr("class", "bubbleText")
+		.on("click", function(d) {
+			highlightCircle(className);
+		});
 }
-function addBottomText(d)
+function addBottomText(d, className)
 {
 	svg.append("text")
 		.attr("x", x)
@@ -193,7 +213,10 @@ function addBottomText(d)
 		.style("font-size", infoBubbleFontSize)
 		.text(d.value)
 		.style("fill", "black")
-		.attr("class", "bubbleText");
+		.attr("class", "bubbleText")
+		.on("click", function(d) {
+			highlightCircle(className);
+		});
 }
 function grabClassColor(number)
 {
@@ -272,7 +295,7 @@ d3.csv("heatmap.csv", function(d) {
 		.on("click", function(d) {
 			moveCircle(offset, 0);
 			moveText(offset, 0);
-			addCircle(d);
+			addCircle(d, this);
 		})
 		.on("mouseover", function(d) {
 			applyBoader(d, this, 2, bubblePadding);

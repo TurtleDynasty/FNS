@@ -36,6 +36,7 @@ var svg = d3.select("body").append("svg")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 var flipCount = 0;
+var toggleSwap = true;
 var buttonColors = ["red", "blue"];
 var flipButton = svg.append("rect")
 	.attr("class", "flipButton")
@@ -45,12 +46,22 @@ var flipButton = svg.append("rect")
 	.attr("height", 20)
 	.on("click", function (d)
 	{
-		console.log("here");
+
 		d3.select(this).style("fill", function (d) {
 				flipCount += 1;
 				return buttonColors[flipCount%2];
 			});
-		swapBars(".bar1", ".bar2", 40);
+		if (toggleSwap)
+		{
+			console.log("here1");
+			swapBars(".bar1", ".bar2", toggleSwap);
+		}
+		else
+		{
+			console.log("here2");
+			swapBars(".bar2", ".bar1", toggleSwap);
+		}
+		toggleSwap = !toggleSwap;
 	})
 	.style("fill", "red");
 
@@ -62,7 +73,6 @@ d3.csv("data.csv", function(error, data) {
   data.forEach(function(d) {
     d.value1 = +d.value1;
 	d.value2 = +d.value2;
-	d.value3 = +d.value3;
   });
 
   // Scale the range of the data in the domains
@@ -73,7 +83,6 @@ d3.csv("data.csv", function(error, data) {
   var bar1 = svg.selectAll(".bar")
       .data(data)
     .enter()
-
 	bar1.append("rect")
 		.attr("class", "bar2")
 		.attr("x", function(d) {
@@ -86,7 +95,8 @@ d3.csv("data.csv", function(error, data) {
 		.attr("height", function(d) {
 			return y(d.value1)-y(d.value2);
 		})
-		.style("fill", "blue");;
+		.style("fill", "blue");
+
 	bar1.append("rect")
 			.attr("class", "bar1")
 			.attr("x", function(d) {
@@ -132,35 +142,29 @@ d3.csv("data.csv", function(error, data) {
 
 });
 // svg.selectAll(".class1, class2, #id2")
-function swapBars(bar1, bar2, offset)
+function swapBars(bar1, bar2, toggle)
 {
 	var classes = bar1 + ", " + bar2;
 	var barList = d3.selectAll(classes)["_groups"][0];
-	var index = 0;
-	console.log(barList[index]["style"]["fill"]);
-	barList[index]["style"]["fill"] = "black";
-	barList[barList.length/2 +index]["style"]["fill"] = "black";
-	console.log(barList[index]["style"]["fill"]);
-	console.log(barList[barList.length/2 +index]);
+	for(i = 0; i < barList.length/2; i++)
+	{
+		var y1 = barList[i]["y"]["baseVal"]["value"];
+		var h1 = barList[i]["height"]["baseVal"]["value"];
+		var y2 = barList[barList.length/2 + i]["y"]["baseVal"]["value"];
+		var h2 = barList[barList.length/2 + i]["height"]["baseVal"]["value"];
+		if (toggle)
+		{
+			barList[i]["y"]["baseVal"]["value"] = y1 + h2;
+			barList[barList.length/2 + i]["y"]["baseVal"]["value"] = y2 - h1;
+		}
+		else
+		{
+			barList[i]["y"]["baseVal"]["value"] = y1 - h2;
+			barList[barList.length/2 + i]["y"]["baseVal"]["value"] = y2 + h1;
+		}
 
+	}
 }
-/*
-value3 stuff
-bar1.append("rect")
-	.attr("class", "bar")
-	.attr("x", function(d) {
-		return x(d.name);
-	})
-	.attr("width", x.bandwidth())
-	.attr("y", function(d) {
-		return y(d.value3);
-	})
-	.attr("height", function(d) {
-		console.log(y(d.value1)-y(d.value2));
-		console.log(y(d.value2)-y(d.value3));
-		return y(d.value2)-y(d.value3);
-	})
-	.style("fill", "cyan");
-*/
+
 </script>
 </body>
