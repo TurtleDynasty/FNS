@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+.bar { fill: steelblue; }
+
+</style>
+<body>
+
+<!-- load the d3.js library -->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+// set the dimensions and margins of the graph
+var margin = {top: 50, right: 50, bottom: 50, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// set the ranges
+var x = d3.scaleBand()
+          .range([0, width])
+          .padding(0.1);
+var y = d3.scaleLinear()
+          .range([height, 0]);
+
+// append the svg object to the body of the page
+// append a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+var flipCount = 0;
+var buttonColors = ["red", "blue"];
+var flipButton = svg.append("rect")
+	.attr("class", "flipButton")
+	.attr("x", width)
+	.attr("y", 20)
+	.attr("width", 20)
+	.attr("height", 20)
+	.on("click", function (d)
+	{
+		console.log("here");
+		d3.select(this).style("fill", function (d) {
+				flipCount += 1;
+				return buttonColors[flipCount%2];
+			});
+		swapBars(".bar1", ".bar2", 40);
+	})
+	.style("fill", "red");
+
+// get the data
+d3.csv("data.csv", function(error, data) {
+  if (error) throw error;
+
+  // format the data
+  data.forEach(function(d) {
+    d.value1 = +d.value1;
+	d.value2 = +d.value2;
+	d.value3 = +d.value3;
+  });
+
+  // Scale the range of the data in the domains
+  x.domain(data.map(function(d) { return d.name; }));
+  y.domain([0, d3.max(data, function(d) { return d.value2; })]);
+
+  // append the rectangles for the bar chart
+  var bar1 = svg.selectAll(".bar")
+      .data(data)
+    .enter()
+
+	bar1.append("rect")
+		.attr("class", "bar2")
+		.attr("x", function(d) {
+			return x(d.name);
+		})
+		.attr("width", x.bandwidth())
+		.attr("y", function(d) {
+			return y(d.value2);
+		})
+		.attr("height", function(d) {
+			return y(d.value1)-y(d.value2);
+		})
+		.style("fill", "blue");;
+	bar1.append("rect")
+			.attr("class", "bar1")
+			.attr("x", function(d) {
+				return x(d.name);
+			})
+			.attr("width", x.bandwidth())
+			.attr("y", function(d) {
+				return y(d.value1);
+			})
+			.attr("height", function(d) {
+				return height - y(d.value1);
+			})
+			.style("fill", "red");
+
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+  // add the y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y));
+
+});
+// svg.selectAll(".class1, class2, #id2")
+function swapBars(bar1, bar2, offset)
+{
+	var classes = bar1 + ", " + bar2;
+	var barList = d3.selectAll(classes)["_groups"][0];
+	var index = 0;
+	console.log(barList[index]["style"]["fill"]);
+	barList[index]["style"]["fill"] = "black";
+	barList[barList.length/2 +index]["style"]["fill"] = "black";
+	console.log(barList[index]["style"]["fill"]);
+	console.log(barList[barList.length/2 +index]);
+
+}
+/*
+value3 stuff
+bar1.append("rect")
+	.attr("class", "bar")
+	.attr("x", function(d) {
+		return x(d.name);
+	})
+	.attr("width", x.bandwidth())
+	.attr("y", function(d) {
+		return y(d.value3);
+	})
+	.attr("height", function(d) {
+		console.log(y(d.value1)-y(d.value2));
+		console.log(y(d.value2)-y(d.value3));
+		return y(d.value2)-y(d.value3);
+	})
+	.style("fill", "cyan");
+*/
+</script>
+</body>
