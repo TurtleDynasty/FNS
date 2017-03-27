@@ -127,14 +127,19 @@ function addCircle(d, className)
 }
 function highlightCircle(className)
 {
-	var originalColor = d3.select(className)["_groups"][0][0]["style"]["fill"];
-	d3.select(className)
-	.style("opacity", 0)
-	.transition()
-	.duration(200)
-	.style("opacity", 1)
-	.transition()
-	.duration(300);
+	var opacity = d3.select(className)["_groups"][0][0]["style"]["opacity"];
+	var to = [1,0];
+	var from = [0,1];
+	if (to[opacity] != null)
+	{
+		d3.select(className)
+		.style("opacity", to[opacity])
+		.transition()
+		.duration(200)
+		.style("opacity", from[opacity])
+		.transition()
+		.duration(300);
+	}
 }
 function addLargeCircle(d, className)
 {
