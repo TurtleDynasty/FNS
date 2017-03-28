@@ -130,10 +130,12 @@
 					var opacity = d3.selectAll(this)["_groups"][0]["style"]["fill-opacity"];
 					if (opacity == 1)
 					{
+						d3.select(this).attr("r", 0);
 						return 0;
 					}
 					else
 					{
+						d3.select(this).attr("r", dotSize);
 						return 1;
 					}
 				});
@@ -194,12 +196,18 @@
 			.on("mouseover", function(d) {
 				console.log(d3.select(this)["_groups"][0][0]);
 				d3.select(this).attr("r", dotSize + dotPadding);
-				tooltip.transition()
-					.duration(200)
-					.style("opacity", .9);
-				tooltip.html(d["Name"] + "<br/> (" + xValue(d) + ", " + yValue(d) + ")")
-					.style("left", (d3.event.pageX + dotSize + dotPadding + 10) + "px")
-					.style("top", (d3.event.pageY - 28) + "px");
+				var test = d3.select(this)["_groups"][0][0]["style"]["fill-opacity"];
+				console.log(test);
+				if (test != 0)
+				{
+					tooltip.transition()
+						.duration(200)
+						.style("opacity", .9);
+					tooltip.html(d["Name"] + "<br/> (" + xValue(d) + ", " + yValue(d) + ")")
+						.style("left", (d3.event.pageX + dotSize + dotPadding + 10) + "px")
+						.style("top", (d3.event.pageY - 28) + "px");
+				}
+
 			})
 			.on("mouseout", function(d) {
 				d3.select(this).attr("r", dotSize);
