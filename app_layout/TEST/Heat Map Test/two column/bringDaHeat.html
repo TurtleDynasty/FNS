@@ -321,7 +321,7 @@ d3.csv("heatmap.csv", function(d) {
 		.attr("class", function(d) { return grabClassColor(d.value); })
 		.style("fill", function(d) { return grabColor(d.value, circleColors); })
 		.style("opacity", 1)
-		.on("click", function(d) {
+		.on("dblclick", function(d) {
 			var opacity = d3.select(this)["_groups"][0][0]["style"]["opacity"];
 			if (opacity == 1)
 			{
