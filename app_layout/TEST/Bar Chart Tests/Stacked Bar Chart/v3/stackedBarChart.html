@@ -113,37 +113,27 @@
 		y.domain([0, d3.max(data, function(d) { return maxNumber(d); })]);
 
 		// append the rectangles for the bar chart
-		var bar1 = svg.selectAll(".bar")
-		.data(data)
-		.enter()
-		bar1.append("rect")
-		.attr("class", "bar2")
-		.attr("x", function(d) {
-			return x(d.name);
-		})
-		.attr("width", x.bandwidth())
-		.attr("y", function(d) {
-			return y(d.value2);
-		})
-		.attr("height", function(d) {
-			return y(d.value1)-y(d.value2);
-		})
-		.style("fill", "blue");
+		svg.append("g")
+		.attr("class", function (d)
+		{
+			for(i = 0; i < data.length; i++)
+			{
+				addBar(x(data[i].name), y(data[i].value4), y(data[i].value3)-y(data[i].value4), "orange", "bar4");
+				addBar(x(data[i].name), y(data[i].value3), y(data[i].value2)-y(data[i].value3), "cyan", "bar3");
+				addBar(x(data[i].name), y(data[i].value2), y(data[i].value1)-y(data[i].value2), "blue", "bar2");
+				addBar(x(data[i].name), y(data[i].value1), height - y(data[i].value1), "red", "bar1");
+			}
+			return "bars";
 
-		bar1.append("rect")
-		.attr("class", "bar1")
-		.attr("x", function(d) {
-			return x(d.name);
 		})
-		.attr("width", x.bandwidth())
-		.attr("y", function(d) {
-			return y(d.value1);
-		})
-		.attr("height", function(d) {
-			return height - y(d.value1);
-		})
-		.style("fill", "red");
 
+		createXAxis();
+		createyAxis();
+
+
+	});
+	function createXAxis()
+	{
 		// add the X Axis
 		svg.append("g")
 		.attr("transform", "translate(0," + height + ")")
@@ -158,7 +148,9 @@
 		.attr("dy", "1em")
 		.style("text-anchor", "middle")
 		.text(xAxisLabel);
-
+	}
+	function createyAxis()
+	{
 		// add the Y Axis
 		svg.append("g")
 		.call(d3.axisLeft(y));
@@ -172,8 +164,23 @@
 		.attr("dy", "1em")
 		.style("text-anchor", "middle")
 		.text(yAxisLabel);
-
-	});
+	}
+	function addBar(xCord, yCord, barHeight, color, className)
+	{
+		svg.append("rect")
+		.attr("class", className)
+		.attr("x", function(d) {
+			return xCord;
+		})
+		.attr("width", x.bandwidth())
+		.attr("y", function(d) {
+			return yCord;
+		})
+		.attr("height", function(d) {
+			return barHeight;
+		})
+		.style("fill", color);
+	}
 	// svg.selectAll(".class1, class2, #id2")
 	function swapBars(bar1, bar2, toggle)
 	{
