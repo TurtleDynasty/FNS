@@ -9,3 +9,5 @@
 "8", "tsmgui11","SELECT `POOLID` , SUM(`REFCOUNT`) FROM `sd_chunk_locations` WHERE `REFCOUNT` NOT LIKE '' GROUP BY `POOLID`", "id,value"
 "9", "tsmgui11","SELECT `CHUNKID` , SUM(`REFCOUNT`) FROM `sd_chunk_locations` WHERE `REFCOUNT` NOT LIKE '' GROUP BY `CHUNKID`","id,value"
 "10","vcloud362","SELECT `CNTRID` , SUM(`REFCOUNT`) FROM `sd_chunk_locations` WHERE `REFCOUNT` NOT LIKE '' GROUP BY `CNTRID`","id,value"
+"11","tsmgui11", "SELECT NODE_NAME, SUM(NUM_FILES) FROM `occupancy` GROUP BY NODE_NAME","nodeName,numFiles"
+"12","vcloud362","SELECT POOLID, FILESIZE, MAXSIZE FROM `sd_containers` GROUP BY POOLID","name,value1,value2"
