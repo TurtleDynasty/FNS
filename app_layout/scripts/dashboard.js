@@ -66,12 +66,21 @@ $(".save").click(function () {
 
 //Selection list on the build section
 $(".vis-select-container").click(function () {
-  $(".vis-select-container").removeClass("vis-list-selected");
+  $(".vis-list-selected").removeClass("vis-list-selected");
   $(this).addClass("vis-list-selected");
+
+  //switch out overview
   var selected = d3.select(".vis-select-container.vis-list-selected");
-  var value = selected.attr("value") - 1;
-  $(".overview.overview-selected").show().hide();
+  var value = selected.attr("value");
+  $(".overview.overview-selected").removeClass("overview-selected").hide();
   $(".overview:eq(" + value +")").show().addClass("overview-selected");
+
+  //switch out options
+  $(".vis-options.vis-options-selected").removeClass("vis-options-selected").hide();
+  $(".vis-options:eq(" + value +")").show().addClass("vis-options-selected");
+
+  //ready generate button
+  $(".generate-button").addClass("ready");
 
 });
 
@@ -97,6 +106,7 @@ function goto_view(){
 
 function goto_build(){
   $("#buildsection").show();
+  refresh_build();
   $("#viewsection").animate({top: window.innerHeight + 'px'}, 500);
   $("#buildsection").animate({ top: 0 }, 500, function (){
     $("#viewsection").hide();
@@ -104,6 +114,15 @@ function goto_build(){
   setTimeout(function(){
     $(".return-to-selection").animate({top: '-200px'}, {queue: true, duration: 500});
   }, 500);
+}
+
+function refresh_build(){
+  $(".vis-list-selected").removeClass("vis-list-selected");
+  $(".generate-button").removeClass("ready");
+  $(".overview-selected").removeClass("overview-selected").hide();
+  $(".vis-options-selected").removeClass("vis-options-selected").hide();
+  $(".overview").first().addClass("overview-selected").show();
+  $(".vis-options").first().addClass("vis-options-selected").show();
 }
 
 function change_vis_title(title){
@@ -139,6 +158,12 @@ function load_vis(value){
   }
   else if (value == 7) {
     setTimeout(init_heatmap, 1500)
+  }
+  else if (value == 8) {
+    setTimeout(init_scatter_test, 1500)
+  }
+  else if (value == 9) {
+    setTimeout(init_occupancy_test, 1500)
   }
   else {
     change_vis_title("A visualization with that index could not be found...");

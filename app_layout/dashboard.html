@@ -8,9 +8,6 @@
 
   <link href="css/utility.css" rel="stylesheet">
   <link href="css/dashboard.css" rel="stylesheet">
-  <link href="css/replicatedobjects.css" rel="stylesheet">
-  <link href="css/af_segments.css" rel="stylesheet">
-  <link href="css/backup_test.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
   <script type="text/javascript" src="dist/d3.js"></script>
   <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
@@ -48,6 +45,8 @@
             <div class="vis-select-container" value="5">Object Count by Container</div>
             <div class="vis-select-container" value="6">Storage Pool Test</div>
             <div class="vis-select-container" value="7">Heat Map Test</div>
+            <div class="vis-select-container" value="8">Scatter Plot Test</div>
+            <div class="vis-select-container" value="9">Occupancy Test</div>
           </div>
         </div>
       </div>
@@ -56,6 +55,11 @@
         <div class="build-widget2">
           <h3>Overview</h3>
           <div class="build-widget-content">
+            <div class="overview overview-selected opacity-half none-selected">
+              <div class="overview-description text-align-center">
+                Select a visualization.
+              </div>
+            </div>
             <div class="overview">
               <img class="overview-icon" src="resources/sunburst-thumb.png" alt="" style="height:200px;width:200px;">
               <div class="overview-description">
@@ -65,7 +69,7 @@
             <div class="overview">
               <img class="overview-icon" src="resources/bargraph.png" alt="" style="height:200px;width:200px;">
               <div class="overview-description">
-                Replicated Objects: The total amount of objects being replicated in a single node that is currently in use. 
+                Replicated Objects: The total amount of objects being replicated in a single node that is currently in use.
               </div>
             </div>
             <div class="overview">
@@ -98,6 +102,18 @@
                 Heat Map: The current number of references in each container that is currently in use.
               </div>
             </div>
+            <div class="overview">
+              <img class="overview-icon" src="resources/scatter.png" alt="" style="height:200px;width:200px;">
+              <div class="overview-description">
+                Scatter Test: This is the Scatter Plot Test description.
+              </div>
+            </div>
+            <div class="overview">
+              <img class="overview-icon" src="resources/bargraph.png" alt="" style="height:200px;width:200px;">
+              <div class="overview-description">
+                Occupancy Test: This is the Occupancy Test descritption.
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -106,17 +122,43 @@
         <div class="build-widget3">
           <h3>Options</h3>
           <div class="build-widget-content">
-            <h4>Dropdown Option</h4>
-            <select class="form-control" id="sel1">
-              <option value=""></option>
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-              <option value="3">Option 3</option>
-              <option value="4">Option 4</option>
-            </select>
+            <div class="vis-options vis-options-selected opacity-half none-selected">
+              <div class="overview-description text-align-center">
+                Select a visualization.
+              </div>
+            </div>
+            <div class="vis-options">
+              <div class="build-widget-content">
+                <h4>Dropdown Option</h4>
 
-            <h4>Checkbox Option</h4>
-            <input type="checkbox" id="checkbox-option" value="checkbox-option" class="options-checkbox">
+                <select class="form-control" id="sel1">
+                  <option value=""></option>
+                  <option value="1">Option 1</option>
+                  <option value="2">Option 2</option>
+                  <option value="3">Option 3</option>
+                  <option value="4">Option 4</option>
+                </select>
+                <h4>Checkbox Option</h4>
+                <input type="checkbox" id="checkbox-option" value="checkbox-option" class="options-checkbox">
+                <h4>Range Option</h4>
+                <input type="number" id="range1" value="" min="0" max="50" class="form-control options-range-left">
+                <h4 class="range-text">to</h4>
+                <input type="number" id="range2" value="" min="0" max="50" class="form-control options-range-right">
+              </div>
+            </div>
+
+            <div class="vis-options">
+              <div class="build-widget-content">
+                <h4>Dropdown Option</h4>
+                <select class="form-control" id="sel1">
+                  <option value=""></option>
+                  <option value="1">Option 1</option>
+                  <option value="2">Option 2</option>
+                  <option value="3">Option 3</option>
+                  <option value="4">Option 4</option>
+                </select>
+              </div>
+            </div>
           </div>
           <div class="generate-button-container">
             <div class="generate-button generate noselect">
