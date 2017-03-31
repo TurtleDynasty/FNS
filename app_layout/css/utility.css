@@ -13,7 +13,7 @@
   padding: 10px 0 0 0;
 }
 
-/*************\
+/*************\f
 | Margin
 \*************/
 .margin-top-20{
@@ -107,4 +107,12 @@
   -moz-transition: none !important;
   -o-transition: none !important;
   transition: none !important;
+}
+
+/*************\
+| Misc
+\*************/
+
+.opacity-half{
+	opacity: 0.5;
 }
