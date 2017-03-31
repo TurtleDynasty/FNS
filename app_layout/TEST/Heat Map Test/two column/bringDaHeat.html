@@ -83,6 +83,7 @@ function moveCircle(offset, xCord)
 		}
 
 	});
+
 }
 function moveText(offset, xCord)
 {
@@ -166,23 +167,6 @@ function addDeletionCircle(d, className)
 		.style("stroke-width", 2)
 		.attr("transform", function(d) {
 			return "translate(" + r + "," + (y - bubbleGraphYOffset + r + deletionCirclePadding) + ")";
-		})
-		.attr("class", "bubbleCircle")
-		.on("click", function(d) {
-					var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
-					moveCircle(-offset, x);
-					moveText(-offset, x);
-				});
-	var whiteWidth = 15;
-	var whiteHeight = 7;
-	svg.append("rect")
-		.attr("width", whiteWidth)
-		.attr("height", whiteHeight)
-		.style("fill", "white")
-		.style("stroke", "black")
-		.style("stroke-width", 1)
-		.attr("transform", function(d) {
-			return "translate(" + (r - whiteWidth/2) + "," + (y + r - whiteHeight/2 + deletionCirclePadding) + ")";
 		})
 		.attr("class", "bubbleCircle")
 		.on("click", function(d) {
