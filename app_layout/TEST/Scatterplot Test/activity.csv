@@ -1,484 +1,484 @@
-DATE_TIME	SEVERITY	MESSAGE
-2017-03-02 12:18	I	ANR0990I Server restart-recovery in progress. 
-2017-03-02 12:18	I	ANR0152I Database manager successfully started. 
-2017-03-02 12:18	I	ANR1628I The database manager is using port 51500 for server connections. 
-2017-03-02 12:19	W	"ANR1636W The server machine GUID changed: old value (), new value (0a.99.81.50.60.dd.11.e6.a5.62.00.15.5d.42.0e.ed). "
-2017-03-02 12:19	I	ANR2100I Activity log process has started. 
-2017-03-02 12:19	W	ANR3733W The master encryption key cannot be generated because the server password is not set. 
-2017-03-02 12:19	E	ANR8578E The IBM Spectrum Protect database does not have a password for the SSL key-ring file. 
-2017-03-02 12:19	I	ANR4726I The NAS-NDMP support module has been loaded. 
-2017-03-02 12:19	W	ANR1794W IBM Spectrum Protect SAN discovery is disabled by options. 
-2017-03-02 12:19	W	ANR7808W Oracle Library Attach module libacs.dll is not available from the system. 
-2017-03-02 12:19	I	ANR2200I Storage pool BACKUPPOOL defined (device class DISK). 
-2017-03-02 12:19	I	ANR2200I Storage pool ARCHIVEPOOL defined (device class DISK). 
-2017-03-02 12:19	I	ANR2200I Storage pool SPACEMGPOOL defined (device class DISK). 
-2017-03-02 12:19	I	ANR2803I License manager started. 
-2017-03-02 12:19	I	ANR8200I TCP/IP Version 4 driver ready for connection with clients on port 1500. 
-2017-03-02 12:19	I	ANR8260I Named Pipes driver ready for connection with clients. 
-2017-03-02 12:19	I	ANR0984I Process 1 for EXPIRE INVENTORY (Automatic) started in the BACKGROUND at 12:19:56. (PROCESS: 1)
-2017-03-02 12:19	I	ANR0811I Inventory client file expiration started as process 1. (PROCESS: 1)
-2017-03-02 12:19	I	ANR0984I Process 2 for AUDIT LICENSE started in the BACKGROUND at 12:19:58. (PROCESS: 2)
-2017-03-02 12:19	I	ANR2820I Automatic license audit started as process 2. (PROCESS: 2)
-2017-03-02 12:19	I	ANR0167I Inventory file expiration process 1 processed for 0 minutes. (PROCESS: 1)
-2017-03-02 12:19	I	"ANR0812I Inventory file expiration process 1 completed: processed 0 nodes, examined 0 objects, deleting 0 backup objects, 0 archive objects, 0 DB backup volumes, and 0 recovery plan files. 0 objects were retried 0 errors were encountered and 0 objects were skipped. (PROCESS: 1)"
-2017-03-02 12:19	I	ANR0985I Process 1 for EXPIRE INVENTORY (Automatic) running in the BACKGROUND completed with completion state SUCCESS at 12:19:58. (PROCESS: 1)
-2017-03-02 12:19	I	ANR2560I Schedule manager started. 
-2017-03-02 12:20	I	ANR2825I License audit process 2 completed successfully - 0 nodes audited.  (PROCESS: 2)
-2017-03-02 12:20	I	ANR0985I Process 2 for AUDIT LICENSE running in the BACKGROUND completed with completion state SUCCESS at 12:20:01. (PROCESS: 2)
-2017-03-02 12:20	W	ANR0098W This system does not meet the minimum memory requirements. 
-2017-03-02 12:20	I	ANR0993I Server initialization complete. 
-2017-03-02 12:20	I	ANR0916I IBM Spectrum Protect distributed by International Business Machines is now ready for use. 
-2017-03-02 12:20	W	ANR2841W Server is NOT IN COMPLIANCE with license terms. 
-2017-03-02 12:20	W	ANR1434W No files have been identified for automatically storing device configuration information. 
-2017-03-02 12:20	W	ANR4502W No files have been defined for automatically storing sequential volume history information. 
-2017-03-02 12:20	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY STGPOOL  
-2017-03-02 12:20	I	ANR2017I Administrator SERVER_CONSOLE issued command: REGISTER ADMIN admin ?***?  
-2017-03-02 12:20	I	ANR2068I Administrator ADMIN registered. 
-2017-03-02 12:20	I	ANR2017I Administrator SERVER_CONSOLE issued command: GRANT AUTHORITY admin cl=sys  
-2017-03-02 12:20	I	ANR2076I System privilege granted to administrator ADMIN. 
-2017-03-02 12:21	W	"ANR4898W This is a pre-release 8.1.1.0 IBM Spectrum Protect server (driver 037, build 17037.1314).  It is not supported for commercial or production use. "
-2017-03-02 12:21	I	ANR2017I Administrator SERVER_CONSOLE issued command: REGISTER NODE win-laptop-01 ?***?  
-2017-03-02 12:21	I	ANR2060I Node WIN-LAPTOP-01 registered in policy domain STANDARD. 
-2017-03-02 12:21	I	ANR2017I Administrator SERVER_CONSOLE issued command: REGISTER NODE capstonenode ?***?  
-2017-03-02 12:21	I	ANR2060I Node CAPSTONENODE registered in policy domain STANDARD. 
-2017-03-02 12:22	I	ANR2017I Administrator SERVER_CONSOLE issued command: DEFINE STGPOOL containerpool stgt=dir  
-2017-03-02 12:22	I	ANR2249I Storage pool CONTAINERPOOL is defined. 
-2017-03-02 12:23	I	ANR2017I Administrator SERVER_CONSOLE issued command: DEFINE STGPOOLDIRECTORY containerpool C:\test  
-2017-03-02 12:23	I	ANR3254I Storage pool directory C:\test was defined in storage pool CONTAINERPOOL. 
-2017-03-02 12:23	I	ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE COPYGROUP standard standard  
-2017-03-02 12:23	E	ANR2022E UPDATE COPYGROUP: One or more parameters are missing. 
-2017-03-02 12:23	I	ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE COPYGROUP standard standard standard  
-2017-03-02 12:23	E	ANR2031E UPDATE COPYGROUP: At least one attribute must be specified for update. 
-2017-03-02 12:24	I	ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE COPYGROUP standard standard standard dest=containerpool  
-2017-03-02 12:24	I	"ANR1532I Backup copy group STANDARD updated in policy domain STANDARD, set STANDARD, management class STANDARD. "
-2017-03-02 12:24	I	ANR2017I Administrator SERVER_CONSOLE issued command: ACTIVATE POLICYSET standard standard  
-2017-03-02 12:24	I	ANR1514I Policy set STANDARD activated in policy domain STANDARD. 
-2017-03-02 12:24	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY NODE f=d  
-2017-03-02 12:25	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY ADMIN  
-2017-03-02 12:25	I	ANR2017I Administrator SERVER_CONSOLE issued command: GRANT AUTHORITY admin cl=sys  
-2017-03-02 12:25	E	ANR2156E GRANT AUTHORITY: Administrator ADMIN has already been granted system privilege. 
-2017-03-02 12:26	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY ADMIN admin f=d  
-2017-03-02 12:26	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY SERVER  
-2017-03-02 12:26	E	ANR2034E QUERY SERVER: No match found using this criteria. 
-2017-03-02 12:26	I	ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE ADMIN admin ssl=no  
-2017-03-02 12:26	I	ANR2071I Administrator ADMIN updated. 
-2017-03-02 12:26	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY ADMIN admin f=d  
-2017-03-02 12:30	I	ANR2017I Administrator SERVER_CONSOLE issued command: ALT  
-2017-03-02 12:30	E	ANR2000E Unknown command - ALT. 
-2017-03-02 12:30	I	ANR2017I Administrator SERVER_CONSOLE issued command: HALT  
-2017-03-02 12:31	I	ANR4726I The ICC support module has been loaded. 
-2017-03-02 12:31	I	ANR0990I Server restart-recovery in progress. 
-2017-03-02 12:31	I	ANR0152I Database manager successfully started. 
-2017-03-02 12:31	I	ANR1628I The database manager is using port 51500 for server connections. 
-2017-03-02 12:32	I	"ANR1635I The server machine GUID, 0a.99.81.50.60.dd.11.e6.a5.62.00.15.5d.42.0e.ed, has initialized. "
-2017-03-02 12:32	I	ANR2100I Activity log process has started. 
-2017-03-02 12:32	W	ANR3733W The master encryption key cannot be generated because the server password is not set. 
-2017-03-02 12:32	E	ANR8578E The IBM Spectrum Protect database does not have a password for the SSL key-ring file. 
-2017-03-02 12:32	I	ANR4726I The NAS-NDMP support module has been loaded. 
-2017-03-02 12:32	W	ANR1794W IBM Spectrum Protect SAN discovery is disabled by options. 
-2017-03-02 12:32	W	ANR7808W Oracle Library Attach module libacs.dll is not available from the system. 
-2017-03-02 12:32	I	ANR0984I Process 1 for EXPIRE INVENTORY (Automatic) started in the BACKGROUND at 12:32:49. (PROCESS: 1)
-2017-03-02 12:32	I	ANR0811I Inventory client file expiration started as process 1. (PROCESS: 1)
-2017-03-02 12:32	I	ANR2803I License manager started. 
-2017-03-02 12:32	I	ANR8200I TCP/IP Version 4 driver ready for connection with clients on port 1500. 
-2017-03-02 12:32	I	ANR2560I Schedule manager started. 
-2017-03-02 12:33	I	ANR0167I Inventory file expiration process 1 processed for 0 minutes. (PROCESS: 1)
-2017-03-02 12:33	I	"ANR0812I Inventory file expiration process 1 completed: processed 2 nodes, examined 0 objects, deleting 0 backup objects, 0 archive objects, 0 DB backup volumes, and 0 recovery plan files. 0 objects were retried 0 errors were encountered and 0 objects were skipped. (PROCESS: 1)"
-2017-03-02 12:33	I	ANR0985I Process 1 for EXPIRE INVENTORY (Automatic) running in the BACKGROUND completed with completion state SUCCESS at 12:33:21. (PROCESS: 1)
-2017-03-02 12:33	W	ANR0098W This system does not meet the minimum memory requirements. 
-2017-03-02 12:33	I	ANR0993I Server initialization complete. 
-2017-03-02 12:33	I	ANR0916I IBM Spectrum Protect distributed by International Business Machines is now ready for use. 
-2017-03-02 12:33	W	ANR2841W Server is NOT IN COMPLIANCE with license terms. 
-2017-03-02 12:33	W	ANR4502W No files have been defined for automatically storing sequential volume history information. 
-2017-03-02 12:33	W	"ANR4898W This is a pre-release 8.1.1.0 IBM Spectrum Protect server (driver 037, build 17037.1314).  It is not supported for commercial or production use. "
-2017-03-02 12:40	I	ANR4726I The ICC support module has been loaded. 
-2017-03-02 12:40	I	ANR0990I Server restart-recovery in progress. 
-2017-03-02 12:40	I	ANR0152I Database manager successfully started. 
-2017-03-02 12:41	I	ANR1628I The database manager is using port 51500 for server connections. 
-2017-03-02 12:41	I	"ANR1635I The server machine GUID, 0a.99.81.50.60.dd.11.e6.a5.62.00.15.5d.42.0e.ed, has initialized. "
-2017-03-02 12:41	I	ANR2100I Activity log process has started. 
-2017-03-02 12:41	W	ANR3733W The master encryption key cannot be generated because the server password is not set. 
-2017-03-02 12:41	E	ANR8578E The IBM Spectrum Protect database does not have a password for the SSL key-ring file. 
-2017-03-02 12:41	I	ANR4726I The NAS-NDMP support module has been loaded. 
-2017-03-02 12:41	W	ANR1794W IBM Spectrum Protect SAN discovery is disabled by options. 
-2017-03-02 12:41	W	ANR7808W Oracle Library Attach module libacs.dll is not available from the system. 
-2017-03-02 12:42	I	ANR0984I Process 1 for EXPIRE INVENTORY (Automatic) started in the BACKGROUND at 12:42:13. (PROCESS: 1)
-2017-03-02 12:42	I	ANR0811I Inventory client file expiration started as process 1. (PROCESS: 1)
-2017-03-02 12:42	I	ANR8200I TCP/IP Version 4 driver ready for connection with clients on port 1500. 
-2017-03-02 12:42	I	ANR2803I License manager started. 
-2017-03-02 12:42	I	ANR0167I Inventory file expiration process 1 processed for 0 minutes. (PROCESS: 1)
-2017-03-02 12:42	I	"ANR0812I Inventory file expiration process 1 completed: processed 2 nodes, examined 0 objects, deleting 0 backup objects, 0 archive objects, 0 DB backup volumes, and 0 recovery plan files. 0 objects were retried 0 errors were encountered and 0 objects were skipped. (PROCESS: 1)"
-2017-03-02 12:42	I	ANR0985I Process 1 for EXPIRE INVENTORY (Automatic) running in the BACKGROUND completed with completion state SUCCESS at 12:42:16. (PROCESS: 1)
-2017-03-02 12:42	I	ANR2560I Schedule manager started. 
-2017-03-02 12:42	W	ANR0098W This system does not meet the minimum memory requirements. 
-2017-03-02 12:42	I	ANR0993I Server initialization complete. 
-2017-03-02 12:42	I	ANR0916I IBM Spectrum Protect distributed by International Business Machines is now ready for use. 
-2017-03-02 12:42	W	ANR2841W Server is NOT IN COMPLIANCE with license terms. 
-2017-03-02 12:42	W	ANR4502W No files have been defined for automatically storing sequential volume history information. 
-2017-03-02 12:43	W	"ANR4898W This is a pre-release 8.1.1.0 IBM Spectrum Protect server (driver 037, build 17037.1314).  It is not supported for commercial or production use. "
-2017-03-02 12:43	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY ADMIN  
-2017-03-02 12:43	I	ANR0406I Session 2 started for node WIN-LAPTOP-01 (WinNT) (Tcp/Ip adminib-puf55ts.tucson.ibm.com(54434)). (SESSION: 2)
-2017-03-02 12:43	I	ANE4083I New node password has been generated.  (SESSION: 2)
-2017-03-02 12:43	I	ANR0406I Session 3 started for node WIN-LAPTOP-01 (WinNT) (Tcp/Ip adminib-puf55ts.tucson.ibm.com(54435)). (SESSION: 3)
-2017-03-02 12:43	I	ANE4083I New node password has been generated.  (SESSION: 3)
-2017-03-02 12:43	I	ANR0950I Session 3 for node WIN-LAPTOP-01 is using inline server data deduplication or inline compression. (SESSION: 3)
-2017-03-02 12:44	I	ANR0406I Session 5 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49336)). (SESSION: 5)
-2017-03-02 12:44	W	ANR0424W Session 5 for node CAPSTONENODE (WinNT) refused - invalid password submitted. (SESSION: 5)
-2017-03-02 12:44	I	ANR0403I Session 5 ended for node CAPSTONENODE (WinNT). (SESSION: 5)
-2017-03-02 12:44	I	ANR0406I Session 7 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49339)). (SESSION: 7)
-2017-03-02 12:45	I	ANR0406I Session 8 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49342)). (SESSION: 8)
-2017-03-02 12:45	I	ANR0406I Session 9 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49343)). (SESSION: 9)
-2017-03-02 12:45	I	ANR0950I Session 8 for node CAPSTONENODE is using inline server data deduplication or inline compression. (SESSION: 8)
-2017-03-02 12:45	I	ANR0406I Session 10 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49344)). (SESSION: 10)
-2017-03-02 12:45	I	ANR0406I Session 11 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49345)). (SESSION: 11)
-2017-03-02 12:45	I	ANR0406I Session 12 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49346)). (SESSION: 12)
-2017-03-02 12:45	I	ANR0406I Session 13 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49347)). (SESSION: 13)
-2017-03-02 12:45	I	ANR0406I Session 14 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49348)). (SESSION: 14)
-2017-03-02 12:45	I	ANR0406I Session 15 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49349)). (SESSION: 15)
-2017-03-02 12:45	W	ANR0480W Session 7 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 7)
-2017-03-02 12:45	W	ANR0480W Session 15 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 15)
-2017-03-02 12:45	W	ANR0480W Session 14 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 14)
-2017-03-02 12:45	W	ANR2841W Server is NOT IN COMPLIANCE with license terms. (SESSION: 15)
-2017-03-02 12:45	W	ANR0480W Session 11 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 11)
-2017-03-02 12:45	W	ANR0480W Session 13 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 13)
-2017-03-02 12:45	W	ANR0480W Session 10 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 10)
-2017-03-02 12:45	W	ANR0480W Session 12 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 12)
-2017-03-02 12:45	W	ANR0480W Session 9 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 9)
-2017-03-02 12:45	I	"ANR0951I Session 8 for node CAPSTONENODE processed 1 files by using inline data deduplication or compression, or both. The number of original bytes was 66,759,593. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 8)"
-2017-03-02 12:45	W	ANR0480W Session 8 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 8)
-2017-03-02 12:45	I	ANR0406I Session 16 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49351)). (SESSION: 16)
-2017-03-02 12:46	I	ANR0406I Session 17 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49352)). (SESSION: 17)
-2017-03-02 12:46	I	ANR0406I Session 18 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49353)). (SESSION: 18)
-2017-03-02 12:46	I	ANR0406I Session 19 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49354)). (SESSION: 19)
-2017-03-02 12:46	I	ANR0406I Session 20 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49355)). (SESSION: 20)
-2017-03-02 12:46	I	ANR0406I Session 21 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49356)). (SESSION: 21)
-2017-03-02 12:46	I	ANR0406I Session 22 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49357)). (SESSION: 22)
-2017-03-02 12:46	I	ANR0406I Session 23 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49358)). (SESSION: 23)
-2017-03-02 12:46	I	ANR0406I Session 24 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49359)). (SESSION: 24)
-2017-03-02 12:46	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  
-2017-03-02 12:50	I	ANR0950I Session 17 for node CAPSTONENODE is using inline server data deduplication or inline compression. (SESSION: 17)
-2017-03-02 12:50	I	ANR0950I Session 19 for node CAPSTONENODE is using inline server data deduplication or inline compression. (SESSION: 19)
-2017-03-02 12:50	I	ANR0950I Session 21 for node CAPSTONENODE is using inline server data deduplication or inline compression. (SESSION: 21)
-2017-03-02 12:50	I	ANR0950I Session 22 for node CAPSTONENODE is using inline server data deduplication or inline compression. (SESSION: 22)
-2017-03-02 12:51	I	"ANR0951I Session 3 for node WIN-LAPTOP-01 processed 20,507 files by using inline data deduplication or compression, or both. The number of original bytes was 1,639,419,762. Inline data deduplication reduced the data by 1,408,928,249 bytes and inline compression reduced the data by 14,172,255 bytes.  (SESSION: 3)"
-2017-03-02 12:51	I	ANR0403I Session 3 ended for node WIN-LAPTOP-01 (WinNT). (SESSION: 3)
-2017-03-02 12:51	W	ANR2841W Server is NOT IN COMPLIANCE with license terms. (SESSION: 3)
-2017-03-02 12:51	I	"ANE4952I Total number of objects inspected:       20,507  (SESSION: 2)"
-2017-03-02 12:51	I	"ANE4954I Total number of objects backed up:       20,507  (SESSION: 2)"
-2017-03-02 12:51	I	ANE4958I Total number of objects updated:              0  (SESSION: 2)
-2017-03-02 12:51	I	ANE4960I Total number of objects rebound:              0  (SESSION: 2)
-2017-03-02 12:51	I	ANE4957I Total number of objects deleted:              0  (SESSION: 2)
-2017-03-02 12:51	I	ANE4970I Total number of objects expired:              0  (SESSION: 2)
-2017-03-02 12:51	I	ANE4959I Total number of objects failed:               0  (SESSION: 2)
-2017-03-02 12:51	I	ANE4197I Total number of objects encrypted:            0  (SESSION: 2)
-2017-03-02 12:51	I	ANE4965I Total number of subfile objects:              0  (SESSION: 2)
-2017-03-02 12:51	I	ANE4914I Total number of objects grew:                 0  (SESSION: 2)
-2017-03-02 12:51	I	ANE4916I Total number of retries:                      0  (SESSION: 2)
-2017-03-02 12:51	I	ANE4977I Total number of bytes inspected:           1.53 GB  (SESSION: 2)
-2017-03-02 12:51	I	ANE4961I Total number of bytes transferred:         1.54 GB  (SESSION: 2)
-2017-03-02 12:51	I	ANE4963I Data transfer time:                      311.19 sec  (SESSION: 2)
-2017-03-02 12:51	I	"ANE4966I Network data transfer rate:            5,174.25 KB/sec  (SESSION: 2)"
-2017-03-02 12:51	I	"ANE4967I Aggregate data transfer rate:          3,571.83 KB/sec  (SESSION: 2)"
-2017-03-02 12:51	I	ANE4968I Objects compressed by:                        0%  (SESSION: 2)
-2017-03-02 12:51	I	ANE4976I Total data reduction ratio:                0.00%  (SESSION: 2)
-2017-03-02 12:51	I	ANE4969I Subfile objects reduced by:                   0%  (SESSION: 2)
-2017-03-02 12:51	I	ANE4964I Elapsed processing time:               00:07:30  (SESSION: 2)
-2017-03-02 12:51	I	ANR0403I Session 2 ended for node WIN-LAPTOP-01 (WinNT). (SESSION: 2)
-2017-03-02 12:52	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  
-2017-03-02 12:53	I	ANR0317I Reorganization of indices for table COPY_GROUPS started. 
-2017-03-02 12:53	I	ANR0318I Reorganization of indices for table COPY_GROUPS ended with sqlCode 0. 
-2017-03-02 12:53	W	ANR0319W The file system for the database archive log has insufficient free space. 
-2017-03-02 12:53	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 12:55	I	ANR0403I Session 23 ended for node CAPSTONENODE (WinNT). (SESSION: 23)
-2017-03-02 12:55	I	"ANR0951I Session 21 for node CAPSTONENODE processed 2 files by using inline data deduplication or compression, or both. The number of original bytes was 2,097,152,000. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 21)"
-2017-03-02 12:55	I	ANR0403I Session 21 ended for node CAPSTONENODE (WinNT). (SESSION: 21)
-2017-03-02 12:56	I	ANR0403I Session 24 ended for node CAPSTONENODE (WinNT). (SESSION: 24)
-2017-03-02 12:56	I	"ANR0951I Session 22 for node CAPSTONENODE processed 2 files by using inline data deduplication or compression, or both. The number of original bytes was 2,097,152,000. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 22)"
-2017-03-02 12:56	I	ANR0403I Session 22 ended for node CAPSTONENODE (WinNT). (SESSION: 22)
-2017-03-02 12:58	I	ANR0336I Runstats for table COPY_GROUPS started. 
-2017-03-02 12:58	I	ANR0337I Runstats for table COPY_GROUPS ended with sqlCode 0. 
-2017-03-02 12:58	I	ANR0403I Session 20 ended for node CAPSTONENODE (WinNT). (SESSION: 20)
-2017-03-02 12:58	I	"ANR0951I Session 19 for node CAPSTONENODE processed 3 files by using inline data deduplication or compression, or both. The number of original bytes was 3,145,728,000. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 19)"
-2017-03-02 12:58	I	ANR0403I Session 19 ended for node CAPSTONENODE (WinNT). (SESSION: 19)
-2017-03-02 12:58	I	ANR0403I Session 18 ended for node CAPSTONENODE (WinNT). (SESSION: 18)
-2017-03-02 12:58	I	"ANR0951I Session 17 for node CAPSTONENODE processed 3 files by using inline data deduplication or compression, or both. The number of original bytes was 3,145,728,000. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 17)"
-2017-03-02 12:58	I	ANR0403I Session 17 ended for node CAPSTONENODE (WinNT). (SESSION: 17)
-2017-03-02 12:58	I	ANE4952I Total number of objects inspected:           13  (SESSION: 16)
-2017-03-02 12:58	I	ANE4954I Total number of objects backed up:           10  (SESSION: 16)
-2017-03-02 12:58	I	ANE4958I Total number of objects updated:              0  (SESSION: 16)
-2017-03-02 12:58	I	ANE4960I Total number of objects rebound:              0  (SESSION: 16)
-2017-03-02 12:58	I	ANE4957I Total number of objects deleted:              0  (SESSION: 16)
-2017-03-02 12:58	I	ANE4970I Total number of objects expired:              0  (SESSION: 16)
-2017-03-02 12:58	I	ANE4959I Total number of objects failed:               0  (SESSION: 16)
-2017-03-02 12:58	I	ANE4197I Total number of objects encrypted:            0  (SESSION: 16)
-2017-03-02 12:58	I	ANE4982I Total objects deduplicated:                  10  (SESSION: 16)
-2017-03-02 12:58	I	ANE4914I Total number of objects grew:                 0  (SESSION: 16)
-2017-03-02 12:58	I	ANE4916I Total number of retries:                      0  (SESSION: 16)
-2017-03-02 12:58	I	ANE4977I Total number of bytes inspected:           9.77 GB  (SESSION: 16)
-2017-03-02 12:58	I	ANE4975I Total number of bytes processed:           9.65 GB  (SESSION: 16)
-2017-03-02 12:58	I	ANE4984I Total bytes before deduplication:          9.77 GB  (SESSION: 16)
-2017-03-02 12:58	I	ANE4198I Total bytes after deduplication:           9.64 GB  (SESSION: 16)
-2017-03-02 12:58	I	ANE4961I Total number of bytes transferred:         9.65 GB  (SESSION: 16)
-2017-03-02 12:58	I	"ANE4963I Data transfer time:                    1,942.07 sec  (SESSION: 16)"
-2017-03-02 12:58	I	"ANE4966I Network data transfer rate:            5,207.90 KB/sec  (SESSION: 16)"
-2017-03-02 12:58	I	"ANE4967I Aggregate data transfer rate:         13,693.27 KB/sec  (SESSION: 16)"
-2017-03-02 12:58	I	ANE4968I Objects compressed by:                        0%  (SESSION: 16)
-2017-03-02 12:58	I	ANE4981I Deduplication reduction:                   1.27%  (SESSION: 16)
-2017-03-02 12:58	I	ANE4976I Total data reduction ratio:                1.29%  (SESSION: 16)
-2017-03-02 12:58	I	ANE4964I Elapsed processing time:               00:12:18  (SESSION: 16)
-2017-03-02 13:03	I	ANR0317I Reorganization of indices for table SD_CHUNK_LOCATIONS started. 
-2017-03-02 13:03	I	ANR0318I Reorganization of indices for table SD_CHUNK_LOCATIONS ended with sqlCode 0. 
-2017-03-02 13:03	W	"ANR2992W The database uses 73,936 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 13:03	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 13:07	I	ANR2017I Administrator SERVER_CONSOLE issued command: DEFINE STGPOOL cleversafe stgt=cloud cloudt=s3 cloudu=http://9.11.60.239 encrypt=no id=Ulam7Z6ulmno8xZOyukg pass=?***?  
-2017-03-02 13:07	I	ANR2249I Storage pool CLEVERSAFE is defined. 
-2017-03-02 13:08	I	ANR2017I Administrator SERVER_CONSOLE issued command: DEFINE STGPOOLDIRECTORY cleversafe C:\cloud-test  
-2017-03-02 13:08	I	ANR3254I Storage pool directory C:\cloud-test was defined in storage pool CLEVERSAFE. 
-2017-03-02 13:08	I	ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE COPYGROUP standard standard standard dest=cleversafe  
-2017-03-02 13:08	I	"ANR1532I Backup copy group STANDARD updated in policy domain STANDARD, set STANDARD, management class STANDARD. "
-2017-03-02 13:08	I	ANR2017I Administrator SERVER_CONSOLE issued command: ACTIVATE POLICYSET standard standard  
-2017-03-02 13:08	I	ANR1514I Policy set STANDARD activated in policy domain STANDARD. 
-2017-03-02 13:10	I	ANR0406I Session 25 started for node WIN-LAPTOP-01 (WinNT) (Tcp/Ip adminib-puf55ts.tucson.ibm.com(54533)). (SESSION: 25)
-2017-03-02 13:10	I	ANR0403I Session 25 ended for node WIN-LAPTOP-01 (WinNT). (SESSION: 25)
-2017-03-02 13:11	I	ANR0406I Session 26 started for node WIN-LAPTOP-01 (WinNT) (Tcp/Ip adminib-puf55ts.tucson.ibm.com(54540)). (SESSION: 26)
-2017-03-02 13:11	I	ANR0406I Session 27 started for node WIN-LAPTOP-01 (WinNT) (Tcp/Ip adminib-puf55ts.tucson.ibm.com(54541)). (SESSION: 27)
-2017-03-02 13:11	I	ANR0950I Session 27 for node WIN-LAPTOP-01 is using inline server data deduplication or inline compression. (SESSION: 27)
-2017-03-02 13:11	I	"ANR0951I Session 27 for node WIN-LAPTOP-01 processed 27 files by using inline data deduplication or compression, or both. The number of original bytes was 136,314,880. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 27)"
-2017-03-02 13:11	I	ANR0403I Session 27 ended for node WIN-LAPTOP-01 (WinNT). (SESSION: 27)
-2017-03-02 13:11	I	ANE4952I Total number of objects inspected:          105  (SESSION: 26)
-2017-03-02 13:11	I	ANE4954I Total number of objects backed up:           27  (SESSION: 26)
-2017-03-02 13:11	I	ANE4958I Total number of objects updated:              0  (SESSION: 26)
-2017-03-02 13:11	I	ANE4960I Total number of objects rebound:              0  (SESSION: 26)
-2017-03-02 13:11	I	ANE4957I Total number of objects deleted:              0  (SESSION: 26)
-2017-03-02 13:11	I	ANE4970I Total number of objects expired:              0  (SESSION: 26)
-2017-03-02 13:11	I	ANE4959I Total number of objects failed:               0  (SESSION: 26)
-2017-03-02 13:11	I	ANE4197I Total number of objects encrypted:            0  (SESSION: 26)
-2017-03-02 13:11	I	ANE4965I Total number of subfile objects:              0  (SESSION: 26)
-2017-03-02 13:11	I	ANE4914I Total number of objects grew:                 0  (SESSION: 26)
-2017-03-02 13:11	I	ANE4916I Total number of retries:                      0  (SESSION: 26)
-2017-03-02 13:11	I	ANE4977I Total number of bytes inspected:         519.00 MB  (SESSION: 26)
-2017-03-02 13:11	I	ANE4961I Total number of bytes transferred:       130.05 MB  (SESSION: 26)
-2017-03-02 13:11	I	ANE4963I Data transfer time:                       15.63 sec  (SESSION: 26)
-2017-03-02 13:11	I	"ANE4966I Network data transfer rate:            8,517.73 KB/sec  (SESSION: 26)"
-2017-03-02 13:11	I	"ANE4967I Aggregate data transfer rate:          6,994.28 KB/sec  (SESSION: 26)"
-2017-03-02 13:11	I	ANE4968I Objects compressed by:                        0%  (SESSION: 26)
-2017-03-02 13:11	I	ANE4976I Total data reduction ratio:               74.95%  (SESSION: 26)
-2017-03-02 13:11	I	ANE4969I Subfile objects reduced by:                   0%  (SESSION: 26)
-2017-03-02 13:11	I	ANE4964I Elapsed processing time:               00:00:19  (SESSION: 26)
-2017-03-02 13:11	I	ANR0403I Session 26 ended for node WIN-LAPTOP-01 (WinNT). (SESSION: 26)
-2017-03-02 13:13	W	ANR0482W Session 16 for node CAPSTONENODE (WinNT) terminated - idle for more than 15 minutes. (SESSION: 16)
-2017-03-02 13:13	W	"ANR2992W The database uses 74,082 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 13:13	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 13:14	I	ANR0984I Process 2 for Local to Cloud Transfer started in the BACKGROUND at 13:14:26. (PROCESS: 2)
-2017-03-02 13:14	I	ANR3832I Local to Cloud Transfer process 2 for storage pool CLEVERSAFE started. (PROCESS: 2)
-2017-03-02 13:14	E	ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
-2017-03-02 13:14	I	ANR3833I Local to Cloud Transfer process 2 for storage pool CLEVERSAFE has completed. (PROCESS: 2)
-2017-03-02 13:14	I	ANR0985I Process 2 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:14:46. (PROCESS: 2)
-2017-03-02 13:14	E	ANR1893E Process 2 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 2)
-2017-03-02 13:15	I	ANR0984I Process 3 for Local to Cloud Transfer started in the BACKGROUND at 13:15:46. (PROCESS: 3)
-2017-03-02 13:15	I	ANR3832I Local to Cloud Transfer process 3 for storage pool CLEVERSAFE started. (PROCESS: 3)
-2017-03-02 13:15	E	ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
-2017-03-02 13:15	I	ANR3833I Local to Cloud Transfer process 3 for storage pool CLEVERSAFE has completed. (PROCESS: 3)
-2017-03-02 13:15	I	ANR0985I Process 3 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:15:56. (PROCESS: 3)
-2017-03-02 13:15	E	ANR1893E Process 3 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 3)
-2017-03-02 13:16	I	ANR0984I Process 4 for Local to Cloud Transfer started in the BACKGROUND at 13:16:57. (PROCESS: 4)
-2017-03-02 13:16	I	ANR3832I Local to Cloud Transfer process 4 for storage pool CLEVERSAFE started. (PROCESS: 4)
-2017-03-02 13:16	E	ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
-2017-03-02 13:17	I	ANR3833I Local to Cloud Transfer process 4 for storage pool CLEVERSAFE has completed. (PROCESS: 4)
-2017-03-02 13:17	I	ANR0985I Process 4 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:17:07. (PROCESS: 4)
-2017-03-02 13:17	E	ANR1893E Process 4 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 4)
-2017-03-02 13:18	I	ANR0984I Process 5 for Local to Cloud Transfer started in the BACKGROUND at 13:18:07. (PROCESS: 5)
-2017-03-02 13:18	I	ANR3832I Local to Cloud Transfer process 5 for storage pool CLEVERSAFE started. (PROCESS: 5)
-2017-03-02 13:18	E	ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
-2017-03-02 13:18	I	ANR3833I Local to Cloud Transfer process 5 for storage pool CLEVERSAFE has completed. (PROCESS: 5)
-2017-03-02 13:18	I	ANR0985I Process 5 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:18:17. (PROCESS: 5)
-2017-03-02 13:18	E	ANR1893E Process 5 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 5)
-2017-03-02 13:19	I	ANR0984I Process 6 for Local to Cloud Transfer started in the BACKGROUND at 13:19:17. (PROCESS: 6)
-2017-03-02 13:19	I	ANR3832I Local to Cloud Transfer process 6 for storage pool CLEVERSAFE started. (PROCESS: 6)
-2017-03-02 13:19	E	ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
-2017-03-02 13:19	I	ANR3833I Local to Cloud Transfer process 6 for storage pool CLEVERSAFE has completed. (PROCESS: 6)
-2017-03-02 13:19	I	ANR0985I Process 6 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:19:27. (PROCESS: 6)
-2017-03-02 13:19	E	ANR1893E Process 6 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 6)
-2017-03-02 13:20	I	ANR0984I Process 7 for Local to Cloud Transfer started in the BACKGROUND at 13:20:27. (PROCESS: 7)
-2017-03-02 13:20	I	ANR3832I Local to Cloud Transfer process 7 for storage pool CLEVERSAFE started. (PROCESS: 7)
-2017-03-02 13:20	E	ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
-2017-03-02 13:20	I	ANR3833I Local to Cloud Transfer process 7 for storage pool CLEVERSAFE has completed. (PROCESS: 7)
-2017-03-02 13:20	I	ANR0985I Process 7 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:20:37. (PROCESS: 7)
-2017-03-02 13:20	E	ANR1893E Process 7 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 7)
-2017-03-02 13:21	I	ANR0984I Process 8 for Local to Cloud Transfer started in the BACKGROUND at 13:21:37. (PROCESS: 8)
-2017-03-02 13:21	I	ANR3832I Local to Cloud Transfer process 8 for storage pool CLEVERSAFE started. (PROCESS: 8)
-2017-03-02 13:21	E	ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
-2017-03-02 13:21	I	ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE STGPOOL clev  
-2017-03-02 13:21	E	ANR2031E UPDATE STGPOOL: At least one attribute must be specified for update. 
-2017-03-02 13:21	I	ANR3833I Local to Cloud Transfer process 8 for storage pool CLEVERSAFE has completed. (PROCESS: 8)
-2017-03-02 13:21	I	ANR0985I Process 8 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:21:47. (PROCESS: 8)
-2017-03-02 13:21	E	ANR1893E Process 8 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 8)
-2017-03-02 13:22	I	ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE STGPOOL cleversafe id=Ulam7Z6uImno8xZ0yukg pass=?***?  
-2017-03-02 13:22	I	ANR2202I Storage pool CLEVERSAFE updated. 
-2017-03-02 13:22	I	ANR0984I Process 9 for Local to Cloud Transfer started in the BACKGROUND at 13:22:47. (PROCESS: 9)
-2017-03-02 13:22	I	ANR3832I Local to Cloud Transfer process 9 for storage pool CLEVERSAFE started. (PROCESS: 9)
-2017-03-02 13:23	I	ANR3833I Local to Cloud Transfer process 9 for storage pool CLEVERSAFE has completed. (PROCESS: 9)
-2017-03-02 13:23	I	"ANR0986I Process 9 for Local to Cloud Transfer running in the BACKGROUND processed 463 items for a total of 137,310,871 bytes with a completion state of SUCCESS at 13:23:07. (PROCESS: 9)"
-2017-03-02 13:23	I	ANR0317I Reorganization of indices for table SD_INFLIGHT_CONTAINERS started. 
-2017-03-02 13:23	I	ANR0318I Reorganization of indices for table SD_INFLIGHT_CONTAINERS ended with sqlCode 0. 
-2017-03-02 13:23	W	"ANR2992W The database uses 73,938 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 13:23	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 13:28	I	ANR0336I Runstats for table SD_INFLIGHT_CONTAINERS started. 
-2017-03-02 13:28	I	ANR0337I Runstats for table SD_INFLIGHT_CONTAINERS ended with sqlCode 0. 
-2017-03-02 13:33	W	"ANR2992W The database uses 73,939 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 13:33	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 13:42	W	ANR2841W Server is NOT IN COMPLIANCE with license terms. 
-2017-03-02 13:43	W	"ANR2992W The database uses 73,937 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 13:43	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 13:53	W	ANR0319W The file system for the database archive log has insufficient free space. 
-2017-03-02 13:53	W	"ANR2992W The database uses 73,933 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 13:53	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 14:03	W	"ANR2992W The database uses 73,936 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 14:03	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 14:13	W	"ANR2992W The database uses 73,934 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 14:13	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 14:23	W	"ANR2992W The database uses 73,936 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 14:23	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 14:26	I	ANR0406I Session 28 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50679)). (SESSION: 28)
-2017-03-02 14:26	I	ANR0406I Session 29 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50680)). (SESSION: 29)
-2017-03-02 14:26	I	ANR0406I Session 30 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50681)). (SESSION: 30)
-2017-03-02 14:26	I	ANR0406I Session 31 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50683)). (SESSION: 31)
-2017-03-02 14:26	I	ANR0406I Session 32 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50684)). (SESSION: 32)
-2017-03-02 14:26	I	ANR0403I Session 32 ended for node CAPSTONENODE (WinNT). (SESSION: 32)
-2017-03-02 14:26	I	ANR0403I Session 31 ended for node CAPSTONENODE (WinNT). (SESSION: 31)
-2017-03-02 14:28	I	ANR0984I Process 10 for Local to Cloud Transfer started in the BACKGROUND at 14:28:19. (PROCESS: 10)
-2017-03-02 14:28	I	ANR3832I Local to Cloud Transfer process 10 for storage pool CLEVERSAFE started. (PROCESS: 10)
-2017-03-02 14:28	I	ANR3833I Local to Cloud Transfer process 10 for storage pool CLEVERSAFE has completed. (PROCESS: 10)
-2017-03-02 14:28	I	"ANR0986I Process 10 for Local to Cloud Transfer running in the BACKGROUND processed 3,282 items for a total of 1,039,963,524 bytes with a completion state of SUCCESS at 14:28:49. (PROCESS: 10)"
-2017-03-02 14:29	W	ANR0522W Transaction failed for session 29 for node CAPSTONENODE (WinNT) - no space available in storage pool CLEVERSAFE and all successor pools. (SESSION: 29)
-2017-03-02 14:29	I	ANR0403I Session 30 ended for node CAPSTONENODE (WinNT). (SESSION: 30)
-2017-03-02 14:29	I	ANR0403I Session 29 ended for node CAPSTONENODE (WinNT). (SESSION: 29)
-2017-03-02 14:29	I	ANR0406I Session 33 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50720)). (SESSION: 33)
-2017-03-02 14:29	I	ANR0406I Session 34 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50721)). (SESSION: 34)
-2017-03-02 14:29	I	ANR0403I Session 33 ended for node CAPSTONENODE (WinNT). (SESSION: 33)
-2017-03-02 14:29	I	ANR0403I Session 34 ended for node CAPSTONENODE (WinNT). (SESSION: 34)
-2017-03-02 14:29	I	ANE4952I Total number of objects inspected:            1  (SESSION: 28)
-2017-03-02 14:29	I	ANE4954I Total number of objects backed up:            0  (SESSION: 28)
-2017-03-02 14:29	I	ANE4958I Total number of objects updated:              0  (SESSION: 28)
-2017-03-02 14:29	I	ANE4960I Total number of objects rebound:              0  (SESSION: 28)
-2017-03-02 14:29	I	ANE4957I Total number of objects deleted:              0  (SESSION: 28)
-2017-03-02 14:29	I	ANE4970I Total number of objects expired:              0  (SESSION: 28)
-2017-03-02 14:29	I	ANE4959I Total number of objects failed:               1  (SESSION: 28)
-2017-03-02 14:29	I	ANE4197I Total number of objects encrypted:            0  (SESSION: 28)
-2017-03-02 14:29	I	ANE4982I Total objects deduplicated:                   0  (SESSION: 28)
-2017-03-02 14:29	I	ANE4914I Total number of objects grew:                 0  (SESSION: 28)
-2017-03-02 14:29	I	ANE4916I Total number of retries:                      0  (SESSION: 28)
-2017-03-02 14:29	I	ANE4977I Total number of bytes inspected:           7.45 GB  (SESSION: 28)
-2017-03-02 14:29	I	ANE4975I Total number of bytes processed:           2.00 GB  (SESSION: 28)
-2017-03-02 14:29	I	ANE4984I Total bytes before deduplication:             0  B  (SESSION: 28)
-2017-03-02 14:29	I	ANE4198I Total bytes after deduplication:              0  B  (SESSION: 28)
-2017-03-02 14:29	I	ANE4961I Total number of bytes transferred:         2.00 GB  (SESSION: 28)
-2017-03-02 14:29	I	ANE4963I Data transfer time:                      173.95 sec  (SESSION: 28)
-2017-03-02 14:29	I	"ANE4966I Network data transfer rate:           12,072.37 KB/sec  (SESSION: 28)"
-2017-03-02 14:29	I	"ANE4967I Aggregate data transfer rate:         11,493.29 KB/sec  (SESSION: 28)"
-2017-03-02 14:29	I	ANE4968I Objects compressed by:                        0%  (SESSION: 28)
-2017-03-02 14:29	I	ANE4981I Deduplication reduction:                   0.00%  (SESSION: 28)
-2017-03-02 14:29	I	ANE4976I Total data reduction ratio:               73.12%  (SESSION: 28)
-2017-03-02 14:29	I	ANE4964I Elapsed processing time:               00:03:02  (SESSION: 28)
-2017-03-02 14:29	I	ANR0984I Process 11 for Local to Cloud Transfer started in the BACKGROUND at 14:29:50. (PROCESS: 11)
-2017-03-02 14:29	I	ANR3832I Local to Cloud Transfer process 11 for storage pool CLEVERSAFE started. (PROCESS: 11)
-2017-03-02 14:30	I	ANR3833I Local to Cloud Transfer process 11 for storage pool CLEVERSAFE has completed. (PROCESS: 11)
-2017-03-02 14:30	I	"ANR0986I Process 11 for Local to Cloud Transfer running in the BACKGROUND processed 3,285 items for a total of 1,055,678,801 bytes with a completion state of SUCCESS at 14:30:20. (PROCESS: 11)"
-2017-03-02 14:32	I	ANR0984I Process 12 for Local to Cloud Transfer started in the BACKGROUND at 14:32:30. (PROCESS: 12)
-2017-03-02 14:32	I	ANR3832I Local to Cloud Transfer process 12 for storage pool CLEVERSAFE started. (PROCESS: 12)
-2017-03-02 14:32	I	ANR3833I Local to Cloud Transfer process 12 for storage pool CLEVERSAFE has completed. (PROCESS: 12)
-2017-03-02 14:32	I	"ANR0986I Process 12 for Local to Cloud Transfer running in the BACKGROUND processed 48 items for a total of 17,640,876 bytes with a completion state of SUCCESS at 14:32:40. (PROCESS: 12)"
-2017-03-02 14:33	I	ANR0293I Reorganization for table SD_CONTAINERS started. 
-2017-03-02 14:34	W	"ANR2992W The database uses 73,937 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 14:34	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 14:38	I	ANR0294I Reorganization for table SD_CONTAINERS ended. 
-2017-03-02 14:42	W	ANR2841W Server is NOT IN COMPLIANCE with license terms. 
-2017-03-02 14:43	I	ANR0336I Runstats for table SD_CONTAINERS started. 
-2017-03-02 14:43	I	ANR0337I Runstats for table SD_CONTAINERS ended with sqlCode 0. 
-2017-03-02 14:44	W	"ANR2992W The database uses 73,937 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 14:44	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 14:44	W	ANR0482W Session 28 for node CAPSTONENODE (WinNT) terminated - idle for more than 15 minutes. (SESSION: 28)
-2017-03-02 14:46	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  
-2017-03-02 14:48	I	ANR0293I Reorganization for table TSMMON_ALERT_TRIGGER started. 
-2017-03-02 14:53	I	ANR0294I Reorganization for table TSMMON_ALERT_TRIGGER ended. 
-2017-03-02 14:54	W	ANR0319W The file system for the database archive log has insufficient free space. 
-2017-03-02 14:54	W	"ANR2992W The database uses 73,937 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 14:54	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 14:58	I	ANR0336I Runstats for table TSMMON_ALERT_TRIGGER started. 
-2017-03-02 14:58	I	ANR0337I Runstats for table TSMMON_ALERT_TRIGGER ended with sqlCode 0. 
-2017-03-02 15:01	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  
-2017-03-02 15:04	W	"ANR2992W The database uses 73,935 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 15:04	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 15:08	I	ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE COPYGROUP standard standard standard dest=cleversafe  
-2017-03-02 15:08	I	"ANR1532I Backup copy group STANDARD updated in policy domain STANDARD, set STANDARD, management class STANDARD. "
-2017-03-02 15:08	I	ANR2017I Administrator SERVER_CONSOLE issued command: ACTIVATE POLICYSET standard standard  
-2017-03-02 15:08	I	ANR1514I Policy set STANDARD activated in policy domain STANDARD. 
-2017-03-02 15:10	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  
-2017-03-02 15:12	I	ANR0406I Session 35 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(51164)). (SESSION: 35)
-2017-03-02 15:12	I	ANR0406I Session 36 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(51165)). (SESSION: 36)
-2017-03-02 15:12	I	ANR0406I Session 37 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(51166)). (SESSION: 37)
-2017-03-02 15:12	I	ANR0406I Session 38 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(51167)). (SESSION: 38)
-2017-03-02 15:12	I	ANR0406I Session 39 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(51168)). (SESSION: 39)
-2017-03-02 15:12	I	ANR0403I Session 38 ended for node CAPSTONENODE (WinNT). (SESSION: 38)
-2017-03-02 15:12	I	ANR0403I Session 39 ended for node CAPSTONENODE (WinNT). (SESSION: 39)
-2017-03-02 15:14	W	"ANR2992W The database uses 74,802 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.92. "
-2017-03-02 15:14	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 15:14	I	ANR0984I Process 13 for Local to Cloud Transfer started in the BACKGROUND at 15:14:31. (PROCESS: 13)
-2017-03-02 15:14	I	ANR3832I Local to Cloud Transfer process 13 for storage pool CLEVERSAFE started. (PROCESS: 13)
-2017-03-02 15:15	I	ANR3833I Local to Cloud Transfer process 13 for storage pool CLEVERSAFE has completed. (PROCESS: 13)
-2017-03-02 15:15	I	"ANR0986I Process 13 for Local to Cloud Transfer running in the BACKGROUND processed 3,337 items for a total of 1,044,437,836 bytes with a completion state of SUCCESS at 15:15:01. (PROCESS: 13)"
-2017-03-02 15:16	I	ANR0984I Process 14 for Local to Cloud Transfer started in the BACKGROUND at 15:16:02. (PROCESS: 14)
-2017-03-02 15:16	I	ANR3832I Local to Cloud Transfer process 14 for storage pool CLEVERSAFE started. (PROCESS: 14)
-2017-03-02 15:16	I	ANR3833I Local to Cloud Transfer process 14 for storage pool CLEVERSAFE has completed. (PROCESS: 14)
-2017-03-02 15:16	I	"ANR0986I Process 14 for Local to Cloud Transfer running in the BACKGROUND processed 3,400 items for a total of 1,054,534,388 bytes with a completion state of SUCCESS at 15:16:32. (PROCESS: 14)"
-2017-03-02 15:17	I	ANR0984I Process 15 for Local to Cloud Transfer started in the BACKGROUND at 15:17:32. (PROCESS: 15)
-2017-03-02 15:17	I	ANR3832I Local to Cloud Transfer process 15 for storage pool CLEVERSAFE started. (PROCESS: 15)
-2017-03-02 15:18	I	ANR3833I Local to Cloud Transfer process 15 for storage pool CLEVERSAFE has completed. (PROCESS: 15)
-2017-03-02 15:18	I	"ANR0986I Process 15 for Local to Cloud Transfer running in the BACKGROUND processed 3,424 items for a total of 1,057,235,487 bytes with a completion state of SUCCESS at 15:18:02. (PROCESS: 15)"
-2017-03-02 15:19	I	ANR0984I Process 16 for Local to Cloud Transfer started in the BACKGROUND at 15:19:02. (PROCESS: 16)
-2017-03-02 15:19	I	ANR3832I Local to Cloud Transfer process 16 for storage pool CLEVERSAFE started. (PROCESS: 16)
-2017-03-02 15:19	I	ANR3833I Local to Cloud Transfer process 16 for storage pool CLEVERSAFE has completed. (PROCESS: 16)
-2017-03-02 15:19	I	"ANR0986I Process 16 for Local to Cloud Transfer running in the BACKGROUND processed 3,393 items for a total of 1,039,354,982 bytes with a completion state of SUCCESS at 15:19:32. (PROCESS: 16)"
-2017-03-02 15:20	I	ANR0984I Process 17 for Local to Cloud Transfer started in the BACKGROUND at 15:20:32. (PROCESS: 17)
-2017-03-02 15:20	I	ANR3832I Local to Cloud Transfer process 17 for storage pool CLEVERSAFE started. (PROCESS: 17)
-2017-03-02 15:21	I	ANR3833I Local to Cloud Transfer process 17 for storage pool CLEVERSAFE has completed. (PROCESS: 17)
-2017-03-02 15:21	I	"ANR0986I Process 17 for Local to Cloud Transfer running in the BACKGROUND processed 3,440 items for a total of 1,070,734,976 bytes with a completion state of SUCCESS at 15:21:02. (PROCESS: 17)"
-2017-03-02 15:21	I	ANR0950I Session 36 for node CAPSTONENODE is using inline server data deduplication or inline compression. (SESSION: 36)
-2017-03-02 15:21	I	ANR0403I Session 37 ended for node CAPSTONENODE (WinNT). (SESSION: 37)
-2017-03-02 15:21	I	"ANR0951I Session 36 for node CAPSTONENODE processed 1 files by using inline data deduplication or compression, or both. The number of original bytes was 6,000,000,000. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 36)"
-2017-03-02 15:21	I	ANR0403I Session 36 ended for node CAPSTONENODE (WinNT). (SESSION: 36)
-2017-03-02 15:21	I	ANE4952I Total number of objects inspected:            1  (SESSION: 35)
-2017-03-02 15:21	I	ANE4954I Total number of objects backed up:            1  (SESSION: 35)
-2017-03-02 15:21	I	ANE4958I Total number of objects updated:              0  (SESSION: 35)
-2017-03-02 15:21	I	ANE4960I Total number of objects rebound:              0  (SESSION: 35)
-2017-03-02 15:21	I	ANE4957I Total number of objects deleted:              0  (SESSION: 35)
-2017-03-02 15:21	I	ANE4970I Total number of objects expired:              0  (SESSION: 35)
-2017-03-02 15:21	I	ANE4959I Total number of objects failed:               0  (SESSION: 35)
-2017-03-02 15:21	I	ANE4197I Total number of objects encrypted:            0  (SESSION: 35)
-2017-03-02 15:21	I	ANE4982I Total objects deduplicated:                   1  (SESSION: 35)
-2017-03-02 15:21	I	ANE4914I Total number of objects grew:                 0  (SESSION: 35)
-2017-03-02 15:21	I	ANE4916I Total number of retries:                      0  (SESSION: 35)
-2017-03-02 15:21	I	ANE4977I Total number of bytes inspected:           5.59 GB  (SESSION: 35)
-2017-03-02 15:21	I	ANE4975I Total number of bytes processed:           5.59 GB  (SESSION: 35)
-2017-03-02 15:21	I	ANE4984I Total bytes before deduplication:          5.59 GB  (SESSION: 35)
-2017-03-02 15:21	I	ANE4198I Total bytes after deduplication:           5.59 GB  (SESSION: 35)
-2017-03-02 15:21	I	ANE4961I Total number of bytes transferred:         5.59 GB  (SESSION: 35)
-2017-03-02 15:21	I	ANE4963I Data transfer time:                      482.78 sec  (SESSION: 35)
-2017-03-02 15:21	I	"ANE4966I Network data transfer rate:           12,141.29 KB/sec  (SESSION: 35)"
-2017-03-02 15:21	I	"ANE4967I Aggregate data transfer rate:         11,562.31 KB/sec  (SESSION: 35)"
-2017-03-02 15:21	I	ANE4968I Objects compressed by:                        0%  (SESSION: 35)
-2017-03-02 15:21	I	ANE4981I Deduplication reduction:                   0.00%  (SESSION: 35)
-2017-03-02 15:21	I	ANE4976I Total data reduction ratio:                0.00%  (SESSION: 35)
-2017-03-02 15:21	I	ANE4964I Elapsed processing time:               00:08:26  (SESSION: 35)
-2017-03-02 15:22	I	ANR0984I Process 18 for Local to Cloud Transfer started in the BACKGROUND at 15:22:03. (PROCESS: 18)
-2017-03-02 15:22	I	ANR3832I Local to Cloud Transfer process 18 for storage pool CLEVERSAFE started. (PROCESS: 18)
-2017-03-02 15:22	I	ANR3833I Local to Cloud Transfer process 18 for storage pool CLEVERSAFE has completed. (PROCESS: 18)
-2017-03-02 15:22	I	"ANR0986I Process 18 for Local to Cloud Transfer running in the BACKGROUND processed 2,442 items for a total of 758,902,769 bytes with a completion state of SUCCESS at 15:22:23. (PROCESS: 18)"
-2017-03-02 15:23	I	ANR0984I Process 19 for Local to Cloud Transfer started in the BACKGROUND at 15:23:23. (PROCESS: 19)
-2017-03-02 15:23	I	ANR3832I Local to Cloud Transfer process 19 for storage pool CLEVERSAFE started. (PROCESS: 19)
-2017-03-02 15:23	I	ANR3833I Local to Cloud Transfer process 19 for storage pool CLEVERSAFE has completed. (PROCESS: 19)
-2017-03-02 15:23	I	"ANR0986I Process 19 for Local to Cloud Transfer running in the BACKGROUND processed 48 items for a total of 17,938,331 bytes with a completion state of SUCCESS at 15:23:33. (PROCESS: 19)"
-2017-03-02 15:24	W	"ANR2992W The database uses 74,066 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
-2017-03-02 15:24	E	ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
-2017-03-02 15:28	I	ANR2017I Administrator SERVER_CONSOLE issued command: QUERY PROCESS  
-2017-03-02 15:28	E	ANR0944E QUERY PROCESS: No active processes found. 
+DATE_TIME,SEVERITY,MESSAGE
+2017-03-02 12:18,I,ANR0990I Server restart-recovery in progress. 
+2017-03-02 12:18,I,ANR0152I Database manager successfully started. 
+2017-03-02 12:18,I,ANR1628I The database manager is using port 51500 for server connections. 
+2017-03-02 12:19,W,"ANR1636W The server machine GUID changed: old value (), new value (0a.99.81.50.60.dd.11.e6.a5.62.00.15.5d.42.0e.ed). "
+2017-03-02 12:19,I,ANR2100I Activity log process has started. 
+2017-03-02 12:19,W,ANR3733W The master encryption key cannot be generated because the server password is not set. 
+2017-03-02 12:19,E,ANR8578E The IBM Spectrum Protect database does not have a password for the SSL key-ring file. 
+2017-03-02 12:19,I,ANR4726I The NAS-NDMP support module has been loaded. 
+2017-03-02 12:19,W,ANR1794W IBM Spectrum Protect SAN discovery is disabled by options. 
+2017-03-02 12:19,W,ANR7808W Oracle Library Attach module libacs.dll is not available from the system. 
+2017-03-02 12:19,I,ANR2200I Storage pool BACKUPPOOL defined (device class DISK). 
+2017-03-02 12:19,I,ANR2200I Storage pool ARCHIVEPOOL defined (device class DISK). 
+2017-03-02 12:19,I,ANR2200I Storage pool SPACEMGPOOL defined (device class DISK). 
+2017-03-02 12:19,I,ANR2803I License manager started. 
+2017-03-02 12:19,I,ANR8200I TCP/IP Version 4 driver ready for connection with clients on port 1500. 
+2017-03-02 12:19,I,ANR8260I Named Pipes driver ready for connection with clients. 
+2017-03-02 12:19,I,ANR0984I Process 1 for EXPIRE INVENTORY (Automatic) started in the BACKGROUND at 12:19:56. (PROCESS: 1)
+2017-03-02 12:19,I,ANR0811I Inventory client file expiration started as process 1. (PROCESS: 1)
+2017-03-02 12:19,I,ANR0984I Process 2 for AUDIT LICENSE started in the BACKGROUND at 12:19:58. (PROCESS: 2)
+2017-03-02 12:19,I,ANR2820I Automatic license audit started as process 2. (PROCESS: 2)
+2017-03-02 12:19,I,ANR0167I Inventory file expiration process 1 processed for 0 minutes. (PROCESS: 1)
+2017-03-02 12:19,I,"ANR0812I Inventory file expiration process 1 completed: processed 0 nodes, examined 0 objects, deleting 0 backup objects, 0 archive objects, 0 DB backup volumes, and 0 recovery plan files. 0 objects were retried 0 errors were encountered and 0 objects were skipped. (PROCESS: 1)"
+2017-03-02 12:19,I,ANR0985I Process 1 for EXPIRE INVENTORY (Automatic) running in the BACKGROUND completed with completion state SUCCESS at 12:19:58. (PROCESS: 1)
+2017-03-02 12:19,I,ANR2560I Schedule manager started. 
+2017-03-02 12:20,I,ANR2825I License audit process 2 completed successfully - 0 nodes audited.  (PROCESS: 2)
+2017-03-02 12:20,I,ANR0985I Process 2 for AUDIT LICENSE running in the BACKGROUND completed with completion state SUCCESS at 12:20:01. (PROCESS: 2)
+2017-03-02 12:20,W,ANR0098W This system does not meet the minimum memory requirements. 
+2017-03-02 12:20,I,ANR0993I Server initialization complete. 
+2017-03-02 12:20,I,ANR0916I IBM Spectrum Protect distributed by International Business Machines is now ready for use. 
+2017-03-02 12:20,W,ANR2841W Server is NOT IN COMPLIANCE with license terms. 
+2017-03-02 12:20,W,ANR1434W No files have been identified for automatically storing device configuration information. 
+2017-03-02 12:20,W,ANR4502W No files have been defined for automatically storing sequential volume history information. 
+2017-03-02 12:20,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY STGPOOL  
+2017-03-02 12:20,I,ANR2017I Administrator SERVER_CONSOLE issued command: REGISTER ADMIN admin ?***?  
+2017-03-02 12:20,I,ANR2068I Administrator ADMIN registered. 
+2017-03-02 12:20,I,ANR2017I Administrator SERVER_CONSOLE issued command: GRANT AUTHORITY admin cl=sys  
+2017-03-02 12:20,I,ANR2076I System privilege granted to administrator ADMIN. 
+2017-03-02 12:21,W,"ANR4898W This is a pre-release 8.1.1.0 IBM Spectrum Protect server (driver 037, build 17037.1314).  It is not supported for commercial or production use. "
+2017-03-02 12:21,I,ANR2017I Administrator SERVER_CONSOLE issued command: REGISTER NODE win-laptop-01 ?***?  
+2017-03-02 12:21,I,ANR2060I Node WIN-LAPTOP-01 registered in policy domain STANDARD. 
+2017-03-02 12:21,I,ANR2017I Administrator SERVER_CONSOLE issued command: REGISTER NODE capstonenode ?***?  
+2017-03-02 12:21,I,ANR2060I Node CAPSTONENODE registered in policy domain STANDARD. 
+2017-03-02 12:22,I,ANR2017I Administrator SERVER_CONSOLE issued command: DEFINE STGPOOL containerpool stgt=dir  
+2017-03-02 12:22,I,ANR2249I Storage pool CONTAINERPOOL is defined. 
+2017-03-02 12:23,I,ANR2017I Administrator SERVER_CONSOLE issued command: DEFINE STGPOOLDIRECTORY containerpool C:\test  
+2017-03-02 12:23,I,ANR3254I Storage pool directory C:\test was defined in storage pool CONTAINERPOOL. 
+2017-03-02 12:23,I,ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE COPYGROUP standard standard  
+2017-03-02 12:23,E,ANR2022E UPDATE COPYGROUP: One or more parameters are missing. 
+2017-03-02 12:23,I,ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE COPYGROUP standard standard standard  
+2017-03-02 12:23,E,ANR2031E UPDATE COPYGROUP: At least one attribute must be specified for update. 
+2017-03-02 12:24,I,ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE COPYGROUP standard standard standard dest=containerpool  
+2017-03-02 12:24,I,"ANR1532I Backup copy group STANDARD updated in policy domain STANDARD, set STANDARD, management class STANDARD. "
+2017-03-02 12:24,I,ANR2017I Administrator SERVER_CONSOLE issued command: ACTIVATE POLICYSET standard standard  
+2017-03-02 12:24,I,ANR1514I Policy set STANDARD activated in policy domain STANDARD. 
+2017-03-02 12:24,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY NODE f=d  
+2017-03-02 12:25,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY ADMIN  
+2017-03-02 12:25,I,ANR2017I Administrator SERVER_CONSOLE issued command: GRANT AUTHORITY admin cl=sys  
+2017-03-02 12:25,E,ANR2156E GRANT AUTHORITY: Administrator ADMIN has already been granted system privilege. 
+2017-03-02 12:26,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY ADMIN admin f=d  
+2017-03-02 12:26,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY SERVER  
+2017-03-02 12:26,E,ANR2034E QUERY SERVER: No match found using this criteria. 
+2017-03-02 12:26,I,ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE ADMIN admin ssl=no  
+2017-03-02 12:26,I,ANR2071I Administrator ADMIN updated. 
+2017-03-02 12:26,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY ADMIN admin f=d  
+2017-03-02 12:30,I,ANR2017I Administrator SERVER_CONSOLE issued command: ALT  
+2017-03-02 12:30,E,ANR2000E Unknown command - ALT. 
+2017-03-02 12:30,I,ANR2017I Administrator SERVER_CONSOLE issued command: HALT  
+2017-03-02 12:31,I,ANR4726I The ICC support module has been loaded. 
+2017-03-02 12:31,I,ANR0990I Server restart-recovery in progress. 
+2017-03-02 12:31,I,ANR0152I Database manager successfully started. 
+2017-03-02 12:31,I,ANR1628I The database manager is using port 51500 for server connections. 
+2017-03-02 12:32,I,"ANR1635I The server machine GUID, 0a.99.81.50.60.dd.11.e6.a5.62.00.15.5d.42.0e.ed, has initialized. "
+2017-03-02 12:32,I,ANR2100I Activity log process has started. 
+2017-03-02 12:32,W,ANR3733W The master encryption key cannot be generated because the server password is not set. 
+2017-03-02 12:32,E,ANR8578E The IBM Spectrum Protect database does not have a password for the SSL key-ring file. 
+2017-03-02 12:32,I,ANR4726I The NAS-NDMP support module has been loaded. 
+2017-03-02 12:32,W,ANR1794W IBM Spectrum Protect SAN discovery is disabled by options. 
+2017-03-02 12:32,W,ANR7808W Oracle Library Attach module libacs.dll is not available from the system. 
+2017-03-02 12:32,I,ANR0984I Process 1 for EXPIRE INVENTORY (Automatic) started in the BACKGROUND at 12:32:49. (PROCESS: 1)
+2017-03-02 12:32,I,ANR0811I Inventory client file expiration started as process 1. (PROCESS: 1)
+2017-03-02 12:32,I,ANR2803I License manager started. 
+2017-03-02 12:32,I,ANR8200I TCP/IP Version 4 driver ready for connection with clients on port 1500. 
+2017-03-02 12:32,I,ANR2560I Schedule manager started. 
+2017-03-02 12:33,I,ANR0167I Inventory file expiration process 1 processed for 0 minutes. (PROCESS: 1)
+2017-03-02 12:33,I,"ANR0812I Inventory file expiration process 1 completed: processed 2 nodes, examined 0 objects, deleting 0 backup objects, 0 archive objects, 0 DB backup volumes, and 0 recovery plan files. 0 objects were retried 0 errors were encountered and 0 objects were skipped. (PROCESS: 1)"
+2017-03-02 12:33,I,ANR0985I Process 1 for EXPIRE INVENTORY (Automatic) running in the BACKGROUND completed with completion state SUCCESS at 12:33:21. (PROCESS: 1)
+2017-03-02 12:33,W,ANR0098W This system does not meet the minimum memory requirements. 
+2017-03-02 12:33,I,ANR0993I Server initialization complete. 
+2017-03-02 12:33,I,ANR0916I IBM Spectrum Protect distributed by International Business Machines is now ready for use. 
+2017-03-02 12:33,W,ANR2841W Server is NOT IN COMPLIANCE with license terms. 
+2017-03-02 12:33,W,ANR4502W No files have been defined for automatically storing sequential volume history information. 
+2017-03-02 12:33,W,"ANR4898W This is a pre-release 8.1.1.0 IBM Spectrum Protect server (driver 037, build 17037.1314).  It is not supported for commercial or production use. "
+2017-03-02 12:40,I,ANR4726I The ICC support module has been loaded. 
+2017-03-02 12:40,I,ANR0990I Server restart-recovery in progress. 
+2017-03-02 12:40,I,ANR0152I Database manager successfully started. 
+2017-03-02 12:41,I,ANR1628I The database manager is using port 51500 for server connections. 
+2017-03-02 12:41,I,"ANR1635I The server machine GUID, 0a.99.81.50.60.dd.11.e6.a5.62.00.15.5d.42.0e.ed, has initialized. "
+2017-03-02 12:41,I,ANR2100I Activity log process has started. 
+2017-03-02 12:41,W,ANR3733W The master encryption key cannot be generated because the server password is not set. 
+2017-03-02 12:41,E,ANR8578E The IBM Spectrum Protect database does not have a password for the SSL key-ring file. 
+2017-03-02 12:41,I,ANR4726I The NAS-NDMP support module has been loaded. 
+2017-03-02 12:41,W,ANR1794W IBM Spectrum Protect SAN discovery is disabled by options. 
+2017-03-02 12:41,W,ANR7808W Oracle Library Attach module libacs.dll is not available from the system. 
+2017-03-02 12:42,I,ANR0984I Process 1 for EXPIRE INVENTORY (Automatic) started in the BACKGROUND at 12:42:13. (PROCESS: 1)
+2017-03-02 12:42,I,ANR0811I Inventory client file expiration started as process 1. (PROCESS: 1)
+2017-03-02 12:42,I,ANR8200I TCP/IP Version 4 driver ready for connection with clients on port 1500. 
+2017-03-02 12:42,I,ANR2803I License manager started. 
+2017-03-02 12:42,I,ANR0167I Inventory file expiration process 1 processed for 0 minutes. (PROCESS: 1)
+2017-03-02 12:42,I,"ANR0812I Inventory file expiration process 1 completed: processed 2 nodes, examined 0 objects, deleting 0 backup objects, 0 archive objects, 0 DB backup volumes, and 0 recovery plan files. 0 objects were retried 0 errors were encountered and 0 objects were skipped. (PROCESS: 1)"
+2017-03-02 12:42,I,ANR0985I Process 1 for EXPIRE INVENTORY (Automatic) running in the BACKGROUND completed with completion state SUCCESS at 12:42:16. (PROCESS: 1)
+2017-03-02 12:42,I,ANR2560I Schedule manager started. 
+2017-03-02 12:42,W,ANR0098W This system does not meet the minimum memory requirements. 
+2017-03-02 12:42,I,ANR0993I Server initialization complete. 
+2017-03-02 12:42,I,ANR0916I IBM Spectrum Protect distributed by International Business Machines is now ready for use. 
+2017-03-02 12:42,W,ANR2841W Server is NOT IN COMPLIANCE with license terms. 
+2017-03-02 12:42,W,ANR4502W No files have been defined for automatically storing sequential volume history information. 
+2017-03-02 12:43,W,"ANR4898W This is a pre-release 8.1.1.0 IBM Spectrum Protect server (driver 037, build 17037.1314).  It is not supported for commercial or production use. "
+2017-03-02 12:43,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY ADMIN  
+2017-03-02 12:43,I,ANR0406I Session 2 started for node WIN-LAPTOP-01 (WinNT) (Tcp/Ip adminib-puf55ts.tucson.ibm.com(54434)). (SESSION: 2)
+2017-03-02 12:43,I,ANE4083I New node password has been generated.  (SESSION: 2)
+2017-03-02 12:43,I,ANR0406I Session 3 started for node WIN-LAPTOP-01 (WinNT) (Tcp/Ip adminib-puf55ts.tucson.ibm.com(54435)). (SESSION: 3)
+2017-03-02 12:43,I,ANE4083I New node password has been generated.  (SESSION: 3)
+2017-03-02 12:43,I,ANR0950I Session 3 for node WIN-LAPTOP-01 is using inline server data deduplication or inline compression. (SESSION: 3)
+2017-03-02 12:44,I,ANR0406I Session 5 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49336)). (SESSION: 5)
+2017-03-02 12:44,W,ANR0424W Session 5 for node CAPSTONENODE (WinNT) refused - invalid password submitted. (SESSION: 5)
+2017-03-02 12:44,I,ANR0403I Session 5 ended for node CAPSTONENODE (WinNT). (SESSION: 5)
+2017-03-02 12:44,I,ANR0406I Session 7 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49339)). (SESSION: 7)
+2017-03-02 12:45,I,ANR0406I Session 8 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49342)). (SESSION: 8)
+2017-03-02 12:45,I,ANR0406I Session 9 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49343)). (SESSION: 9)
+2017-03-02 12:45,I,ANR0950I Session 8 for node CAPSTONENODE is using inline server data deduplication or inline compression. (SESSION: 8)
+2017-03-02 12:45,I,ANR0406I Session 10 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49344)). (SESSION: 10)
+2017-03-02 12:45,I,ANR0406I Session 11 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49345)). (SESSION: 11)
+2017-03-02 12:45,I,ANR0406I Session 12 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49346)). (SESSION: 12)
+2017-03-02 12:45,I,ANR0406I Session 13 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49347)). (SESSION: 13)
+2017-03-02 12:45,I,ANR0406I Session 14 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49348)). (SESSION: 14)
+2017-03-02 12:45,I,ANR0406I Session 15 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49349)). (SESSION: 15)
+2017-03-02 12:45,W,ANR0480W Session 7 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 7)
+2017-03-02 12:45,W,ANR0480W Session 15 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 15)
+2017-03-02 12:45,W,ANR0480W Session 14 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 14)
+2017-03-02 12:45,W,ANR2841W Server is NOT IN COMPLIANCE with license terms. (SESSION: 15)
+2017-03-02 12:45,W,ANR0480W Session 11 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 11)
+2017-03-02 12:45,W,ANR0480W Session 13 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 13)
+2017-03-02 12:45,W,ANR0480W Session 10 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 10)
+2017-03-02 12:45,W,ANR0480W Session 12 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 12)
+2017-03-02 12:45,W,ANR0480W Session 9 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 9)
+2017-03-02 12:45,I,"ANR0951I Session 8 for node CAPSTONENODE processed 1 files by using inline data deduplication or compression, or both. The number of original bytes was 66,759,593. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 8)"
+2017-03-02 12:45,W,ANR0480W Session 8 for node CAPSTONENODE (WinNT) terminated - connection with client severed. (SESSION: 8)
+2017-03-02 12:45,I,ANR0406I Session 16 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49351)). (SESSION: 16)
+2017-03-02 12:46,I,ANR0406I Session 17 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49352)). (SESSION: 17)
+2017-03-02 12:46,I,ANR0406I Session 18 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49353)). (SESSION: 18)
+2017-03-02 12:46,I,ANR0406I Session 19 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49354)). (SESSION: 19)
+2017-03-02 12:46,I,ANR0406I Session 20 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49355)). (SESSION: 20)
+2017-03-02 12:46,I,ANR0406I Session 21 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49356)). (SESSION: 21)
+2017-03-02 12:46,I,ANR0406I Session 22 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49357)). (SESSION: 22)
+2017-03-02 12:46,I,ANR0406I Session 23 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49358)). (SESSION: 23)
+2017-03-02 12:46,I,ANR0406I Session 24 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(49359)). (SESSION: 24)
+2017-03-02 12:46,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  
+2017-03-02 12:50,I,ANR0950I Session 17 for node CAPSTONENODE is using inline server data deduplication or inline compression. (SESSION: 17)
+2017-03-02 12:50,I,ANR0950I Session 19 for node CAPSTONENODE is using inline server data deduplication or inline compression. (SESSION: 19)
+2017-03-02 12:50,I,ANR0950I Session 21 for node CAPSTONENODE is using inline server data deduplication or inline compression. (SESSION: 21)
+2017-03-02 12:50,I,ANR0950I Session 22 for node CAPSTONENODE is using inline server data deduplication or inline compression. (SESSION: 22)
+2017-03-02 12:51,I,"ANR0951I Session 3 for node WIN-LAPTOP-01 processed 20,507 files by using inline data deduplication or compression, or both. The number of original bytes was 1,639,419,762. Inline data deduplication reduced the data by 1,408,928,249 bytes and inline compression reduced the data by 14,172,255 bytes.  (SESSION: 3)"
+2017-03-02 12:51,I,ANR0403I Session 3 ended for node WIN-LAPTOP-01 (WinNT). (SESSION: 3)
+2017-03-02 12:51,W,ANR2841W Server is NOT IN COMPLIANCE with license terms. (SESSION: 3)
+2017-03-02 12:51,I,"ANE4952I Total number of objects inspected:       20,507  (SESSION: 2)"
+2017-03-02 12:51,I,"ANE4954I Total number of objects backed up:       20,507  (SESSION: 2)"
+2017-03-02 12:51,I,ANE4958I Total number of objects updated:              0  (SESSION: 2)
+2017-03-02 12:51,I,ANE4960I Total number of objects rebound:              0  (SESSION: 2)
+2017-03-02 12:51,I,ANE4957I Total number of objects deleted:              0  (SESSION: 2)
+2017-03-02 12:51,I,ANE4970I Total number of objects expired:              0  (SESSION: 2)
+2017-03-02 12:51,I,ANE4959I Total number of objects failed:               0  (SESSION: 2)
+2017-03-02 12:51,I,ANE4197I Total number of objects encrypted:            0  (SESSION: 2)
+2017-03-02 12:51,I,ANE4965I Total number of subfile objects:              0  (SESSION: 2)
+2017-03-02 12:51,I,ANE4914I Total number of objects grew:                 0  (SESSION: 2)
+2017-03-02 12:51,I,ANE4916I Total number of retries:                      0  (SESSION: 2)
+2017-03-02 12:51,I,ANE4977I Total number of bytes inspected:           1.53 GB  (SESSION: 2)
+2017-03-02 12:51,I,ANE4961I Total number of bytes transferred:         1.54 GB  (SESSION: 2)
+2017-03-02 12:51,I,ANE4963I Data transfer time:                      311.19 sec  (SESSION: 2)
+2017-03-02 12:51,I,"ANE4966I Network data transfer rate:            5,174.25 KB/sec  (SESSION: 2)"
+2017-03-02 12:51,I,"ANE4967I Aggregate data transfer rate:          3,571.83 KB/sec  (SESSION: 2)"
+2017-03-02 12:51,I,ANE4968I Objects compressed by:                        0%  (SESSION: 2)
+2017-03-02 12:51,I,ANE4976I Total data reduction ratio:                0.00%  (SESSION: 2)
+2017-03-02 12:51,I,ANE4969I Subfile objects reduced by:                   0%  (SESSION: 2)
+2017-03-02 12:51,I,ANE4964I Elapsed processing time:               00:07:30  (SESSION: 2)
+2017-03-02 12:51,I,ANR0403I Session 2 ended for node WIN-LAPTOP-01 (WinNT). (SESSION: 2)
+2017-03-02 12:52,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  
+2017-03-02 12:53,I,ANR0317I Reorganization of indices for table COPY_GROUPS started. 
+2017-03-02 12:53,I,ANR0318I Reorganization of indices for table COPY_GROUPS ended with sqlCode 0. 
+2017-03-02 12:53,W,ANR0319W The file system for the database archive log has insufficient free space. 
+2017-03-02 12:53,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 12:55,I,ANR0403I Session 23 ended for node CAPSTONENODE (WinNT). (SESSION: 23)
+2017-03-02 12:55,I,"ANR0951I Session 21 for node CAPSTONENODE processed 2 files by using inline data deduplication or compression, or both. The number of original bytes was 2,097,152,000. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 21)"
+2017-03-02 12:55,I,ANR0403I Session 21 ended for node CAPSTONENODE (WinNT). (SESSION: 21)
+2017-03-02 12:56,I,ANR0403I Session 24 ended for node CAPSTONENODE (WinNT). (SESSION: 24)
+2017-03-02 12:56,I,"ANR0951I Session 22 for node CAPSTONENODE processed 2 files by using inline data deduplication or compression, or both. The number of original bytes was 2,097,152,000. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 22)"
+2017-03-02 12:56,I,ANR0403I Session 22 ended for node CAPSTONENODE (WinNT). (SESSION: 22)
+2017-03-02 12:58,I,ANR0336I Runstats for table COPY_GROUPS started. 
+2017-03-02 12:58,I,ANR0337I Runstats for table COPY_GROUPS ended with sqlCode 0. 
+2017-03-02 12:58,I,ANR0403I Session 20 ended for node CAPSTONENODE (WinNT). (SESSION: 20)
+2017-03-02 12:58,I,"ANR0951I Session 19 for node CAPSTONENODE processed 3 files by using inline data deduplication or compression, or both. The number of original bytes was 3,145,728,000. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 19)"
+2017-03-02 12:58,I,ANR0403I Session 19 ended for node CAPSTONENODE (WinNT). (SESSION: 19)
+2017-03-02 12:58,I,ANR0403I Session 18 ended for node CAPSTONENODE (WinNT). (SESSION: 18)
+2017-03-02 12:58,I,"ANR0951I Session 17 for node CAPSTONENODE processed 3 files by using inline data deduplication or compression, or both. The number of original bytes was 3,145,728,000. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 17)"
+2017-03-02 12:58,I,ANR0403I Session 17 ended for node CAPSTONENODE (WinNT). (SESSION: 17)
+2017-03-02 12:58,I,ANE4952I Total number of objects inspected:           13  (SESSION: 16)
+2017-03-02 12:58,I,ANE4954I Total number of objects backed up:           10  (SESSION: 16)
+2017-03-02 12:58,I,ANE4958I Total number of objects updated:              0  (SESSION: 16)
+2017-03-02 12:58,I,ANE4960I Total number of objects rebound:              0  (SESSION: 16)
+2017-03-02 12:58,I,ANE4957I Total number of objects deleted:              0  (SESSION: 16)
+2017-03-02 12:58,I,ANE4970I Total number of objects expired:              0  (SESSION: 16)
+2017-03-02 12:58,I,ANE4959I Total number of objects failed:               0  (SESSION: 16)
+2017-03-02 12:58,I,ANE4197I Total number of objects encrypted:            0  (SESSION: 16)
+2017-03-02 12:58,I,ANE4982I Total objects deduplicated:                  10  (SESSION: 16)
+2017-03-02 12:58,I,ANE4914I Total number of objects grew:                 0  (SESSION: 16)
+2017-03-02 12:58,I,ANE4916I Total number of retries:                      0  (SESSION: 16)
+2017-03-02 12:58,I,ANE4977I Total number of bytes inspected:           9.77 GB  (SESSION: 16)
+2017-03-02 12:58,I,ANE4975I Total number of bytes processed:           9.65 GB  (SESSION: 16)
+2017-03-02 12:58,I,ANE4984I Total bytes before deduplication:          9.77 GB  (SESSION: 16)
+2017-03-02 12:58,I,ANE4198I Total bytes after deduplication:           9.64 GB  (SESSION: 16)
+2017-03-02 12:58,I,ANE4961I Total number of bytes transferred:         9.65 GB  (SESSION: 16)
+2017-03-02 12:58,I,"ANE4963I Data transfer time:                    1,942.07 sec  (SESSION: 16)"
+2017-03-02 12:58,I,"ANE4966I Network data transfer rate:            5,207.90 KB/sec  (SESSION: 16)"
+2017-03-02 12:58,I,"ANE4967I Aggregate data transfer rate:         13,693.27 KB/sec  (SESSION: 16)"
+2017-03-02 12:58,I,ANE4968I Objects compressed by:                        0%  (SESSION: 16)
+2017-03-02 12:58,I,ANE4981I Deduplication reduction:                   1.27%  (SESSION: 16)
+2017-03-02 12:58,I,ANE4976I Total data reduction ratio:                1.29%  (SESSION: 16)
+2017-03-02 12:58,I,ANE4964I Elapsed processing time:               00:12:18  (SESSION: 16)
+2017-03-02 13:03,I,ANR0317I Reorganization of indices for table SD_CHUNK_LOCATIONS started. 
+2017-03-02 13:03,I,ANR0318I Reorganization of indices for table SD_CHUNK_LOCATIONS ended with sqlCode 0. 
+2017-03-02 13:03,W,"ANR2992W The database uses 73,936 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 13:03,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 13:07,I,ANR2017I Administrator SERVER_CONSOLE issued command: DEFINE STGPOOL cleversafe stgt=cloud cloudt=s3 cloudu=http://9.11.60.239 encrypt=no id=Ulam7Z6ulmno8xZOyukg pass=?***?  
+2017-03-02 13:07,I,ANR2249I Storage pool CLEVERSAFE is defined. 
+2017-03-02 13:08,I,ANR2017I Administrator SERVER_CONSOLE issued command: DEFINE STGPOOLDIRECTORY cleversafe C:\cloud-test  
+2017-03-02 13:08,I,ANR3254I Storage pool directory C:\cloud-test was defined in storage pool CLEVERSAFE. 
+2017-03-02 13:08,I,ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE COPYGROUP standard standard standard dest=cleversafe  
+2017-03-02 13:08,I,"ANR1532I Backup copy group STANDARD updated in policy domain STANDARD, set STANDARD, management class STANDARD. "
+2017-03-02 13:08,I,ANR2017I Administrator SERVER_CONSOLE issued command: ACTIVATE POLICYSET standard standard  
+2017-03-02 13:08,I,ANR1514I Policy set STANDARD activated in policy domain STANDARD. 
+2017-03-02 13:10,I,ANR0406I Session 25 started for node WIN-LAPTOP-01 (WinNT) (Tcp/Ip adminib-puf55ts.tucson.ibm.com(54533)). (SESSION: 25)
+2017-03-02 13:10,I,ANR0403I Session 25 ended for node WIN-LAPTOP-01 (WinNT). (SESSION: 25)
+2017-03-02 13:11,I,ANR0406I Session 26 started for node WIN-LAPTOP-01 (WinNT) (Tcp/Ip adminib-puf55ts.tucson.ibm.com(54540)). (SESSION: 26)
+2017-03-02 13:11,I,ANR0406I Session 27 started for node WIN-LAPTOP-01 (WinNT) (Tcp/Ip adminib-puf55ts.tucson.ibm.com(54541)). (SESSION: 27)
+2017-03-02 13:11,I,ANR0950I Session 27 for node WIN-LAPTOP-01 is using inline server data deduplication or inline compression. (SESSION: 27)
+2017-03-02 13:11,I,"ANR0951I Session 27 for node WIN-LAPTOP-01 processed 27 files by using inline data deduplication or compression, or both. The number of original bytes was 136,314,880. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 27)"
+2017-03-02 13:11,I,ANR0403I Session 27 ended for node WIN-LAPTOP-01 (WinNT). (SESSION: 27)
+2017-03-02 13:11,I,ANE4952I Total number of objects inspected:          105  (SESSION: 26)
+2017-03-02 13:11,I,ANE4954I Total number of objects backed up:           27  (SESSION: 26)
+2017-03-02 13:11,I,ANE4958I Total number of objects updated:              0  (SESSION: 26)
+2017-03-02 13:11,I,ANE4960I Total number of objects rebound:              0  (SESSION: 26)
+2017-03-02 13:11,I,ANE4957I Total number of objects deleted:              0  (SESSION: 26)
+2017-03-02 13:11,I,ANE4970I Total number of objects expired:              0  (SESSION: 26)
+2017-03-02 13:11,I,ANE4959I Total number of objects failed:               0  (SESSION: 26)
+2017-03-02 13:11,I,ANE4197I Total number of objects encrypted:            0  (SESSION: 26)
+2017-03-02 13:11,I,ANE4965I Total number of subfile objects:              0  (SESSION: 26)
+2017-03-02 13:11,I,ANE4914I Total number of objects grew:                 0  (SESSION: 26)
+2017-03-02 13:11,I,ANE4916I Total number of retries:                      0  (SESSION: 26)
+2017-03-02 13:11,I,ANE4977I Total number of bytes inspected:         519.00 MB  (SESSION: 26)
+2017-03-02 13:11,I,ANE4961I Total number of bytes transferred:       130.05 MB  (SESSION: 26)
+2017-03-02 13:11,I,ANE4963I Data transfer time:                       15.63 sec  (SESSION: 26)
+2017-03-02 13:11,I,"ANE4966I Network data transfer rate:            8,517.73 KB/sec  (SESSION: 26)"
+2017-03-02 13:11,I,"ANE4967I Aggregate data transfer rate:          6,994.28 KB/sec  (SESSION: 26)"
+2017-03-02 13:11,I,ANE4968I Objects compressed by:                        0%  (SESSION: 26)
+2017-03-02 13:11,I,ANE4976I Total data reduction ratio:               74.95%  (SESSION: 26)
+2017-03-02 13:11,I,ANE4969I Subfile objects reduced by:                   0%  (SESSION: 26)
+2017-03-02 13:11,I,ANE4964I Elapsed processing time:               00:00:19  (SESSION: 26)
+2017-03-02 13:11,I,ANR0403I Session 26 ended for node WIN-LAPTOP-01 (WinNT). (SESSION: 26)
+2017-03-02 13:13,W,ANR0482W Session 16 for node CAPSTONENODE (WinNT) terminated - idle for more than 15 minutes. (SESSION: 16)
+2017-03-02 13:13,W,"ANR2992W The database uses 74,082 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 13:13,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 13:14,I,ANR0984I Process 2 for Local to Cloud Transfer started in the BACKGROUND at 13:14:26. (PROCESS: 2)
+2017-03-02 13:14,I,ANR3832I Local to Cloud Transfer process 2 for storage pool CLEVERSAFE started. (PROCESS: 2)
+2017-03-02 13:14,E,ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
+2017-03-02 13:14,I,ANR3833I Local to Cloud Transfer process 2 for storage pool CLEVERSAFE has completed. (PROCESS: 2)
+2017-03-02 13:14,I,ANR0985I Process 2 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:14:46. (PROCESS: 2)
+2017-03-02 13:14,E,ANR1893E Process 2 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 2)
+2017-03-02 13:15,I,ANR0984I Process 3 for Local to Cloud Transfer started in the BACKGROUND at 13:15:46. (PROCESS: 3)
+2017-03-02 13:15,I,ANR3832I Local to Cloud Transfer process 3 for storage pool CLEVERSAFE started. (PROCESS: 3)
+2017-03-02 13:15,E,ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
+2017-03-02 13:15,I,ANR3833I Local to Cloud Transfer process 3 for storage pool CLEVERSAFE has completed. (PROCESS: 3)
+2017-03-02 13:15,I,ANR0985I Process 3 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:15:56. (PROCESS: 3)
+2017-03-02 13:15,E,ANR1893E Process 3 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 3)
+2017-03-02 13:16,I,ANR0984I Process 4 for Local to Cloud Transfer started in the BACKGROUND at 13:16:57. (PROCESS: 4)
+2017-03-02 13:16,I,ANR3832I Local to Cloud Transfer process 4 for storage pool CLEVERSAFE started. (PROCESS: 4)
+2017-03-02 13:16,E,ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
+2017-03-02 13:17,I,ANR3833I Local to Cloud Transfer process 4 for storage pool CLEVERSAFE has completed. (PROCESS: 4)
+2017-03-02 13:17,I,ANR0985I Process 4 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:17:07. (PROCESS: 4)
+2017-03-02 13:17,E,ANR1893E Process 4 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 4)
+2017-03-02 13:18,I,ANR0984I Process 5 for Local to Cloud Transfer started in the BACKGROUND at 13:18:07. (PROCESS: 5)
+2017-03-02 13:18,I,ANR3832I Local to Cloud Transfer process 5 for storage pool CLEVERSAFE started. (PROCESS: 5)
+2017-03-02 13:18,E,ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
+2017-03-02 13:18,I,ANR3833I Local to Cloud Transfer process 5 for storage pool CLEVERSAFE has completed. (PROCESS: 5)
+2017-03-02 13:18,I,ANR0985I Process 5 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:18:17. (PROCESS: 5)
+2017-03-02 13:18,E,ANR1893E Process 5 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 5)
+2017-03-02 13:19,I,ANR0984I Process 6 for Local to Cloud Transfer started in the BACKGROUND at 13:19:17. (PROCESS: 6)
+2017-03-02 13:19,I,ANR3832I Local to Cloud Transfer process 6 for storage pool CLEVERSAFE started. (PROCESS: 6)
+2017-03-02 13:19,E,ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
+2017-03-02 13:19,I,ANR3833I Local to Cloud Transfer process 6 for storage pool CLEVERSAFE has completed. (PROCESS: 6)
+2017-03-02 13:19,I,ANR0985I Process 6 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:19:27. (PROCESS: 6)
+2017-03-02 13:19,E,ANR1893E Process 6 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 6)
+2017-03-02 13:20,I,ANR0984I Process 7 for Local to Cloud Transfer started in the BACKGROUND at 13:20:27. (PROCESS: 7)
+2017-03-02 13:20,I,ANR3832I Local to Cloud Transfer process 7 for storage pool CLEVERSAFE started. (PROCESS: 7)
+2017-03-02 13:20,E,ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
+2017-03-02 13:20,I,ANR3833I Local to Cloud Transfer process 7 for storage pool CLEVERSAFE has completed. (PROCESS: 7)
+2017-03-02 13:20,I,ANR0985I Process 7 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:20:37. (PROCESS: 7)
+2017-03-02 13:20,E,ANR1893E Process 7 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 7)
+2017-03-02 13:21,I,ANR0984I Process 8 for Local to Cloud Transfer started in the BACKGROUND at 13:21:37. (PROCESS: 8)
+2017-03-02 13:21,I,ANR3832I Local to Cloud Transfer process 8 for storage pool CLEVERSAFE started. (PROCESS: 8)
+2017-03-02 13:21,E,ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. 
+2017-03-02 13:21,I,ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE STGPOOL clev  
+2017-03-02 13:21,E,ANR2031E UPDATE STGPOOL: At least one attribute must be specified for update. 
+2017-03-02 13:21,I,ANR3833I Local to Cloud Transfer process 8 for storage pool CLEVERSAFE has completed. (PROCESS: 8)
+2017-03-02 13:21,I,ANR0985I Process 8 for Local to Cloud Transfer running in the BACKGROUND completed with completion state FAILURE at 13:21:47. (PROCESS: 8)
+2017-03-02 13:21,E,ANR1893E Process 8 for Local to Cloud Transfer completed with a completion state of FAILURE. (PROCESS: 8)
+2017-03-02 13:22,I,ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE STGPOOL cleversafe id=Ulam7Z6uImno8xZ0yukg pass=?***?  
+2017-03-02 13:22,I,ANR2202I Storage pool CLEVERSAFE updated. 
+2017-03-02 13:22,I,ANR0984I Process 9 for Local to Cloud Transfer started in the BACKGROUND at 13:22:47. (PROCESS: 9)
+2017-03-02 13:22,I,ANR3832I Local to Cloud Transfer process 9 for storage pool CLEVERSAFE started. (PROCESS: 9)
+2017-03-02 13:23,I,ANR3833I Local to Cloud Transfer process 9 for storage pool CLEVERSAFE has completed. (PROCESS: 9)
+2017-03-02 13:23,I,"ANR0986I Process 9 for Local to Cloud Transfer running in the BACKGROUND processed 463 items for a total of 137,310,871 bytes with a completion state of SUCCESS at 13:23:07. (PROCESS: 9)"
+2017-03-02 13:23,I,ANR0317I Reorganization of indices for table SD_INFLIGHT_CONTAINERS started. 
+2017-03-02 13:23,I,ANR0318I Reorganization of indices for table SD_INFLIGHT_CONTAINERS ended with sqlCode 0. 
+2017-03-02 13:23,W,"ANR2992W The database uses 73,938 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 13:23,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 13:28,I,ANR0336I Runstats for table SD_INFLIGHT_CONTAINERS started. 
+2017-03-02 13:28,I,ANR0337I Runstats for table SD_INFLIGHT_CONTAINERS ended with sqlCode 0. 
+2017-03-02 13:33,W,"ANR2992W The database uses 73,939 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 13:33,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 13:42,W,ANR2841W Server is NOT IN COMPLIANCE with license terms. 
+2017-03-02 13:43,W,"ANR2992W The database uses 73,937 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 13:43,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 13:53,W,ANR0319W The file system for the database archive log has insufficient free space. 
+2017-03-02 13:53,W,"ANR2992W The database uses 73,933 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 13:53,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 14:03,W,"ANR2992W The database uses 73,936 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 14:03,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 14:13,W,"ANR2992W The database uses 73,934 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 14:13,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 14:23,W,"ANR2992W The database uses 73,936 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 14:23,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 14:26,I,ANR0406I Session 28 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50679)). (SESSION: 28)
+2017-03-02 14:26,I,ANR0406I Session 29 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50680)). (SESSION: 29)
+2017-03-02 14:26,I,ANR0406I Session 30 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50681)). (SESSION: 30)
+2017-03-02 14:26,I,ANR0406I Session 31 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50683)). (SESSION: 31)
+2017-03-02 14:26,I,ANR0406I Session 32 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50684)). (SESSION: 32)
+2017-03-02 14:26,I,ANR0403I Session 32 ended for node CAPSTONENODE (WinNT). (SESSION: 32)
+2017-03-02 14:26,I,ANR0403I Session 31 ended for node CAPSTONENODE (WinNT). (SESSION: 31)
+2017-03-02 14:28,I,ANR0984I Process 10 for Local to Cloud Transfer started in the BACKGROUND at 14:28:19. (PROCESS: 10)
+2017-03-02 14:28,I,ANR3832I Local to Cloud Transfer process 10 for storage pool CLEVERSAFE started. (PROCESS: 10)
+2017-03-02 14:28,I,ANR3833I Local to Cloud Transfer process 10 for storage pool CLEVERSAFE has completed. (PROCESS: 10)
+2017-03-02 14:28,I,"ANR0986I Process 10 for Local to Cloud Transfer running in the BACKGROUND processed 3,282 items for a total of 1,039,963,524 bytes with a completion state of SUCCESS at 14:28:49. (PROCESS: 10)"
+2017-03-02 14:29,W,ANR0522W Transaction failed for session 29 for node CAPSTONENODE (WinNT) - no space available in storage pool CLEVERSAFE and all successor pools. (SESSION: 29)
+2017-03-02 14:29,I,ANR0403I Session 30 ended for node CAPSTONENODE (WinNT). (SESSION: 30)
+2017-03-02 14:29,I,ANR0403I Session 29 ended for node CAPSTONENODE (WinNT). (SESSION: 29)
+2017-03-02 14:29,I,ANR0406I Session 33 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50720)). (SESSION: 33)
+2017-03-02 14:29,I,ANR0406I Session 34 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(50721)). (SESSION: 34)
+2017-03-02 14:29,I,ANR0403I Session 33 ended for node CAPSTONENODE (WinNT). (SESSION: 33)
+2017-03-02 14:29,I,ANR0403I Session 34 ended for node CAPSTONENODE (WinNT). (SESSION: 34)
+2017-03-02 14:29,I,ANE4952I Total number of objects inspected:            1  (SESSION: 28)
+2017-03-02 14:29,I,ANE4954I Total number of objects backed up:            0  (SESSION: 28)
+2017-03-02 14:29,I,ANE4958I Total number of objects updated:              0  (SESSION: 28)
+2017-03-02 14:29,I,ANE4960I Total number of objects rebound:              0  (SESSION: 28)
+2017-03-02 14:29,I,ANE4957I Total number of objects deleted:              0  (SESSION: 28)
+2017-03-02 14:29,I,ANE4970I Total number of objects expired:              0  (SESSION: 28)
+2017-03-02 14:29,I,ANE4959I Total number of objects failed:               1  (SESSION: 28)
+2017-03-02 14:29,I,ANE4197I Total number of objects encrypted:            0  (SESSION: 28)
+2017-03-02 14:29,I,ANE4982I Total objects deduplicated:                   0  (SESSION: 28)
+2017-03-02 14:29,I,ANE4914I Total number of objects grew:                 0  (SESSION: 28)
+2017-03-02 14:29,I,ANE4916I Total number of retries:                      0  (SESSION: 28)
+2017-03-02 14:29,I,ANE4977I Total number of bytes inspected:           7.45 GB  (SESSION: 28)
+2017-03-02 14:29,I,ANE4975I Total number of bytes processed:           2.00 GB  (SESSION: 28)
+2017-03-02 14:29,I,ANE4984I Total bytes before deduplication:             0  B  (SESSION: 28)
+2017-03-02 14:29,I,ANE4198I Total bytes after deduplication:              0  B  (SESSION: 28)
+2017-03-02 14:29,I,ANE4961I Total number of bytes transferred:         2.00 GB  (SESSION: 28)
+2017-03-02 14:29,I,ANE4963I Data transfer time:                      173.95 sec  (SESSION: 28)
+2017-03-02 14:29,I,"ANE4966I Network data transfer rate:           12,072.37 KB/sec  (SESSION: 28)"
+2017-03-02 14:29,I,"ANE4967I Aggregate data transfer rate:         11,493.29 KB/sec  (SESSION: 28)"
+2017-03-02 14:29,I,ANE4968I Objects compressed by:                        0%  (SESSION: 28)
+2017-03-02 14:29,I,ANE4981I Deduplication reduction:                   0.00%  (SESSION: 28)
+2017-03-02 14:29,I,ANE4976I Total data reduction ratio:               73.12%  (SESSION: 28)
+2017-03-02 14:29,I,ANE4964I Elapsed processing time:               00:03:02  (SESSION: 28)
+2017-03-02 14:29,I,ANR0984I Process 11 for Local to Cloud Transfer started in the BACKGROUND at 14:29:50. (PROCESS: 11)
+2017-03-02 14:29,I,ANR3832I Local to Cloud Transfer process 11 for storage pool CLEVERSAFE started. (PROCESS: 11)
+2017-03-02 14:30,I,ANR3833I Local to Cloud Transfer process 11 for storage pool CLEVERSAFE has completed. (PROCESS: 11)
+2017-03-02 14:30,I,"ANR0986I Process 11 for Local to Cloud Transfer running in the BACKGROUND processed 3,285 items for a total of 1,055,678,801 bytes with a completion state of SUCCESS at 14:30:20. (PROCESS: 11)"
+2017-03-02 14:32,I,ANR0984I Process 12 for Local to Cloud Transfer started in the BACKGROUND at 14:32:30. (PROCESS: 12)
+2017-03-02 14:32,I,ANR3832I Local to Cloud Transfer process 12 for storage pool CLEVERSAFE started. (PROCESS: 12)
+2017-03-02 14:32,I,ANR3833I Local to Cloud Transfer process 12 for storage pool CLEVERSAFE has completed. (PROCESS: 12)
+2017-03-02 14:32,I,"ANR0986I Process 12 for Local to Cloud Transfer running in the BACKGROUND processed 48 items for a total of 17,640,876 bytes with a completion state of SUCCESS at 14:32:40. (PROCESS: 12)"
+2017-03-02 14:33,I,ANR0293I Reorganization for table SD_CONTAINERS started. 
+2017-03-02 14:34,W,"ANR2992W The database uses 73,937 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 14:34,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 14:38,I,ANR0294I Reorganization for table SD_CONTAINERS ended. 
+2017-03-02 14:42,W,ANR2841W Server is NOT IN COMPLIANCE with license terms. 
+2017-03-02 14:43,I,ANR0336I Runstats for table SD_CONTAINERS started. 
+2017-03-02 14:43,I,ANR0337I Runstats for table SD_CONTAINERS ended with sqlCode 0. 
+2017-03-02 14:44,W,"ANR2992W The database uses 73,937 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 14:44,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 14:44,W,ANR0482W Session 28 for node CAPSTONENODE (WinNT) terminated - idle for more than 15 minutes. (SESSION: 28)
+2017-03-02 14:46,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  
+2017-03-02 14:48,I,ANR0293I Reorganization for table TSMMON_ALERT_TRIGGER started. 
+2017-03-02 14:53,I,ANR0294I Reorganization for table TSMMON_ALERT_TRIGGER ended. 
+2017-03-02 14:54,W,ANR0319W The file system for the database archive log has insufficient free space. 
+2017-03-02 14:54,W,"ANR2992W The database uses 73,937 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 14:54,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 14:58,I,ANR0336I Runstats for table TSMMON_ALERT_TRIGGER started. 
+2017-03-02 14:58,I,ANR0337I Runstats for table TSMMON_ALERT_TRIGGER ended with sqlCode 0. 
+2017-03-02 15:01,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  
+2017-03-02 15:04,W,"ANR2992W The database uses 73,935 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 15:04,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 15:08,I,ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE COPYGROUP standard standard standard dest=cleversafe  
+2017-03-02 15:08,I,"ANR1532I Backup copy group STANDARD updated in policy domain STANDARD, set STANDARD, management class STANDARD. "
+2017-03-02 15:08,I,ANR2017I Administrator SERVER_CONSOLE issued command: ACTIVATE POLICYSET standard standard  
+2017-03-02 15:08,I,ANR1514I Policy set STANDARD activated in policy domain STANDARD. 
+2017-03-02 15:10,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  
+2017-03-02 15:12,I,ANR0406I Session 35 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(51164)). (SESSION: 35)
+2017-03-02 15:12,I,ANR0406I Session 36 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(51165)). (SESSION: 36)
+2017-03-02 15:12,I,ANR0406I Session 37 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(51166)). (SESSION: 37)
+2017-03-02 15:12,I,ANR0406I Session 38 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(51167)). (SESSION: 38)
+2017-03-02 15:12,I,ANR0406I Session 39 started for node CAPSTONENODE (WinNT) (Tcp/Ip danb.tucson.ibm.com(51168)). (SESSION: 39)
+2017-03-02 15:12,I,ANR0403I Session 38 ended for node CAPSTONENODE (WinNT). (SESSION: 38)
+2017-03-02 15:12,I,ANR0403I Session 39 ended for node CAPSTONENODE (WinNT). (SESSION: 39)
+2017-03-02 15:14,W,"ANR2992W The database uses 74,802 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.92. "
+2017-03-02 15:14,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 15:14,I,ANR0984I Process 13 for Local to Cloud Transfer started in the BACKGROUND at 15:14:31. (PROCESS: 13)
+2017-03-02 15:14,I,ANR3832I Local to Cloud Transfer process 13 for storage pool CLEVERSAFE started. (PROCESS: 13)
+2017-03-02 15:15,I,ANR3833I Local to Cloud Transfer process 13 for storage pool CLEVERSAFE has completed. (PROCESS: 13)
+2017-03-02 15:15,I,"ANR0986I Process 13 for Local to Cloud Transfer running in the BACKGROUND processed 3,337 items for a total of 1,044,437,836 bytes with a completion state of SUCCESS at 15:15:01. (PROCESS: 13)"
+2017-03-02 15:16,I,ANR0984I Process 14 for Local to Cloud Transfer started in the BACKGROUND at 15:16:02. (PROCESS: 14)
+2017-03-02 15:16,I,ANR3832I Local to Cloud Transfer process 14 for storage pool CLEVERSAFE started. (PROCESS: 14)
+2017-03-02 15:16,I,ANR3833I Local to Cloud Transfer process 14 for storage pool CLEVERSAFE has completed. (PROCESS: 14)
+2017-03-02 15:16,I,"ANR0986I Process 14 for Local to Cloud Transfer running in the BACKGROUND processed 3,400 items for a total of 1,054,534,388 bytes with a completion state of SUCCESS at 15:16:32. (PROCESS: 14)"
+2017-03-02 15:17,I,ANR0984I Process 15 for Local to Cloud Transfer started in the BACKGROUND at 15:17:32. (PROCESS: 15)
+2017-03-02 15:17,I,ANR3832I Local to Cloud Transfer process 15 for storage pool CLEVERSAFE started. (PROCESS: 15)
+2017-03-02 15:18,I,ANR3833I Local to Cloud Transfer process 15 for storage pool CLEVERSAFE has completed. (PROCESS: 15)
+2017-03-02 15:18,I,"ANR0986I Process 15 for Local to Cloud Transfer running in the BACKGROUND processed 3,424 items for a total of 1,057,235,487 bytes with a completion state of SUCCESS at 15:18:02. (PROCESS: 15)"
+2017-03-02 15:19,I,ANR0984I Process 16 for Local to Cloud Transfer started in the BACKGROUND at 15:19:02. (PROCESS: 16)
+2017-03-02 15:19,I,ANR3832I Local to Cloud Transfer process 16 for storage pool CLEVERSAFE started. (PROCESS: 16)
+2017-03-02 15:19,I,ANR3833I Local to Cloud Transfer process 16 for storage pool CLEVERSAFE has completed. (PROCESS: 16)
+2017-03-02 15:19,I,"ANR0986I Process 16 for Local to Cloud Transfer running in the BACKGROUND processed 3,393 items for a total of 1,039,354,982 bytes with a completion state of SUCCESS at 15:19:32. (PROCESS: 16)"
+2017-03-02 15:20,I,ANR0984I Process 17 for Local to Cloud Transfer started in the BACKGROUND at 15:20:32. (PROCESS: 17)
+2017-03-02 15:20,I,ANR3832I Local to Cloud Transfer process 17 for storage pool CLEVERSAFE started. (PROCESS: 17)
+2017-03-02 15:21,I,ANR3833I Local to Cloud Transfer process 17 for storage pool CLEVERSAFE has completed. (PROCESS: 17)
+2017-03-02 15:21,I,"ANR0986I Process 17 for Local to Cloud Transfer running in the BACKGROUND processed 3,440 items for a total of 1,070,734,976 bytes with a completion state of SUCCESS at 15:21:02. (PROCESS: 17)"
+2017-03-02 15:21,I,ANR0950I Session 36 for node CAPSTONENODE is using inline server data deduplication or inline compression. (SESSION: 36)
+2017-03-02 15:21,I,ANR0403I Session 37 ended for node CAPSTONENODE (WinNT). (SESSION: 37)
+2017-03-02 15:21,I,"ANR0951I Session 36 for node CAPSTONENODE processed 1 files by using inline data deduplication or compression, or both. The number of original bytes was 6,000,000,000. Inline data deduplication reduced the data by 0 bytes and inline compression reduced the data by 0 bytes.  (SESSION: 36)"
+2017-03-02 15:21,I,ANR0403I Session 36 ended for node CAPSTONENODE (WinNT). (SESSION: 36)
+2017-03-02 15:21,I,ANE4952I Total number of objects inspected:            1  (SESSION: 35)
+2017-03-02 15:21,I,ANE4954I Total number of objects backed up:            1  (SESSION: 35)
+2017-03-02 15:21,I,ANE4958I Total number of objects updated:              0  (SESSION: 35)
+2017-03-02 15:21,I,ANE4960I Total number of objects rebound:              0  (SESSION: 35)
+2017-03-02 15:21,I,ANE4957I Total number of objects deleted:              0  (SESSION: 35)
+2017-03-02 15:21,I,ANE4970I Total number of objects expired:              0  (SESSION: 35)
+2017-03-02 15:21,I,ANE4959I Total number of objects failed:               0  (SESSION: 35)
+2017-03-02 15:21,I,ANE4197I Total number of objects encrypted:            0  (SESSION: 35)
+2017-03-02 15:21,I,ANE4982I Total objects deduplicated:                   1  (SESSION: 35)
+2017-03-02 15:21,I,ANE4914I Total number of objects grew:                 0  (SESSION: 35)
+2017-03-02 15:21,I,ANE4916I Total number of retries:                      0  (SESSION: 35)
+2017-03-02 15:21,I,ANE4977I Total number of bytes inspected:           5.59 GB  (SESSION: 35)
+2017-03-02 15:21,I,ANE4975I Total number of bytes processed:           5.59 GB  (SESSION: 35)
+2017-03-02 15:21,I,ANE4984I Total bytes before deduplication:          5.59 GB  (SESSION: 35)
+2017-03-02 15:21,I,ANE4198I Total bytes after deduplication:           5.59 GB  (SESSION: 35)
+2017-03-02 15:21,I,ANE4961I Total number of bytes transferred:         5.59 GB  (SESSION: 35)
+2017-03-02 15:21,I,ANE4963I Data transfer time:                      482.78 sec  (SESSION: 35)
+2017-03-02 15:21,I,"ANE4966I Network data transfer rate:           12,141.29 KB/sec  (SESSION: 35)"
+2017-03-02 15:21,I,"ANE4967I Aggregate data transfer rate:         11,562.31 KB/sec  (SESSION: 35)"
+2017-03-02 15:21,I,ANE4968I Objects compressed by:                        0%  (SESSION: 35)
+2017-03-02 15:21,I,ANE4981I Deduplication reduction:                   0.00%  (SESSION: 35)
+2017-03-02 15:21,I,ANE4976I Total data reduction ratio:                0.00%  (SESSION: 35)
+2017-03-02 15:21,I,ANE4964I Elapsed processing time:               00:08:26  (SESSION: 35)
+2017-03-02 15:22,I,ANR0984I Process 18 for Local to Cloud Transfer started in the BACKGROUND at 15:22:03. (PROCESS: 18)
+2017-03-02 15:22,I,ANR3832I Local to Cloud Transfer process 18 for storage pool CLEVERSAFE started. (PROCESS: 18)
+2017-03-02 15:22,I,ANR3833I Local to Cloud Transfer process 18 for storage pool CLEVERSAFE has completed. (PROCESS: 18)
+2017-03-02 15:22,I,"ANR0986I Process 18 for Local to Cloud Transfer running in the BACKGROUND processed 2,442 items for a total of 758,902,769 bytes with a completion state of SUCCESS at 15:22:23. (PROCESS: 18)"
+2017-03-02 15:23,I,ANR0984I Process 19 for Local to Cloud Transfer started in the BACKGROUND at 15:23:23. (PROCESS: 19)
+2017-03-02 15:23,I,ANR3832I Local to Cloud Transfer process 19 for storage pool CLEVERSAFE started. (PROCESS: 19)
+2017-03-02 15:23,I,ANR3833I Local to Cloud Transfer process 19 for storage pool CLEVERSAFE has completed. (PROCESS: 19)
+2017-03-02 15:23,I,"ANR0986I Process 19 for Local to Cloud Transfer running in the BACKGROUND processed 48 items for a total of 17,938,331 bytes with a completion state of SUCCESS at 15:23:33. (PROCESS: 19)"
+2017-03-02 15:24,W,"ANR2992W The database uses 74,066 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. "
+2017-03-02 15:24,E,ANR2989E Database TSMDB1 backup failed - Missing volume history file. 
+2017-03-02 15:28,I,ANR2017I Administrator SERVER_CONSOLE issued command: QUERY PROCESS  
+2017-03-02 15:28,E,ANR0944E QUERY PROCESS: No active processes found. 
