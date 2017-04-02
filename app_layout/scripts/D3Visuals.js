@@ -92,28 +92,30 @@ d3.select("#vis-title").html("Replicated Objects By Node");
 }
 
 function init_af_segments() {
-  var margin = {top: 30, right: 40, bottom: 65, left: 80},
-  container = d3.select(".widget2").append("div").classed("svg-container", true),
-  width = parseInt(d3.select(".svg-container").style("width")),
-  height = parseInt(d3.select(".svg-container").style("height"));
-
-  var formatPercent = d3.format("");
-
-  var x = d3.scaleBand()
-    .rangeRound([0, width])
-    .padding(0.1);
-
-  var y = d3.scaleLinear()
-      .range([height, 0]);
-
-  var xAxis = d3.axisBottom()
-      .scale(x);
-
-  var yAxis = d3.axisLeft()
-      .scale(y)
-      .tickFormat(formatPercent);
-
-
+	var margin = {top: 30, right: 40, bottom: 100, left: 80};
+    var container = d3.select(".widget2").append("div").classed("svg-container", true);
+    var width = parseInt(d3.select(".svg-container").style("width"));
+    var height = parseInt(d3.select(".svg-container").style("height"));
+	var xUnit = "";
+	var xLabel = "Volume ID's" + xUnit;
+	var yUnit = "MB";
+    var yLabel = "Segment Size (" + yUnit + ")";
+    var tickPadding = "20";
+    var tooltipHeight = 32;
+    var tooltipWidth = 0;
+    var tooltipBox = d3.select("body").append("div")
+  	  .attr("class", "tooltip")
+  	  .style("opacity", 0);
+    var formatPercent = d3.format("");
+    var x = d3.scaleBand()
+  	  .rangeRound([0, width])
+  	  .padding(0.1);
+    var y = d3.scaleLinear()
+  	  .range([height, 0]);
+    var xAxis = d3.axisBottom(x);
+    var yAxis = d3.axisLeft(y)
+  	  .tickFormat(formatPercent)
+  	  .tickPadding(tickPadding);
   var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -135,9 +137,9 @@ function init_af_segments() {
 
   svg.append("text")      // text label for the x axis
      	.attr("x", width / 2 )
-          .attr("y",  height + margin.bottom )
+          .attr("y",  height + (margin.bottom/2))
           .style("text-anchor", "middle")
-          .text("Volume ID's");
+          .text(xLabel);
 
     svg.append("g")
         .attr("class", "y axis")
@@ -154,7 +156,7 @@ function init_af_segments() {
           .attr("x",0 - (height / 2))
           .attr("dy", "1em")
           .style("text-anchor", "middle")
-          .text("Segment Size (MB)");
+          .text(yLabel);
 
   svg.selectAll(".bar")
         .data(data)
@@ -164,6 +166,19 @@ function init_af_segments() {
         .attr("width", x.bandwidth())
         .attr("y", function(d) { return y(d.frequency); })
         .attr("height", function(d) { return height - y(d.frequency); })
+		.on('mouseover', function(d) {
+			tooltipBox.transition()
+				.duration(20)
+				.style("top", (d3.event.pageY - tooltipHeight) + "px")
+				.style("left", (d3.event.pageX - tooltipWidth) + "px")
+				.style("opacity", .9)
+				.text(d.frequency + " " + yUnit)
+		})
+		.on('mouseout', function(d) {
+			tooltipBox.transition()
+				.duration(500)
+				.style("opacity", 0)
+		});
   });
 
   d3.select("#vis-title").html("AF Segments");
