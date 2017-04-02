@@ -1143,31 +1143,31 @@ function init_heatmap() {
 }
 
 function init_scatter_test(){
-  // scroll-over circle enlargement
-		var dotSize = 3.5;
-		var dotPadding = 5;
-		// setup margin
+	// scroll-over circle enlargement
+	var dotSize = 3.5;
+	var dotPadding = 5;
+	// setup margin
     var margin = {top: 20, right: 20, bottom: 30, left: 50};
     var margin = {top: 20, right: 20, bottom: 30, left: 50};
     var container = d3.select(".widget2").append("div").classed("svg-container", true);
     var width = parseInt(d3.select(".svg-container").style("width"));
     var height = parseInt(d3.select(".svg-container").style("height"));
     container.append("svg").classed("heatmap", true).attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100));
-		var tickPadding = "10";
-		var xUnit = "";
-		var xAxisLabel = "File Space ID" + xUnit;
-		var yUnit = "bytes";
-		var yAxisLabel = "Actual Size (" + yUnit + ")";
-		// setup x
-		var xValue = function(d) { return d.X;}, // data -> value
-    		xScale = d3.scaleLinear().range([0, width]), // value -> display
-    		xMap = function(d) { return xScale(xValue(d));}; // data -> display
-    		// xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+	var tickPadding = "10";
+	var xUnit = "";
+	var xAxisLabel = "File Space ID" + xUnit;
+	var yUnit = "bytes";
+	var yAxisLabel = "Actual Size (" + yUnit + ")";
+	// setup x
+	var xValue = function(d) { return d.X;}, // data -> value
+    	xScale = d3.scaleLinear().range([0, width]), // value -> display
+    	xMap = function(d) { return xScale(xValue(d));}; // data -> display
+    	// xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 		// setup y
 		var yValue = function(d) { return d["Y"];}, // data -> value
     		yScale = d3.scaleLinear().range([height, 0]), // value -> display
     		yMap = function(d) { return yScale(yValue(d));}; // data -> display
-    		// yAxis = d3.svg.axis().scale(yScale).orient("left");
+    	// yAxis = d3.svg.axis().scale(yScale).orient("left");
 		// setup fill color
 		var cValue = function(d) { return d.Type;},
     		color = d3.scaleOrdinal(d3.schemeCategory10);
