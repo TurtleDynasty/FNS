@@ -1152,7 +1152,7 @@ function init_scatter_test(){
     var container = d3.select(".widget2").append("div").classed("svg-container", true);
     var width = parseInt(d3.select(".svg-container").style("width"));
     var height = parseInt(d3.select(".svg-container").style("height"));
-    container.append("svg").classed("heatmap", true).attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100));
+    container.append("svg").classed("svg-container", true).attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100));
 	var tickPadding = "10";
 	var xUnit = "";
 	var xAxisLabel = "File Space ID" + xUnit;
@@ -1319,7 +1319,7 @@ function init_occupancy_test(){
     var container = d3.select(".widget2").append("div").classed("svg-container", true);
     var width = parseInt(d3.select(".svg-container").style("width"));
     var height = parseInt(d3.select(".svg-container").style("height"));
-    container.append("svg").classed("heatmap", true).attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100));
+    container.append("svg").classed("svg-container", true).attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100));
   	var xLabel = "Node Names";
   	var yLabel = "Number of Files";
   	var tickPadding = "20";
