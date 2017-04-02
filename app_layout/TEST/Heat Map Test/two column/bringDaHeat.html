@@ -64,7 +64,7 @@ function moveCircle(offset, xCord)
 {
 	d3.selectAll(".bubbleCircle")
 	.transition()
-  	.duration(50)
+  	.duration(500)
 	.attr("transform", function(d) {
 		var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
 		var y = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["f"];
@@ -89,7 +89,7 @@ function moveText(offset, xCord)
 {
 	d3.selectAll(".bubbleText")
 	.transition()
-	.duration(50)
+	.duration(500)
 	.attr("y", function (d) {
 		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"];
 		var y = d3.select(this)["_groups"][0][0]["y"]["baseVal"][0]["value"];
@@ -305,13 +305,12 @@ d3.csv("heatmap.csv", function(d) {
 		.attr("class", function(d) { return grabClassColor(d.value); })
 		.style("fill", function(d) { return grabColor(d.value, circleColors); })
 		.style("opacity", 1)
-		.on("dblclick", function(d) {
+		.on("click", function(d) {
 			var opacity = d3.select(this)["_groups"][0][0]["style"]["opacity"];
 			if (opacity == 1)
 			{
-				moveCircle(offset, 0);
-				moveText(offset, 0);
-				addCircle(d, this);
+				disable(this);
+				moveStuff(d, this);
 			}
 		})
 		.on("mouseover", function(d) {
@@ -337,6 +336,30 @@ d3.csv("heatmap.csv", function(d) {
 			d3.select(className)
 			.style("stroke-width", 3);
 		});
+	}
+	function moveStuff(d, className)
+	{
+		moveCircle(offset, 0);
+		moveText(offset, 0);
+		addCircle(d, className);
+	}
+	function reable(object)
+	{
+		d3.select(object).on("click", function(d)
+		{
+			var opacity = d3.select(object)["_groups"][0][0]["style"]["opacity"];
+			if (opacity == 1)
+			{
+				disable(object);
+				moveStuff(d, object);
+			}
+		});
+	}
+	function disable(object)
+	{
+		d3.select(object).on("click", null);
+		setTimeout(function () { reable(object);}, 500);
+
 	}
 	function createColorLegend()
 	{

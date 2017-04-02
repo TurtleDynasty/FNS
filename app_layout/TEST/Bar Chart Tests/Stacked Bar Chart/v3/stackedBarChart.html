@@ -51,15 +51,13 @@
 			flipCount += 1;
 			return buttonColors[flipCount%2];
 		});
-		if (toggleSwap)
+		if (flipCount%2 == 0)
 		{
-			console.log("here1");
-			swapBars(".bar1", ".bar2", toggleSwap);
+			swapBars("bar2", "bar3");
 		}
 		else
 		{
-			console.log("here2");
-			swapBars(".bar2", ".bar1", toggleSwap);
+			swapBars("bar3", "bar2");
 		}
 		toggleSwap = !toggleSwap;
 	})
@@ -69,10 +67,14 @@
 	var stackOrder;
 	var stackNum = 1; // default is one, will be changed if addition columns are present
 	d3.csv("data.csv", function(error, data) {
-		if (error) throw error;
+		if (error)
+		{
+			throw error;
+		}
 
 		// format the data
-		data.forEach(function(d) {
+		data.forEach(function(d)
+		{
 			d.value1 = +d.value1;
 			if (!isNaN(d.value2))
 			{
@@ -118,12 +120,12 @@
 		{
 			for(i = 0; i < data.length; i++)
 			{
-				addBar(x(data[i].name), y(data[i].value4), y(data[i].value3)-y(data[i].value4), "orange", "bar4");
-				addBar(x(data[i].name), y(data[i].value3), y(data[i].value2)-y(data[i].value3), "cyan", "bar3");
-				addBar(x(data[i].name), y(data[i].value2), y(data[i].value1)-y(data[i].value2), "blue", "bar2");
-				addBar(x(data[i].name), y(data[i].value1), height - y(data[i].value1), "red", "bar1");
+				addBar(data[i].name, x(data[i].name), y(data[i].value4), y(data[i].value3)-y(data[i].value4), "orange", "bar4");
+				addBar(data[i].name, x(data[i].name), y(data[i].value3), y(data[i].value2)-y(data[i].value3), "cyan", "bar3");
+				addBar(data[i].name, x(data[i].name), y(data[i].value2), y(data[i].value1)-y(data[i].value2), "blue", "bar2");
+				addBar(data[i].name, x(data[i].name), y(data[i].value1), height - y(data[i].value1), "red", "bar1");
 			}
-			return "bars";
+			return "garbage";
 
 		})
 
@@ -132,6 +134,31 @@
 
 
 	});
+	// svg.selectAll(".class1, class2, #id2")
+	function swapBars(bar1, bar2, toggle)
+	{
+		console.log(bar1 + " -> " + bar2);
+		var barList1 = d3.selectAll("." + bar1)["_groups"][0];
+		var barList2 = d3.selectAll("." + bar2)["_groups"][0];
+		console.log(barList1);
+		console.log(barList2);
+		for(i = 0; i < barList1.length; i++)
+		{
+			console.log("here");
+			var bar1Y = barList1[i]["y"]["baseVal"]["value"];
+			var bar2Y = barList2[i]["y"]["baseVal"]["value"];
+			console.log("Y's: " + bar1Y + ", " + bar2Y);
+			var bar1H = barList1[i]["height"]["baseVal"]["value"];
+			var bar2H = barList2[i]["height"]["baseVal"]["value"];
+			console.log("H's: " + bar1H + ", " + bar2H);
+			barList1[i]["y"]["baseVal"]["value"] = bar1Y + bar2H;
+			barList2[i]["y"]["baseVal"]["value"] = bar2Y - bar1H;
+
+		}
+		console.log("/ " + bar1 + " -> " + bar2);
+
+	}
+
 	function createXAxis()
 	{
 		// add the X Axis
@@ -165,10 +192,12 @@
 		.style("text-anchor", "middle")
 		.text(yAxisLabel);
 	}
-	function addBar(xCord, yCord, barHeight, color, className)
+	function addBar(name, xCord, yCord, barHeight, color, className)
 	{
 		svg.append("rect")
-		.attr("class", className)
+		.classed('bars', true)
+		.classed(className, true)
+		.classed(name, true)
 		.attr("x", function(d) {
 			return xCord;
 		})
@@ -181,30 +210,7 @@
 		})
 		.style("fill", color);
 	}
-	// svg.selectAll(".class1, class2, #id2")
-	function swapBars(bar1, bar2, toggle)
-	{
-		var classes = bar1 + ", " + bar2;
-		var barList = d3.selectAll(classes)["_groups"][0];
-		for(i = 0; i < barList.length/2; i++)
-		{
-			var y1 = barList[i]["y"]["baseVal"]["value"];
-			var h1 = barList[i]["height"]["baseVal"]["value"];
-			var y2 = barList[barList.length/2 + i]["y"]["baseVal"]["value"];
-			var h2 = barList[barList.length/2 + i]["height"]["baseVal"]["value"];
-			if (toggle)
-			{
-				barList[i]["y"]["baseVal"]["value"] = y1 + h2;
-				barList[barList.length/2 + i]["y"]["baseVal"]["value"] = y2 - h1;
-			}
-			else
-			{
-				barList[i]["y"]["baseVal"]["value"] = y1 - h2;
-				barList[barList.length/2 + i]["y"]["baseVal"]["value"] = y2 + h1;
-			}
 
-		}
-	}
 
 	</script>
 </body>
