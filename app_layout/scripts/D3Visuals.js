@@ -335,10 +335,10 @@ function init_sunburst() {
     var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
   */
 function init_pie_test() {
-  var margin = {top: 50, right: 50, bottom: 50, left: 50};
-  var container = d3.select(".widget2").append("div").classed("svg-container", true);
-  var width = parseInt(d3.select(".svg-container").style("width"));
-  var height = parseInt(d3.select(".svg-container").style("height"));
+	var margin = {top: 50, right: 50, bottom: 50, left: 50};
+	var container = d3.select(".widget2").append("div").classed("svg-container", true);
+	var width = parseInt(d3.select(".svg-container").style("width"));
+	var height = parseInt(d3.select(".svg-container").style("height"));
 	var innerRadius = Math.min(width, height) / 4;
 	var outerRadius = Math.min(width, height) / 3;
 	// ---- label Text STUFF
@@ -363,24 +363,24 @@ function init_pie_test() {
 	var piePullOutDuration = 500;
 	// --------------------
 	var color = d3.scaleOrdinal()
-	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+		.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 	var arc = d3.arc()
-	.innerRadius(innerRadius)
-	.outerRadius(outerRadius);
+		.innerRadius(innerRadius)
+		.outerRadius(outerRadius);
 	var arcOver = d3.arc()
-	.innerRadius(innerRadius)
-	.outerRadius(outerRadius + pieSegmentPullOut);
+		.innerRadius(innerRadius)
+		.outerRadius(outerRadius + pieSegmentPullOut);
 	var labelArc = d3.arc()
-	.innerRadius(innerRadius)
-	.outerRadius(outerRadius);
+		.innerRadius(innerRadius)
+		.outerRadius(outerRadius);
 	var pie = d3.pie()
-	.sort(null)
-	.value(function(d) { return d.count; });
+		.sort(null)
+		.value(function(d) { return d.count; });
 	var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
-	.attr("width", width)
-	.attr("height", height)
-	.append("g")
-	.attr("transform", "translate(" + width / 2  + "," + height / 2 + ")");
+		.attr("width", width)
+		.attr("height", height)
+		.append("g")
+		.attr("transform", "translate(" + width / 2  + "," + height / 2 + ")");
 	function type(d)
 	{
 		d.count = +d.count;
