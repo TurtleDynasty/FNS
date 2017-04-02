@@ -348,8 +348,8 @@ input[type="checkbox"].settings-input {
 .tooltip {
   position: absolute;
   text-align: center;
-  width: 70px;
-  height: 32px;
+  width: auto;
+  height: auto;
   padding: 2px;
   font: 12px sans-serif;
   background: lightsteelblue;
