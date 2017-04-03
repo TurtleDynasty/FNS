@@ -1,0 +1,16 @@
+id,value
+flare.query.methods.iff,748
+flare.query.methods.isa,461
+flare.query.methods.lt,597
+flare.query.methods.lte,619
+flare.query.methods.max,283
+flare.query.methods.min,283
+flare.query.methods.mod,591
+flare.query.methods.mul,603
+flare.query.methods.neq,599
+flare.query.methods.not,386
+flare.query.methods.or,323
+flare.query.methods.orderby,307
+flare.query.methods.range,772
+flare.query.methods.select,296
+flare.vis.operator.filter.Visibility

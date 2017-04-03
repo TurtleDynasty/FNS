@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+text {
+	font: 10px sans-serif;
+	text-anchor: middle;
+}
+
+</style>
+<svg width="1000" height="1000"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+var circleColors = ["darkblue",
+					"blue",
+					"seagreen",
+					"Turquoise",
+					"SpringGreen",
+					"greenyellow",
+					"yellow",
+					"orange",
+					"orangered",
+					"red"];
+var svg = d3.select("svg");
+var width = +svg.attr("width");
+var height = +svg.attr("height");
+var circlePadding = 5;
+var circleRadius = 25;
+var x = circleRadius;
+var xIndex = 0;
+var y = circleRadius;
+var yIndex = 0;
+function grabClassColor(number)
+{
+	var divideColor = d3.scaleLinear().domain([minColor, maxColor+1]).range([0, 1]);
+	var index = Math.floor(divideColor(number) * 10);
+	return circleColors[index];
+}
+function grabColor(number, colors)
+{
+	var divideColor = d3.scaleLinear().domain([minColor, maxColor]).range([0, 1]);
+	var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
+	var color = divideColor(number);
+	return pickColor(color);
+}
+function applyBoader(data, className, strokeWidth, offset)
+{
+	d3.select(className).attr("r", 10 + offset)
+	.style("stroke", "black")
+	.style("stroke-width", strokeWidth);
+}
+var maxColor = -Infinity;
+var minColor = Infinity;
+d3.csv("heatmap0.csv", function(d) {
+	d.value = +d.value;
+	if (d.value > 1)
+	{
+		if (d.value < minColor)
+		{
+			minColor = d.value;
+		}
+		if (d.value > maxColor)
+		{
+			maxColor = d.value;
+		}
+		return d;
+	}
+}, function(error, classes)
+	{
+		if (error)
+		{
+			throw error;
+	 	}
+		for(i = 0; i < classes.length; i++)
+		{
+			var number = 10;
+			svg.append("circle")
+			.classed("circleBubble", true)
+			.attr("value", classes[i]["value"])
+			.attr("cx", x)
+			.attr("cy", y)
+			.attr("r", circleRadius)
+			.attr("fill-opacity", 1)
+			.style("fill", function() { return grabColor(classes[i]["value"], circleColors); })
+			.on("mouseover", function(d) {
+				d3.select(this).attr('r', circleRadius + circlePadding);
+			})
+			.on("mouseout", function(d) {
+				d3.select(this).attr('r', circleRadius);
+			})
+			.on("click", function(d)
+			{
+				toggleVisibility(this);
+
+			});
+
+			x += 2 * circleRadius + circlePadding;
+			xIndex += 1;
+			if (x > width - circleRadius)
+			{
+				x = circleRadius;
+				y += 2 * circleRadius + circlePadding;
+				xIndex = 0;
+				yIndex += 1;
+			}
+		}
+		function toggleVisibility(objName)
+		{
+			var opacity = d3.select(objName).attr('fill-opacity');
+			if (opacity == 0)
+			{
+				d3.select(objName).attr('fill-opacity', 1);
+			}
+			else if (opacity == 1)
+			{
+				d3.select(objName).attr('fill-opacity', 0);
+			}
+		}
+	});
+
+
+</script>
