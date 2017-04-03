@@ -1400,5 +1400,5 @@ function init_occupancy_test(){
 		d.numFiles = +d.numFiles;
 	    return d;
   	}
-
+ d3.select("#vis-title").html("Occupancy Test");
 }
