@@ -60,191 +60,13 @@ var offset = 80;
 var x = r + 1;
 var y = height * .9;
 var deletionCirclePadding = 25;
-function moveCircle(offset, xCord)
-{
-	d3.selectAll(".bubbleCircle")
-	.transition()
-  	.duration(500)
-	.attr("transform", function(d) {
-		var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
-		var y = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["f"];
-		if (x > xCord)
-		{
-			var y = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["f"];
-			return "translate(" + (x + 2*offset) + "," + y + ")";
-		}
-		else if (x < xCord)
-		{
-			return "translate(" + x + "," + y + ")";
-		}
-		else
-		{
-			return "translate(-200,9001)";
-		}
-
-	});
-
-}
-function moveText(offset, xCord)
-{
-	d3.selectAll(".bubbleText")
-	.transition()
-	.duration(500)
-	.attr("y", function (d) {
-		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"];
-		var y = d3.select(this)["_groups"][0][0]["y"]["baseVal"][0]["value"];
-		if (x != xCord)
-		{
-			return y;
-		}
-		else
-		{
-			return 9001;
-		}
-	})
-	.attr("x", function (d) {
-		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"];
-		if (x > xCord)
-		{
-			x = x + 2*offset;
-			return x;
-		}
-		else if (x < xCord)
-		{
-			return x;
-		}
-		else
-		{
-			return -200;
-		}
-	});
-}
-function addCircle(d, className)
-{
-	addLargeCircle(d, className);
-	addTextBackground(d, className)
-	addTopText(d, className);
-	addBottomText(d, className);
-	addDeletionCircle(d, className)
-}
-function highlightCircle(className)
-{
-	var opacity = d3.select(className)["_groups"][0][0]["style"]["opacity"];
-	var to = [1,0];
-	var from = [0,1];
-	if (to[opacity] != null)
-	{
-		d3.select(className)
-		.style("opacity", to[opacity])
-		.transition()
-		.duration(200)
-		.style("opacity", from[opacity])
-		.transition()
-		.duration(300);
-	}
-}
-function addLargeCircle(d, className)
-{
-	svg.append("circle")
-		.attr("r", r)
-		.style("fill", grabColor(d.value, circleColors))
-		.style("stroke", "black")
-		.style("stroke-width", 2)
-		.attr("transform", function(d) {
-			return "translate(" + r + "," + (y - bubbleGraphYOffset) + ")";
-		})
-		.attr("class", "bubbleCircle")
-		.on("click", function(d) {
-			highlightCircle(className);
-		});
-}
-function addDeletionCircle(d, className)
-{
-	svg.append("circle")
-		.attr("r", deletionCircleSize)
-		.style("fill", "red")
-		.style("stroke", "black")
-		.style("stroke-width", 2)
-		.attr("transform", function(d) {
-			return "translate(" + r + "," + (y - bubbleGraphYOffset + r + deletionCirclePadding) + ")";
-		})
-		.attr("class", "bubbleCircle")
-		.on("click", function(d) {
-					var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
-					moveCircle(-offset, x);
-					moveText(-offset, x);
-				});
-}
-function addTextBackground(d, className)
-{
-	svg.append("circle")
-		.attr("r", r - 10)
-		.style("fill", "white")
-		.style("stroke", "black")
-		.style("stroke-width", 2)
-		.attr("transform", function(d) {
-			return "translate(" + r + "," + (y - bubbleGraphYOffset) + ")";
-		})
-		.attr("class", "bubbleCircle")
-		.on("click", function(d) {
-			highlightCircle(className);
-		});
-}
-function addTopText(d, className)
-{
-	svg.append("text")
-		.attr("x", x)
-		.attr("y", y - bubbleGraphYOffset)
-		.attr("dy", - infoBubblePadding)
-		.attr("width", legendTileSize)
-		.attr("height", legendTileSize)
-		.style("text-anchor", "middle")
-		.style("font-weight", "bolder")
-		.style("font-size", infoBubbleFontSize)
-		.text(d.class)
-		.style("fill", "black")
-		.attr("class", "bubbleText")
-		.on("click", function(d) {
-			highlightCircle(className);
-		});
-}
-function addBottomText(d, className)
-{
-	svg.append("text")
-		.attr("x", x)
-		.attr("y", y - bubbleGraphYOffset)
-		.attr("dy", infoBubblePadding)
-		.attr("width", legendTileSize)
-		.attr("height", legendTileSize)
-		.style("text-anchor", "middle")
-		.style("font-size", infoBubbleFontSize)
-		.text(d.value)
-		.style("fill", "black")
-		.attr("class", "bubbleText")
-		.on("click", function(d) {
-			highlightCircle(className);
-		});
-}
-function grabClassColor(number)
-{
-	var divideColor = d3.scaleLinear().domain([minColor, maxColor+1]).range([0, 1]);
-	var index = Math.floor(divideColor(number) * 10);
-	return circleColors[index];
-}
-function grabColor(number, colors)
-{
-	var divideColor = d3.scaleLinear().domain([minColor, maxColor]).range([0, 1]);
-	var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
-	var color = divideColor(number);
-	return pickColor(color);
-}
 var legendWidth = 100;
-console.log(height);
+
 var pack = d3.pack()
 .size([width - legendWidth, height/1.175])
 .padding(bubblePadding);
-var maxColor = 0;
-var minColor = 9999999999999;
+var maxColor = -Infinity;
+var minColor = Infinity;
 d3.csv("heatmap.csv", function(d) {
 	d.value = +d.value;
 	if (d.value > 1)
@@ -281,12 +103,6 @@ d3.csv("heatmap.csv", function(d) {
 		createColorLegend();
 
 	});
-	function applyBoader(data, className, strokeWidth, offset)
-	{
-		d3.select(className).attr("r", data.r + offset)
-		.style("stroke", "black")
-		.style("stroke-width", strokeWidth);
-	}
 	function addDataCircles(root)
 	{
 		var node = svg.selectAll(".node")
@@ -337,11 +153,30 @@ d3.csv("heatmap.csv", function(d) {
 			.style("stroke-width", 3);
 		});
 	}
-	function moveStuff(d, className)
+	function grabClassColor(number)
 	{
-		moveCircle(offset, 0);
-		moveText(offset, 0);
-		addCircle(d, className);
+		var divideColor = d3.scaleLinear().domain([minColor, maxColor+1]).range([0, 1]);
+		var index = Math.floor(divideColor(number) * 10);
+		return circleColors[index];
+	}
+	function grabColor(number, colors)
+	{
+		var divideColor = d3.scaleLinear().domain([minColor, maxColor]).range([0, 1]);
+		var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
+		var color = divideColor(number);
+		return pickColor(color);
+	}
+	function applyBoader(data, className, strokeWidth, offset)
+	{
+		d3.select(className).attr("r", data.r + offset)
+		.style("stroke", "black")
+		.style("stroke-width", strokeWidth);
+	}
+	function disable(object)
+	{
+		d3.select(object).on("click", null);
+		setTimeout(function () { reable(object);}, 500);
+
 	}
 	function reable(object)
 	{
@@ -355,11 +190,178 @@ d3.csv("heatmap.csv", function(d) {
 			}
 		});
 	}
-	function disable(object)
+	function moveStuff(d, className)
 	{
-		d3.select(object).on("click", null);
-		setTimeout(function () { reable(object);}, 500);
+		moveCircle(offset, 0);
+		moveText(offset, 0);
+		addCircle(d, className);
+	}
+	function moveCircle(offset, xCord)
+	{
+		d3.selectAll(".bubbleCircle")
+		.transition()
+	  	.duration(500)
+		.attr("transform", function(d) {
+			var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
+			var y = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["f"];
+			if (x > xCord)
+			{
+				var y = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["f"];
+				return "translate(" + (x + 2*offset) + "," + y + ")";
+			}
+			else if (x < xCord)
+			{
+				return "translate(" + x + "," + y + ")";
+			}
+			else
+			{
+				return "translate(-200,9001)";
+			}
 
+		});
+
+	}
+	function moveText(offset, xCord)
+	{
+		d3.selectAll(".bubbleText")
+		.transition()
+		.duration(500)
+		.attr("y", function (d) {
+			var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"];
+			var y = d3.select(this)["_groups"][0][0]["y"]["baseVal"][0]["value"];
+			if (x != xCord)
+			{
+				return y;
+			}
+			else
+			{
+				return 9001;
+			}
+		})
+		.attr("x", function (d) {
+			var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"];
+			if (x > xCord)
+			{
+				x = x + 2*offset;
+				return x;
+			}
+			else if (x < xCord)
+			{
+				return x;
+			}
+			else
+			{
+				return -200;
+			}
+		});
+	}
+	function addCircle(d, className)
+	{
+		addLargeCircle(d, className);
+		addTextBackground(d, className)
+		addTopText(d, className);
+		addBottomText(d, className);
+		addDeletionCircle(d, className)
+	}
+	function addLargeCircle(d, className)
+	{
+		svg.append("circle")
+			.attr("r", r)
+			.style("fill", grabColor(d.value, circleColors))
+			.style("stroke", "black")
+			.style("stroke-width", 2)
+			.attr("transform", function(d) {
+				return "translate(" + r + "," + (y - bubbleGraphYOffset) + ")";
+			})
+			.attr("class", "bubbleCircle")
+			.on("click", function(d) {
+				highlightCircle(className);
+			});
+	}
+	function addTextBackground(d, className)
+	{
+		svg.append("circle")
+			.attr("r", r - 10)
+			.style("fill", "white")
+			.style("stroke", "black")
+			.style("stroke-width", 2)
+			.attr("transform", function(d) {
+				return "translate(" + r + "," + (y - bubbleGraphYOffset) + ")";
+			})
+			.attr("class", "bubbleCircle")
+			.on("click", function(d) {
+				highlightCircle(className);
+			});
+	}
+	function addTopText(d, className)
+	{
+		svg.append("text")
+			.attr("x", x)
+			.attr("y", y - bubbleGraphYOffset)
+			.attr("dy", - infoBubblePadding)
+			.attr("width", legendTileSize)
+			.attr("height", legendTileSize)
+			.style("text-anchor", "middle")
+			.style("font-weight", "bolder")
+			.style("font-size", infoBubbleFontSize)
+			.text(d.class)
+			.style("fill", "black")
+			.attr("class", "bubbleText")
+			.on("click", function(d) {
+				highlightCircle(className);
+			});
+	}
+	function addBottomText(d, className)
+	{
+		svg.append("text")
+			.attr("x", x)
+			.attr("y", y - bubbleGraphYOffset)
+			.attr("dy", infoBubblePadding)
+			.attr("width", legendTileSize)
+			.attr("height", legendTileSize)
+			.style("text-anchor", "middle")
+			.style("font-size", infoBubbleFontSize)
+			.text(d.value)
+			.style("fill", "black")
+			.attr("class", "bubbleText")
+			.on("click", function(d) {
+				highlightCircle(className);
+			});
+	}
+
+	function addDeletionCircle(d, className)
+	{
+		svg.append("circle")
+			.attr("r", deletionCircleSize)
+			.style("fill", "red")
+			.style("stroke", "black")
+			.style("stroke-width", 2)
+			.attr("transform", function(d) {
+				return "translate(" + r + "," + (y - bubbleGraphYOffset + r + deletionCirclePadding) + ")";
+			})
+			.attr("class", "bubbleCircle")
+			.on("click", function(d) {
+						var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
+						moveCircle(-offset, x);
+						moveText(-offset, x);
+					});
+	}
+
+	function highlightCircle(className)
+	{
+		var opacity = d3.select(className)["_groups"][0][0]["style"]["opacity"];
+		var to = [1,0];
+		var from = [0,1];
+		if (to[opacity] != null)
+		{
+			d3.select(className)
+			.style("opacity", to[opacity])
+			.transition()
+			.duration(200)
+			.style("opacity", from[opacity])
+			.transition()
+			.duration(300);
+		}
 	}
 	function createColorLegend()
 	{
