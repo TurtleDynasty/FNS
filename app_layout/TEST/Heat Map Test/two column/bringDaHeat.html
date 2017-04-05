@@ -258,10 +258,10 @@ d3.csv("heatmap.csv", function(d) {
 	function addCircle(d, className)
 	{
 		addLargeCircle(d, className);
-		addTextBackground(d, className)
+		addTextBackground(className)
 		addTopText(d, className);
 		addBottomText(d, className);
-		addDeletionCircle(d, className)
+		addDeletionCircle(className)
 	}
 	function addLargeCircle(d, className)
 	{
@@ -278,18 +278,18 @@ d3.csv("heatmap.csv", function(d) {
 				highlightCircle(className);
 			});
 	}
-	function addTextBackground(d, className)
+	function addTextBackground(className)
 	{
 		svg.append("circle")
 			.attr("r", r - 10)
 			.style("fill", "white")
 			.style("stroke", "black")
 			.style("stroke-width", 2)
-			.attr("transform", function(d) {
+			.attr("transform", function() {
 				return "translate(" + r + "," + (y - bubbleGraphYOffset) + ")";
 			})
 			.attr("class", "bubbleCircle")
-			.on("click", function(d) {
+			.on("click", function() {
 				highlightCircle(className);
 			});
 	}
@@ -329,7 +329,7 @@ d3.csv("heatmap.csv", function(d) {
 			});
 	}
 
-	function addDeletionCircle(d, className)
+	function addDeletionCircle(className)
 	{
 		svg.append("circle")
 			.attr("r", deletionCircleSize)
@@ -340,7 +340,7 @@ d3.csv("heatmap.csv", function(d) {
 				return "translate(" + r + "," + (y - bubbleGraphYOffset + r + deletionCirclePadding) + ")";
 			})
 			.attr("class", "bubbleCircle")
-			.on("click", function(d) {
+			.on("click", function() {
 						var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
 						moveCircle(-offset, x);
 						moveText(-offset, x);
