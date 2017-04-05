@@ -42,6 +42,7 @@
 	.attr("y", 0)
 	.attr("height", 100)
 	.style("fill", "red")
+	.call(drag);
 
 	svg.append("rect")
 	.classed('legendBar', true)
@@ -51,6 +52,7 @@
 	.attr("y", 100)
 	.attr("height", 100)
 	.style("fill", "cyan")
+	.call(drag);
 
 	svg.append("rect")
 	.classed('legendBar', true)
@@ -60,17 +62,19 @@
 	.attr("y", 200)
 	.attr("height", 100)
 	.style("fill", "green")
+	.call(drag);
+
+	var drag = d3.drag()
+        .on("drag", function(d,i) {
+            d.x += d3.event.dx
+            d.y += d3.event.dy
+            d3.select(this).attr("transform", function(d,i){
+                return "translate(" + [ d.x,d.y ] + ")"
+            })
+        });
+
 	var barOrder = ["bar1","bar2","bar3"]
-	svg.append("rect")
-	.classed('legendBar', true)
-	.classed("bar3", true)
-	.attr("x", 40 + 10)
-	.attr("width", 20)
-	.attr("y", 90)
-	.attr("height", 20)
-	.style("fill", "black")
-	.on("click", function()
-	{
-		
-	});
+	var barYOrder = [100, 200, 300];
+
+
 </script>
