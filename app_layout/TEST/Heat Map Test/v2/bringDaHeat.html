@@ -8,7 +8,7 @@ text {
 }
 
 </style>
-<svg width="1000" height="1000"></svg>
+<svg width="650" height="650"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 var circleColors = ["darkblue",
@@ -23,35 +23,24 @@ var circleColors = ["darkblue",
 					"red"];
 var svg = d3.select("svg");
 var width = +svg.attr("width");
+var heatMapWidth = width - 100;
 var height = +svg.attr("height");
 var circlePadding = 5;
 var circleRadius = 25;
-var x = circleRadius;
+var x = 0;
 var xIndex = 0;
-var y = circleRadius;
+var y = 0;
 var yIndex = 0;
-function grabClassColor(number)
-{
-	var divideColor = d3.scaleLinear().domain([minColor, maxColor+1]).range([0, 1]);
-	var index = Math.floor(divideColor(number) * 10);
-	return circleColors[index];
-}
-function grabColor(number, colors)
-{
-	var divideColor = d3.scaleLinear().domain([minColor, maxColor]).range([0, 1]);
-	var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
-	var color = divideColor(number);
-	return pickColor(color);
-}
-function applyBoader(data, className, strokeWidth, offset)
-{
-	d3.select(className).attr("r", 10 + offset)
-	.style("stroke", "black")
-	.style("stroke-width", strokeWidth);
-}
+svg.append("rect")
+.attr("x", 0)
+.attr("width", heatMapWidth)
+.attr("y", 0)
+.attr("height", heatMapWidth)
+.style("fill", "black")
+.style("fill-opacity", .25)
 var maxColor = -Infinity;
 var minColor = Infinity;
-d3.csv("heatmap0.csv", function(d) {
+d3.csv("heatmap.csv", function(d) {
 	d.value = +d.value;
 	if (d.value > 1)
 	{
@@ -71,22 +60,52 @@ d3.csv("heatmap0.csv", function(d) {
 		{
 			throw error;
 	 	}
+		circleRadius = heatMapWidth / Math.sqrt(classes.length) - circlePadding;
+		console.log(classes.length);
+		console.log(circleRadius);
 		for(i = 0; i < classes.length; i++)
 		{
 			var number = 10;
-			svg.append("circle")
+			svg.append("rect")
 			.classed("circleBubble", true)
 			.attr("value", classes[i]["value"])
-			.attr("cx", x)
-			.attr("cy", y)
-			.attr("r", circleRadius)
+			.attr("x", x)
+			.attr("y", y)
+			.attr("height", circleRadius)
+			.attr("width", circleRadius)
 			.attr("fill-opacity", 1)
+			.attr("stroke-opacity", 0)
+			.style("stroke", "black")
 			.style("fill", function() { return grabColor(classes[i]["value"], circleColors); })
 			.on("mouseover", function(d) {
-				d3.select(this).attr('r', circleRadius + circlePadding);
+				d3.select(this).attr('width', circleRadius + circlePadding);
+				d3.select(this).attr('height', circleRadius + circlePadding);
+				d3.select(this).attr("stroke-opacity", 1);
+				d3.select(this).attr('x', function ()
+				{
+					var x = parseFloat(d3.select(this).attr('x'));
+					return (x - circlePadding/2);
+				})
+				.attr('y', function ()
+				{
+					var y = parseFloat(d3.select(this).attr('y'));
+					return (y - circlePadding/2);
+				})
 			})
 			.on("mouseout", function(d) {
-				d3.select(this).attr('r', circleRadius);
+				d3.select(this).attr('width', circleRadius);
+				d3.select(this).attr('height', circleRadius);
+				d3.select(this).attr("stroke-opacity", 0);
+				d3.select(this).attr('x', function ()
+				{
+					var x = parseFloat(d3.select(this).attr('x'));
+					return (x + circlePadding/2);
+				})
+				.attr('y', function ()
+				{
+					var y = parseFloat(d3.select(this).attr('y'));
+					return (y + circlePadding/2);
+				})
 			})
 			.on("click", function(d)
 			{
@@ -94,15 +113,22 @@ d3.csv("heatmap0.csv", function(d) {
 
 			});
 
-			x += 2 * circleRadius + circlePadding;
+			x += circleRadius + circlePadding;
 			xIndex += 1;
-			if (x > width - circleRadius)
+			if (x > heatMapWidth)
 			{
-				x = circleRadius;
-				y += 2 * circleRadius + circlePadding;
+				x = 0;
+				y += circleRadius + circlePadding;
 				xIndex = 0;
 				yIndex += 1;
 			}
+		}
+		function grabColor(number, colors)
+		{
+			var divideColor = d3.scaleLinear().domain([minColor, maxColor]).range([0, 1]);
+			var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
+			var color = divideColor(number);
+			return pickColor(color);
 		}
 		function toggleVisibility(objName)
 		{
