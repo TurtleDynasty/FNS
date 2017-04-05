@@ -73,6 +73,28 @@
 		d.count = +d.count;
 		return d;
 	}
+
+	var total = 0;
+	d3.csv("data.csv", type, function(error, data)
+	{
+		if (error)
+		{
+			throw error;
+		}
+		
+		data = parseData(data);
+
+		g = svg.selectAll(".arc")
+		.data(pie(data))
+		.enter().append("g")
+		.attr("class", "arc");
+
+
+		addPieSegments();
+		addPieLabels();
+		createTextBoxes(g);
+		setTextBoxes(data);
+	});
 	function addPieSegments()
 	{
 		g.append("path")
@@ -82,7 +104,7 @@
 			innerLabelEnter(d);
 			d3.select(this)
 				.transition()
-			    .duration(piePullOutDuration)
+				.duration(piePullOutDuration)
 				.attr("d", arcOver);
 		})
 		.on("mouseout", function(d) {
@@ -93,7 +115,13 @@
 				.attr("d", arc);
 		});
 	}
-	function addLabels()
+	function innerLabelEnter(d)
+	{
+		text.text(d.data.count + "/" + total + " " + units);
+		bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
+		labelText.text(d.data.name);
+	}
+	function addPieLabels()
 	{
 		g.append("text")
 		.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
@@ -104,24 +132,12 @@
 			innerLabelEnter(d);
 		});
 	}
-	var total = 0;
-	d3.csv("data.csv", type, function(error, data)
+	function innerLabelExit(d)
 	{
-		if (error)
-		{
-			throw error;
-		}
-		data = parseData(data);
-		g = svg.selectAll(".arc")
-		.data(pie(data))
-		.enter().append("g")
-		.attr("class", "arc");
-
-		createTextBoxes(g);
-		addPieSegments();
-		addLabels();
-		setTextBoxes(data);
-	});
+		text.text(total + " " + units);
+		bottomText.text("");
+		labelText.text("");
+	}
 	function createTextBoxes(g)
 	{
 		text = g.append("text")
@@ -156,18 +172,7 @@
 	{
 		text.text(total + " " + units);
 	}
-	function innerLabelEnter(d)
-	{
-		text.text(d.data.count + "/" + total + " " + units);
-		bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
-		labelText.text(d.data.name);
-	}
-	function innerLabelExit(d)
-	{
-		text.text(total + " " + units);
-		bottomText.text("");
-		labelText.text("");
-	}
+
 	function parseData(data)
 	{
 		var stripped = convertToArray(data);

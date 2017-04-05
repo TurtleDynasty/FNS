@@ -61,11 +61,17 @@
 			throw error;
 		}
 		data = parseData(data);
-		var g = svg.selectAll(".arc")
+		g = svg.selectAll(".arc")
 		.data(pie(data))
 		.enter().append("g")
 		.attr("class", "arc");
 
+		addPieSegements();
+		addPieLabels();
+		
+	});
+	function addPieSegements()
+	{
 		g.append("path")
 		.attr("d", arc)
 		.style("fill", function(d) { return color(d.data.name); })
@@ -81,13 +87,15 @@
 				.duration(piePullOutDuration)
 				.attr("d", arc);
 		});
-
+	}
+	function addPieLabels()
+	{
 		g.append("text")
 		.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
 		.attr("dy", ".35em")
 		.style("font-size", "14px")
 		.text(function(d) { return d.data.name; });
-	});
+	}
 	function parseData(data)
 	{
 		var stripped = convertToArray(data);

@@ -80,6 +80,61 @@
 		d.count = +d.count;
 		return d;
 	}
+
+
+	var total = 0;
+	d3.csv("data.csv", type, function(error, data)
+	{
+		if (error)
+		{
+			throw error;
+		}
+
+		data = parseData(data);
+
+		g = svg.selectAll(".arc")
+		.data(pie(data))
+		.enter().append("g")
+		.attr("class", "arc");
+
+
+		addPieSegments();
+		addPieLabels();
+		addPieToLabelLine();
+		addPieLabelUnderLine();
+		moveGraphToCenter();
+		createTextBoxes(g);
+		setTextBoxes(data);
+	});
+
+	function addPieSegments()
+	{
+		g.append("path")
+		.attr("d", arc)
+		.style("fill", function(d) { return color(d.data.name); })
+		.on("mouseenter", function(d) {
+			innerLabelEnter(d);
+			changeArc(this, arcOver);
+			changeLine(d, pieSegmentPullOut);
+		})
+		.on("mouseout", function(d) {
+			innerLabelExit(d);
+			changeArc(this, arc);
+			changeLine(d, 0);
+		});
+	}
+	function innerLabelEnter(d)
+	{
+		text.text(d.data.count + "/" + total + " " + units);
+		bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
+		labelText.text(d.data.name);
+	}
+	function innerLabelExit(d)
+	{
+		text.text(total + " " + units);
+		bottomText.text("");
+		labelText.text("");
+	}
 	function changeArc(className, arc)
 	{
 		d3.select(className)
@@ -102,23 +157,7 @@
 				return Math.sin(a) * (lineToLabelStart + offset);
 			})
 	}
-	function addPieSegments()
-	{
-		g.append("path")
-		.attr("d", arc)
-		.style("fill", function(d) { return color(d.data.name); })
-		.on("mouseenter", function(d) {
-			innerLabelEnter(d);
-			changeArc(this, arcOver);
-			changeLine(d, pieSegmentPullOut);
-		})
-		.on("mouseout", function(d) {
-			innerLabelExit(d);
-			changeArc(this, arc);
-			changeLine(d, 0);
-		});
-	}
-	function addLabel()
+	function addPieLabels()
 	{
 		// text
 		g.append("text")
@@ -162,10 +201,7 @@
 		.attr("stroke-width", 2)
 		.attr("stroke", "black");
 	}
-	function moveGraphToCenter()
-	{
-		svg.attr("transform", "translate(" + (width/ 2 + margin.left) + "," + (height/ 2 + margin.top) + ")");
-	}
+
 	function addPieLabelUnderLine()
 	{
 		// label underline
@@ -190,28 +226,25 @@
 		.attr("stroke-width", 2)
 		.attr("stroke", "black");
 	}
-	var total = 0;
-	d3.csv("data.csv", type, function(error, data)
+	function calculateAngle(data)
 	{
-		if (error)
+		return data.startAngle + (data.endAngle - data.startAngle)/2 - Math.PI/2;
+	}
+	function quadrantCalculator(quadrant, offset)
+	{
+		if (quadrant > 0)
 		{
-			throw error;
+			return quadrant + offset;
 		}
-
-		data = parseData(data);
-		g = svg.selectAll(".arc")
-		.data(pie(data))
-		.enter().append("g")
-		.attr("class", "arc");
-
-		createTextBoxes(g);
-		addPieSegments();
-		addLabel();
-		addPieToLabelLine();
-		addPieLabelUnderLine();
-		moveGraphToCenter();
-		setTextBoxes(data);
-	});
+		else
+		{
+			return quadrant - offset;
+		}
+	}
+	function moveGraphToCenter()
+	{
+		svg.attr("transform", "translate(" + (width/ 2 + margin.left) + "," + (height/ 2 + margin.top) + ")");
+	}
 	function createTextBoxes(g)
 	{
 		text = g.append("text")
@@ -245,33 +278,6 @@
 	function setTextBoxes(data)
 	{
 		text.text(total + " " + units);
-	}
-	function quadrantCalculator(quadrant, offset)
-	{
-		if (quadrant > 0)
-		{
-			return quadrant + offset;
-		}
-		else
-		{
-			return quadrant - offset;
-		}
-	}
-	function calculateAngle(data)
-	{
-		return data.startAngle + (data.endAngle - data.startAngle)/2 - Math.PI/2;
-	}
-	function innerLabelEnter(d)
-	{
-		text.text(d.data.count + "/" + total + " " + units);
-		bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
-		labelText.text(d.data.name);
-	}
-	function innerLabelExit(d)
-	{
-		text.text(total + " " + units);
-		bottomText.text("");
-		labelText.text("");
 	}
 	function parseData(data)
 	{
