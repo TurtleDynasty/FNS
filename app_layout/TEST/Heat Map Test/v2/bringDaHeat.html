@@ -43,6 +43,7 @@ svg.append("rect")
 .style("fill-opacity", .25)
 var maxColor = -Infinity;
 var minColor = Infinity;
+
 d3.csv("heatmap.csv", function(d) {
 	d.value = +d.value;
 	if (d.value > 1)
@@ -63,6 +64,19 @@ d3.csv("heatmap.csv", function(d) {
 		{
 			throw error;
 	 	}
+		classes = parseData(classes);
+		function parseData(data)
+		{
+			data = data.sort(compare);
+			return data;
+		}
+		function compare(a,b) {
+		  if (a.value < b.value)
+		    return -1;
+		  if (a.value > b.value)
+		    return 1;
+		  return 0;
+		}
 		circleRadius = heatMapWidth / Math.sqrt(classes.length) - circlePadding;
 		console.log(classes.length);
 		console.log(circleRadius);
@@ -106,6 +120,51 @@ d3.csv("heatmap.csv", function(d) {
 				yIndex += 1;
 			}
 		}
+		function grabClassColor(number)
+		{
+			var divideColor = d3.scaleLinear().domain([minColor, maxColor+1]).range([0, 1]);
+			var index = Math.floor(divideColor(number) * 10);
+			return circleColors[index];
+		}
+		function grabColor(number, colors)
+		{
+			var divideColor = d3.scaleLinear().domain([minColor, maxColor]).range([0, 1]);
+			var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
+			var color = divideColor(number);
+			return pickColor(color);
+		}
+		function mouseEnterSquare(object)
+		{
+			d3.select(object).attr('width', circleRadius + circlePadding);
+			d3.select(object).attr('height', circleRadius + circlePadding);
+			d3.select(object).attr("stroke-opacity", 1);
+			d3.select(object).attr('x', function ()
+			{
+				var x = parseFloat(d3.select(object).attr('x'));
+				return (x - circlePadding/2);
+			})
+			.attr('y', function ()
+			{
+				var y = parseFloat(d3.select(object).attr('y'));
+				return (y - circlePadding/2);
+			})
+		}
+		function mouseExitSquare(object)
+		{
+			d3.select(object).attr('width', circleRadius);
+			d3.select(object).attr('height', circleRadius);
+			d3.select(object).attr("stroke-opacity", 0);
+			d3.select(object).attr('x', function ()
+			{
+				var x = parseFloat(d3.select(object).attr('x'));
+				return (x + circlePadding/2);
+			})
+			.attr('y', function ()
+			{
+				var y = parseFloat(d3.select(object).attr('y'));
+				return (y + circlePadding/2);
+			})
+		}
 		function moveInfoSquares(offset)
 		{
 			d3.selectAll(".infoNode").attr('x', function ()
@@ -126,6 +185,7 @@ d3.csv("heatmap.csv", function(d) {
 			var id = id.split(".");
 			var id = id[id.length-1];
 
+
 			svg.append("rect")
 			.classed("infoNode", true)
 			.attr("x", 0)
@@ -133,6 +193,10 @@ d3.csv("heatmap.csv", function(d) {
 			.attr("width", infoTileSize)
 			.attr("height", infoTileSize)
 			.style("fill", color)
+			.on("click", function()
+			{
+
+			});
 
 			svg.append("rect")
 			.classed("infoNode", true)
@@ -148,7 +212,11 @@ d3.csv("heatmap.csv", function(d) {
 			.attr("y", heatMapWidth + 25 + (infoTileSize-2*infoTilePadding)/2)
 			.attr("dy", "-1.5em")
 			.style("fill", "black")
-			.text(id);
+			.text(id)
+			.on("click", function()
+			{
+
+			});
 
 			svg.append("text")
 			.classed("infoNode", true)
@@ -156,7 +224,11 @@ d3.csv("heatmap.csv", function(d) {
 			.attr("y", heatMapWidth + 25 + (infoTileSize-2*infoTilePadding)/2)
 			.attr("dy", "1.5em")
 			.style("fill", "black")
-			.text(value);
+			.text(value)
+			.on("click", function()
+			{
+
+			});
 
 		}
 		drawLegend();
@@ -231,51 +303,8 @@ d3.csv("heatmap.csv", function(d) {
 				console.log(opacity);
 			}
 		}
-		function grabClassColor(number)
-		{
-			var divideColor = d3.scaleLinear().domain([minColor, maxColor+1]).range([0, 1]);
-			var index = Math.floor(divideColor(number) * 10);
-			return circleColors[index];
-		}
-		function grabColor(number, colors)
-		{
-			var divideColor = d3.scaleLinear().domain([minColor, maxColor]).range([0, 1]);
-			var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
-			var color = divideColor(number);
-			return pickColor(color);
-		}
-		function mouseEnterSquare(object)
-		{
-			d3.select(object).attr('width', circleRadius + circlePadding);
-			d3.select(object).attr('height', circleRadius + circlePadding);
-			d3.select(object).attr("stroke-opacity", 1);
-			d3.select(object).attr('x', function ()
-			{
-				var x = parseFloat(d3.select(object).attr('x'));
-				return (x - circlePadding/2);
-			})
-			.attr('y', function ()
-			{
-				var y = parseFloat(d3.select(object).attr('y'));
-				return (y - circlePadding/2);
-			})
-		}
-		function mouseExitSquare(object)
-		{
-			d3.select(object).attr('width', circleRadius);
-			d3.select(object).attr('height', circleRadius);
-			d3.select(object).attr("stroke-opacity", 0);
-			d3.select(object).attr('x', function ()
-			{
-				var x = parseFloat(d3.select(object).attr('x'));
-				return (x + circlePadding/2);
-			})
-			.attr('y', function ()
-			{
-				var y = parseFloat(d3.select(object).attr('y'));
-				return (y + circlePadding/2);
-			})
-		}
+
+
 	});
 
 
