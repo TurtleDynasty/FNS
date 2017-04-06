@@ -25,7 +25,8 @@
 	"translate(" + 100 + "," + 100 + ")");
 	var start = 50;
 	var end = 0;
-	var drag = d3.drag()
+	function subject(d) {return { x: d3.event.x, y: d3.event.y }};
+	var drag = d3.drag().subject(subject)
 		.on('start', function()
 		{
 			d3.select(this)
@@ -41,9 +42,9 @@
 				{
 					return barCords[barCords.length-1] + wiggleRoom;
 				}
-				else if (y < 0-wiggleRoom)
+				else if (y < 0)
 				{
-					return -wiggleRoom;
+					return 0;
 				}
 				return d3.event.y
 			})
@@ -55,50 +56,39 @@
 			.delay(500)
 			.duration(500)
 			.attr('x', end);
-			console.log("here")
-			console.log(d3.selectAll(".legendBar")["_groups"][0]);
 		});
 	var barOrder = ["bar1","bar2","bar3"];
 	var barCords = [0, 100, 200];
 
 	svg.append("rect")
-	.classed('legendBar', true)
-	.classed("bar1", true)
-	.attr("x", 0)
-	.attr("width", 40)
-	.attr("y", 0)
-	.attr("height", 100)
-	.style("fill", "red")
-	.call(drag);
+		.classed("legendBar", true)
+		.classed("bar1", true)
+		.attr("x", 0)
+		.attr("width", 40)
+		.attr("y", 0)
+		.attr("height", 100)
+		.style("fill", "red")
+		.call(drag);
 
 	svg.append("rect")
-	.classed('legendBar', true)
-	.classed("bar2", true)
-	.attr("x", 0)
-	.attr("width", 40)
-	.attr("y", 100)
-	.attr("height", 100)
-	.style("fill", "cyan")
-	.call(drag);
+		.classed("legendBar", true)
+		.classed("bar2", true)
+		.attr("x", 0)
+		.attr("width", 40)
+		.attr("y", 100)
+		.attr("height", 100)
+		.style("fill", "cyan")
+		.call(drag);
 
 	svg.append("rect")
-	.classed('legendBar', true)
-	.classed("bar3", true)
-	.attr("x", 0)
-	.attr("width", 40)
-	.attr("y", 200)
-	.attr("height", 100)
-	.style("fill", "green")
-	.call(drag);
-
-	var drag = d3.drag()
-        .on("drag", function(d,i) {
-            d.x += d3.event.dx
-            d.y += d3.event.dy
-            d3.select(this).attr("transform", function(d,i){
-                return "translate(" + [ d.x,d.y ] + ")"
-            })
-        });
+		.classed("legendBar", true)
+		.classed("bar3", true)
+		.attr("x", 0)
+		.attr("width", 40)
+		.attr("y", 200)
+		.attr("height", 100)
+		.style("fill", "green")
+		.call(drag);
 
 	var barOrder = ["bar1","bar2","bar3"]
 	var barYOrder = [100, 200, 300];
