@@ -8,7 +8,7 @@ text {
 }
 
 </style>
-<svg width="650" height="650"></svg>
+<svg width="700" height="800"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 var circleColors = ["darkblue",
@@ -31,6 +31,9 @@ var x = 0;
 var xIndex = 0;
 var y = 0;
 var yIndex = 0;
+var legendTileSize = 25;
+var infoTileSize = 125;
+var infoTilePadding = 5;
 svg.append("rect")
 .attr("x", 0)
 .attr("width", heatMapWidth)
@@ -68,14 +71,17 @@ d3.csv("heatmap.csv", function(d) {
 			var number = 10;
 			svg.append("rect")
 			.classed(grabClassColor(classes[i]["value"]), true)
+			.attr("color", grabClassColor(classes[i]["value"]))
 			.classed("circleBubble", true)
 			.attr("value", classes[i]["value"])
+			.attr("id", classes[i]["id"])
 			.attr("x", x)
 			.attr("y", y)
 			.attr("height", circleRadius)
 			.attr("width", circleRadius)
 			.attr("fill-opacity", 1)
 			.attr("stroke-opacity", 0)
+			.attr("stroke-width", 2)
 			.style("stroke", "black")
 			.style("fill", function() { return grabColor(classes[i]["value"], circleColors); })
 			.on("mouseover", function() {
@@ -86,7 +92,8 @@ d3.csv("heatmap.csv", function(d) {
 			})
 			.on("click", function(d)
 			{
-
+				moveInfoSquares(infoTileSize + infoTilePadding);
+				drawInfoSquare(this, d3.select(this).attr("color"));
 			});
 
 			x += circleRadius + circlePadding;
@@ -99,10 +106,62 @@ d3.csv("heatmap.csv", function(d) {
 				yIndex += 1;
 			}
 		}
+		function moveInfoSquares(offset)
+		{
+			d3.selectAll(".infoNode").attr('x', function ()
+			{
+				var x = parseFloat(d3.select(this).attr('x'));
+				x += offset;
+				if (x > heatMapWidth)
+				{
+					d3.select(this).remove();
+				}
+				return x;
+			})
+		}
+		function drawInfoSquare(d, color)
+		{
+			var value = d3.select(d).attr("value");
+			var id = d3.select(d).attr("id");
+			var id = id.split(".");
+			var id = id[id.length-1];
+
+			svg.append("rect")
+			.classed("infoNode", true)
+			.attr("x", 0)
+			.attr("y", heatMapWidth + 25)
+			.attr("width", infoTileSize)
+			.attr("height", infoTileSize)
+			.style("fill", color)
+
+			svg.append("rect")
+			.classed("infoNode", true)
+			.attr("x", 0 + infoTilePadding)
+			.attr("y", heatMapWidth + 25 + infoTilePadding)
+			.attr("width", infoTileSize-2*infoTilePadding)
+			.attr("height", infoTileSize-2*infoTilePadding)
+			.style("fill", "white")
+
+			svg.append("text")
+			.classed("infoNode", true)
+			.attr("x", 0 + (infoTileSize-2*infoTilePadding)/2)
+			.attr("y", heatMapWidth + 25 + (infoTileSize-2*infoTilePadding)/2)
+			.attr("dy", "-1.5em")
+			.style("fill", "black")
+			.text(id);
+
+			svg.append("text")
+			.classed("infoNode", true)
+			.attr("x", 0 + (infoTileSize-2*infoTilePadding)/2)
+			.attr("y", heatMapWidth + 25 + (infoTileSize-2*infoTilePadding)/2)
+			.attr("dy", "1.5em")
+			.style("fill", "black")
+			.text(value);
+
+		}
 		drawLegend();
 		function drawLegend()
 		{
-			var legendTileSize = 25;
 			var increment = (heatMapWidth / circleColors.length)+1;
 			for (i = 0; i < circleColors.length; i++)
 			{
@@ -119,12 +178,37 @@ d3.csv("heatmap.csv", function(d) {
 				.attr("height", legendTileSize)
 				.attr("width", legendTileSize)
 				.style("fill", circleColors[i])
+				.on("mouseover", function() {
+					var opacity = d3.select(this).attr("fill-opacity");
+					toggleBoarder(d3.select(this).attr("color"));
+
+				})
+				.on("mouseout", function() {
+					var opacity = d3.select(this).attr("fill-opacity");
+					toggleBoarder(d3.select(this).attr("color"));
+				})
 				.on("click", function(d)
 				{
 					filterColor(d3.select(this).attr("color"));
 				});
 			}
 
+		}
+		function toggleBoarder(color)
+		{
+			var color2filter = "." + color;
+			d3.selectAll(color2filter).attr("stroke-opacity", function()
+			{
+				var opacity = d3.select(this).attr("stroke-opacity");
+				if (opacity == 0)
+				{
+					return 1;
+				}
+				else if (opacity == 1)
+				{
+					return 0;
+				}
+			})
 		}
 		function filterColor(color)
 		{
