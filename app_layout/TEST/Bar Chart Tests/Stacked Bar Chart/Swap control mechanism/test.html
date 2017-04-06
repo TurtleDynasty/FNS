@@ -23,16 +23,43 @@
 	.append("g")
 	.attr("transform",
 	"translate(" + 100 + "," + 100 + ")");
-
+	var start = 50;
+	var end = 0;
 	var drag = d3.drag()
-		.on('start', function() {
-
+		.on('start', function()
+		{
+			d3.select(this)
+			.transition()
+			.duration(500)
+			.attr('x', start);
 		})
         .on('drag', function() {
 			d3.select(this).attr('y', function() {
+				var y = d3.select(this).attr('y');
+				var wiggleRoom = 100;
+				if (y > barCords[barCords.length-1] + wiggleRoom)
+				{
+					return barCords[barCords.length-1] + wiggleRoom;
+				}
+				else if (y < 0-wiggleRoom)
+				{
+					return -wiggleRoom;
+				}
 				return d3.event.y
-			});
+			})
+
 		})
+		.on('end', function() {
+			d3.select(this)
+			.transition()
+			.delay(500)
+			.duration(500)
+			.attr('x', end);
+			console.log("here")
+			console.log(d3.selectAll(".legendBar")["_groups"][0]);
+		});
+	var barOrder = ["bar1","bar2","bar3"];
+	var barCords = [0, 100, 200];
 
 	svg.append("rect")
 	.classed('legendBar', true)
