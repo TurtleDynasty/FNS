@@ -100,12 +100,43 @@
 				.on('drag', function() {
 					d3.select(".dragBar").attr('width', function() {
 						var x = d3.select(".dragBar").attr('x');
-						return (d3.event.x-x);
+							return (d3.event.x-firstX);
 					});
 					d3.select(".dragBar").attr('height', function() {
 						var y = d3.select(".dragBar").attr('y');
-						return (d3.event.y-y);
+						return (d3.event.y-firstY);
 					});
+					var width = d3.select(".dragBar").attr("width");
+					var height = d3.select(".dragBar").attr("height");
+					if (width < 0 && height < 0)
+					{
+						d3.select(".dragBar").attr("transform", function()
+						{
+							return "translate(" + (width) + "," + (height) + ")";
+						});
+						d3.select(".dragBar").attr("width", Math.abs(width));
+						d3.select(".dragBar").attr("height", Math.abs(height));
+					}
+					else if (width < 0)
+					{
+						d3.select(".dragBar").attr("transform", function()
+						{
+							return "translate(" + (width) + ",0)";
+						});
+						d3.select(".dragBar").attr("width", Math.abs(width));
+					}
+					else if (height < 0)
+					{
+						d3.select(".dragBar").attr("transform", function()
+						{
+							return "translate(0," + (height) + ")";
+						});
+						d3.select(".dragBar").attr("height", Math.abs(height));
+					}
+
+
+
+
 				})
 				.on('end', function() {
 					secondX = d3.event.x;
