@@ -92,6 +92,7 @@
 			{
 				return { x: d3.event.x, y: d3.event.y };
 			};
+			var inDragBox = [];
 			var drag = d3.drag()
 				.subject(subject)
 				.on('start', function()
@@ -150,14 +151,21 @@
 						});
 						d3.select(".dragBar").attr("height", Math.abs(height));
 					}
-
-
-
-
 				})
 				.on('end', function() {
 					secondX = d3.event.x;
 					secondY = d3.event.y;
+					d3.selectAll(".dataDots")
+					.attr("cx", function ()
+					{
+						var x = d3.select(this).attr("cx");
+						return x;
+					})
+					.attr("y", function ()
+					{
+						var y = d3.select(this).attr("cy");
+						return y;
+					});
 					console.log(firstX);
 					console.log(secondX);
 					console.log(firstY);
@@ -233,9 +241,9 @@
 				// add Y Axis label
 				svg.append("text")
 						.attr("class", "label")
-						.attr("transform", "translate(" + (-5) + "," + ((height-margin.bottom)/2) + ") rotate(-90)")
-						.attr("y", 0)
-						.attr("x", 0)
+						.attr("transform", "rotate(-90)")
+						.attr("y", 0 - margin.left)
+						.attr("x", 0 - (height / 2) - 5)
 						.attr("dy", "1em")
 						.style("font-size", labelFontSize)
 						.style("text-anchor", "middle")
