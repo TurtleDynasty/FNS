@@ -73,6 +73,52 @@
 				.attr("height", height + margin.top + margin.bottom)
 				.append("g")
 	    		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			function subject(d)
+			{
+				return { x: d3.event.x, y: d3.event.y };
+			};
+			var firstX = null;
+			var firstY = null;
+			var secondX = null;
+			var secondY = null;
+			var drag = d3.drag()
+				.subject(subject)
+				.on('start', function()
+				{
+					firstX = d3.event.x;
+					firstY = d3.event.y;
+					svg.append("rect")
+						.classed("dragBar", true)
+						.attr("x", firstX)
+						.attr("y", firstY)
+						.attr("width", 0)
+						.attr("height", 0)
+						.style("fill", "grey")
+						.style("fillopacity", .25)
+						.call(drag);
+				})
+				.on('drag', function() {
+
+				})
+				.on('end', function() {
+					secondX = d3.event.x;
+					secondY = d3.event.y;
+
+					console.log(firstX);
+					console.log(secondX);
+					console.log(firstY);
+					console.log(secondY);
+				});
+			svg.append("rect")
+				.classed("legendBar", true)
+				.classed("bar1", true)
+				.attr("x", 0)
+				.attr("y", 0)
+				.attr("width", width)
+				.attr("height", height)
+				.style("fill-opacity", 0)
+				.call(drag);
+
 
 			// add the tooltip area to the webpage
 			var tooltip = d3.select("body").append("div")
@@ -180,7 +226,8 @@
 						tooltip.transition()
 							.duration(500)
 							.style("opacity", 0);
-					});
+					})
+					.call(drag);
 			}
 			function drawLegend()
 			{
@@ -244,15 +291,13 @@
 				// draw legend text
 				legend.append("text")
 					.attr("x", width - legendTileSize - 7)
-					.attr("y", function ()
-					{
+					.attr("y", function () {
 						i += 1;
 						return i * legendTileSize;
 					})
 					.attr("dy", legendTileSize/2 + 1)
 					.style("text-anchor", "end")
-					.text(function(d)
-					{
+					.text(function(d) {
 						return d;
 					})
 			}
