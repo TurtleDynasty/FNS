@@ -27,7 +27,7 @@ var height = +svg.attr("height");
 
 
 var legendTileSize = 40;
-var legendSize = 100;
+var legendSize = 120;
 var legendOffset = 30;
 var infoTileSize = 100;
 var infoTilePadding = 5;
@@ -36,7 +36,7 @@ var infoTileOffset = 10;
 var heatMapWidth = width-legendSize;
 var heatMapHeight = height - 2 * infoTileSize - infoTileOffset;
 
-var circlePadding = 2;
+var circlePadding = 5;
 var squareWidth = 25;
 var x = 0;
 var xIndex = 0;
@@ -126,7 +126,7 @@ d3.csv("heatmap.csv", function(d) {
 
 			x += squareWidth + circlePadding;
 			xIndex += 1;
-			if (x > heatMapWidth)
+			if (x >= heatMapWidth)
 			{
 				x = 0;
 				y += squareHeight + circlePadding;
