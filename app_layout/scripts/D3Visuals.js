@@ -245,22 +245,29 @@ function init_af_segments()
 d3.select("#vis-title").html("AF Segments");
 }
 
-function init_backup_test(){
+function init_backup_test()
+{
 	var margin = {top: 30, right: 40, bottom: 100, left: 80};
-    var container = d3.select(".widget2").append("div").classed("svg-container", true);
+    var container = d3.select(".widget2")
+		.append("div")
+		.classed("svg-container", true);
     var width = parseInt(d3.select(".svg-container").style("width"));
     var height = parseInt(d3.select(".svg-container").style("height"));
+
     var xUnit = "";
     var xLabel = "File Space" + xUnit;
     var yUnit = "MB";
     var yLabel = "Actual Size (" + yUnit + ")";
     var tickPadding = "20";
+
     var tooltipHeight = 32;
     var tooltipWidth = 0;
     var tooltipBox = d3.select("body").append("div")
   		.attr("class", "tooltip")
   		.style("opacity", 0);
-    var formatPercent = d3.format("");
+
+    var formatPercent = d3.format
+
     var x = d3.scaleBand()
   		.rangeRound([0, width])
   		.padding(0.1);
@@ -270,13 +277,26 @@ function init_backup_test(){
     var yAxis = d3.axisLeft(y)
   		.tickFormat(formatPercent)
   		.tickPadding(tickPadding);
-	var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
+
+	var svg = container.append("svg")
+		.attr("width", width)
+		.attr("height", height)
+		.attr("preserveAspectRatio", "xMidYMid meet")
+		.attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
     	.append("g")
     	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	d3.csv("csvs/backups.csv", type, function(error, data) {
-		x.domain(data.map(function(d) { return d.letter; }));
-		y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+	d3.csv("csvs/backups.csv", type, function(error, data)
+	{
+		x.domain(data.map(function(d)
+		{
+			return d.letter;
+		}));
+		y.domain([0, d3.max(data, function(d)
+		{
+			return d.frequency;
+		})]);
+
 		svg.append("g")
 			.attr("class", "x axis")
         	.attr("transform", "translate(0," + height + ")")
@@ -286,11 +306,13 @@ function init_backup_test(){
 			.attr("dx", "-.8em")
 			.attr("dy", ".15em")
 			.attr("transform", "rotate(-45)");
+
 		svg.append("text")      // text label for the x axis
 			.attr("x", width / 2 )
         	.attr("y",  height + margin.bottom -10)
         	.style("text-anchor", "middle")
         	.text(xLabel);
+
 		svg.append("g")
         	.attr("class", "y axis")
         	.call(yAxis)
@@ -299,6 +321,7 @@ function init_backup_test(){
         	.attr("y", 6)
         	.attr("dy", ".71em")
         	.style("text-anchor", "end");
+
 		svg.append("text")
         	.attr("transform", "rotate(-90)")
         	.attr("y", 0-60)
@@ -306,15 +329,26 @@ function init_backup_test(){
         	.attr("dy", "1em")
         	.style("text-anchor", "middle")
         	.text(yLabel);
+
 		svg.selectAll(".bar")
         	.data(data)
     		.enter().append("rect")
         	.attr("class", "bar")
-        	.attr("x", function(d) { return x(d.letter); })
+        	.attr("x", function(d)
+			{
+				return x(d.letter);
+			})
         	.attr("width", x.bandwidth())
-        	.attr("y", function(d) { return y(d.frequency); })
-        	.attr("height", function(d) { return height - y(d.frequency); })
-			.on('mouseover', function(d) {
+        	.attr("y", function(d)
+			{
+				return y(d.frequency);
+			})
+        	.attr("height", function(d)
+			{
+				return height - y(d.frequency);
+			})
+			.on('mouseover', function(d)
+			{
 				tooltipBox.transition()
 					.duration(20)
 					.style("top", (d3.event.pageY - tooltipHeight) + "px")
@@ -322,14 +356,15 @@ function init_backup_test(){
 					.style("opacity", .9)
 					.text(d.frequency + " " + yUnit)
 			})
-			.on('mouseout', function(d) {
+			.on('mouseout', function(d)
+			{
 				tooltipBox.transition()
 					.duration(500)
 					.style("opacity", 0)
 			});
 	});
 
-  d3.select("#vis-title").html("Backup Test");
+d3.select("#vis-title").html("Backup Test");
 }
 
 //https://bl.ocks.org/maybelinot/5552606564ef37b5de7e47ed2b7dc099
