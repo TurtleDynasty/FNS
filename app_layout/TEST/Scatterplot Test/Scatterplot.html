@@ -94,11 +94,16 @@
 						.attr("width", 0)
 						.attr("height", 0)
 						.style("fill", "grey")
-						.style("fillopacity", .25)
+						.style("fill-opacity", .5)
 						.call(drag);
 				})
 				.on('drag', function() {
-
+					d3.select(".dragBar").attr('width', function() {
+						return d3.event.x;
+					});
+					d3.select(".dragBar").attr('height', function() {
+						return d3.event.y;
+					});
 				})
 				.on('end', function() {
 					secondX = d3.event.x;
@@ -110,8 +115,6 @@
 					console.log(secondY);
 				});
 			svg.append("rect")
-				.classed("legendBar", true)
-				.classed("bar1", true)
 				.attr("x", 0)
 				.attr("y", 0)
 				.attr("width", width)
