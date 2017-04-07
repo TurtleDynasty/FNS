@@ -31,7 +31,7 @@ var legendSize = 120;
 var legendOffset = 30;
 var infoTileSize = 100;
 var infoTilePadding = 5;
-var infoTileOffset = 10;
+var infoTileOffset = infoTilePadding + 1;
 
 var heatMapWidth = width-legendSize;
 var heatMapHeight = height - 2 * infoTileSize - infoTileOffset;
@@ -212,7 +212,7 @@ d3.csv("heatmap.csv", function(d) {
 			svg.append("rect")
 			.classed("infoNode", true)
 			.attr("x", 0)
-			.attr("y", heatMapHeight + infoTileOffset)
+			.attr("y", heatMapHeight + infoTileSize/2)
 			.attr("rx", 5)
 			.attr("ry", 5)
 			.attr("width", infoTileSize)
@@ -226,7 +226,7 @@ d3.csv("heatmap.csv", function(d) {
 			svg.append("rect")
 			.classed("infoNode", true)
 			.attr("x", 0 + infoTilePadding)
-			.attr("y", heatMapHeight + infoTilePadding + infoTileOffset)
+			.attr("y", heatMapHeight + infoTileSize/2 + infoTilePadding)
 			.attr("rx", 5)
 			.attr("ry", 5)
 			.attr("width", infoTileSize-2*infoTilePadding)
@@ -240,7 +240,7 @@ d3.csv("heatmap.csv", function(d) {
 			svg.append("text")
 			.classed("infoNode", true)
 			.attr("x", 0 + (infoTileSize-infoTilePadding)/2)
-			.attr("y", heatMapHeight + (infoTileSize-infoTilePadding)/2 + infoTileOffset)
+			.attr("y", heatMapHeight + infoTileSize + infoTilePadding/2)
 			.attr("dy", "-1.5em")
 			.style("fill", "black")
 			.style("text-anchor","middle")
@@ -253,7 +253,7 @@ d3.csv("heatmap.csv", function(d) {
 			svg.append("text")
 			.classed("infoNode", true)
 			.attr("x", 0 + (infoTileSize-infoTilePadding)/2)
-			.attr("y", heatMapHeight +  (infoTileSize-infoTilePadding)/2 + infoTileOffset)
+			.attr("y", heatMapHeight + infoTileSize + infoTilePadding/2)
 			.attr("dy", "1.5em")
 			.style("fill", "black")
 			.style("text-anchor","middle")
