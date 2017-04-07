@@ -99,10 +99,12 @@
 				})
 				.on('drag', function() {
 					d3.select(".dragBar").attr('width', function() {
-						return d3.event.x;
+						var x = d3.select(".dragBar").attr('x');
+						return (d3.event.x-x);
 					});
 					d3.select(".dragBar").attr('height', function() {
-						return d3.event.y;
+						var y = d3.select(".dragBar").attr('y');
+						return (d3.event.y-y);
 					});
 				})
 				.on('end', function() {
