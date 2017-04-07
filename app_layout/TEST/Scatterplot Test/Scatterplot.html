@@ -73,6 +73,21 @@
 				.attr("height", height + margin.top + margin.bottom)
 				.append("g")
 	    		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			d3.selection.prototype.moveToBack = function()
+			{
+			    return this.each(function() {
+			        var firstChild = this.parentNode.firstChild;
+			        if (firstChild) {
+			            this.parentNode.insertBefore(this, firstChild);
+			        }
+			    });
+			};
+			d3.selection.prototype.moveToFront = function()
+			{
+				return this.each(function(){
+					this.parentNode.appendChild(this);
+				});
+			};
 			function subject(d)
 			{
 				return { x: d3.event.x, y: d3.event.y };
@@ -90,13 +105,14 @@
 						.attr("y", firstY)
 						.attr("width", 0)
 						.attr("height", 0)
-						.style("fill", "grey")
-						.style("fill-opacity", .5)
+						.style("fill", "CornflowerBlue")
+						.style("fill-opacity", .45)
 						.call(drag)
 						.on("click", function ()
 						{
 							d3.select(this).remove();
 						});
+					d3.select(".dragBar").moveToBack();
 				})
 				.on('drag', function() {
 					d3.select(".dragBar").attr('width', function() {
