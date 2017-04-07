@@ -108,7 +108,7 @@ d3.csv("http://localhost:800/pullData.php?queryNumber=4&format=CSV", type, funct
 	.attr("dx", "-.8em")
 	.attr("dy", ".15em")
 	.attr("transform", "rotate(-45)");
-	
+
 svg.append("text")      // text label for the x axis
    	.attr("x", width / 2 )
         .attr("y",  height + margin.bottom )
@@ -123,7 +123,7 @@ svg.append("text")      // text label for the x axis
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end");
-	
+
 svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0 -60)
@@ -131,7 +131,7 @@ svg.append("text")
         .attr("dy", "1em")
         .style("text-anchor", "middle")
         .text("# Replicated Objects");
-  
+
 svg.selectAll(".bar")
       .data(data)
     .enter().append("rect")
@@ -151,3 +151,4 @@ function type(d) {
 }
 
 </script>
+</body>
