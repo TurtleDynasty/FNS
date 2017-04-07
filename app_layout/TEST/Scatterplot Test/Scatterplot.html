@@ -153,23 +153,39 @@
 					}
 				})
 				.on('end', function() {
+
+					console.log("----")
 					secondX = d3.event.x;
 					secondY = d3.event.y;
-					d3.selectAll(".dataDots")
+					d3.selectAll(".dataDot")
 					.attr("cx", function ()
 					{
 						var x = d3.select(this).attr("cx");
+						var y = d3.select(this).attr("cy");
+						var dragX = d3.select(".dragBar").attr("x");
+						var dragY = d3.select(".dragBar").attr("y");
+						console.log(d3.select(".dragBar")["_groups"][0][0]["transform"][""])
+						var dragWidth = d3.select(".dragBar").attr("width");
+						var dragHeight = d3.select(".dragBar").attr("height");
+
+						svg.append("rect")
+							.attr("x", dragX)
+							.attr("y", dragY)
+							.attr("width", 10)
+							.attr("height", 10)
+							.style("fill", "red")
+
+						if (x >= dragX && y >= dragY)
+						{
+							console.log(d3.select(this)["_groups"][0][0])
+						}
 						return x;
 					})
-					.attr("y", function ()
-					{
-						var y = d3.select(this).attr("cy");
-						return y;
-					});
 					console.log(firstX);
 					console.log(secondX);
 					console.log(firstY);
 					console.log(secondY);
+					console.log("----")
 				});
 			svg.append("rect")
 				.attr("x", 0)
@@ -255,10 +271,13 @@
 				svg.selectAll(".dot")
 					.data(data)
 					.enter().append("circle")
-					.attr("class", function(d)
+					.attr("type", function(d)
 					{
-						return d.Type.replace(/\s/g, '');
+						type =  d.Type.replace(/\s/g, '');
+						d3.select(this).classed(type, true);
+						return type;
 					})
+					.classed("dataDot", true)
 					.attr("r", dotSize)
 					.attr("cx", function(d)
 					{
@@ -275,6 +294,7 @@
 					.style("fill-opacity", 1)
 					.on("mouseover", function(d)
 					{
+						console.log(this)
 						d3.select(this).attr("r", dotSize + dotPadding);
 						var test = d3.select(this)["_groups"][0][0]["style"]["fill-opacity"];
 						if (test != 0)
