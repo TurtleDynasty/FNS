@@ -162,29 +162,18 @@
 					{
 						var x = d3.select(this).attr("cx");
 						var y = d3.select(this).attr("cy");
-						var dragX = d3.select(".dragBar").attr("x");
-						var dragY = d3.select(".dragBar").attr("y");
-						console.log(d3.select(".dragBar")["_groups"][0][0]["transform"][""])
-						var dragWidth = d3.select(".dragBar").attr("width");
-						var dragHeight = d3.select(".dragBar").attr("height");
-
-						svg.append("rect")
-							.attr("x", dragX)
-							.attr("y", dragY)
-							.attr("width", 10)
-							.attr("height", 10)
-							.style("fill", "red")
-
-						if (x >= dragX && y >= dragY)
+						var XCords = [firstX, secondX].sort();
+						var YCords = [firstY, secondY].sort();
+						if (x >= XCords[0] && x <= XCords[1] && y >= YCords[0] && y <= YCords[1])
 						{
-							console.log(d3.select(this)["_groups"][0][0])
+
+							inDragBox.push(d3.select(this));
 						}
 						return x;
 					})
-					console.log(firstX);
-					console.log(secondX);
-					console.log(firstY);
-					console.log(secondY);
+					console.log("(" + firstX + ", " + firstY + ")");
+					console.log("(" + secondX + ", " + secondY + ")");
+					console.log(inDragBox);
 					console.log("----")
 				});
 			svg.append("rect")
