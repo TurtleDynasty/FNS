@@ -64,10 +64,12 @@
 	var legendWidth = 100;
 
 	var pack = d3.pack()
-	.size([width - legendWidth, height/1.175])
-	.padding(bubblePadding);
+		.size([width - legendWidth, height/1.175])
+		.padding(bubblePadding);
+
 	var maxColor = -Infinity;
 	var minColor = Infinity;
+
 	d3.csv("heatmap.csv", function(d) {
 		d.value = +d.value;
 		if (d.value > 1)
@@ -90,15 +92,15 @@
 	 	}
 
 		var root = d3.hierarchy({children: classes})
-		.sum(function(d) { return d.value; })
-		.each(function(d) {
-			if (id = d.data.id) {
-				var id, i = id.lastIndexOf(".");
-				d.id = id;
-				d.package = id.slice(0, i);
-				d.class = id.slice(i + 1);
-			}
-		});
+			.sum(function(d) { return d.value; })
+			.each(function(d) {
+				if (id = d.data.id) {
+					var id, i = id.lastIndexOf(".");
+					d.id = id;
+					d.package = id.slice(0, i);
+					d.class = id.slice(i + 1);
+				}
+			});
 
 		addDataCircles(root);
 		createColorLegend();

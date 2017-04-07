@@ -2,7 +2,10 @@
 <meta charset="utf-8">
 <style> /* set the CSS */
 
-.bar { fill: steelblue; }
+	.bar
+	{
+		fill: steelblue;
+	}
 
 </style>
 <body>
@@ -15,7 +18,7 @@
 	var yUnit = "bytes";
 	var yAxisLabel = "Actual Size (" + yUnit + ")";
 	// set the dimensions and margins of the graph
-	var margin = {top: 50, right: 50, bottom: 50, left: 50},
+	var margin = {top: 50, right: 50, bottom: 50, left: 50};
 	var width = 960 - margin.left - margin.right;
 	var height = 500 - margin.top - margin.bottom;
 
@@ -35,34 +38,6 @@
 		.append("g")
 		.attr("transform",
 		"translate(" + margin.left + "," + margin.top + ")");
-
-	var flipCount = 0;
-	var toggleSwap = true;
-	var buttonColors = ["red", "blue"];
-	var flipButton = svg.append("rect")
-		.attr("class", "flipButton")
-		.attr("x", width)
-		.attr("y", 20)
-		.attr("width", 20)
-		.attr("height", 20)
-		.on("click", function (d)
-		{
-
-			d3.select(this).style("fill", function (d) {
-				flipCount += 1;
-				return buttonColors[flipCount%2];
-			});
-			if (flipCount%2 == 0)
-			{
-				swapBars("bar2", "bar3");
-			}
-			else
-			{
-				swapBars("bar3", "bar2");
-			}
-			toggleSwap = !toggleSwap;
-		})
-		.style("fill", "red");
 
 	// get the data
 	var stackOrder;
