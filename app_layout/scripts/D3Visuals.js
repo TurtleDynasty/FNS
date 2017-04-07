@@ -368,12 +368,15 @@ d3.select("#vis-title").html("Backup Test");
 }
 
 //https://bl.ocks.org/maybelinot/5552606564ef37b5de7e47ed2b7dc099
-function init_sunburst() {
+function init_sunburst()
+{
     clear_vis();
-    var container = d3.select(".widget2").append("div").classed("svg-container", true),
-    width = parseInt(d3.select(".svg-container").style("width")),
-    height = parseInt(d3.select(".svg-container").style("height")),
-    radius = (Math.min(width, height) / 2) - 10;
+    var container = d3.select(".widget2")
+		.append("div")
+		.classed("svg-container", true);
+    var width = parseInt(d3.select(".svg-container").style("width"));
+    var height = parseInt(d3.select(".svg-container").style("height"));
+    var radius = (Math.min(width, height) / 2) - 10;
 
     var formatNumber = d3.format(",d");
 
@@ -388,49 +391,87 @@ function init_sunburst() {
     var partition = d3.partition();
 
     var arc = d3.arc()
-    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x0))); })
-    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x1))); })
-    .innerRadius(function(d) { return Math.max(0, y(d.y0)); })
-    .outerRadius(function(d) { return Math.max(0, y(d.y1)); });
+	    .startAngle(function(d)
+		{
+			return Math.max(0, Math.min(2 * Math.PI, x(d.x0)));
+		})
+	    .endAngle(function(d)
+		{
+			return Math.max(0, Math.min(2 * Math.PI, x(d.x1)));
+		})
+	    .innerRadius(function(d)
+		{
+			return Math.max(0, y(d.y0));
+		})
+	    .outerRadius(function(d)
+		{
+			return Math.max(0, y(d.y1));
+		});
 
-
-    var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
+    var svg = container.append("svg")
+		.attr("width", width)
+		.attr("height", height)
+		.attr("preserveAspectRatio", "xMidYMid meet")
+		.attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
         .attr("id", "vis")
         .append("g")
         .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
 
-    d3.json("scripts/falseData.json", function(error, root) {
-      if (error) throw error;
-
-      root = d3.hierarchy(root);
-      root.sum(function(d) { return d.size; });
-      svg.selectAll("path")
-          .data(partition(root).descendants())
-        .enter().append("path")
-          .attr("d", arc)
-          .style("fill", function(d) { return color((d.children ? d : d.parent).data.name); })
-          .on("click", click)
-        .append("title")
-          .text(function(d) { return d.data.name + "\n" + formatNumber(d.value); });
+    d3.json("scripts/falseData.json", function(error, root)
+	{
+     	if (error)
+		{
+			throw error;
+		}
+		root = d3.hierarchy(root);
+		root.sum(function(d)
+		{
+			return d.size;
+		});
+		svg.selectAll("path")
+			.data(partition(root).descendants())
+			.enter().append("path")
+			.attr("d", arc)
+			.style("fill", function(d)
+			{
+				return color((d.children ? d : d.parent).data.name);
+			})
+			.on("click", click)
+			.append("title")
+  			.text(function(d)
+			{
+				return d.data.name + "\n" + formatNumber(d.value);
+			});
     });
 
-    function click(d) {
+    function click(d)
+	{
       svg.transition()
-          .duration(750)
-          .tween("scale", function() {
-            var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
-                yd = d3.interpolate(y.domain(), [d.y0, 1]),
-                yr = d3.interpolate(y.range(), [d.y0 ? 20 : 0, radius]);
-            return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
-          })
-        .selectAll("path")
-          .attrTween("d", function(d) { return function() { return arc(d); }; });
+        	.duration(750)
+        	.tween("scale", function()
+			{
+            	var xd = d3.interpolate(x.domain(), [d.x0, d.x1]);
+                var yd = d3.interpolate(y.domain(), [d.y0, 1]);
+                var	yr = d3.interpolate(y.range(), [d.y0 ? 20 : 0, radius]);
+            	return function(t)
+				{
+					x.domain(xd(t)); y.domain(yd(t)).range(yr(t));
+				};
+          	})
+	        .selectAll("path")
+	        .attrTween("d", function(d)
+			{
+				return function()
+				{
+					return arc(d);
+				};
+			});
     }
 
-    d3.select(self.frameElement).style("height", height + "px");
+d3.select(self.frameElement).style("height", height + "px");
 
-    //change vis title
-    d3.select("#vis-title").html("Backup Domains Distribution");
+//change vis title
+d3.select("#vis-title").html("Backup Domains Distribution");
 }
 
 /*    var container = d3.select(".widget2").append("div").classed("svg-container", true);
