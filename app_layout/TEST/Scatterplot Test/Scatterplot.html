@@ -36,13 +36,13 @@
 			var dotSize = 3.5;
 			var dotPadding = 5;
 			// setup margin
-			var margin = {top: 20, right: 20, bottom: 30, left: 50};
+			var margin = {top: 50, right: 50, bottom: 50, left: 50};
 			var width = 960 - margin.left - margin.right;
-			var height = 500 - margin.top - margin.bottom;
+			var height = 1000 - margin.top - margin.bottom;
 			var margin = {top: 20, right: 20, bottom: 30, left: 50};
 			var legendWidth = 200;
 			var width = 1080 - margin.left - margin.right - legendWidth;
-			var height = 500 - margin.top - margin.bottom;
+			var height = 700 - margin.top - margin.bottom;
 			var tickPadding = "10";
 			var legendTileSize = 30;
 			var legendSpacing = 30;
@@ -50,16 +50,16 @@
 			var xAxisLabel = "File Space ID" + xUnit;
 			var yUnit = "bytes";
 			var yAxisLabel = "Actual Size (" + yUnit + ")";
-
+			var labelFontSize = "20px"
 			// setup x
 			var xValue = function(d) { return d.X;}, // data -> value
-	    		xScale = d3.scaleLinear().range([0, width]), // value -> display
+	    		xScale = d3.scaleLinear().range([margin.left, width]), // value -> display
 	    		xMap = function(d) { return xScale(xValue(d));}; // data -> display
 	    		// xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
 			// setup y
 			var yValue = function(d) { return d["Y"];}, // data -> value
-	    		yScale = d3.scaleLinear().range([height, 0]), // value -> display
+	    		yScale = d3.scaleLinear().range([height-margin.bottom, 0]), // value -> display
 	    		yMap = function(d) { return yScale(yValue(d));}; // data -> display
 	    		// yAxis = d3.svg.axis().scale(yScale).orient("left");
 
@@ -208,31 +208,38 @@
 				// x-axis
 				svg.append("g")
 					.attr("class", "x axis")
-					.attr("transform", "translate(0," + height + ")")
+					.attr("transform", "translate(0," + (height - margin.bottom) + ")")
 					.call(d3.axisBottom(xScale))
+
+				// add X Axis label
 				svg.append("text")
-					.attr("class", "label")
-					.attr("transform", "rotate(0)")
-					.attr("y", height + 20)
-					.attr("x", width/2)
-					.attr("dy", "1em")
-					.style("text-anchor", "middle")
-					.text(xAxisLabel);
+						.attr("class", "label")
+						.attr("transform", "rotate(0)")
+						.attr("y", height )
+						.attr("x", width/2)
+						.attr("dy", "1em")
+						.style("font-size", labelFontSize)
+						.style("text-anchor", "middle")
+						.text(xAxisLabel);
 			}
 			function createYAxis()
 			{
 				// y-axis
 				svg.append("g")
 					.call(d3.axisLeft(yScale).tickPadding(["10"]))
-					.attr("class", "y axis");
+					.attr("class", "y axis")
+					.attr("transform", "translate(" + margin.left + ",0)")
+
+				// add Y Axis label
 				svg.append("text")
-					.attr("class", "label")
-					.attr("transform", "rotate(-90)")
-					.attr("y", 0 - margin.left)
-					.attr("x", 0 - (height / 2) - 5)
-					.attr("dy", "1em")
-					.style("text-anchor", "middle")
-					.text(yAxisLabel);
+						.attr("class", "label")
+						.attr("transform", "translate(" + (-5) + "," + ((height-margin.bottom)/2) + ") rotate(-90)")
+						.attr("y", 0)
+						.attr("x", 0)
+						.attr("dy", "1em")
+						.style("font-size", labelFontSize)
+						.style("text-anchor", "middle")
+						.text(yAxisLabel);
 			}
 			function drawDots(data)
 			{
