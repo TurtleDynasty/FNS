@@ -95,8 +95,8 @@
 		for(i = 0; i < classes.length; i++)
 		{
 			svg.append("rect")
-				.classed(grabClassColor(classes[i]["value"]), true)
-				.attr("color", grabClassColor(classes[i]["value"]))
+				.classed(grabColor(classes[i]["value"])[1], true)
+				.attr("color", grabColor(classes[i]["value"])[1])
 				.classed("circleBubble", true)
 				.attr("value", classes[i]["value"])
 				.attr("id", classes[i]["id"])
@@ -110,7 +110,7 @@
 				.attr("stroke-opacity", 0)
 				.attr("stroke-width", 2)
 				.style("stroke", "black")
-				.style("fill", function() { return grabColor(classes[i]["value"], circleColors); })
+				.style("fill", function() { return grabColor(classes[i]["value"], circleColors)[0]; })
 				.on("mouseover", function() {
 					mouseEnterSquare(this);
 				})
@@ -138,18 +138,14 @@
 			yIndex += 1;
 		}
 	}
-	function grabClassColor(number)
-	{
-		var divideColor = d3.scaleLinear().domain([minColor, maxColor+1]).range([0, 1]);
-		var index = Math.floor(divideColor(number) * 10);
-		return circleColors[index];
-	}
 	function grabColor(number, colors)
 	{
+		colors = colors || [];
 		var divideColor = d3.scaleLinear().domain([minColor, maxColor]).range([0, 1]);
 		var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
-		var color = divideColor(number);
-		return pickColor(color);
+		var color = pickColor(divideColor(number));
+		var index = Math.floor(divideColor(number) * 10);
+		return [color, circleColors[index]];
 	}
 	function mouseEnterSquare(object)
 	{

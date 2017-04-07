@@ -124,10 +124,10 @@
 				return "translate(0," + bubbleGraphYOffset + ")";
 			})
 			.attr("class", function(d) {
-				return grabClassColor(d.value);
+				return grabColor(d.value)[1];
 			})
 			.style("fill", function(d) {
-				return grabColor(d.value, circleColors);
+				return grabColor(d.value, circleColors)[0];
 			})
 			.style("opacity", 1)
 			.on("click", function(d) {
@@ -140,7 +140,7 @@
 			})
 			.on("mouseover", function(d) {
 				applyBoader(d, this, 2, bubblePadding);
-				var legendTile = "." + grabClassColor(d.value) + "L";
+				var legendTile = "." + grabColor(d.value)[1] + "L";
 				d3.select(legendTile)
 				.style("stroke-width", function (d) {
 					var opacity = d3.select(legendTile)["_groups"][0][0]["style"]["fill-opacity"];
@@ -156,23 +156,19 @@
 			})
 			.on("mouseout", function(d) {
 				applyBoader(d, this, 0, 0);
-				var className = "." + grabClassColor(d.value) + "L";
+				var className = "." + grabColor(d.value)[1] + "L";
 				d3.select(className)
 				.style("stroke-width", 3);
 			});
 	}
-	function grabClassColor(number)
-	{
-		var divideColor = d3.scaleLinear().domain([minColor, maxColor+1]).range([0, 1]);
-		var index = Math.floor(divideColor(number) * 10);
-		return circleColors[index];
-	}
 	function grabColor(number, colors)
 	{
+		colors = colors || [];
 		var divideColor = d3.scaleLinear().domain([minColor, maxColor]).range([0, 1]);
 		var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
-		var color = divideColor(number);
-		return pickColor(color);
+		var color = pickColor(divideColor(number));
+		var index = Math.floor(divideColor(number) * 10);
+		return [color, circleColors[index]];
 	}
 	function applyBoader(data, className, strokeWidth, offset)
 	{
@@ -275,7 +271,7 @@
 	{
 		svg.append("circle")
 			.attr("r", r)
-			.style("fill", grabColor(d.value, circleColors))
+			.style("fill", grabColor(d.value, circleColors)[0])
 			.style("stroke", "black")
 			.style("stroke-width", 2)
 			.attr("transform", function(d) {
