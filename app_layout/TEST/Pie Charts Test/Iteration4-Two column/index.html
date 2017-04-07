@@ -22,6 +22,7 @@
 
 		// ---- label Text STUFF
 		var labelFontSize = "14px"
+
 		// -------------------
 		// ---- Inner Text STUFF
 		var units = "objects";
@@ -39,6 +40,8 @@
 		var bottomXOffset = "0em";
 		var bottomYOffset = "1.5em";
 		// --------------------
+
+		// --------------------
 		// --- linelabels STUFF
 		var letterLineLength = 11;
 		var lineToLabelEnd = outerRadius * .2;
@@ -47,30 +50,32 @@
 		var pieSegmentPullOut = 30;
 		var piePullOutDuration = 1000;
 		// --------------------
+
 		var color = d3.scaleOrdinal()
-		.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+			.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 		var arc = d3.arc()
-		.innerRadius(innerRadius)
-		.outerRadius(outerRadius);
-
+			.innerRadius(innerRadius)
+			.outerRadius(outerRadius);
 		var arcOver = d3.arc()
-		.innerRadius(innerRadius)
-		.outerRadius(outerRadius + pieSegmentPullOut);
-
+			.innerRadius(innerRadius)
+			.outerRadius(outerRadius + pieSegmentPullOut);
 		var labelArc = d3.arc()
-		.innerRadius(innerRadius)
-		.outerRadius(outerRadius);
+			.innerRadius(innerRadius)
+			.outerRadius(outerRadius);
 
 		var pie = d3.pie()
-		.sort(null)
-		.value(function(d) { return d.count; });
+			.sort(null)
+			.value(function(d)
+			{
+				return d.count;
+			});
 
 		var svg = d3.select("body").append("svg")
-		.attr("width", width)
-		.attr("height", height)
-		.append("g")
-		.attr("transform", "translate(" + width / 2  + "," + height / 2 + ")");
+			.attr("width", width)
+			.attr("height", height)
+			.append("g")
+			.attr("transform", "translate(" + width / 2  + "," + height / 2 + ")");
 
 		function type(d)
 		{
@@ -79,18 +84,19 @@
 		}
 
 		var total = 0;
+
 		d3.csv("data.csv", type, function(error, data)
 		{
 			if (error)
 			{
 				throw error;
 			}
+
 			data = parseData(data);
 			g = svg.selectAll(".arc")
-			.data(pie(data))
-			.enter().append("g")
-			.attr("class", "arc");
-
+				.data(pie(data))
+				.enter().append("g")
+				.attr("class", "arc");
 
 			addPieSegments();
 			addPieLabels();
@@ -99,23 +105,27 @@
 			moveGraphToCenter();
 			createTextBoxes(g);
 			setTextBoxes(data);
-
 		});
 		function addPieSegments()
 		{
 			g.append("path")
-			.attr("d", arc)
-			.style("fill", function(d) { return color(d.data.name); })
-			.on("mouseenter", function(d) {
-				innerLabelEnter(d);
-				changeArc(this, arcOver);
-				changeLine(d, pieSegmentPullOut);
-			})
-			.on("mouseout", function(d) {
-				innerLabelExit(d);
-				changeArc(this, arc);
-				changeLine(d, 0);
-			});
+				.attr("d", arc)
+				.style("fill", function(d)
+				{
+					return color(d.data.name);
+				})
+				.on("mouseenter", function(d)
+				{
+					innerLabelEnter(d);
+					changeArc(this, arcOver);
+					changeLine(d, pieSegmentPullOut);
+				})
+				.on("mouseout", function(d)
+				{
+					innerLabelExit(d);
+					changeArc(this, arc);
+					changeLine(d, 0);
+				});
 		}
 		function innerLabelEnter(d)
 		{
@@ -142,11 +152,13 @@
 			d3.select(className)
 				.transition()
 				.duration(piePullOutDuration)
-				.attr("x1", function(d) {
+				.attr("x1", function(d)
+				{
 					var a = calculateAngle(d);
 					return Math.cos(a) * (lineToLabelStart + offset);
 				})
-				.attr("y1", function(d) {
+				.attr("y1", function(d)
+				{
 					var a = calculateAngle(d);
 					return Math.sin(a) * (lineToLabelStart + offset);
 				})
@@ -155,70 +167,83 @@
 		{
 			// text
 			g.append("text")
-			.attr("text-anchor", "middle")
-			.attr("x", function(d) {
-				var a = calculateAngle(d);
-				var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
-				return quadrantCalculator(quadrant, letterLineLength*d.data.name.length/2);
-			})
-			.attr("y", function(d) {
-				var a = calculateAngle(d);
-				return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
-
-			})
-			.style("font-size", labelFontSize)
-			.text(function(d) { return d.data.name; });
+				.attr("text-anchor", "middle")
+				.attr("x", function(d)
+				{
+					var a = calculateAngle(d);
+					var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
+					return quadrantCalculator(quadrant, letterLineLength*d.data.name.length/2);
+				})
+				.attr("y", function(d)
+				{
+					var a = calculateAngle(d);
+					return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
+				})
+				.style("font-size", labelFontSize)
+				.text(function(d)
+				{
+					return d.data.name;
+				});
 		}
 		function addPieToLabelLine()
 		{
 			// pie2labelline
 			g.append("line")
-			.attr("class", function (d) {
-				return d.data.name;
-			})
-			.attr("x1", function(d) {
-				var a = calculateAngle(d);
-				return Math.cos(a) * (lineToLabelStart);
-			})
-			.attr("y1", function(d) {
-				var a = calculateAngle(d);
-				return Math.sin(a) * (lineToLabelStart);
-			})
-			.attr("x2", function(d) {
-				var a = calculateAngle(d);
-				return Math.cos(a) * (outerRadius + lineToLabelEnd);
-			})
-			.attr("y2", function(d) {
-				var a = calculateAngle(d);
-				return Math.sin(a) * (outerRadius + lineToLabelEnd);
-			})
-			.attr("stroke-width", 2)
-			.attr("stroke", "black");
+				.attr("class", function (d)
+				{
+					return d.data.name;
+				})
+				.attr("x1", function(d)
+				{
+					var a = calculateAngle(d);
+					return Math.cos(a) * (lineToLabelStart);
+				})
+				.attr("y1", function(d)
+				{
+					var a = calculateAngle(d);
+					return Math.sin(a) * (lineToLabelStart);
+				})
+				.attr("x2", function(d)
+				{
+					var a = calculateAngle(d);
+					return Math.cos(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("y2", function(d)
+				{
+					var a = calculateAngle(d);
+					return Math.sin(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("stroke-width", 2)
+				.attr("stroke", "black");
 		}
 
 		function addPieLabelUnderLine()
 		{
 			// label underline
 			g.append("line")
-			.attr("x1", function(d) {
-				var a = calculateAngle(d);
-				return Math.cos(a) * (outerRadius + lineToLabelEnd);
-			})
-			.attr("y1", function(d) {
-				var a = calculateAngle(d);
-				return Math.sin(a) * (outerRadius + lineToLabelEnd);
-			})
-			.attr("x2", function(d) {
-				var a = calculateAngle(d);
-				var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
-				return quadrantCalculator(quadrant, letterLineLength*d.data.name.length);
-			})
-			.attr("y2", function(d) {
-				var a = calculateAngle(d);
-				return Math.sin(a) * (outerRadius + lineToLabelEnd);
-			})
-			.attr("stroke-width", 2)
-			.attr("stroke", "black");
+				.attr("x1", function(d)
+				{
+					var a = calculateAngle(d);
+					return Math.cos(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("y1", function(d)
+				{
+					var a = calculateAngle(d);
+					return Math.sin(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("x2", function(d)
+				{
+					var a = calculateAngle(d);
+					var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
+					return quadrantCalculator(quadrant, letterLineLength*d.data.name.length);
+				})
+				.attr("y2", function(d)
+				{
+					var a = calculateAngle(d);
+					return Math.sin(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("stroke-width", 2)
+				.attr("stroke", "black");
 		}
 		function calculateAngle(data)
 		{
@@ -253,22 +278,22 @@
 				.text(" ");
 
 			bottomText = g.append("text")
-			.attr("dx", bottomXOffset)
-			.attr("dy", bottomYOffset)
-			.style("text-anchor", "middle")
-			.style("fill", "black")
-			.style("font-size", innerFontSize)
-			.attr("class", "on")
-			.text(" ");
+				.attr("dx", bottomXOffset)
+				.attr("dy", bottomYOffset)
+				.style("text-anchor", "middle")
+				.style("fill", "black")
+				.style("font-size", innerFontSize)
+				.attr("class", "on")
+				.text(" ");
 
 			labelText = g.append("text")
-			.attr("dx", labelXOffset)
-			.attr("dy", labelYOffset)
-			.style("text-anchor", "middle")
-			.style("fill", "black")
-			.style("font-size", innerFontSize)
-			.attr("class", "on")
-			.text(" ");
+				.attr("dx", labelXOffset)
+				.attr("dy", labelYOffset)
+				.style("text-anchor", "middle")
+				.style("fill", "black")
+				.style("font-size", innerFontSize)
+				.attr("class", "on")
+				.text(" ");
 		}
 		function setTextBoxes(data)
 		{
