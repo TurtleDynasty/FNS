@@ -1,22 +1,28 @@
-function type(d) {
-  d.frequency = +d.frequency;
-  return d;
+function type(d)
+{
+	d.frequency = +d.frequency;
+	return d;
 }
 
-function init_replicated_objects(){
+function init_replicated_objects()
+{
 	var margin = {top: 30, right: 40, bottom: 100, left: 80};
 	var container = d3.select(".widget2").append("div").classed("svg-container", true);
 	var width = parseInt(d3.select(".svg-container").style("width"));
 	var height = parseInt(d3.select(".svg-container").style("height"));
+
 	var xLabel = "Node Names";
 	var yLabel = "Number of Replicated Objects";
 	var tickPadding = "20";
+
 	var tooltipHeight = 32;
 	var tooltipWidth = 0;
 	var tooltipBox = d3.select("body").append("div")
     	.attr("class", "tooltip")
     	.style("opacity", 0);
+
 	var formatPercent = d3.format("");
+
 	var x = d3.scaleBand()
     	.rangeRound([0, width])
   		.padding(0.1);
@@ -26,13 +32,27 @@ function init_replicated_objects(){
 	var yAxis = d3.axisLeft(y)
     	.tickFormat(formatPercent)
   		.tickPadding(tickPadding);
-	var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
+
+	var svg = container.append("svg")
+		.attr("width", width)
+		.attr("height", height)
+		.attr("preserveAspectRatio", "xMidYMid meet")
+		.attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
 		.append("g")
     	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-  	d3.csv("csvs/replicatedObjects.csv", type, function(error, data) {
-    	x.domain(data.map(function(d) { return d.nodeName; }));
-    	y.domain([0, d3.max(data, function(d) { return d.replCount; })]);
-   		svg.append("g")
+
+  	d3.csv("csvs/replicatedObjects.csv", type, function(error, data)
+	{
+    	x.domain(data.map(function(d)
+		{
+			return d.nodeName;
+		}));
+    	y.domain([0, d3.max(data, function(d)
+		{
+			return d.replCount;
+		})]);
+
+		svg.append("g")
         	.attr("class", "x axis")
         	.attr("transform", "translate(0," + height + ")")
         	.call(xAxis)
@@ -41,12 +61,14 @@ function init_replicated_objects(){
   			.attr("dx", "-.8em")
   			.attr("dy", ".15em")
   			.attr("transform", "rotate(-45)");
-  		svg.append("text")      // text label for the x axis
+
+		svg.append("text")      // text label for the x axis
      		.attr("x", width / 2 )
         	.attr("y",  height + margin.bottom )
         	.style("text-anchor", "middle")
         	.text(xLabel);
-    	svg.append("g")
+
+		svg.append("g")
         	.attr("class", "y axis")
         	.call(yAxis)
     		.append("text")
@@ -54,6 +76,7 @@ function init_replicated_objects(){
         	.attr("y", 6)
         	.attr("dy", ".71em")
         	.style("text-anchor", "end");
+
 		svg.append("text")
         	.attr("transform", "rotate(-90)")
         	.attr("y", 0 -60)
@@ -61,15 +84,26 @@ function init_replicated_objects(){
         	.attr("dy", "1em")
         	.style("text-anchor", "middle")
         	.text(yLabel);
+
 		svg.selectAll(".bar")
         	.data(data)
       		.enter().append("rect")
         	.attr("class", "bar")
-        	.attr("x", function(d) { return x(d.nodeName); })
+        	.attr("x", function(d)
+			{
+				return x(d.nodeName);
+			})
         	.attr("width", x.bandwidth())
-        	.attr("y", function(d) { return y(d.replCount); })
-        	.attr("height", function(d) { return height - y(d.replCount); })
-        	.on('mouseover', function(d) {
+        	.attr("y", function(d)
+			{
+				return y(d.replCount);
+			})
+        	.attr("height", function(d)
+			{
+				return height - y(d.replCount);
+			})
+        	.on('mouseover', function(d)
+			{
 				tooltipBox.transition()
   		  			.duration(20)
     				.style("top", (d3.event.pageY - tooltipHeight) + "px")
@@ -77,7 +111,8 @@ function init_replicated_objects(){
   					.style("opacity", .9)
   					.text(d.replCount + " " + "replicated")
   	  		})
-        	.on('mouseout', function(d) {
+        	.on('mouseout', function(d)
+			{
   				tooltipBox.transition()
   		  			.duration(500)
   					.style("opacity", 0)
