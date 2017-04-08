@@ -95,18 +95,16 @@
 							"red"];
 
 
-		var legendTileSize = 40;
+		var legendTileSize = height/(circleColors.length*2);
 		var legendSize = 120;
-		var legendOffset = 30;
-		var infoTileSize = 100;
+		var legendOffset = height/circleColors.length;
+		var infoTileSize = width * .1;
 		var infoTilePadding = 5;
 		var infoTileOffset = infoTilePadding + 1;
-
 		var heatMapWidth = width-legendSize;
-		var heatMapHeight = height - 2 * infoTileSize - infoTileOffset;
+		var heatMapHeight = height - infoTileSize - 2* infoTileOffset;
 
-		var circlePadding = 5;
-		var squareWidth = 25;
+		var squarePadding = 5;
 		var x = 0;
 		var xIndex = 0;
 		var y = 0;
@@ -155,11 +153,10 @@
 				return data;
 			}
 
-			squareWidth = Math.sqrt((heatMapWidth * heatMapHeight / classes.length));
-			squareWidth -= circlePadding;
-			squareHeight = squareWidth;
+			squareRadius = Math.sqrt((heatMapWidth * heatMapHeight / classes.length));
+			squareRadius -= squarePadding;
 			console.log(classes.length);
-			console.log(squareWidth);
+			console.log(squareRadius);
 			for(i = 0; i < classes.length; i++)
 			{
 				svg.append("rect")
@@ -172,8 +169,8 @@
 					.attr("y", y)
 					.attr("rx", 4)
 					.attr("ry", 4)
-					.attr("width", squareWidth)
-					.attr("height", squareHeight)
+					.attr("width", squareRadius)
+					.attr("height", squareRadius)
 					.attr("fill-opacity", 1)
 					.attr("stroke-opacity", 0)
 					.attr("stroke-width", 2)
@@ -196,12 +193,12 @@
 		});
 		function calculateNextXYCords()
 		{
-			x += squareWidth + circlePadding;
+			x += squareRadius + squarePadding;
 			xIndex += 1;
 			if (x >= heatMapWidth)
 			{
 				x = 0;
-				y += squareHeight + circlePadding;
+				y += squareRadius + squarePadding;
 				xIndex = 0;
 				yIndex += 1;
 			}
@@ -218,34 +215,34 @@
 		function mouseEnterSquare(object)
 		{
 
-			d3.select(object).attr('width', squareWidth + circlePadding);
-			d3.select(object).attr('height', squareWidth + circlePadding);
+			d3.select(object).attr('width', squareRadius + squarePadding);
+			d3.select(object).attr('height', squareRadius + squarePadding);
 			d3.select(object).attr("stroke-opacity", 1);
 			d3.select(object).attr('x', function ()
 			{
 				var x = parseFloat(d3.select(object).attr('x'));
-				return (x-circlePadding/2);
+				return (x-squarePadding/2);
 			})
 			.attr('y', function ()
 			{
 				var y = parseFloat(d3.select(object).attr('y'));
-				return (y-circlePadding/2);
+				return (y-squarePadding/2);
 			})
 		}
 		function mouseExitSquare(object)
 		{
-			d3.select(object).attr('width', squareWidth);
-			d3.select(object).attr('height', squareHeight);
+			d3.select(object).attr('width', squareRadius);
+			d3.select(object).attr('height', squareRadius);
 			d3.select(object).attr("stroke-opacity", 0);
 			d3.select(object).attr('x', function ()
 			{
 				var x = parseFloat(d3.select(object).attr('x'));
-				return (x+circlePadding/2);
+				return (x+squarePadding/2);
 			})
 			.attr('y', function ()
 			{
 				var y = parseFloat(d3.select(object).attr('y'));
-				return (y+circlePadding/2);
+				return (y+squarePadding/2);
 			})
 		}
 		function moveInfoSquares(offset)
@@ -255,7 +252,7 @@
 			{
 				var x = parseFloat(d3.select(this).attr('x'));
 				x += offset;
-				if (x > heatMapWidth - 2 * squareWidth)
+				if (x > heatMapWidth - 2 * squareRadius)
 				{
 					list.push(this)
 					if (list.length == 4)
@@ -279,7 +276,7 @@
 			svg.append("rect")
 				.classed("infoNode", true)
 				.attr("x", 0)
-				.attr("y", heatMapHeight + infoTileSize/2)
+				.attr("y", heatMapHeight + infoTileOffset/2)
 				.attr("rx", 5)
 				.attr("ry", 5)
 				.attr("width", infoTileSize)
@@ -289,7 +286,7 @@
 			svg.append("rect")
 				.classed("infoNode", true)
 				.attr("x", 0 + infoTilePadding)
-				.attr("y", heatMapHeight + infoTileSize/2 + infoTilePadding)
+				.attr("y", heatMapHeight + infoTileOffset/2 + infoTilePadding)
 				.attr("rx", 5)
 				.attr("ry", 5)
 				.attr("width", infoTileSize-2*infoTilePadding)
@@ -299,7 +296,7 @@
 			svg.append("text")
 				.classed("infoNode", true)
 				.attr("x", 0 + (infoTileSize-infoTilePadding)/2)
-				.attr("y", heatMapHeight + infoTileSize + infoTilePadding/2)
+				.attr("y", heatMapHeight + infoTileSize/2 + infoTilePadding/2)
 				.attr("dy", "-1.5em")
 				.style("fill", "black")
 				.style("text-anchor","middle")
@@ -308,7 +305,7 @@
 			svg.append("text")
 				.classed("infoNode", true)
 				.attr("x", 0 + (infoTileSize-infoTilePadding)/2)
-				.attr("y", heatMapHeight + infoTileSize + infoTilePadding/2)
+				.attr("y", heatMapHeight + infoTileSize/2 + infoTilePadding/2)
 				.attr("dy", "1.5em")
 				.style("fill", "black")
 				.style("text-anchor","middle")
@@ -316,7 +313,7 @@
 		}
 		function drawLegend()
 		{
-			var increment = (heatMapHeight / circleColors.length)+1;
+			var increment = ((heatMapHeight - infoTileSize) / circleColors.length+10);
 			for (i = 0; i < circleColors.length; i++)
 			{
 				svg.append("rect")
@@ -324,7 +321,7 @@
 					.classed(circleColors[i], true)
 					.attr("color", circleColors[i])
 					.attr("x", heatMapWidth + legendOffset)
-					.attr("y", squareWidth + i * increment)
+					.attr("y", squareRadius + i * increment)
 					.attr("fill-opacity", 1)
 					.attr("stroke", circleColors[i])
 					.attr("rx", 5)
