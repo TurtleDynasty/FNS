@@ -86,10 +86,41 @@
 		var pieSegmentPullOut = 15;
 		var piePullOutDuration = 500;
 
-		var innerRadius = pieSegmentPullOut;
-		var outerRadius = Math.min(width, height) /2 - pieSegmentPullOut;
+		var innerRadius = Math.min(width, height) / 4;
+		var outerRadius = Math.min(width, height) / 3 - pieSegmentPullOut;
 
 
+
+		// ---- label Text STUFF
+		var labelFontSize = "14px"
+
+		// -------------------
+		// ---- Inner Text STUFF
+		var units = "objects";
+
+		var numDecimalPlaces = 3;
+
+		var innerFontSize = "35px";
+
+		var labelXOffset = "0em";
+		var labelYOffset = "-.5em";
+
+		var topXOffset = "0em";
+		var topYOffset = ".5em";
+
+		var bottomXOffset = "0em";
+		var bottomYOffset = "1.5em";
+		// --------------------
+
+		// --------------------
+		// --- linelabels STUFF
+		var letterLineLength = 11;
+		var lineToLabelEnd = outerRadius * .2;
+		var lineToLabelStart = outerRadius;
+
+		var pieSegmentPullOut = 15;
+		var piePullOutDuration = 500;
+		// --------------------
 
 		var color = d3.scaleOrdinal()
 			.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
@@ -97,16 +128,19 @@
 		var arc = d3.arc()
 			.innerRadius(innerRadius)
 			.outerRadius(outerRadius);
+
 		var arcOver = d3.arc()
 			.innerRadius(innerRadius)
 			.outerRadius(outerRadius + pieSegmentPullOut);
+
 		var labelArc = d3.arc()
-			.innerRadius(outerRadius - 40)
-			.outerRadius(outerRadius - 40);
+			.innerRadius(innerRadius)
+			.outerRadius(outerRadius);
 
 		var pie = d3.pie()
 			.sort(null)
-			.value(function(d) {
+			.value(function(d)
+			{
 				return d.count;
 			});
 
@@ -115,65 +149,207 @@
 			d.count = +d.count;
 			return d;
 		}
+
+		var total = 0;
+
 		d3.csv("data.csv", type, function(error, data)
 		{
 			if (error)
 			{
 				throw error;
 			}
+
 			data = parseData(data);
+
 			g = svg.selectAll(".arc")
 				.data(pie(data))
 				.enter().append("g")
 				.attr("class", "arc");
 
-			addPieSegements();
+			addPieSegments();
 			addPieLabels();
-			moveGraphToCenter()
+			addPieToLabelLine();
+			addPieLabelUnderLine();
+			moveGraphToCenter();
+			createTextBoxes(g);
+			setTextBoxes(data);
 		});
+
+		function addPieSegments()
+		{
+			g.append("path")
+				.attr("d", arc)
+				.style("fill", function(d) {
+					return color(d.data.name);
+				})
+				.on("mouseenter", function(d) {
+					innerLabelEnter(d);
+					changeArc(this, arcOver);
+					changeLine(d, pieSegmentPullOut);
+				})
+				.on("mouseout", function(d) {
+					innerLabelExit(d);
+					changeArc(this, arc);
+					changeLine(d, 0);
+				});
+		}
+		function innerLabelEnter(d)
+		{
+			text.text(d.data.count + "/" + total + " " + units);
+			bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
+			labelText.text(d.data.name);
+		}
+		function innerLabelExit(d)
+		{
+			text.text(total + " " + units);
+			bottomText.text("");
+			labelText.text("");
+		}
+		function changeArc(className, arc)
+		{
+			d3.select(className)
+				.transition()
+				.duration(piePullOutDuration)
+				.attr("d", arc);
+		}
+		function changeLine(d, offset)
+{
+			className = "." + d.data.name;
+			d3.select(className)
+				.transition()
+				.duration(piePullOutDuration)
+				.attr("x1", function(d) {
+					var a = calculateAngle(d);
+					return Math.cos(a) * (lineToLabelStart + offset);
+				})
+				.attr("y1", function(d) {
+					var a = calculateAngle(d);
+					return Math.sin(a) * (lineToLabelStart + offset);
+				})
+		}
+		function addPieLabels()
+		{
+			// text
+			g.append("text")
+				.attr("text-anchor", "middle")
+				.attr("x", function(d) {
+					var a = calculateAngle(d);
+					var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
+					return quadrantCalculator(quadrant, letterLineLength*d.data.name.length/2);
+				})
+				.attr("y", function(d) {
+					var a = calculateAngle(d);
+					return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
+
+				})
+				.style("font-size", labelFontSize)
+				.text(function(d) {
+					return d.data.name;
+				});
+		}
+		function addPieToLabelLine()
+		{
+			// pie2labelline
+			g.append("line")
+				.attr("class", function (d) {
+					return d.data.name;
+				})
+				.attr("x1", function(d) {
+					var a = calculateAngle(d);
+					return Math.cos(a) * (lineToLabelStart);
+				})
+				.attr("y1", function(d) {
+					var a = calculateAngle(d);
+					return Math.sin(a) * (lineToLabelStart);
+				})
+				.attr("x2", function(d) {
+					var a = calculateAngle(d);
+					return Math.cos(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("y2", function(d) {
+					var a = calculateAngle(d);
+					return Math.sin(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("stroke-width", 2)
+				.attr("stroke", "black");
+		}
+
+		function addPieLabelUnderLine()
+		{
+			// label underline
+			g.append("line")
+				.attr("x1", function(d) {
+					var a = calculateAngle(d);
+					return Math.cos(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("y1", function(d) {
+					var a = calculateAngle(d);
+					return Math.sin(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("x2", function(d) {
+					var a = calculateAngle(d);
+					var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
+					return quadrantCalculator(quadrant, letterLineLength*d.data.name.length);
+				})
+				.attr("y2", function(d) {
+					var a = calculateAngle(d);
+					return Math.sin(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("stroke-width", 2)
+				.attr("stroke", "black");
+		}
+		function calculateAngle(data)
+		{
+			return data.startAngle + (data.endAngle - data.startAngle)/2 - Math.PI/2;
+		}
+		function quadrantCalculator(quadrant, offset)
+		{
+			if (quadrant > 0)
+			{
+				return quadrant + offset;
+			}
+			else
+			{
+				return quadrant - offset;
+			}
+		}
 		function moveGraphToCenter()
 		{
 			svg.attr("transform", "translate(" + (width/2) + "," + (height/2) + ")");
 		}
-		var currentPie = null;
-		function addPieSegements()
+		function createTextBoxes(g)
 		{
-			g.append("path")
-				.attr("d", arc)
-				.style("fill", function(d)  {
-					return color(d.data.name);
-				})
-				.on("mouseenter", function(d)  {
-					currentPie = this;
-					d3.select(currentPie)
-						.transition()
-						.duration(piePullOutDuration)
-						.attr("d", arcOver);
-				})
-				.on("mouseout", function(d)  {
-					d3.select(this)
-						.transition()
-						.duration(piePullOutDuration)
-						.attr("d", arc);
-				});
+			text = g.append("text")
+				.attr("transform", 0)
+				.attr("dx", topXOffset)
+				.attr("dy", topYOffset)
+				.style("text-anchor", "middle")
+				.style("fill", "black")
+				.style("font-size", innerFontSize)
+				.attr("class", "on")
+				.text(" ");
+
+			bottomText = g.append("text")
+				.attr("dx", bottomXOffset)
+				.attr("dy", bottomYOffset)
+				.style("text-anchor", "middle")
+				.style("fill", "black")
+				.style("font-size", innerFontSize)
+				.attr("class", "on")
+				.text(" ");
+
+			labelText = g.append("text")
+				.attr("dx", labelXOffset)
+				.attr("dy", labelYOffset)
+				.style("text-anchor", "middle")
+				.style("fill", "black")
+				.style("font-size", innerFontSize)
+				.attr("class", "on")
+				.text(" ");
 		}
-		function addPieLabels()
+		function setTextBoxes(data)
 		{
-			g.append("text")
-				.attr("transform", function(d)  {
-					return "translate(" + labelArc.centroid(d) + ")";
-				})
-				.attr("dy", ".35em")
-				.style("font-size", "20px")
-				.text(function(d)  {
-					return d.data.name;
-				})
-				.on("mouseenter", function(d)  {
-					d3.select(currentPie)
-						.transition()
-						.duration(piePullOutDuration)
-						.attr("d", arcOver);
-				});
+			text.text(total + " " + units);
 		}
 		function parseData(data)
 		{
@@ -221,21 +397,17 @@
 					var a = new Object();
 					a.name = original[i];
 					a.count = myCount;
+					total += myCount;
 					compressed.push(a);
 				}
 			}
+
 			return compressed;
 		}
 		function customFilterData(data)
 		{
 			// Custom data filters go here.
-			var copy = []
-			for(i = 0; i < data.length; i++)
-			{
-				// Filter goes here. console.log(data[i]) to know the poperties of said data
-				copy.push(data[i]);
-			}
-			return copy;
+			return data;
 		}
 		//your visual title here
 		d3.select("#vis-title").html("");

@@ -129,8 +129,7 @@
 
 		var pie = d3.pie()
 			.sort(null)
-			.value(function(d)
-			{
+			.value(function(d)  {
 				return d.count;
 			});
 
@@ -159,33 +158,21 @@
 			addPieLabels();
 			createTextBoxes(g);
 			setTextBoxes(data);
-			centerGraph();
+			moveGraphToCenter()
 		});
-		function centerGraph()
+		function moveGraphToCenter()
 		{
-			d3.selectAll(".graphVis").attr("transform", "translate(" + width/2 + "," + height / 2 + ")");
-			d3.selectAll(".graphLab").attr("transform", function ()
-			{
-				var transArray = d3.select(this).attr("trans").split(",");
-				var x = parseInt(transArray[0]);
-				var y = parseInt(transArray[1]);
-				console.log("("  + x + "," + y +  ")")
-				console.log(transArray)
-				return "translate("  + (width/2 + x) + "," + (height/2 + y)+  ")";
-			})
+			svg.attr("transform", "translate(" + (width/2) + "," + (height/2) + ")");
 		}
 		var currentPie = null;
 		function addPieSegments()
 		{
 			g.append("path")
-				.classed("graphVis", true)
 				.attr("d", arc)
-				.style("fill", function(d)
-				{
+				.style("fill", function(d) {
 					return color(d.data.name);
 				})
-				.on("mouseenter", function(d)
-				{
+				.on("mouseenter", function(d) {
 					currentPie = this;
 					innerLabelEnter(d);
 					d3.select(currentPie)
@@ -193,8 +180,7 @@
 						.duration(piePullOutDuration)
 						.attr("d", arcOver);
 				})
-				.on("mouseout", function(d)
-				{
+				.on("mouseout", function(d) {
 					innerLabelExit(d);
 					d3.select(this)
 						.transition()
@@ -211,20 +197,15 @@
 		function addPieLabels()
 		{
 			g.append("text")
-				.classed("graphLab", true)
-				.attr("trans", function (d)
-				{
-					return labelArc.centroid(d);
+				.attr("transform", function(d) {
+					return "translate(" + labelArc.centroid(d) + ")";
 				})
-				.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
 				.attr("dy", ".35em")
 				.style("font-size", labelFontSize)
-				.text(function(d)
-				{
+				.text(function(d) {
 					return d.data.name;
 				})
-				.on("mouseenter", function(d)
-				{
+				.on("mouseenter", function(d){
 					innerLabelEnter(d);
 					d3.select(currentPie)
 						.transition()
@@ -241,7 +222,6 @@
 		function createTextBoxes(g)
 		{
 			text = g.append("text")
-				.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
 				.attr("dx", topXOffset)
 				.attr("dy", topYOffset)
 				.style("text-anchor", "middle")
@@ -251,7 +231,6 @@
 				.text(" ");
 
 			bottomText = g.append("text")
-				.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
 				.attr("dx", bottomXOffset)
 				.attr("dy", bottomYOffset)
 				.style("text-anchor", "middle")
@@ -261,7 +240,6 @@
 				.text(" ");
 
 			labelText = g.append("text")
-				.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
 				.attr("dx", labelXOffset)
 				.attr("dy", labelYOffset)
 				.style("text-anchor", "middle")
