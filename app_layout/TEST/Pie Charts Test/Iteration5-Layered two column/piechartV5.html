@@ -75,10 +75,16 @@
 		Keep this and eliminate the lines in your code that set the width and height, as well as the svg var declaration up to .append(g)
 		Make sure to change the location of your csv to "/pathfromroot/.../yourcsv.csv". That should be it.
 		*/
-		var container = d3.select(".widget2").append("div").classed("svg-container", true);
+		var container = d3.select(".widget2")
+			.append("div")
+			.classed("svg-container", true);
 		var width = parseInt(d3.select(".svg-container").style("width"));
 		var height = parseInt(d3.select(".svg-container").style("height"));
-		var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+25) + " " + (height+25));
+		var svg = container.append("svg")
+			.attr("width", width)
+			.attr("height", height)
+			.attr("preserveAspectRatio", "xMidYMid meet")
+			.attr("viewBox", "0  0 " + (width+25) + " " + (height+25));
 
 		/***********************\
 		| Your visual script below
@@ -181,7 +187,24 @@
 					innerLabelExit(d);
 					changeArc(this, arc);
 					changeLine(d, 0);
+				})
+				// on click to create info pane
+				.on("click", function(d)
+				{
+					drawInfoPane();
 				});
+		}
+		function drawInfoPane()
+		{
+			svg.append("rect")
+				.attr("x", 0)
+				.attr("y", 0)
+				.attr("rx", 5)
+				.attr("ry", 5)
+				.attr("width", 100)
+				.attr("height", 100)
+				.style("stroke", 'black')
+				.style("fill", 'white');
 		}
 		function innerLabelEnter(d)
 		{
