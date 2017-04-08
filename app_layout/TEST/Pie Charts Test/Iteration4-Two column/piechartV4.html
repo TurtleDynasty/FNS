@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>FNS App</title>
+
+	<link href="../../../dist/bootstrap.min.css" rel="stylesheet">
+	<link href="../../../css/utility.css" rel="stylesheet">
+	<link href="../../../css/dashboard.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../../dist/d3.js"></script>
+</head>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="../../../dist/underscore-min.js" type="text/javascript"></script>
+<script src="../../../dist/backbone-min.js" type="text/javascript"></script>
+<script src="../../../dist/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="../../../scripts/D3Visuals.js"></script>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid no-padding">
+			<div class="navbar-header"></div>
+			<div id="navbar" class="navbar-collapse collapse"></div>
+		</div>
+	</nav>
+	<div class="container-fluid master-container col-sm-12 no-padding full-height" id="viewsection" style="display: inline" >
+		<div class="container-fluid col-md-9 col-sm-12 no-padding full-height widget2-container">
+			<div class="widget2">
+				<h3 id="vis-title">Select a Visualization</h3>
+			</div>
+		</div>
+
+		<div class="container-fluid col-md-3 col-sm-12 no-padding full-height widget1-container">
+			<div class="widget1 half-height-20 position-relative">
+				<h3>Filter Objects</h3>
+				<div class="filter-input-container padding-top-10">
+					<h4>Out</h4>
+					<label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
+						<select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+					</label>
+				</div>
+
+
+				<div class="filter-input-container padding-top-10">
+					<h4>In</h4>
+					<label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
+						<select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+					</label>
+				</div>
+
+				<div class="filter-button-container">
+					<div class="filter-button noselect">
+						Filter
+					</div>
+				</div>
+			</div>
+
+			<div class="widget1 half-height margin-top-20">
+				<h3>Messages</h3>
+				<div class="messages-box">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	/**********************************************\
+	| Insert your visual code inside this function!
+	\**********************************************/
+
+	function init_visual()
+	{
+		/*these 4 lines set up a responsive viewbox for the visual , note the use of .widget2 instead of body.
+		Keep this and eliminate the lines in your code that set the width and height, as well as the svg var declaration up to .append(g)
+		Make sure to change the location of your csv to "/pathfromroot/.../yourcsv.csv". That should be it.
+		*/
+		var container = d3.select(".widget2").append("div").classed("svg-container", true);
+		var width = parseInt(d3.select(".svg-container").style("width"));
+		var height = parseInt(d3.select(".svg-container").style("height"));
+		var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+25) + " " + (height+25));
+
+		/***********************\
+		| Your visual script below
+		\***********************/
+		var pieSegmentPullOut = 15;
+		var piePullOutDuration = 500;
+
+		var innerRadius = Math.min(width, height) / 4;
+		var outerRadius = Math.min(width, height) / 3 - pieSegmentPullOut;
+
+		// ---- label Text STUFF
+		var labelFontSize = "14px"
+
+		// -------------------
+		// ---- Inner Text STUFF
+		var units = "objects";
+
+		var numDecimalPlaces = 3;
+
+		var innerFontSize = "35px";
+
+		var labelXOffset = "0em";
+		var labelYOffset = "-.5em";
+
+		var topXOffset = "0em";
+		var topYOffset = ".5em";
+
+		var bottomXOffset = "0em";
+		var bottomYOffset = "1.5em";
+		// --------------------
+
+		// --------------------
+		// --- linelabels STUFF
+		var letterLineLength = 11;
+		var lineToLabelEnd = outerRadius * .2;
+		var lineToLabelStart = outerRadius;
+		// --------------------
+
+		var color = d3.scaleOrdinal()
+			.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+		var arc = d3.arc()
+			.innerRadius(innerRadius)
+			.outerRadius(outerRadius);
+		var arcOver = d3.arc()
+			.innerRadius(innerRadius)
+			.outerRadius(outerRadius + pieSegmentPullOut);
+		var labelArc = d3.arc()
+			.innerRadius(innerRadius)
+			.outerRadius(outerRadius);
+
+		var pie = d3.pie()
+			.sort(null)
+			.value(function(d) {
+				return d.count;
+			});
+
+		function type(d)
+		{
+			d.count = +d.count;
+			return d;
+		}
+
+		var total = 0;
+
+		d3.csv("data.csv", type, function(error, data)
+		{
+			if (error)
+			{
+				throw error;
+			}
+
+			data = parseData(data);
+			g = svg.selectAll(".arc")
+				.data(pie(data))
+				.enter().append("g")
+				.attr("class", "arc");
+
+			addPieSegments();
+			addPieLabels();
+			addPieToLabelLine();
+			addPieLabelUnderLine();
+			moveGraphToCenter();
+			createTextBoxes(g);
+			setTextBoxes(data);
+		});
+		function addPieSegments()
+		{
+			g.append("path")
+				.attr("d", arc)
+				.style("fill", function(d) {
+					return color(d.data.name);
+				})
+				.on("mouseenter", function(d) {
+					innerLabelEnter(d);
+					changeArc(this, arcOver);
+					changeLine(d, pieSegmentPullOut);
+				})
+				.on("mouseout", function(d) {
+					innerLabelExit(d);
+					changeArc(this, arc);
+					changeLine(d, 0);
+				});
+		}
+		function innerLabelEnter(d)
+		{
+			text.text(d.data.count + "/" + total + " " + units);
+			bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
+			labelText.text(d.data.name);
+		}
+		function innerLabelExit(d)
+		{
+			text.text(total + " " + units);
+			bottomText.text("");
+			labelText.text("");
+		}
+		function changeArc(className, arc)
+		{
+			d3.select(className)
+				.transition()
+				.duration(piePullOutDuration)
+				.attr("d", arc);
+		}
+		function changeLine(d, offset)
+		{
+			className = "." + d.data.name;
+			d3.select(className)
+				.transition()
+				.duration(piePullOutDuration)
+				.attr("x1", function(d) {
+					var a = calculateAngle(d);
+					return Math.cos(a) * (lineToLabelStart + offset);
+				})
+				.attr("y1", function(d) {
+					var a = calculateAngle(d);
+					return Math.sin(a) * (lineToLabelStart + offset);
+				})
+		}
+		function addPieLabels()
+		{
+			// text
+			g.append("text")
+				.attr("text-anchor", "middle")
+				.attr("x", function(d) {
+					var a = calculateAngle(d);
+					var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
+					return quadrantCalculator(quadrant, letterLineLength*d.data.name.length/2);
+				})
+				.attr("y", function(d) {
+					var a = calculateAngle(d);
+					return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
+				})
+				.style("font-size", labelFontSize)
+				.text(function(d) {
+					return d.data.name;
+				});
+		}
+		function addPieToLabelLine()
+		{
+			// pie2labelline
+			g.append("line")
+				.attr("class", function (d)
+				{
+					return d.data.name;
+				})
+				.attr("x1", function(d) {
+					var a = calculateAngle(d);
+					return Math.cos(a) * (lineToLabelStart);
+				})
+				.attr("y1", function(d) {
+					var a = calculateAngle(d);
+					return Math.sin(a) * (lineToLabelStart);
+				})
+				.attr("x2", function(d) {
+					var a = calculateAngle(d);
+					return Math.cos(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("y2", function(d) {
+					var a = calculateAngle(d);
+					return Math.sin(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("stroke-width", 2)
+				.attr("stroke", "black");
+		}
+
+		function addPieLabelUnderLine()
+		{
+			// label underline
+			g.append("line")
+				.attr("x1", function(d) {
+					var a = calculateAngle(d);
+					return Math.cos(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("y1", function(d) {
+					var a = calculateAngle(d);
+					return Math.sin(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("x2", function(d) {
+					var a = calculateAngle(d);
+					var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
+					return quadrantCalculator(quadrant, letterLineLength*d.data.name.length);
+				})
+				.attr("y2", function(d) {
+					var a = calculateAngle(d);
+					return Math.sin(a) * (outerRadius + lineToLabelEnd);
+				})
+				.attr("stroke-width", 2)
+				.attr("stroke", "black");
+		}
+		function calculateAngle(data)
+		{
+			return data.startAngle + (data.endAngle - data.startAngle)/2 - Math.PI/2;
+		}
+		function quadrantCalculator(quadrant, offset)
+		{
+			if (quadrant > 0)
+			{
+				return quadrant + offset;
+			}
+			else
+			{
+				return quadrant - offset;
+			}
+		}
+		function moveGraphToCenter()
+		{
+			svg.attr("transform", "translate(" + (width/ 2) + "," + (height/ 2) + ")");
+		}
+
+		function createTextBoxes(g)
+		{
+			text = g.append("text")
+				.attr("transform", 0)
+				.attr("dx", topXOffset)
+				.attr("dy", topYOffset)
+				.style("text-anchor", "middle")
+				.style("fill", "black")
+				.style("font-size", innerFontSize)
+				.attr("class", "on")
+				.text(" ");
+
+			bottomText = g.append("text")
+				.attr("dx", bottomXOffset)
+				.attr("dy", bottomYOffset)
+				.style("text-anchor", "middle")
+				.style("fill", "black")
+				.style("font-size", innerFontSize)
+				.attr("class", "on")
+				.text(" ");
+
+			labelText = g.append("text")
+				.attr("dx", labelXOffset)
+				.attr("dy", labelYOffset)
+				.style("text-anchor", "middle")
+				.style("fill", "black")
+				.style("font-size", innerFontSize)
+				.attr("class", "on")
+				.text(" ");
+		}
+		function setTextBoxes(data)
+		{
+			text.text(total + " " + units);
+		}
+
+		function parseData(data)
+		{
+			var compressed = compressArray(data);
+			var parsedData = customFilterData(compressed);
+			return parsedData;
+
+		}
+		function compressArray(original)
+		{
+			var copy = [original[0]]
+			for(i = 1; i < original.length; i++)
+			{
+				var notFound = true;
+				for (j = 0; j < copy.length; j ++)
+				{
+					if (original[i].name == copy[j].name)
+					{
+						notFound = false;
+						total += original[i].count;
+						copy[j].count += original[i].count;
+					}
+				}
+				if (notFound)
+				{
+					total += original[i].count;
+					copy.push(original[i]);
+				}
+			}
+			return copy;
+		}
+		function customFilterData(data)
+		{
+			// Custom data filters go here.
+			return data;
+		}
+		//your visual title here
+		d3.select("#vis-title").html("");
+	}
+
+	init_visual();
+	</script>
+
+</body>
+</html>
