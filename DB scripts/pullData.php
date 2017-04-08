@@ -37,7 +37,7 @@
 	$csv = array_map('str_getcsv', file('queryList.csv'));
 	$database = $csv[$queryNumber][1];
 	$username = "FNS";
-	$password = "datvis";
+	$password = "datavis";
 	$host = "127.0.0.1";
 	$myquery =  $csv[$queryNumber][2];
 	$header =  $csv[$queryNumber][3];
