@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>FNS App</title>
+
+	<link href="../../dist/bootstrap.min.css" rel="stylesheet">
+	<link href="../../css/utility.css" rel="stylesheet">
+	<link href="../../css/dashboard.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../dist/d3.js"></script>
+</head>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="../../dist/underscore-min.js" type="text/javascript"></script>
+<script src="../../dist/backbone-min.js" type="text/javascript"></script>
+<script src="../../dist/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="../../scripts/D3Visuals.js"></script>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid no-padding">
+			<div class="navbar-header"></div>
+			<div id="navbar" class="navbar-collapse collapse"></div>
+		</div>
+	</nav>
+	<div class="container-fluid master-container col-sm-12 no-padding full-height" id="viewsection" style="display: inline" >
+		<div class="container-fluid col-md-9 col-sm-12 no-padding full-height widget2-container">
+			<div class="widget2">
+				<h3 id="vis-title">Select a Visualization</h3>
+			</div>
+		</div>
+
+		<div class="container-fluid col-md-3 col-sm-12 no-padding full-height widget1-container">
+			<div class="widget1 half-height-20 position-relative">
+				<h3>Filter Objects</h3>
+				<div class="filter-input-container padding-top-10">
+					<h4>Out</h4>
+					<label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
+						<select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+					</label>
+				</div>
+
+
+				<div class="filter-input-container padding-top-10">
+					<h4>In</h4>
+					<label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
+						<select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+					</label>
+				</div>
+
+				<div class="filter-button-container">
+					<div class="filter-button noselect">
+						Filter
+					</div>
+				</div>
+			</div>
+
+			<div class="widget1 half-height margin-top-20">
+				<h3>Messages</h3>
+				<div class="messages-box">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	/**********************************************\
+	| Insert your visual code inside this function!
+	\**********************************************/
+
+	function init_visual()
+	{
+		/*these 4 lines set up a responsive viewbox for the visual , note the use of .widget2 instead of body.
+		Keep this and eliminate the lines in your code that set the width and height, as well as the svg var declaration up to .append(g)
+		Make sure to change the location of your csv to "/pathfromroot/.../yourcsv.csv". That should be it.
+		*/
+		var container = d3.select(".widget2").append("div").classed("svg-container", true);
+		var width = parseInt(d3.select(".svg-container").style("width"));
+		var height = parseInt(d3.select(".svg-container").style("height"));
+		var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+25) + " " + (height+25));
+
+		/***********************\
+		| Your visual script below
+		\***********************/
+		// scroll-over circle enlargement
+		var dotSize = 3.5;
+		var dotPadding = 5;
+		// setup margin
+		var labelPadding = 50;
+		var legendWidth = 200;
+		var tickPadding = "10";
+		var legendTileSize = 30;
+		var legendSpacing = 30;
+		var xUnit = "";
+		var xAxisLabel = "File Space ID" + xUnit;
+		var yUnit = "bytes";
+		var yAxisLabel = "Actual Size (" + yUnit + ")";
+		var labelFontSize = "20px"
+		// setup x
+		var xValue = function(d) { return d.X;}, // data -> value
+			xScale = d3.scaleLinear().range([labelPadding, width-legendWidth]), // value -> display
+			xMap = function(d) { return xScale(xValue(d));}; // data -> display
+			// xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+
+		// setup y
+		var yValue = function(d) { return d["Y"];}, // data -> value
+			yScale = d3.scaleLinear().range([height-labelPadding, 0]), // value -> display
+			yMap = function(d) { return yScale(yValue(d));}; // data -> display
+			// yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+		// setup fill color
+		var cValue = function(d) { return d.Type;},
+			color = d3.scaleOrdinal(d3.schemeCategory10);
+
+		// add the graph canvas to the body of the webpage
+		svg.append("g")
+			.attr("transform", "translate(" + 0 + "," + 0 + ")");
+			function subject(d)
+			{
+				return { x: d3.event.x, y: d3.event.y };
+			};
+			var drag = d3.drag()
+				.subject(subject)
+				.on('start', function()
+				{
+					d3.select(".dragBar").remove();
+
+					firstX = d3.event.x + width/2;
+					firstY = d3.event.y + height/2;
+					console.log(firstX)
+					console.log("-->" + xScale(firstX))
+					svg.append("rect")
+						.classed("dragBar", true)
+						.attr("x", function ()
+						{
+							return firstX;
+						})
+						.attr("y", function ()
+						{
+							return firstY;
+						})
+						.attr("width", 100)
+						.attr("height", 100)
+						.style("fill", "CornflowerBlue")
+						.style("fill-opacity", 1)
+						.on("click", function ()
+						{
+							d3.select(this).remove();
+						});
+				})
+				.on('drag', function() {
+					console.log(d3.event.x)
+				})
+				.on('end', function() {
+					d3.select(".dragBar").attr("width", 100);
+					d3.select(".dragBar").attr("height", 100);
+				});
+			svg.append("rect")
+				.attr("x", 0)
+				.attr("y", 0)
+				.attr("width", width)
+				.attr("height", height)
+				.style("fill-opacity", 0.15)
+				.call(drag);
+
+
+			// add the tooltip area to the webpage
+			var tooltip = d3.select("body").append("div")
+				.attr("class", "tooltip")
+				.style("opacity", 0);
+		// load data
+		d3.csv("cereal.csv", function(error, data)
+		{
+			if (error)
+			{
+				throw error;
+			}
+
+			// change string (from CSV) into number format
+			data.forEach(function(d)
+			{
+				d.X = +d.X;
+				d["Y"] = +d["Y"];
+			// comment out this line before going live
+			});
+
+			// don't want dots overlapping axis, so add in buffer to data domain
+			xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
+			yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
+
+			createXAxis();
+			createYAxis();
+			drawDots(data);
+			drawLegend();
+		});
+
+		function createXAxis()
+		{
+			// x-axis
+			svg.append("g")
+				.attr("class", "x axis")
+				.attr("transform", "translate(0," + (height-labelPadding/2) + ")")
+				.call(d3.axisBottom(xScale))
+
+			// add X Axis label
+			svg.append("text")
+					.attr("class", "label")
+					.attr("transform", "rotate(0)")
+					.attr("y", height )
+					.attr("x", width/2)
+					.attr("dy", "1em")
+					.style("font-size", labelFontSize)
+					.style("text-anchor", "middle")
+					.text(xAxisLabel);
+		}
+		function createYAxis()
+		{
+			// y-axis
+			svg.append("g")
+				.call(d3.axisLeft(yScale).tickPadding(["10"]))
+				.attr("class", "y axis")
+				.attr("transform", "translate(" + labelPadding + ",0)")
+
+			// add Y Axis label
+			svg.append("text")
+					.attr("class", "label")
+					.attr("transform", "rotate(-90)")
+					.attr("y", 0)
+					.attr("x", -height/2)
+					.attr("dy", ".75em")
+					.style("font-size", labelFontSize)
+					.style("text-anchor", "middle")
+					.text(yAxisLabel);
+		}
+		function drawDots(data)
+		{
+			// draw dots
+			svg.selectAll(".dot")
+				.data(data)
+				.enter().append("circle")
+				.attr("type", function(d)
+				{
+					type =  d.Type.replace(/\s/g, '');
+					d3.select(this).classed(type, true);
+					return type;
+				})
+				.classed("dataDot", true)
+				.attr("r", dotSize)
+				.attr("cx", function(d)
+				{
+					return xScale(d.X);
+				})
+				.attr("cy", function(d)
+				{
+					return yScale(d.Y);
+				})
+				.style("fill", function(d)
+				{
+					return color(cValue(d));
+				})
+				.style("fill-opacity", 1)
+				.on("mouseover", function(d)
+				{
+					d3.select(this).attr("r", dotSize + dotPadding);
+					var test = d3.select(this)["_groups"][0][0]["style"]["fill-opacity"];
+					if (test != 0)
+					{
+						tooltip.transition()
+							.duration(200)
+							.style("opacity", .9);
+						tooltip.html(d["Name"] + "<br/> (" + xValue(d) + ", " + yValue(d) + ")")
+							.style("left", (d3.event.pageX + dotSize + dotPadding + 10) + "px")
+							.style("top", (d3.event.pageY - 28) + "px");
+					}
+				})
+				.on("mouseout", function(d)
+				{
+					d3.select(this).attr("r", dotSize);
+					tooltip.transition()
+						.duration(500)
+						.style("opacity", 0);
+				})
+		}
+		function drawLegend()
+		{
+			// draw legend
+			var legend = svg.selectAll(".legend")
+				.data(color.domain())
+				.enter().append("g")
+				.attr("class", "legend")
+				.attr("transform", function(d, i)
+				{
+					return "translate(" + 0 + "," + i * legendSpacing + ")";
+				});
+			var i = 0;
+			// draw legend colored rectangles
+			legend.append("rect")
+				.attr("class", color)
+				.attr("fill-opacity", 1)
+				.attr("x", width - legendTileSize)
+				.attr("y", function ()
+				{
+					i += 1;
+					return i * legendTileSize;
+				})
+				.attr("rx", 5)
+				.attr("ry", 5)
+				.attr("width", legendTileSize)
+				.attr("height", legendTileSize)
+				.style("stroke", color)
+				.style("stroke-width", 2)
+				.style("fill", color)
+				.on("click", function (d)
+				{
+					var dotType = "." + d.replace(/\s/g, '');
+					var dotList = d3.selectAll(dotType)
+					.style("fill-opacity", function (d)
+					{
+						var opacity = d3.selectAll(this)["_groups"][0]["style"]["fill-opacity"];
+						if (opacity == 1)
+						{
+							d3.select(this).attr("r", 0);
+							return 0;
+						}
+						else
+						{
+							d3.select(this).attr("r", dotSize);
+							return 1;
+						}
+					});
+					var opacity = d3.select(this).attr("fill-opacity");
+					if (opacity == 1)
+					{
+						opacity = d3.select(this).attr("fill-opacity", 0);
+					}
+					else
+					{
+						opacity = d3.select(this).attr("fill-opacity", 1);
+					}
+					//.style("opacity", 0);
+				});
+			var i = 0;
+			// draw legend text
+			legend.append("text")
+				.attr("x", width - legendTileSize - 7)
+				.attr("y", function () {
+					i += 1;
+					return i * legendTileSize;
+				})
+				.attr("dy", legendTileSize/2 + 1)
+				.style("text-anchor", "end")
+				.text(function(d) {
+					return d;
+				})
+		}
+		//your visual title here
+		d3.select("#vis-title").html("");
+	}
+
+	init_visual();
+	</script>
+
+</body>
+</html>
