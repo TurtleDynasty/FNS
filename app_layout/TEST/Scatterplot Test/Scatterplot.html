@@ -154,25 +154,36 @@
 				})
 				.on('end', function() {
 
+					for (i = 0; i < inDragBox.length; i++)
+					{
+						inDragBox[i].style("stroke-width", 0);
+					}
+					inDragBox = []
 					console.log("----")
 					secondX = d3.event.x;
 					secondY = d3.event.y;
+					function compare(a,b)
+					{
+						return a-b;
+					}
+					var XCords = [firstX, secondX].sort(compare);
+					var YCords = [firstY, secondY].sort(compare);
 					d3.selectAll(".dataDot")
 					.attr("cx", function ()
 					{
 						var x = d3.select(this).attr("cx");
 						var y = d3.select(this).attr("cy");
-						var XCords = [firstX, secondX].sort();
-						var YCords = [firstY, secondY].sort();
 						if (x >= XCords[0] && x <= XCords[1] && y >= YCords[0] && y <= YCords[1])
 						{
-
+							d3.select(this)
+								.style("stroke-width", 1)
+								.style("stroke", "black")
 							inDragBox.push(d3.select(this));
 						}
 						return x;
 					})
-					console.log("(" + firstX + ", " + firstY + ")");
-					console.log("(" + secondX + ", " + secondY + ")");
+					console.log("(" + XCords[0] + ", " + YCords[0] + ")");
+					console.log("(" + XCords[1] + ", " + YCords[1] + ")");
 					console.log(inDragBox);
 					console.log("----")
 				});
