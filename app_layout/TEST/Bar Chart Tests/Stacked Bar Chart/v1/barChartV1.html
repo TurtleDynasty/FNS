@@ -83,6 +83,7 @@
 		| Your visual script below
 		\***********************/
 		var labelOffset = 50;
+		var labelFontSize = "20px";
 		var xUnit = "";
 		var xAxisLabel = "File Space ID" + xUnit;
 		var yUnit = "bytes";
@@ -212,6 +213,7 @@
 				.attr("x", width/2)
 				.attr("dy", "1em")
 				.style("text-anchor", "middle")
+				.style("font-size", labelFontSize)
 				.text(xAxisLabel);
 		}
 		function createyAxis()
@@ -229,6 +231,7 @@
 				.attr("x", 0 - (height / 2) - 5)
 				.attr("dy", "1em")
 				.style("text-anchor", "middle")
+				.style("font-size", labelFontSize)
 				.text(yAxisLabel);
 		}
 		function addBar(name, xCord, yCord, barHeight, color, className)
