@@ -150,7 +150,7 @@
 
 		var total = 0;
 
-		d3.csv("containerFreeSpace.csv", type, function(error, data)
+		d3.csv("data.csv", type, function(error, data)
 		{
 			if (error)
 			{
@@ -164,9 +164,6 @@
 				.attr("class", "arc");
 
 			addPieSegments();
-			addPieLabels();
-			addPieToLabelLine();
-			addPieLabelUnderLine();
 			moveGraphToCenter();
 			createTextBoxes(g);
 			setTextBoxes(data);
@@ -179,6 +176,9 @@
 					return color(d.data.name);
 				})
 				.on("mouseenter", function(d) {
+					addPieLabels(d);
+					addPieToLabelLine(d);
+					addPieLabelUnderLine(d);
 					innerLabelEnter(d);
 					changeArc(this, arcOver);
 					changeLine(d, pieSegmentPullOut);
@@ -209,15 +209,26 @@
 				{
 					d3.select(this).remove();
 				});
+
+			svg.append("text")
+				.attr("x", -width/2)
+				.attr("y", -height/2)
+				.attr("dy", "-1.5em")
+				.style("fill", "black")
+				.style("text-anchor","middle")
+				.text(name);
 		}
 		function innerLabelEnter(d)
 		{
+			d3.selectAll("." + d.data.name).style("opacity", 1);
 			text.text(d.data.count + "/" + total + " " + units);
 			bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
 			labelText.text(d.data.name);
+
 		}
 		function innerLabelExit(d)
 		{
+			d3.selectAll("." + d.data.name).style("opacity", 0);
 			text.text(total + " " + units);
 			bottomText.text("");
 			labelText.text("");
@@ -244,10 +255,15 @@
 					return Math.sin(a) * (lineToLabelStart + offset);
 				})
 		}
-		function addPieLabels()
+		function addPieLabels(d)
 		{
 			// text
 			g.append("text")
+				.style("opacity", 0)
+				.attr("class", function (d)
+				{
+					return d.data.name;
+				})
 				.attr("text-anchor", "middle")
 				.attr("x", function(d) {
 					var a = calculateAngle(d);
@@ -263,10 +279,11 @@
 					return d.data.name;
 				});
 		}
-		function addPieToLabelLine()
+		function addPieToLabelLine(d)
 		{
 			// pie2labelline
 			g.append("line")
+				.style("opacity", 0)
 				.attr("class", function (d)
 				{
 					return d.data.name;
@@ -291,10 +308,15 @@
 				.attr("stroke", "black");
 		}
 
-		function addPieLabelUnderLine()
+		function addPieLabelUnderLine(d)
 		{
 			// label underline
 			g.append("line")
+				.style("opacity", 0)
+				.attr("class", function (d)
+				{
+					return d.data.name;
+				})
 				.attr("x1", function(d) {
 					var a = calculateAngle(d);
 					return Math.cos(a) * (outerRadius + lineToLabelEnd);
@@ -406,7 +428,7 @@
 			return data;
 		}
 		//your visual title here
-		d3.select("#vis-title").html("");
+		d3.select("#vis-title").html("Container Storage Test");
 	}
 
 	init_visual();
