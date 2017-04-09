@@ -131,32 +131,127 @@
 		// setup fill color
 		var cValue = function(d) { return d.Type;},
 			color = d3.scaleOrdinal(d3.schemeCategory10);
-
-		function subject(d)
-		{
-			return { x: d3.event.x, y: d3.event.y };
-		};
-		var drag = d3.drag()
-			.subject(subject)
-			.on('start', function()
+			d3.selection.prototype.moveToBack = function()
 			{
-				console.log("width: "+width)
-				console.log("height: "+height)
-				d3.select(".dragBar").remove();
-			})
-			.on('drag', function() {
-				console.log(d3.event.x + "," + d3.event.y)
-			})
-			.on('end', function() {
-			});
+			    return this.each(function() {
+			        var firstChild = this.parentNode.firstChild;
+			        if (firstChild) {
+			            this.parentNode.insertBefore(this, firstChild);
+			        }
+			    });
+			};
+			d3.selection.prototype.moveToFront = function()
+			{
+				return this.each(function(){
+					this.parentNode.appendChild(this);
+				});
+			};
+			function subject(d)
+			{
+				return { x: d3.event.x, y: d3.event.y };
+			};
+			var inDragBox = [];
+			var drag = d3.drag()
+				.subject(subject)
+				.on('start', function()
+				{
+					d3.select(".dragBar").remove();
+					firstX = d3.event.x;
+					firstY = d3.event.y;
+					svg.append("rect")
+						.classed("dragBar", true)
+						.attr("x", firstX)
+						.attr("y", firstY)
+						.attr("width", 0)
+						.attr("height", 0)
+						.style("fill", "CornflowerBlue")
+						.style("fill-opacity", .45)
+						.call(drag)
+						.on("click", function ()
+						{
+							d3.select(this).remove();
+						});
+					d3.select(".dragBar").moveToBack();
+				})
+				.on('drag', function() {
+					d3.select(".dragBar").attr('width', function() {
+						var x = d3.select(".dragBar").attr('x');
+							return (d3.event.x-firstX);
+					});
+					d3.select(".dragBar").attr('height', function() {
+						var y = d3.select(".dragBar").attr('y');
+						return (d3.event.y-firstY);
+					});
+					var width = d3.select(".dragBar").attr("width");
+					var height = d3.select(".dragBar").attr("height");
+					if (width < 0 && height < 0)
+					{
+						d3.select(".dragBar").attr("transform", function()
+						{
+							return "translate(" + (width) + "," + (height) + ")";
+						});
+						d3.select(".dragBar").attr("width", Math.abs(width));
+						d3.select(".dragBar").attr("height", Math.abs(height));
+					}
+					else if (width < 0)
+					{
+						d3.select(".dragBar").attr("transform", function()
+						{
+							return "translate(" + (width) + ",0)";
+						});
+						d3.select(".dragBar").attr("width", Math.abs(width));
+					}
+					else if (height < 0)
+					{
+						d3.select(".dragBar").attr("transform", function()
+						{
+							return "translate(0," + (height) + ")";
+						});
+						d3.select(".dragBar").attr("height", Math.abs(height));
+					}
+				})
+				.on('end', function() {
 
-		svg.append("rect")
-			.attr("x", 0)
-			.attr("y", 0)
-			.attr("width", width)
-			.attr("height", height)
-			.style("fill-opacity", 0.15)
-			.call(drag);
+					for (i = 0; i < inDragBox.length; i++)
+					{
+						inDragBox[i].style("stroke-width", 0);
+					}
+					inDragBox = []
+					console.log("----")
+					secondX = d3.event.x;
+					secondY = d3.event.y;
+					function compare(a,b)
+					{
+						return a-b;
+					}
+					var XCords = [firstX, secondX].sort(compare);
+					var YCords = [firstY, secondY].sort(compare);
+					d3.selectAll(".dataDot")
+					.attr("cx", function ()
+					{
+						var x = d3.select(this).attr("cx");
+						var y = d3.select(this).attr("cy");
+						if (x >= XCords[0] && x <= XCords[1] && y >= YCords[0] && y <= YCords[1])
+						{
+							d3.select(this)
+								.style("stroke-width", 1)
+								.style("stroke", "black")
+							inDragBox.push(d3.select(this));
+						}
+						return x;
+					})
+					console.log("(" + XCords[0] + ", " + YCords[0] + ")");
+					console.log("(" + XCords[1] + ", " + YCords[1] + ")");
+					console.log(inDragBox);
+					console.log("----")
+				});
+			svg.append("rect")
+				.attr("x", 0)
+				.attr("y", 0)
+				.attr("width", width)
+				.attr("height", height)
+				.style("fill-opacity", 0)
+				.call(drag);
 
 
 		// add the tooltip area to the webpage
