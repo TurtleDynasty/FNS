@@ -98,7 +98,8 @@
 		var xAxisLabel = "File Space ID" + xUnit;
 		var yUnit = "bytes";
 		var yAxisLabel = "Actual Size (" + yUnit + ")";
-		var labelFontSize = "20px"
+		var labelFontSize = "20px";
+		var tickFontSize = "15px";
 		// setup x
 		var xValue = function(d) { return d.X;}, // data -> value
 			xScale = d3.scaleLinear().range([labelPadding, width-legendWidth]), // value -> display
@@ -244,21 +245,32 @@
 			createYAxis();
 			drawDots(data);
 			drawLegend();
+			formatAxis();
 		});
-
+		function formatAxis()
+		{
+			d3.selectAll(".xAxis>.tick>text")
+			  .each(function(d, i){
+			    d3.select(this).style("font-size", tickFontSize);
+  			});
+			d3.selectAll(".yAxis>.tick>text")
+			  .each(function(d, i){
+				d3.select(this).style("font-size", tickFontSize);
+			});
+		}
 		function createXAxis()
 		{
 			// x-axis
 			svg.append("g")
-				.attr("class", "x axis")
+				.attr("class", "xAxis")
 				.attr("transform", "translate(0," + (height-labelPadding) + ")")
-				.call(d3.axisBottom(xScale))
+				.call(d3.axisBottom(xScale).tickPadding([10]))
 
 			// add X Axis label
 			svg.append("text")
 					.attr("class", "label")
 					.attr("transform", "rotate(0)")
-					.attr("y", height-labelPadding/2 )
+					.attr("y", height-labelPadding/2 + 10 )
 					.attr("x", width/2)
 					.attr("dy", "1em")
 					.style("font-size", labelFontSize)
@@ -269,15 +281,15 @@
 		{
 			// y-axis
 			svg.append("g")
-				.call(d3.axisLeft(yScale).tickPadding(["10"]))
-				.attr("class", "y axis")
+				.call(d3.axisLeft(yScale).tickPadding([15]))
+				.attr("class", "yAxis")
 				.attr("transform", "translate(" + labelPadding + ",0)")
 
 			// add Y Axis label
 			svg.append("text")
 					.attr("class", "label")
 					.attr("transform", "rotate(-90)")
-					.attr("y", 0)
+					.attr("y", -10)
 					.attr("x", -height/2)
 					.attr("dy", ".75em")
 					.style("font-size", labelFontSize)
