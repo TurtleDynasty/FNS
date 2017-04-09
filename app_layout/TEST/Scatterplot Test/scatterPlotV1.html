@@ -105,7 +105,7 @@
 
 		// setup y
 		var yValue = function(d) { return d["Y"];}, // data -> value
-			yScale = d3.scaleLinear().range([height-labelPadding, 0]), // value -> display
+			yScale = d3.scaleLinear().range([height-labelPadding, labelPadding]), // value -> display
 			yMap = function(d) { return yScale(yValue(d));}; // data -> display
 			// yAxis = d3.svg.axis().scale(yScale).orient("left");
 
@@ -200,14 +200,14 @@
 			// x-axis
 			svg.append("g")
 				.attr("class", "x axis")
-				.attr("transform", "translate(0," + (height-labelPadding/2) + ")")
+				.attr("transform", "translate(0," + (height-labelPadding) + ")")
 				.call(d3.axisBottom(xScale))
 
 			// add X Axis label
 			svg.append("text")
 					.attr("class", "label")
 					.attr("transform", "rotate(0)")
-					.attr("y", height )
+					.attr("y", height-labelPadding/2 )
 					.attr("x", width/2)
 					.attr("dy", "1em")
 					.style("font-size", labelFontSize)
