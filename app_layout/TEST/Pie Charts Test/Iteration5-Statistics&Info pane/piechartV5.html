@@ -182,17 +182,13 @@
 					innerLabelEnter(d);
 					changeArc(this, arcOver);
 					changeLine(d, pieSegmentPullOut);
+					drawInfoPane();
 				})
 				.on("mouseout", function(d) {
 					innerLabelExit(d);
 					changeArc(this, arc);
 					changeLine(d, 0);
 				})
-				// on click to create info pane
-				.on("click", function(d)
-				{
-					drawInfoPane();
-				});
 		}
 		function drawInfoPane()
 		{
@@ -209,14 +205,6 @@
 				{
 					d3.select(this).remove();
 				});
-
-			svg.append("text")
-				.attr("x", -width/2)
-				.attr("y", -height/2)
-				.attr("dy", "-1.5em")
-				.style("fill", "black")
-				.style("text-anchor","middle")
-				.text(name);
 		}
 		function innerLabelEnter(d)
 		{
