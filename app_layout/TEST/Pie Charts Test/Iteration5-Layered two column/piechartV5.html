@@ -197,14 +197,18 @@
 		function drawInfoPane()
 		{
 			svg.append("rect")
-				.attr("x", 0)
-				.attr("y", 0)
+				.attr("x", -width/2)
+				.attr("y", -height/2)
 				.attr("rx", 5)
 				.attr("ry", 5)
-				.attr("width", 100)
-				.attr("height", 100)
+				.attr("width", width/4)
+				.attr("height", height/4)
 				.style("stroke", 'black')
-				.style("fill", 'white');
+				.style("fill", 'white')
+				.on("click", function (d)
+				{
+					d3.select(this).remove();
+				});
 		}
 		function innerLabelEnter(d)
 		{
