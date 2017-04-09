@@ -10,6 +10,25 @@
 	<link href="../../css/dashboard.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="../../dist/d3.js"></script>
+	<style>
+	svg{
+
+	    transform:translate(-50%, -50%);
+			max-width: 100%;
+			max-height: 100%;
+	}
+	svg
+	{
+		top:0%;
+		bottom:100%;
+		left: 0%;
+		right: 100%;
+		transform:scale(1,1);
+		transform:translate(0%,0%);
+	}
+
+	</style>
+
 </head>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="../../dist/underscore-min.js" type="text/javascript"></script>
@@ -113,62 +132,37 @@
 		var cValue = function(d) { return d.Type;},
 			color = d3.scaleOrdinal(d3.schemeCategory10);
 
-		// add the graph canvas to the body of the webpage
-		svg.append("g")
-			.attr("transform", "translate(" + 0 + "," + 0 + ")");
-			function subject(d)
+		function subject(d)
+		{
+			return { x: d3.event.x, y: d3.event.y };
+		};
+		var drag = d3.drag()
+			.subject(subject)
+			.on('start', function()
 			{
-				return { x: d3.event.x, y: d3.event.y };
-			};
-			var drag = d3.drag()
-				.subject(subject)
-				.on('start', function()
-				{
-					d3.select(".dragBar").remove();
+				console.log("width: "+width)
+				console.log("height: "+height)
+				d3.select(".dragBar").remove();
+			})
+			.on('drag', function() {
+				console.log(d3.event.x + "," + d3.event.y)
+			})
+			.on('end', function() {
+			});
 
-					firstX = d3.event.x + width/2;
-					firstY = d3.event.y + height/2;
-					console.log(firstX)
-					console.log("-->" + xScale(firstX))
-					svg.append("rect")
-						.classed("dragBar", true)
-						.attr("x", function ()
-						{
-							return firstX;
-						})
-						.attr("y", function ()
-						{
-							return firstY;
-						})
-						.attr("width", 100)
-						.attr("height", 100)
-						.style("fill", "CornflowerBlue")
-						.style("fill-opacity", 1)
-						.on("click", function ()
-						{
-							d3.select(this).remove();
-						});
-				})
-				.on('drag', function() {
-					console.log(d3.event.x)
-				})
-				.on('end', function() {
-					d3.select(".dragBar").attr("width", 100);
-					d3.select(".dragBar").attr("height", 100);
-				});
-			svg.append("rect")
-				.attr("x", 0)
-				.attr("y", 0)
-				.attr("width", width)
-				.attr("height", height)
-				.style("fill-opacity", 0.15)
-				.call(drag);
+		svg.append("rect")
+			.attr("x", 0)
+			.attr("y", 0)
+			.attr("width", width)
+			.attr("height", height)
+			.style("fill-opacity", 0.15)
+			.call(drag);
 
 
-			// add the tooltip area to the webpage
-			var tooltip = d3.select("body").append("div")
-				.attr("class", "tooltip")
-				.style("opacity", 0);
+		// add the tooltip area to the webpage
+		var tooltip = d3.select("body").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
 		// load data
 		d3.csv("cereal.csv", function(error, data)
 		{
