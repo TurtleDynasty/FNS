@@ -84,6 +84,7 @@
 		\***********************/
 		var labelOffset = 50;
 		var labelFontSize = "20px";
+		var tickFontSize = "15px";
 		var xUnit = "";
 		var xAxisLabel = "File Space ID" + xUnit;
 		var yUnit = "bytes";
@@ -169,10 +170,22 @@
 			})
 
 			createXAxis();
-			createyAxis();
+			createYAxis();
+			formatAxis();
 
 
 		});
+		function formatAxis()
+		{
+			d3.selectAll(".xAxis>.tick>text")
+			  .each(function(d, i){
+			    d3.select(this).style("font-size", tickFontSize);
+  			});
+			d3.selectAll(".yAxis>.tick>text")
+			  .each(function(d, i){
+				d3.select(this).style("font-size", tickFontSize);
+			});
+		}
 		// svg.selectAll(".class1, class2, #id2")
 		function swapBars(bar1, bar2, toggle)
 		{
@@ -202,8 +215,10 @@
 		{
 			// add the X Axis
 			svg.append("g")
+				.attr("class", "xAxis")
 				.attr("transform", "translate(0," + (height-labelOffset) + ")")
-				.call(d3.axisBottom(x));
+				.style("stroke-width", 2)
+				.call(d3.axisBottom(x).tickPadding([10]));
 
 			// add X Axis label
 			svg.append("text")
@@ -213,22 +228,26 @@
 				.attr("x", width/2)
 				.attr("dy", "1em")
 				.style("text-anchor", "middle")
+				.style("stroke-width", 2)
 				.style("font-size", labelFontSize)
 				.text(xAxisLabel);
 		}
-		function createyAxis()
+		function createYAxis()
 		{
 			// add the Y Axis
 			svg.append("g")
-				.attr("transform", "translate(" + labelOffset+ "," + -labelOffset + ")")
-				.call(d3.axisLeft(y));
+				.attr("class", "yAxis")
+				.attr("transform", "translate(" + labelOffset + "," + -labelOffset + ")")
+				.style("stroke-width", 2)
+				.call(d3.axisLeft(y).tickPadding([10]));
 
 			// add Y Axis label
 			svg.append("text")
+
 				.attr("class", "label")
 				.attr("transform", "rotate(-90)")
 				.attr("y", 0)
-				.attr("x", 0 - (height / 2) - 5)
+				.attr("x", 0 - (height / 2))
 				.attr("dy", "1em")
 				.style("text-anchor", "middle")
 				.style("font-size", labelFontSize)

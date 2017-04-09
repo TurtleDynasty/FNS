@@ -95,7 +95,7 @@
 		var heatMapWidth = Math.min(width, height) - 100;
 
 		var circlePadding = 5;
-		var circleRadius = 25;
+		var squareRadius = 25;
 		var x = 0;
 		var xIndex = 0;
 		var y = 0;
@@ -146,7 +146,7 @@
 				return data;
 			}
 
-			circleRadius = heatMapWidth / Math.sqrt(classes.length) - circlePadding;
+			squareRadius = heatMapWidth / Math.sqrt(classes.length) - circlePadding;
 
 			for(i = 0; i < classes.length; i++)
 			{
@@ -159,10 +159,10 @@
 					.attr("id", classes[i]["id"])
 					.attr("x", x)
 					.attr("y", y)
-					.attr("rx", 4)
-					.attr("ry", 4)
-					.attr("height", circleRadius)
-					.attr("width", circleRadius)
+					.attr("rx", squareRadius)
+					.attr("ry", squareRadius)
+					.attr("height", squareRadius)
+					.attr("width", squareRadius)
 					.attr("fill-opacity", 1)
 					.attr("stroke-opacity", 0)
 					.attr("stroke-width", 2)
@@ -184,12 +184,12 @@
 		});
 		function calculateNextXYCords()
 		{
-			x += circleRadius + circlePadding;
+			x += squareRadius + circlePadding;
 			xIndex += 1;
 			if (x > heatMapWidth)
 			{
 				x = 0;
-				y += circleRadius + circlePadding;
+				y += squareRadius + circlePadding;
 				xIndex = 0;
 				yIndex += 1;
 			}
@@ -205,8 +205,8 @@
 		}
 		function mouseEnterSquare(object)
 		{
-			d3.select(object).attr('width', circleRadius + circlePadding);
-			d3.select(object).attr('height', circleRadius + circlePadding);
+			d3.select(object).attr('width', squareRadius + circlePadding);
+			d3.select(object).attr('height', squareRadius + circlePadding);
 			d3.select(object).attr("stroke-opacity", 1);
 			d3.select(object).attr('x', function ()
 			{
@@ -221,8 +221,8 @@
 		}
 		function mouseExitSquare(object)
 		{
-			d3.select(object).attr('width', circleRadius);
-			d3.select(object).attr('height', circleRadius);
+			d3.select(object).attr('width', squareRadius);
+			d3.select(object).attr('height', squareRadius);
 			d3.select(object).attr("stroke-opacity", 0);
 			d3.select(object).attr('x', function ()
 			{
@@ -303,7 +303,7 @@
 					.classed(circleColors[i], true)
 					.attr("color", circleColors[i])
 					.attr("x", heatMapWidth + 10)
-					.attr("y", circleRadius + i * increment)
+					.attr("y", squareRadius + i * increment)
 					.attr("fill-opacity", 1)
 					.attr("stroke", circleColors[i])
 					.attr("rx", 5)

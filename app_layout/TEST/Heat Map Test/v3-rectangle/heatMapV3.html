@@ -104,7 +104,7 @@
 		var heatMapWidth = width-legendSize;
 		var heatMapHeight = height - infoTileSize - 2* infoTileOffset;
 
-		var squarePadding = 5;
+		var squarePadding = 2;
 		var x = 0;
 		var xIndex = 0;
 		var y = 0;
@@ -155,8 +155,6 @@
 
 			squareRadius = Math.sqrt((heatMapWidth * heatMapHeight / classes.length));
 			squareRadius -= squarePadding;
-			console.log(classes.length);
-			console.log(squareRadius);
 			for(i = 0; i < classes.length; i++)
 			{
 				svg.append("rect")
@@ -167,8 +165,8 @@
 					.attr("id", classes[i]["id"])
 					.attr("x", x)
 					.attr("y", y)
-					.attr("rx", 4)
-					.attr("ry", 4)
+					.attr("rx", squareRadius)
+					.attr("ry", squareRadius)
 					.attr("width", squareRadius)
 					.attr("height", squareRadius)
 					.attr("fill-opacity", 1)
@@ -320,7 +318,7 @@
 					.classed("legend", true)
 					.classed(circleColors[i], true)
 					.attr("color", circleColors[i])
-					.attr("x", heatMapWidth + legendOffset)
+					.attr("x", heatMapWidth + (width - heatMapWidth)/2)
 					.attr("y", squareRadius + i * increment)
 					.attr("fill-opacity", 1)
 					.attr("stroke", circleColors[i])
@@ -379,7 +377,6 @@
 			for (i = 0; i < colorSqaureList.length; i++)
 			{
 				var opacity = colorSqaureList[i]["fill-opacity"];
-				console.log(opacity);
 			}
 		}
 		//your visual title here
