@@ -7,6 +7,7 @@
 	<link href="../../../../dist/bootstrap.min.css" rel="stylesheet">
 	<link href="../../../../css/utility.css" rel="stylesheet">
 	<link href="../../../../css/dashboard.css" rel="stylesheet">
+	<link href="../../../../css/barchart.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="../../../../dist/d3.js"></script>
 </head>
@@ -82,9 +83,7 @@
 		/***********************\
 		| Your visual script below
 		\***********************/
-		var labelOffset = 50;
-		var labelFontSize = "20px";
-		var tickFontSize = "15px";
+		var labelOffset = 75;
 		var xUnit = "";
 		var xAxisLabel = "File Space ID" + xUnit;
 		var yUnit = "bytes";
@@ -97,7 +96,7 @@
 			.range([labelOffset, width])
 			.padding(0.1);
 		var y = d3.scaleLinear()
-			.range([height, labelOffset]);
+			.range([height, labelOffset + 10]);
 
 		// append the svg object to the body of the page
 		// append a 'group' element to 'svg'
@@ -171,21 +170,7 @@
 
 			createXAxis();
 			createYAxis();
-			formatAxis();
-
-
 		});
-		function formatAxis()
-		{
-			d3.selectAll(".xAxis>.tick>text")
-			  .each(function(d, i){
-			    d3.select(this).style("font-size", tickFontSize);
-  			});
-			d3.selectAll(".yAxis>.tick>text")
-			  .each(function(d, i){
-				d3.select(this).style("font-size", tickFontSize);
-			});
-		}
 		// svg.selectAll(".class1, class2, #id2")
 		function swapBars(bar1, bar2, toggle)
 		{
@@ -215,42 +200,35 @@
 		{
 			// add the X Axis
 			svg.append("g")
-				.attr("class", "xAxis")
+				.attr("class", "axis")
 				.attr("transform", "translate(0," + (height-labelOffset) + ")")
-				.style("stroke-width", 2)
 				.call(d3.axisBottom(x).tickPadding([10]));
 
 			// add X Axis label
 			svg.append("text")
-				.attr("class", "label")
+				.attr("class", "axisLabel")
 				.attr("transform", "rotate(0)")
 				.attr("y", height -labelOffset/2)
 				.attr("x", width/2)
 				.attr("dy", "1em")
-				.style("text-anchor", "middle")
-				.style("stroke-width", 2)
-				.style("font-size", labelFontSize)
 				.text(xAxisLabel);
 		}
 		function createYAxis()
 		{
 			// add the Y Axis
 			svg.append("g")
-				.attr("class", "yAxis")
+				.attr("class", "axis")
 				.attr("transform", "translate(" + labelOffset + "," + -labelOffset + ")")
-				.style("stroke-width", 2)
 				.call(d3.axisLeft(y).tickPadding([10]));
 
 			// add Y Axis label
 			svg.append("text")
 
-				.attr("class", "label")
+				.attr("class", "axisLabel")
 				.attr("transform", "rotate(-90)")
 				.attr("y", 0)
 				.attr("x", 0 - (height / 2))
 				.attr("dy", "1em")
-				.style("text-anchor", "middle")
-				.style("font-size", labelFontSize)
 				.text(yAxisLabel);
 		}
 		function addBar(name, xCord, yCord, barHeight, color, className)

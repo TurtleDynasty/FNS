@@ -17,4 +17,6 @@ text.infoNode
 rect.infoNode
 {
 	fill: white;
+	stroke: black;
+	stroke-width: 2;
 }
