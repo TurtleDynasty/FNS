@@ -190,10 +190,10 @@
 				})
 				.on("mouseout", function(d)  {
 					d3.select(this)
-						.attr('opacity', baseOpacity)
 						.transition()
 						.duration(piePullOutDuration)
-						.attr("d", arc);
+						.attr("d", arc)
+						.attr('opacity', baseOpacity);
 				});
 		}
 		function innerLabelEnter(d)
