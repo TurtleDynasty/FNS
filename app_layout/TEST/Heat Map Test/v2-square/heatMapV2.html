@@ -7,6 +7,7 @@
 	<link href="../../../dist/bootstrap.min.css" rel="stylesheet">
 	<link href="../../../css/utility.css" rel="stylesheet">
 	<link href="../../../css/dashboard.css" rel="stylesheet">
+	<link href="../../../css/heatMapSquare.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="../../../dist/d3.js"></script>
 </head>
@@ -82,7 +83,7 @@
 		/***********************\
 		| Your visual script below
 		\***********************/
-		var circleColors = ["darkblue",
+		var squareColors = ["darkblue",
 							"blue",
 							"seagreen",
 							"Turquoise",
@@ -92,9 +93,9 @@
 							"orange",
 							"orangered",
 							"red"];
-		var heatMapWidth = Math.min(width, height) - 100;
+		var heatMapWidth = Math.min(width, height) - 125;
 
-		var circlePadding = 5;
+		var squarePadding = 5;
 		var squareRadius = 25;
 		var x = 0;
 		var xIndex = 0;
@@ -108,12 +109,11 @@
 		var minColor = Infinity;
 
 		svg.append("rect")
+			.classed("backGround", true)
 			.attr("x", 0)
 			.attr("width", heatMapWidth)
 			.attr("y", 0)
 			.attr("height", heatMapWidth)
-			.style("fill", "black")
-			.style("fill-opacity", .25)
 
 		d3.csv("heatmap.csv", function(d) {
 			d.value = +d.value;
@@ -146,7 +146,7 @@
 				return data;
 			}
 
-			squareRadius = heatMapWidth / Math.sqrt(classes.length) - circlePadding;
+			squareRadius = heatMapWidth / Math.sqrt(classes.length) - squarePadding;
 
 			for(i = 0; i < classes.length; i++)
 			{
@@ -154,7 +154,7 @@
 				svg.append("rect")
 					.classed(grabColor(classes[i]["value"])[1], true)
 					.attr("color", grabColor(classes[i]["value"])[1])
-					.classed("circleBubble", true)
+					.classed("dataPoint", true)
 					.attr("value", classes[i]["value"])
 					.attr("id", classes[i]["id"])
 					.attr("x", x)
@@ -167,7 +167,7 @@
 					.attr("stroke-opacity", 0)
 					.attr("stroke-width", 2)
 					.style("stroke", "black")
-					.style("fill", function() { return grabColor(classes[i]["value"], circleColors)[0]; })
+					.style("fill", function() { return grabColor(classes[i]["value"], squareColors)[0]; })
 					.on("mouseover", function() {
 						mouseEnterSquare(this);
 					})
@@ -184,12 +184,12 @@
 		});
 		function calculateNextXYCords()
 		{
-			x += squareRadius + circlePadding;
+			x += squareRadius + squarePadding;
 			xIndex += 1;
 			if (x > heatMapWidth)
 			{
 				x = 0;
-				y += squareRadius + circlePadding;
+				y += squareRadius + squarePadding;
 				xIndex = 0;
 				yIndex += 1;
 			}
@@ -201,23 +201,28 @@
 			var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
 			var color = pickColor(divideColor(number));
 			var index = Math.floor(divideColor(number) * 10);
-			return [color, circleColors[index]];
+			return [color, squareColors[index]];
 		}
 		function mouseEnterSquare(object)
 		{
-			d3.select(object).attr('width', squareRadius + circlePadding);
-			d3.select(object).attr('height', squareRadius + circlePadding);
-			d3.select(object).attr("stroke-opacity", 1);
+			d3.select(object).attr('width', squareRadius + squarePadding);
+			d3.select(object).attr('height', squareRadius + squarePadding);
+			var opacity = d3.select(object).attr("fill-opacity");
+			if (opacity == 1)
+			{
+				d3.select(object).attr("stroke-opacity", 1);
+			}
 			d3.select(object).attr('x', function ()
 			{
 				var x = parseFloat(d3.select(object).attr('x'));
-				return (x - circlePadding/2);
+				return (x - squarePadding/2);
 			})
 			.attr('y', function ()
 			{
 				var y = parseFloat(d3.select(object).attr('y'));
-				return (y - circlePadding/2);
+				return (y - squarePadding/2);
 			})
+
 		}
 		function mouseExitSquare(object)
 		{
@@ -227,12 +232,12 @@
 			d3.select(object).attr('x', function ()
 			{
 				var x = parseFloat(d3.select(object).attr('x'));
-				return (x + circlePadding/2);
+				return (x + squarePadding/2);
 			})
 			.attr('y', function ()
 			{
 				var y = parseFloat(d3.select(object).attr('y'));
-				return (y + circlePadding/2);
+				return (y + squarePadding/2);
 			})
 		}
 		function moveInfoSquares(offset)
@@ -273,14 +278,12 @@
 				.attr("ry", 5)
 				.attr("width", infoTileSize-2*infoTilePadding)
 				.attr("height", infoTileSize-2*infoTilePadding)
-				.style("fill", "white")
 
 			svg.append("text")
 				.classed("infoNode", true)
 				.attr("x", 0 + (infoTileSize-2*infoTilePadding)/2)
 				.attr("y", heatMapWidth + 25 + (infoTileSize-2*infoTilePadding)/2)
 				.attr("dy", "-1.5em")
-				.style("fill", "black")
 				.text(id)
 
 			svg.append("text")
@@ -288,36 +291,33 @@
 				.attr("x", 0 + (infoTileSize-2*infoTilePadding)/2)
 				.attr("y", heatMapWidth + 25 + (infoTileSize-2*infoTilePadding)/2)
 				.attr("dy", "1.5em")
-				.style("fill", "black")
 				.text(value)
 
 		}
 		drawLegend();
 		function drawLegend()
 		{
-			var increment = (heatMapWidth / circleColors.length)+1;
-			for (i = 0; i < circleColors.length; i++)
+			var increment = (heatMapWidth / squareColors.length)+1;
+			for (i = 0; i < squareColors.length; i++)
 			{
 				svg.append("rect")
 					.classed("legend", true)
-					.classed(circleColors[i], true)
-					.attr("color", circleColors[i])
+					.classed(squareColors[i], true)
+					.attr("color", squareColors[i])
 					.attr("x", heatMapWidth + 10)
 					.attr("y", squareRadius + i * increment)
 					.attr("fill-opacity", 1)
-					.attr("stroke", circleColors[i])
+					.attr("stroke", squareColors[i])
 					.attr("rx", 5)
 					.attr("ry", 5)
 					.attr("height", legendTileSize)
 					.attr("width", legendTileSize)
-					.style("fill", circleColors[i])
+					.style("fill", squareColors[i])
 					.on("mouseover", function() {
-						var opacity = d3.select(this).attr("fill-opacity");
 						toggleBoarder(d3.select(this).attr("color"));
 
 					})
 					.on("mouseout", function() {
-						var opacity = d3.select(this).attr("fill-opacity");
 						toggleBoarder(d3.select(this).attr("color"));
 					})
 					.on("click", function(d)

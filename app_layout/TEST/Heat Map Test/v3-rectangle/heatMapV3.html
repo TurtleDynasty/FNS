@@ -212,7 +212,11 @@
 
 			d3.select(object).attr('width', squareRadius + squarePadding);
 			d3.select(object).attr('height', squareRadius + squarePadding);
-			d3.select(object).attr("stroke-opacity", 1);
+			var opacity = d3.select(object).attr("fill-opacity");
+			if (opacity == 1)
+			{
+				d3.select(object).attr("stroke-opacity", 1);
+			}
 			d3.select(object).attr('x', function ()
 			{
 				var x = parseFloat(d3.select(object).attr('x'));
