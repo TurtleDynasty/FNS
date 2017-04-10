@@ -149,7 +149,8 @@
 		}
 
 		var total = 0;
-
+		drawInfoPane();
+		hideInfoPane();
 		d3.csv("data.csv", type, function(error, data)
 		{
 			if (error)
@@ -176,35 +177,42 @@
 					return color(d.data.name);
 				})
 				.on("mouseenter", function(d) {
-					addPieLabels(d);
+					addPieLabels(d, this);
 					addPieToLabelLine(d);
 					addPieLabelUnderLine(d);
 					innerLabelEnter(d);
 					changeArc(this, arcOver);
 					changeLine(d, pieSegmentPullOut);
-					drawInfoPane();
+					showInfoPane();
 				})
 				.on("mouseout", function(d) {
 					innerLabelExit(d);
 					changeArc(this, arc);
 					changeLine(d, 0);
-				})
+					hideInfoPane();
+				});
 		}
 		function drawInfoPane()
 		{
 			svg.append("rect")
+				.classed("infoPane", true)
 				.attr("x", -width/2)
 				.attr("y", -height/2)
 				.attr("rx", 5)
 				.attr("ry", 5)
 				.attr("width", width/4)
 				.attr("height", height/4)
-				.style("stroke", 'black')
-				.style("fill", 'white')
-				.on("click", function (d)
-				{
-					d3.select(this).remove();
-				});
+				.style("stroke", "black")
+				.style("fill", "white")
+				.style("fill-opacity", 0);
+		}
+		function showInfoPane()
+		{
+			d3.select(".infoPane").attr("opacity", 1);
+		}
+		function hideInfoPane()
+		{
+			d3.select(".infoPane").attr("opacity", 0);
 		}
 		function innerLabelEnter(d)
 		{
@@ -212,7 +220,8 @@
 				.transition()
 				.duration(500)
 				.style("opacity", 1);
-			text.text(d.data.count + "/" + total + " " + units);
+			text.text("");
+			infoText.text(d.data.name);
 			bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
 			labelText.text(d.data.name);
 
@@ -224,6 +233,7 @@
 				.duration(500)
 				.style("opacity", 0);
 			text.text(total + " " + units);
+			infoText.text("");
 			bottomText.text("");
 			labelText.text("");
 		}
@@ -249,7 +259,7 @@
 					return Math.sin(a) * (lineToLabelStart + offset);
 				})
 		}
-		function addPieLabels(d)
+		function addPieLabels(d, objName)
 		{
 			// text
 			g.append("text")
@@ -380,6 +390,14 @@
 				.style("font-size", innerFontSize)
 				.attr("class", "on")
 				.text(" ");
+
+			infoText = g.append("text")
+			.attr("x", -width/2.5)
+			.attr("y", -height/2.5)
+			.style("text-anchor", "middle")
+			.style("fill", "black")
+			.style("font-size", labelFontSize)
+			.text(" ");
 		}
 		function setTextBoxes(data)
 		{
