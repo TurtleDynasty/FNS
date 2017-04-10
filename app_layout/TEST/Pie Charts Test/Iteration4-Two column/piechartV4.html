@@ -176,20 +176,27 @@
 		});
 		function addPieSegments()
 		{
+			var baseOpacity = .95;
 			g.append("path")
 				.attr("d", arc)
-				.style("fill", function(d) {
+				.attr('opacity', baseOpacity)
+				.style("fill", function(d)  {
 					return color(d.data.name);
 				})
-				.on("mouseenter", function(d) {
-					innerLabelEnter(d);
-					changeArc(this, arcOver);
-					changeLine(d, pieSegmentPullOut);
+				.on("mouseenter", function(d)  {
+					d3.select(this).attr('opacity', 1);
+					currentPie = this;
+					d3.select(currentPie)
+						.transition()
+						.duration(piePullOutDuration)
+						.attr("d", arcOver);
 				})
-				.on("mouseout", function(d) {
-					innerLabelExit(d);
-					changeArc(this, arc);
-					changeLine(d, 0);
+				.on("mouseout", function(d)  {
+					d3.select(this).attr('opacity', baseOpacity);
+					d3.select(this)
+						.transition()
+						.duration(piePullOutDuration)
+						.attr("d", arc);
 				});
 		}
 		function innerLabelEnter(d)

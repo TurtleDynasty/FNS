@@ -1,17 +1,21 @@
 text.statTextBox
 {
 	text-anchor: middle;
-	fill: red;
-	font-size: 100px;
+	fill: black;
+	font-size: 20px;
 }
 text.labelTextBox
 {
 	text-anchor: middle;
-	fill: red;
-	font-size: 100px;
+	fill: black;
+	font-size: 20px;
 }
 line
 {
-	stroke: red;
+	stroke: black;
 	stroke-width: 2;
+}
+.arc
+{
+	fill: black;
 }
