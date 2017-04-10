@@ -21,7 +21,7 @@ text.axisLabel
 .axis path
 {
 	fill: white;
-	stroke: black;
+	fill-opacity: 0;
 	stroke-width: 2;
 	pointer-events: none;
 }
