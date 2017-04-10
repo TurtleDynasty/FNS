@@ -140,7 +140,15 @@
 			.value(function(d) {
 				return d.count;
 			});
-
+		d3.selection.prototype.moveToBack = function()
+		{
+		    return this.each(function() {
+		        var firstChild = this.parentNode.firstChild;
+		        if (firstChild) {
+		            this.parentNode.insertBefore(this, firstChild);
+		        }
+		    });
+		};
 		function type(d)
 		{
 			d.count = +d.count;
@@ -212,17 +220,7 @@
 		function changeLine(d, offset)
 		{
 			className = "." + d.data.name;
-			d3.select(className)
-				.transition()
-				.duration(piePullOutDuration)
-				.attr("x1", function(d) {
-					var a = calculateAngle(d);
-					return Math.cos(a) * (lineToLabelStart + offset);
-				})
-				.attr("y1", function(d) {
-					var a = calculateAngle(d);
-					return Math.sin(a) * (lineToLabelStart + offset);
-				})
+			d3.select(className).moveToBack();
 		}
 		function addPieLabels()
 		{
@@ -247,7 +245,9 @@
 		{
 			// pie2labelline
 			g.append("line")
-				.classed("line", true)
+				.attr("class", function (d) {
+					return d.data.name;
+				})
 				.attr("x1", function(d) {
 					var a = calculateAngle(d);
 					return Math.cos(a) * (lineToLabelStart);
@@ -270,7 +270,6 @@
 		{
 			// label underline
 			g.append("line")
-				.classed("line", true)
 				.attr("x1", function(d) {
 					var a = calculateAngle(d);
 					return Math.cos(a) * (outerRadius + lineToLabelEnd);
@@ -312,7 +311,6 @@
 		{
 			text = g.append("text")
 				.classed("statTextBox", true)
-				.attr("transform", 0)
 				.attr("dx", topXOffset)
 				.attr("dy", topYOffset)
 				.text(" ");

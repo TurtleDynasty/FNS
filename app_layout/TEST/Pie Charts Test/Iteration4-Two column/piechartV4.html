@@ -8,6 +8,7 @@
 	<link href="../../../dist/bootstrap.min.css" rel="stylesheet">
 	<link href="../../../css/utility.css" rel="stylesheet">
 	<link href="../../../css/dashboard.css" rel="stylesheet">
+	<link href="../../../css/piechart.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="../../../dist/d3.js"></script>
 </head>
@@ -135,7 +136,15 @@
 			.value(function(d) {
 				return d.count;
 			});
-
+		d3.selection.prototype.moveToBack = function()
+		{
+		    return this.each(function() {
+		        var firstChild = this.parentNode.firstChild;
+		        if (firstChild) {
+		            this.parentNode.insertBefore(this, firstChild);
+		        }
+		    });
+		};
 		function type(d)
 		{
 			d.count = +d.count;
@@ -205,23 +214,13 @@
 		function changeLine(d, offset)
 		{
 			className = "." + d.data.name;
-			d3.select(className)
-				.transition()
-				.duration(piePullOutDuration)
-				.attr("x1", function(d) {
-					var a = calculateAngle(d);
-					return Math.cos(a) * (lineToLabelStart + offset);
-				})
-				.attr("y1", function(d) {
-					var a = calculateAngle(d);
-					return Math.sin(a) * (lineToLabelStart + offset);
-				})
+			d3.select(className).moveToBack();
 		}
 		function addPieLabels()
 		{
 			// text
 			g.append("text")
-				.attr("text-anchor", "middle")
+				.classed("labelTextBox", true)
 				.attr("x", function(d) {
 					var a = calculateAngle(d);
 					var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
@@ -231,7 +230,6 @@
 					var a = calculateAngle(d);
 					return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
 				})
-				.style("font-size", labelFontSize)
 				.text(function(d) {
 					return d.data.name;
 				});
@@ -260,8 +258,6 @@
 					var a = calculateAngle(d);
 					return Math.sin(a) * (outerRadius + lineToLabelEnd);
 				})
-				.style("stroke-width", 2)
-				.style("stroke", "black");
 		}
 
 		function addPieLabelUnderLine()
@@ -285,8 +281,6 @@
 					var a = calculateAngle(d);
 					return Math.sin(a) * (outerRadius + lineToLabelEnd);
 				})
-				.style("stroke-width", 2)
-				.style("stroke", "black");
 		}
 		function calculateAngle(data)
 		{
@@ -311,31 +305,22 @@
 		function createTextBoxes(g)
 		{
 			text = g.append("text")
+				.classed("statTextBox", true)
 				.attr("transform", 0)
 				.attr("dx", topXOffset)
 				.attr("dy", topYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 
 			bottomText = g.append("text")
+				.classed("statTextBox", true)
 				.attr("dx", bottomXOffset)
 				.attr("dy", bottomYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 
 			labelText = g.append("text")
+				.classed("statTextBox", true)
 				.attr("dx", labelXOffset)
 				.attr("dy", labelYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 		}
 		function setTextBoxes(data)
