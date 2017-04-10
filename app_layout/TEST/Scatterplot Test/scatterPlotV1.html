@@ -99,8 +99,6 @@
 		var xAxisLabel = "File Space ID" + xUnit;
 		var yUnit = "bytes";
 		var yAxisLabel = "Actual Size (" + yUnit + ")";
-		var labelFontSize = "20px";
-		var tickFontSize = "15px";
 		// setup x
 		var xValue = function(d) { return d.X;}, // data -> value
 			xScale = d3.scaleLinear().range([labelPadding, width-legendWidth]), // value -> display
@@ -244,19 +242,7 @@
 			createYAxis();
 			drawDots(data);
 			drawLegend();
-			formatAxis();
 		});
-		function formatAxis()
-		{
-			d3.selectAll(".xAxis>.tick>text")
-			  .each(function(d, i){
-			    d3.select(this).style("font-size", tickFontSize);
-  			});
-			d3.selectAll(".yAxis>.tick>text")
-			  .each(function(d, i){
-				d3.select(this).style("font-size", tickFontSize);
-			});
-		}
 		function createXAxis()
 		{
 			// x-axis
