@@ -95,6 +95,7 @@
 
 		var innerRadius = Math.min(width, height) / 4;
 		var outerRadius = Math.min(width, height) / 3 - pieSegmentPullOut;
+		var cornerRadius = 7.5;
 
 		// ---- label Text STUFF
 		var labelFontSize = "14px"
@@ -129,10 +130,12 @@
 
 		var arc = d3.arc()
 			.innerRadius(innerRadius)
-			.outerRadius(outerRadius);
+			.outerRadius(outerRadius)
+			.cornerRadius(cornerRadius);
 		var arcOver = d3.arc()
 			.innerRadius(innerRadius)
-			.outerRadius(outerRadius + pieSegmentPullOut);
+			.outerRadius(outerRadius + pieSegmentPullOut)
+			.cornerRadius(cornerRadius);
 		var labelArc = d3.arc()
 			.innerRadius(innerRadius)
 			.outerRadius(outerRadius);

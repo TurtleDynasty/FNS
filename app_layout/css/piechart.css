@@ -9,6 +9,7 @@ text.labelTextBox
 	text-anchor: middle;
 	fill: black;
 	font-size: 20px;
+	pointer-events: none;
 }
 text.infoTextBox
 {

@@ -89,16 +89,20 @@
 
 		var innerRadius = pieSegmentPullOut;
 		var outerRadius = Math.min(width, height) /2 - pieSegmentPullOut;
-
+		var cornerRadius = 10;
 		var color = d3.scaleOrdinal()
 			.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 		var arc = d3.arc()
 			.innerRadius(innerRadius)
-			.outerRadius(outerRadius);
+			.outerRadius(outerRadius)
+			.cornerRadius(cornerRadius);
+
 		var arcOver = d3.arc()
 			.innerRadius(innerRadius)
-			.outerRadius(outerRadius + pieSegmentPullOut);
+			.outerRadius(outerRadius + pieSegmentPullOut)
+			.cornerRadius(cornerRadius);
+
 		var labelArc = d3.arc()
 			.innerRadius(outerRadius - 40)
 			.outerRadius(outerRadius - 40);
