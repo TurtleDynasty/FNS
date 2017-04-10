@@ -159,7 +159,7 @@
 				svg.append("rect")
 					.classed(grabColor(classes[i]["value"])[1], true)
 					.attr("color", grabColor(classes[i]["value"])[1])
-					.classed("squarePoint", true)
+					.classed("dataPoint", true)
 					.attr("value", classes[i]["value"])
 					.attr("id", classes[i]["id"])
 					.attr("x", x)
@@ -168,7 +168,7 @@
 					.attr("ry", squareRadius)
 					.attr("width", squareRadius)
 					.attr("height", squareRadius)
-					.attr("fill-opacity", 1)
+					.attr("fill-opacity", 1) // used for legend filtering
 					.attr("stroke-opacity", 0)
 					.style("fill", function() { return grabColor(classes[i]["value"], squareColors)[0]; })
 					.on("mouseover", function() {
@@ -320,12 +320,9 @@
 					.attr("width", legendTileSize)
 					.style("fill", squareColors[i])
 					.on("mouseover", function() {
-						var opacity = d3.select(this).attr("fill-opacity");
 						toggleBoarder(d3.select(this).attr("color"));
-
 					})
 					.on("mouseout", function() {
-						var opacity = d3.select(this).attr("fill-opacity");
 						toggleBoarder(d3.select(this).attr("color"));
 					})
 					.on("click", function(d)

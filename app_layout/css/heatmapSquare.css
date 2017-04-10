@@ -3,11 +3,10 @@ rect.backGround
 	fill: black;
 	fill-opacity: .25
 }
-rect.squarePoint
+rect.dataPoint
 {
-	stroke: red;
+	stroke: black;
 	stroke-width: 2;
-	stroke-opacity: 0;
 }
 text.infoNode
 {
