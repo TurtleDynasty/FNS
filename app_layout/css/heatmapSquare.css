@@ -1,0 +1,21 @@
+rect.backGround
+{
+	fill: black;
+	fill-opacity: .25
+}
+rect.squarePoint
+{
+	stroke: red;
+	stroke-width: 2;
+	stroke-opacity: 0;
+}
+text.infoNode
+{
+	fill: black;
+	text-anchor: middle;
+	font-size: 14px;
+}
+rect.infoNode
+{
+	fill: white;
+}
