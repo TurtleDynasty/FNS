@@ -8,8 +8,12 @@
 	<link href="../../../dist/bootstrap.min.css" rel="stylesheet">
 	<link href="../../../css/utility.css" rel="stylesheet">
 	<link href="../../../css/dashboard.css" rel="stylesheet">
+	<link href="../../../css/piechart.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="../../../dist/d3.js"></script>
+	<style>
+
+	</style>
 </head>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="../../../dist/underscore-min.js" type="text/javascript"></script>
@@ -197,11 +201,11 @@
 		function addPieLabels()
 		{
 			g.append("text")
+				.classed("labelTextBox", true)
 				.attr("transform", function(d) {
 					return "translate(" + labelArc.centroid(d) + ")";
 				})
 				.attr("dy", ".35em")
-				.style("font-size", labelFontSize)
 				.text(function(d) {
 					return d.data.name;
 				})
@@ -222,30 +226,21 @@
 		function createTextBoxes(g)
 		{
 			text = g.append("text")
+				.classed("statTextBox", true)
 				.attr("dx", topXOffset)
 				.attr("dy", topYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 
 			bottomText = g.append("text")
+				.classed("statTextBox", true)
 				.attr("dx", bottomXOffset)
 				.attr("dy", bottomYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 
 			labelText = g.append("text")
+				.classed("statTextBox", true)
 				.attr("dx", labelXOffset)
 				.attr("dy", labelYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 		}
 		function setTextBoxes(data)

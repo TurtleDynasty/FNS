@@ -1,0 +1,12 @@
+text.statTextBox
+{
+	text-anchor: end;
+	fill: red;
+	font-size: 34px;
+}
+text.labelTextBox
+{
+	text-anchor: middle;
+	fill: red;
+	font-size: 34px;
+}
