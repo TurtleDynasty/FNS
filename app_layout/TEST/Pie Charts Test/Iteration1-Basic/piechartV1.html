@@ -8,6 +8,7 @@
 	<link href="../../../dist/bootstrap.min.css" rel="stylesheet">
 	<link href="../../../css/utility.css" rel="stylesheet">
 	<link href="../../../css/dashboard.css" rel="stylesheet">
+	<link href="../../../css/piechart.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="../../../dist/d3.js"></script>
 </head>
@@ -160,11 +161,11 @@
 		function addPieLabels()
 		{
 			g.append("text")
+				.classed("labelTextBox", true)
 				.attr("transform", function(d)  {
 					return "translate(" + labelArc.centroid(d) + ")";
 				})
 				.attr("dy", ".35em")
-				.style("font-size", labelFontSize)
 				.text(function(d)  {
 					return d.data.name;
 				})

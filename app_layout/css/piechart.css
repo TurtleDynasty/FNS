@@ -2,13 +2,13 @@ text.statTextBox
 {
 	text-anchor: middle;
 	fill: red;
-	font-size: 10px;
+	font-size: 100px;
 }
 text.labelTextBox
 {
 	text-anchor: middle;
 	fill: red;
-	font-size: 10px;
+	font-size: 100px;
 }
 line
 {
