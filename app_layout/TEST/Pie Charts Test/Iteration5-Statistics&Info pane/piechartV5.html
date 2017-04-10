@@ -184,9 +184,9 @@
 				})
 				.on("mouseenter", function(d) {
 					d3.select(this).attr('opacity', 1);
-					addPieLabels(d, this);
 					addPieToLabelLine(d);
 					addPieLabelUnderLine(d);
+					addPieLabels(d, this);
 					innerLabelEnter(d);
 					changeArc(this, arcOver);
 					changeLine(d, pieSegmentPullOut);
@@ -224,11 +224,12 @@
 		}
 		function innerLabelEnter(d)
 		{
+			d3.selectAll(".infoTextBox").attr("opacity", 1);
 			d3.selectAll("." + d.data.name)
 				.transition()
 				.duration(500)
 				.style("opacity", 1);
-			text.text("");
+			text.text(d.data.count + "/" + total + " " + units);
 			infoName.text("More information about:" + " " + d.data.name);
 			infoContent1.text("Count 1:" + " " + d.data.count1);
 			infoContent2.text("Count 2:" + " " + d.data.count2);
@@ -238,14 +239,12 @@
 		}
 		function innerLabelExit(d)
 		{
+			d3.selectAll(".infoTextBox").attr("opacity", 0);
 			d3.selectAll("." + d.data.name)
 				.transition()
 				.duration(100)
 				.style("opacity", 0);
 			text.text(total + " " + units);
-			infoName.text("");
-			infoContent1.text("");
-			infoContent2.text("");
 			bottomText.text("");
 			labelText.text("");
 		}
