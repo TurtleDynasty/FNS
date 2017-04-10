@@ -171,21 +171,23 @@
 		var currentPie = null;
 		function addPieSegments()
 		{
+			var baseOpacity = .95;
 			g.append("path")
 				.attr("d", arc)
-				.style("fill", function(d) {
+				.attr('opacity', baseOpacity)
+				.style("fill", function(d)  {
 					return color(d.data.name);
 				})
-				.on("mouseenter", function(d) {
+				.on("mouseenter", function(d)  {
+					d3.select(this).attr('opacity', 1);
 					currentPie = this;
-					innerLabelEnter(d);
 					d3.select(currentPie)
 						.transition()
 						.duration(piePullOutDuration)
 						.attr("d", arcOver);
 				})
-				.on("mouseout", function(d) {
-					innerLabelExit(d);
+				.on("mouseout", function(d)  {
+					d3.select(this).attr('opacity', baseOpacity);
 					d3.select(this)
 						.transition()
 						.duration(piePullOutDuration)
@@ -304,7 +306,7 @@
 			return data;
 		}
 		//your visual title here
-		d3.select("#vis-title").html("");
+		d3.select("#vis-title").html("Pie Chart V2");
 	}
 
 	init_visual();

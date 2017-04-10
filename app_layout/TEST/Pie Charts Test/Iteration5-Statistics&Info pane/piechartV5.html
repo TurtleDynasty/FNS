@@ -170,25 +170,28 @@
 		});
 		function addPieSegments()
 		{
+			var baseOpacity = .95;
 			g.append("path")
 				.attr("d", arc)
-				.style("fill", function(d) {
+				.attr('opacity', baseOpacity)
+				.style("fill", function(d)  {
 					return color(d.data.name);
 				})
-				.on("mouseenter", function(d) {
-					addPieLabels(d);
-					addPieToLabelLine(d);
-					addPieLabelUnderLine(d);
-					innerLabelEnter(d);
-					changeArc(this, arcOver);
-					changeLine(d, pieSegmentPullOut);
-					drawInfoPane();
+				.on("mouseenter", function(d)  {
+					d3.select(this).attr('opacity', 1);
+					currentPie = this;
+					d3.select(currentPie)
+						.transition()
+						.duration(piePullOutDuration)
+						.attr("d", arcOver);
 				})
-				.on("mouseout", function(d) {
-					innerLabelExit(d);
-					changeArc(this, arc);
-					changeLine(d, 0);
-				})
+				.on("mouseout", function(d)  {
+					d3.select(this).attr('opacity', baseOpacity);
+					d3.select(this)
+						.transition()
+						.duration(piePullOutDuration)
+						.attr("d", arc);
+				});
 		}
 		function drawInfoPane()
 		{
@@ -422,7 +425,7 @@
 			return data;
 		}
 		//your visual title here
-		d3.select("#vis-title").html("Container Storage Test");
+		d3.select("#vis-title").html("Pie Chart V5");
 	}
 
 	init_visual();
