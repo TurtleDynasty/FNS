@@ -164,10 +164,11 @@
 				.enter().append("g")
 				.attr("class", "arc");
 
-			addPieSegments();
+
 			addPieLabels();
 			addPieToLabelLine();
 			addPieLabelUnderLine();
+			addPieSegments();
 			moveGraphToCenter();
 			createTextBoxes(g);
 			setTextBoxes(data);
@@ -216,11 +217,6 @@
 				.transition()
 				.duration(piePullOutDuration)
 				.attr("d", arc);
-		}
-		function changeLine(d, offset)
-		{
-			className = "." + d.data.name;
-			d3.select(className).moveToBack();
 		}
 		function addPieLabels()
 		{

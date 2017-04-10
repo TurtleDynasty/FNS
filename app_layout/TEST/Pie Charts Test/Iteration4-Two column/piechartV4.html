@@ -161,10 +161,11 @@
 				.enter().append("g")
 				.attr("class", "arc");
 
-			addPieSegments();
+
 			addPieLabels();
 			addPieToLabelLine();
 			addPieLabelUnderLine();
+			addPieSegments();
 			moveGraphToCenter();
 			createTextBoxes(g);
 			setTextBoxes(data);
@@ -179,16 +180,15 @@
 					return color(d.data.name);
 				})
 				.on("mouseenter", function(d)  {
-					d3.select(this).attr('opacity', 1);
-					currentPie = this;
-					d3.select(currentPie)
+					d3.select(this)
+						.attr('opacity', 1)
 						.transition()
 						.duration(piePullOutDuration)
 						.attr("d", arcOver);
 				})
 				.on("mouseout", function(d)  {
-					d3.select(this).attr('opacity', baseOpacity);
 					d3.select(this)
+						.attr('opacity', baseOpacity)
 						.transition()
 						.duration(piePullOutDuration)
 						.attr("d", arc);
@@ -212,11 +212,6 @@
 				.transition()
 				.duration(piePullOutDuration)
 				.attr("d", arc);
-		}
-		function changeLine(d, offset)
-		{
-			className = "." + d.data.name;
-			d3.select(className).moveToBack();
 		}
 		function addPieLabels()
 		{
