@@ -225,7 +225,9 @@
 				.duration(500)
 				.style("opacity", 1);
 			text.text("");
-			infoText.text(d.data.name);
+			infoName.text("More information about:" + " " + d.data.name);
+			infoContent1.text("Count 1:" + " " + d.data.count1);
+			infoContent2.text("Count 2:" + " " + d.data.count2);
 			bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
 			labelText.text(d.data.name);
 
@@ -234,10 +236,12 @@
 		{
 			d3.selectAll("." + d.data.name)
 				.transition()
-				.duration(500)
+				.duration(100)
 				.style("opacity", 0);
 			text.text(total + " " + units);
-			infoText.text("");
+			infoName.text("");
+			infoContent1.text("");
+			infoContent2.text("");
 			bottomText.text("");
 			labelText.text("");
 		}
@@ -395,10 +399,26 @@
 				.attr("class", "on")
 				.text(" ");
 
-			infoText = g.append("text")
-			.attr("x", -width/2.5)
-			.attr("y", -height/2.5)
-			.style("text-anchor", "middle")
+			infoName = g.append("text")
+			.attr("x", -width/2.01)
+			.attr("y", -height/2.1)
+			.style("text-anchor", "start")
+			.style("fill", "black")
+			.style("font-size", labelFontSize)
+			.text(" ");
+
+			infoContent1 = g.append("text")
+			.attr("x", -width/2.01)
+			.attr("y", -height/2.1 + 20)
+			.style("text-anchor", "start")
+			.style("fill", "black")
+			.style("font-size", labelFontSize)
+			.text(" ");
+
+			infoContent2 = g.append("text")
+			.attr("x", -width/2.01)
+			.attr("y", -height/2.1 + 40)
+			.style("text-anchor", "start")
 			.style("fill", "black")
 			.style("font-size", labelFontSize)
 			.text(" ");
