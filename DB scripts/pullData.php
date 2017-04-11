@@ -36,9 +36,9 @@
 	}
 	$csv = array_map('str_getcsv', file('queryList.csv'));
 	$database = $csv[$queryNumber][1];
-	$username = "FNS";
-	$password = "datvis";
-	$host = "127.0.0.1";
+	$username = "capstone-datavis";//FNS
+	$password = "Fns1234";//datvis
+	$host = "mysql.cefns.nau.edu";//127.0.0.1
 	$myquery =  $csv[$queryNumber][2];
 	$header =  $csv[$queryNumber][3];
 	$server = mysql_connect($host, $username, $password);
