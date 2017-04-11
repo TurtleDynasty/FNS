@@ -154,7 +154,8 @@
 
 			squareRadius = Math.sqrt((heatMapWidth * heatMapHeight / classes.length));
 			squareRadius -= squarePadding;
-			for(i = 0; i < classes.length; i++)
+			var classLength = classes.length;
+			for(i = 0; i < classLength; i++)
 			{
 				svg.append("rect")
 					.classed(grabColor(classes[i]["value"])[1], true)
@@ -256,7 +257,7 @@
 					list.push(this)
 					if (list.length == 4)
 					{
-						for (i = 0; i < list.length; i++)
+						for (i = 0; i < 4; i++)
 						{
 							d3.select(list[i]).remove();
 						}
@@ -307,8 +308,10 @@
 		}
 		function drawLegend()
 		{
-			var increment = ((heatMapHeight - infoTileSize) / squareColors.length+10);
-			for (i = 0; i < squareColors.length; i++)
+
+			var squareColorsLength = squareColors.length;
+			var increment = ((heatMapHeight - infoTileSize) / squareColorsLength+10);
+			for (i = 0; i < squareColorsLength; i++)
 			{
 				svg.append("rect")
 					.classed("legend", true)

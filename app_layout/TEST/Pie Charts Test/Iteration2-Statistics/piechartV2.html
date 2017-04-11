@@ -259,7 +259,8 @@
 		function convertToArray(original)
 		{
 			var result = [];
-			for(i = 0; i < original.length; i++)
+			var originalLength = original.length;
+			for(i = 0; i < originalLength; i++)
 			{
 				result.push(original[i].name);
 			}
@@ -272,11 +273,12 @@
 			var copy = original.slice(0);
 
 			// first loop goes over every element
-			for (var i = 0; i < original.length; i++)
+			var originalLength = original.length;
+			for(var i = 0; i < originalLength; i++)
 			{
 				var myCount = 0;
 				// loop over every element in the copy and see if it's the same
-				for (var w = 0; w < copy.length; w++)
+				for(var w = 0; w < copy.length; w++)
 				{
 					if (original[i] == copy[w])
 					{

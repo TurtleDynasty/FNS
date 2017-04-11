@@ -135,6 +135,8 @@
 					.classed("dragBar", true)
 					.attr("x", firstX)
 					.attr("y", firstY)
+					.attr("rx", 5)
+					.attr("ry", 5)
 					.attr("width", 0)
 					.attr("height", 0)
 					.call(drag)
@@ -175,8 +177,8 @@
 				d3.select(".dragBar").attr("height", Math.abs(dragHeight));
 			})
 			.on('end', function() {
-
-				for (i = 0; i < inDragBox.length; i++)
+				var dragBoxLength = inDragBox.length;
+				for (i = 0; i < dragBoxLength; i++)
 				{
 					inDragBox[i].style("stroke-width", 0);
 				}

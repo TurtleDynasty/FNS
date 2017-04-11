@@ -193,7 +193,8 @@
 		function convertToArray(original)
 		{
 			var result = [];
-			for(i = 0; i < original.length; i++)
+			var originalLength = original.length;
+			for(i = 0; i < originalLength; i++)
 			{
 				result.push(original[i].name);
 			}
@@ -207,11 +208,11 @@
 			var copy = original.slice(0);
 
 			// first loop goes over every element
-			for (var i = 0; i < original.length; i++)
+			var originalLength = original.length;
+			for (var i = 0; i < originalLength; i++)
 			{
 				var myCount = 0;
 				// loop over every element in the copy and see if it's the same
-
 				for (var w = 0; w < copy.length; w++)
 				{
 					if (original[i] == copy[w])
@@ -235,14 +236,7 @@
 		}
 		function customFilterData(data)
 		{
-			// Custom data filters go here.
-			var copy = []
-			for(i = 0; i < data.length; i++)
-			{
-				// Filter goes here. console.log(data[i]) to know the poperties of said data
-				copy.push(data[i]);
-			}
-			return copy;
+			return data;
 		}
 		//your visual title here
 		d3.select("#vis-title").html("Pie Chart V1");

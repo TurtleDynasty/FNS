@@ -226,8 +226,6 @@
 		{
 			d3.selectAll(".infoTextBox").attr("opacity", 1);
 			d3.selectAll("." + d.data.name)
-				.transition()
-				.duration(500)
 				.style("opacity", 1);
 			text.text(d.data.count + "/" + total + " " + units);
 			infoName.text("More information about:" + " " + d.data.name);
@@ -241,8 +239,6 @@
 		{
 			d3.selectAll(".infoTextBox").attr("opacity", 0);
 			d3.selectAll("." + d.data.name)
-				.transition()
-				.duration(100)
 				.style("opacity", 0);
 			text.text(total + " " + units);
 			bottomText.text("");
@@ -422,10 +418,11 @@
 		function compressArray(original)
 		{
 			var copy = [original[0]]
-			for(i = 1; i < original.length; i++)
+			var originalLength = original.length;
+			for(i = 1; i < originalLength; i++)
 			{
 				var notFound = true;
-				for (j = 0; j < copy.length; j ++)
+				for(j = 0; j < copy.length; j ++)
 				{
 					if (original[i].name == copy[j].name)
 					{

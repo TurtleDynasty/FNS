@@ -239,8 +239,8 @@
 			// Scale the range of the data in the domains
 			x.domain(data.map(function(d) { return d.name; }));
 			y.domain([0, d3.max(data, function(d) { return maxNumber(d); })]);
-
-			for(i = 0; i < data.length; i++)
+			var dataLength = data.length;
+			for(i = 0; i < dataLength; i++)
 			{
 				addBar(data[i].name, x(data[i].name), y(data[i].value4), y(data[i].value3)-y(data[i].value4), colors[3], "bar4");
 				addBar(data[i].name, x(data[i].name), y(data[i].value3), y(data[i].value2)-y(data[i].value3), colors[2], "bar3");
@@ -259,7 +259,8 @@
 			var barList2 = d3.selectAll("." + bar2)["_groups"][0];
 			console.log(barList1);
 			console.log(barList2);
-			for(i = 0; i < barList1.length; i++)
+			var barListLength = barList1.length;
+			for(i = 0; i < barListLength; i++)
 			{
 				console.log("here");
 				var bar1Y = barList1[i]["y"]["baseVal"]["value"];
