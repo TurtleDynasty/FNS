@@ -88,23 +88,99 @@
 		var xAxisLabel = "File Space ID" + xUnit;
 		var yUnit = "bytes";
 		var yAxisLabel = "Actual Size (" + yUnit + ")";
-		// set the dimensions and margins of the graph
-		var margin = {top: 50, right: 50, bottom: 50, left: 50};
-
+		var legendWidth = 100;
 		// set the ranges
 		var x = d3.scaleBand()
-			.range([labelOffset, width])
+			.range([labelOffset, width-legendWidth])
 			.padding(0.1);
 		var y = d3.scaleLinear()
 			.range([height, labelOffset + 10]);
+		var colors = ["red", "blue", "cyan", "gold"];
+		function getValue(data, total)
+		{
+			if (totalMode)
+			{
+				console.log("here1")
+				return total;
+			}
+			else
+			{
+				return data;
+			}
+		}
+		var start = width-legendWidth + labelOffset/2;
+		var end = width-legendWidth + labelOffset;
+		var drag = d3.drag()
+			.on('start', function()
+			{
+				d3.select(this)
+					.transition()
+					.duration(250)
+					.attr('x', end);
+			})
+			.on('drag', function()
+			{
+				d3.select(this)
+					.attr('y', function ()
+					{
+						var y = parseFloat(d3.select(this).attr('y'));
+						if (y > height-labelOffset)
+						{
+							return height-labelOffset;
+						}
+						else if ( y < -labelOffset)
+						{
+							return -labelOffset;
+						}
+						return d3.event.y
+					});
+			})
+			.on('end', function()
+			{
+				d3.select(this)
+					.transition()
+					.delay(250)
+					.duration(250)
+					.attr('x', start);
+			});
+		function createLegend()
+		{
+			svg.append("text")
+				.attr("class", "legendLabel")
+				.attr("y", 20)
+				.attr("x", width-legendWidth-1)
+				.text("Stack Ordering:");
 
-		// append the svg object to the body of the page
-		// append a 'group' element to 'svg'
-		// moves the 'group' element to the top left margin
+			var increment = (height-labelOffset) / (stackNum+1);
+			var spacing = 20;
+			for(i = 0; i < stackNum; i ++)
+			{
+				svg.append("rect")
+					.classed("legendBar", true)
+					.classed("Lbar"+i, true)
+					.attr("rx", 10)
+					.attr("ry", 10)
+					.attr("x", start)
+					.attr("y", (stackNum - i - 1)* increment + spacing*(stackNum - i - 1) + 40)
+					.attr("width", labelOffset/2.5)
+					.attr("height", increment)
+					.style("fill", colors[i])
+					.style("stroke", "black")
+					.style("stroke-width", 2)
+					.call(drag)
+					.on("click", function ()
+					{
+						console.log(this);
+					})
+			}
 
+		}
 		// get the data
+		order = [ "bar1", "bar2", "bar3", "bar4"];
 		var stackOrder;
-		var stackNum = 1; // default is one, will be changed if addition columns are present
+		var totalMode = false;
+		var sortMode = true;
+		var stackNum = 1; // default is one, will be changed  if addition columns are present
 		d3.csv("data.csv", function(error, data) {
 			if (error)
 			{
@@ -114,25 +190,36 @@
 			// format the data
 			data.forEach(function(d)
 			{
+				var total = 0;
 				d.value1 = +d.value1;
+				total += d.value1;
 				if (!isNaN(d.value2))
 				{
 					stackNum = 2;
-					d.value2 = +d.value2;
+					total += +d.value2;
+					d.value2 = getValue(+d.value2, total);
 				}
 				if (!isNaN(d.value3))
 				{
 					stackNum = 3;
-					d.value3 = +d.value3;
+					total += +d.value3;
+					d.value3 = getValue(+d.value3, total);
 				}
 				if (!isNaN(d.value4))
 				{
 					stackNum = 4;
-					d.value4 = +d.value4;
+					total += +d.value4;
+					d.value4 = getValue(+d.value4, total);
 				}
+				d.total = total;
 			});
 			function maxNumber(data)
 			{
+				if (totalMode)
+				{
+					console.log(data.total)
+					return data.total;
+				}
 				switch (stackNum)
 				{
 					case 1:
@@ -153,26 +240,19 @@
 			x.domain(data.map(function(d) { return d.name; }));
 			y.domain([0, d3.max(data, function(d) { return maxNumber(d); })]);
 
-			// append the rectangles for the bar chart
-			svg.append("g")
-			.attr("class", function (d)
+			for(i = 0; i < data.length; i++)
 			{
-				for(i = 0; i < data.length; i++)
-				{
-					addBar(data[i].name, x(data[i].name), y(data[i].value4), y(data[i].value3)-y(data[i].value4), "orange", "bar4");
-					addBar(data[i].name, x(data[i].name), y(data[i].value3), y(data[i].value2)-y(data[i].value3), "cyan", "bar3");
-					addBar(data[i].name, x(data[i].name), y(data[i].value2), y(data[i].value1)-y(data[i].value2), "blue", "bar2");
-					addBar(data[i].name, x(data[i].name), y(data[i].value1), height - y(data[i].value1), "red", "bar1");
-				}
-				return "garbage";
-
-			})
-
+				addBar(data[i].name, x(data[i].name), y(data[i].value4), y(data[i].value3)-y(data[i].value4), colors[3], "bar4");
+				addBar(data[i].name, x(data[i].name), y(data[i].value3), y(data[i].value2)-y(data[i].value3), colors[2], "bar3");
+				addBar(data[i].name, x(data[i].name), y(data[i].value2), y(data[i].value1)-y(data[i].value2), colors[1], "bar2");
+				addBar(data[i].name, x(data[i].name), y(data[i].value1), height - y(data[i].value1), colors[0], "bar1");
+			}
 			createXAxis();
 			createYAxis();
+			createLegend();
 		});
 		// svg.selectAll(".class1, class2, #id2")
-		function swapBars(bar1, bar2, toggle)
+		function swapBars(bar1, bar2)
 		{
 			console.log(bar1 + " -> " + bar2);
 			var barList1 = d3.selectAll("." + bar1)["_groups"][0];
@@ -207,7 +287,6 @@
 			// add X Axis label
 			svg.append("text")
 				.attr("class", "axisLabel")
-				.attr("transform", "rotate(0)")
 				.attr("y", height -labelOffset/2)
 				.attr("x", width/2)
 				.attr("dy", "1em")
@@ -237,6 +316,8 @@
 				.classed('bars', true)
 				.classed(className, true)
 				.classed(name, true)
+				.attr("rx", 10)
+				.attr("ry", 10)
 				.attr("x", function(d) {
 					return xCord;
 				})
@@ -247,6 +328,8 @@
 				.attr("height", function(d) {
 					return barHeight;
 				})
+				.style("stroke", "black")
+				.style("stroke-width", 1)
 				.style("fill", color);
 		}
 		//your visual title here

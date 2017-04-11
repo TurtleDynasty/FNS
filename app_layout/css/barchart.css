@@ -13,6 +13,12 @@ text.axisLabel
 	text-anchor: middle;
 	pointer-events: none;
 }
+text.legendLabel
+{
+	font-size: 20px;
+	text-anchor: start;
+	pointer-events: none;
+}
 .axis path
 {
 	stroke: black;
