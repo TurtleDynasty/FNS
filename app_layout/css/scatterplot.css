@@ -1,0 +1,62 @@
+rect.dragBar
+{
+	fill: CornflowerBlue;
+	fill-opacity: .45;
+}
+svg
+{
+	top:0%;
+	bottom:100%;
+	left: 0%;
+	right: 100%;
+	transform:scale(1,1);
+	transform:translate(0%,0%);
+}
+text.axisLabel
+{
+	font-size: 20px;
+	text-anchor: middle;
+	pointer-events: none;
+}
+.axis path
+{
+	stroke: black;
+	fill-opacity: 0;
+	stroke-width: 2;
+	pointer-events: none;
+}
+.axis line
+{
+	stroke: black;
+	stroke-width: 2;
+	pointer-events: none;
+}
+.axis text
+{
+	fill: black;
+	font-size: 12px;
+	pointer-events: none;
+}
+rect.legend
+{
+	stroke-width: 2;
+}
+text.legend
+{
+	text-anchor: end;
+	font-size: 11px;
+	pointer-events: none;
+}
+.tooltip
+{
+	position: absolute;
+	text-align: center;
+	width: auto;
+	height: auto;
+	padding: 2px;
+	font: 12px sans-serif;
+	background: lightsteelblue;
+	border: 0px;
+	border-radius: 8px;
+	pointer-events: none;
+}

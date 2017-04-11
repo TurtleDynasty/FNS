@@ -29,12 +29,7 @@
 		"translate(" + 100 + "," + 100 + ")");
 	var start = 50;
 	var end = 0;
-	function subject(d)
-	{
-		return { x: d3.event.x, y: d3.event.y };
-	};
 	var drag = d3.drag()
-		.subject(subject)
 		.on('start', function()
 		{
 			d3.select(this)

@@ -9,6 +9,7 @@
 	<link href="../../css/utility.css" rel="stylesheet">
 	<link href="../../css/dashboard.css" rel="stylesheet">
 	<link href="../../css/DragEvent.css" rel="stylesheet">
+	<link href="../../css/scatterplot.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="../../dist/d3.js"></script>
 
@@ -98,8 +99,6 @@
 		var xAxisLabel = "File Space ID" + xUnit;
 		var yUnit = "bytes";
 		var yAxisLabel = "Actual Size (" + yUnit + ")";
-		var labelFontSize = "20px";
-		var tickFontSize = "15px";
 		// setup x
 		var xValue = function(d) { return d.X;}, // data -> value
 			xScale = d3.scaleLinear().range([labelPadding, width-legendWidth]), // value -> display
@@ -136,10 +135,10 @@
 					.classed("dragBar", true)
 					.attr("x", firstX)
 					.attr("y", firstY)
+					.attr("rx", 5)
+					.attr("ry", 5)
 					.attr("width", 0)
 					.attr("height", 0)
-					.style("fill", "CornflowerBlue")
-					.style("fill-opacity", .45)
 					.call(drag)
 					.on("click", function ()
 					{
@@ -178,8 +177,8 @@
 				d3.select(".dragBar").attr("height", Math.abs(dragHeight));
 			})
 			.on('end', function() {
-
-				for (i = 0; i < inDragBox.length; i++)
+				var dragBoxLength = inDragBox.length;
+				for (i = 0; i < dragBoxLength; i++)
 				{
 					inDragBox[i].style("stroke-width", 0);
 				}
@@ -245,36 +244,22 @@
 			createYAxis();
 			drawDots(data);
 			drawLegend();
-			formatAxis();
 		});
-		function formatAxis()
-		{
-			d3.selectAll(".xAxis>.tick>text")
-			  .each(function(d, i){
-			    d3.select(this).style("font-size", tickFontSize);
-  			});
-			d3.selectAll(".yAxis>.tick>text")
-			  .each(function(d, i){
-				d3.select(this).style("font-size", tickFontSize);
-			});
-		}
 		function createXAxis()
 		{
 			// x-axis
 			svg.append("g")
-				.attr("class", "xAxis")
+				.attr("class", "axis")
 				.attr("transform", "translate(0," + (height-labelPadding) + ")")
 				.call(d3.axisBottom(xScale).tickPadding([10]))
 
 			// add X Axis label
 			svg.append("text")
-					.attr("class", "label")
+					.attr("class", "axisLabel")
 					.attr("transform", "rotate(0)")
 					.attr("y", height-labelPadding/2 + 10 )
 					.attr("x", width/2)
 					.attr("dy", "1em")
-					.style("font-size", labelFontSize)
-					.style("text-anchor", "middle")
 					.text(xAxisLabel);
 		}
 		function createYAxis()
@@ -282,18 +267,16 @@
 			// y-axis
 			svg.append("g")
 				.call(d3.axisLeft(yScale).tickPadding([15]))
-				.attr("class", "yAxis")
+				.attr("class", "axis")
 				.attr("transform", "translate(" + labelPadding + ",0)")
 
 			// add Y Axis label
 			svg.append("text")
-					.attr("class", "label")
+					.attr("class", "axisLabel")
 					.attr("transform", "rotate(-90)")
 					.attr("y", -10)
 					.attr("x", -height/2)
 					.attr("dy", ".75em")
-					.style("font-size", labelFontSize)
-					.style("text-anchor", "middle")
 					.text(yAxisLabel);
 		}
 		function drawDots(data)
@@ -359,7 +342,8 @@
 			var i = 0;
 			// draw legend colored rectangles
 			legend.append("rect")
-				.attr("class", color)
+				.classed(color, true)
+				.classed("legend", true)
 				.attr("fill-opacity", 1)
 				.attr("x", width - legendTileSize)
 				.attr("y", function ()
@@ -372,7 +356,6 @@
 				.attr("width", legendTileSize)
 				.attr("height", legendTileSize)
 				.style("stroke", color)
-				.style("stroke-width", 2)
 				.style("fill", color)
 				.on("click", function (d)
 				{
@@ -406,19 +389,19 @@
 			var i = 0;
 			// draw legend text
 			legend.append("text")
+				.classed("legend", true)
 				.attr("x", width - legendTileSize - 7)
 				.attr("y", function () {
 					i += 1;
 					return i * legendTileSize;
 				})
 				.attr("dy", legendTileSize/2 + 1)
-				.style("text-anchor", "end")
 				.text(function(d) {
 					return d;
 				})
 		}
 		//your visual title here
-		d3.select("#vis-title").html("");
+		d3.select("#vis-title").html("Scatter Plot V1");
 	}
 
 	init_visual();

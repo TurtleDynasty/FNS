@@ -8,6 +8,7 @@
 	<link href="../../../dist/bootstrap.min.css" rel="stylesheet">
 	<link href="../../../css/utility.css" rel="stylesheet">
 	<link href="../../../css/dashboard.css" rel="stylesheet">
+	<link href="../../../css/piechart.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="../../../dist/d3.js"></script>
 </head>
@@ -88,19 +89,12 @@
 
 		var innerRadius = Math.min(width, height) / 4;
 		var outerRadius = Math.min(width, height) / 3 - pieSegmentPullOut;
-
-
-
-		// ---- label Text STUFF
-		var labelFontSize = "14px"
-
+		var cornerRadius = 7.5;
 		// -------------------
 		// ---- Inner Text STUFF
 		var units = "objects";
 
 		var numDecimalPlaces = 3;
-
-		var innerFontSize = "20px";
 
 		var labelXOffset = "0em";
 		var labelYOffset = "-.5em";
@@ -124,11 +118,13 @@
 
 		var arc = d3.arc()
 			.innerRadius(innerRadius)
-			.outerRadius(outerRadius);
+			.outerRadius(outerRadius)
+			.cornerRadius(cornerRadius);;
 
 		var arcOver = d3.arc()
 			.innerRadius(innerRadius)
-			.outerRadius(outerRadius + pieSegmentPullOut);
+			.outerRadius(outerRadius + pieSegmentPullOut)
+			.cornerRadius(cornerRadius);;
 
 		var labelArc = d3.arc()
 			.innerRadius(innerRadius)
@@ -139,7 +135,15 @@
 			.value(function(d) {
 				return d.count;
 			});
-
+		d3.selection.prototype.moveToBack = function()
+		{
+		    return this.each(function() {
+		        var firstChild = this.parentNode.firstChild;
+		        if (firstChild) {
+		            this.parentNode.insertBefore(this, firstChild);
+		        }
+		    });
+		};
 		function type(d)
 		{
 			d.count = +d.count;
@@ -162,10 +166,11 @@
 				.enter().append("g")
 				.attr("class", "arc");
 
-			addPieSegments();
+
 			addPieLabels();
 			addPieToLabelLine();
 			addPieLabelUnderLine();
+			addPieSegments();
 			moveGraphToCenter();
 			createTextBoxes(g);
 			setTextBoxes(data);
@@ -173,20 +178,26 @@
 
 		function addPieSegments()
 		{
+			var baseOpacity = .95;
 			g.append("path")
 				.attr("d", arc)
-				.style("fill", function(d) {
+				.attr('opacity', baseOpacity)
+				.style("fill", function(d)  {
 					return color(d.data.name);
 				})
-				.on("mouseenter", function(d) {
-					innerLabelEnter(d);
-					changeArc(this, arcOver);
-					changeLine(d, pieSegmentPullOut);
+				.on("mouseenter", function(d)  {
+					d3.select(this)
+						.attr('opacity', 1)
+						.transition()
+						.duration(piePullOutDuration)
+						.attr("d", arcOver);
 				})
-				.on("mouseout", function(d) {
-					innerLabelExit(d);
-					changeArc(this, arc);
-					changeLine(d, 0);
+				.on("mouseout", function(d)  {
+					d3.select(this)
+						.transition()
+						.duration(piePullOutDuration)
+						.attr("d", arc)
+						.attr('opacity', baseOpacity);
 				});
 		}
 		function innerLabelEnter(d)
@@ -208,26 +219,11 @@
 				.duration(piePullOutDuration)
 				.attr("d", arc);
 		}
-		function changeLine(d, offset)
-		{
-			className = "." + d.data.name;
-			d3.select(className)
-				.transition()
-				.duration(piePullOutDuration)
-				.attr("x1", function(d) {
-					var a = calculateAngle(d);
-					return Math.cos(a) * (lineToLabelStart + offset);
-				})
-				.attr("y1", function(d) {
-					var a = calculateAngle(d);
-					return Math.sin(a) * (lineToLabelStart + offset);
-				})
-		}
 		function addPieLabels()
 		{
 			// text
 			g.append("text")
-				.attr("text-anchor", "middle")
+				.classed("labelTextBox", true)
 				.attr("x", function(d) {
 					var a = calculateAngle(d);
 					var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
@@ -238,7 +234,6 @@
 					return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
 
 				})
-				.style("font-size", labelFontSize)
 				.text(function(d) {
 					return d.data.name;
 				});
@@ -266,8 +261,6 @@
 					var a = calculateAngle(d);
 					return Math.sin(a) * (outerRadius + lineToLabelEnd);
 				})
-				.style("stroke-width", 2)
-				.style("stroke", "black");
 		}
 
 		function addPieLabelUnderLine()
@@ -291,8 +284,6 @@
 					var a = calculateAngle(d);
 					return Math.sin(a) * (outerRadius + lineToLabelEnd);
 				})
-				.style("stroke-width", 2)
-				.style("stroke", "black");
 		}
 		function calculateAngle(data)
 		{
@@ -316,31 +307,21 @@
 		function createTextBoxes(g)
 		{
 			text = g.append("text")
-				.attr("transform", 0)
+				.classed("statTextBox", true)
 				.attr("dx", topXOffset)
 				.attr("dy", topYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 
 			bottomText = g.append("text")
+				.classed("statTextBox", true)
 				.attr("dx", bottomXOffset)
 				.attr("dy", bottomYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 
 			labelText = g.append("text")
+				.classed("statTextBox", true)
 				.attr("dx", labelXOffset)
 				.attr("dy", labelYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 		}
 		function setTextBoxes(data)
@@ -358,7 +339,8 @@
 		function convertToArray(original)
 		{
 			var result = [];
-			for(i = 0; i < original.length; i++)
+			var originalLength = original.length;
+			for(i = 0; i < originalLength; i++)
 			{
 				result.push(original[i].name);
 			}
@@ -372,12 +354,13 @@
 			var copy = original.slice(0);
 
 			// first loop goes over every element
-			for (var i = 0; i < original.length; i++)
+			var originalLength = original.length;
+			for(var i = 0; i < originalLength; i++)
 			{
 				var myCount = 0;
 				// loop over every element in the copy and see if it's the same
 
-				for (var w = 0; w < copy.length; w++)
+				for(var w = 0; w < copy.length; w++)
 				{
 					if (original[i] == copy[w])
 					{
@@ -406,7 +389,7 @@
 			return data;
 		}
 		//your visual title here
-		d3.select("#vis-title").html("");
+		d3.select("#vis-title").html("Pie Chart V3");
 	}
 
 	init_visual();

@@ -8,8 +8,12 @@
 	<link href="../../../dist/bootstrap.min.css" rel="stylesheet">
 	<link href="../../../css/utility.css" rel="stylesheet">
 	<link href="../../../css/dashboard.css" rel="stylesheet">
+	<link href="../../../css/piechart.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="../../../dist/d3.js"></script>
+	<style>
+
+	</style>
 </head>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="../../../dist/underscore-min.js" type="text/javascript"></script>
@@ -88,17 +92,13 @@
 
 		var innerRadius = Math.min(width, height) / 3;
 		var outerRadius = Math.min(width, height) / 2 - pieSegmentPullOut;
-
-		// ---- label Text STUFF
-		var labelFontSize = "20px";
+		var cornerRadius = 7.5;
 
 		// -------------------
 		// ---- Inner Text STUFF
 		var units = "objects";
 
 		var numDecimalPlaces = 3;
-
-		var innerFontSize = "25px";
 
 		var labelXOffset = "0em";
 		var labelYOffset = "-.5em";
@@ -117,11 +117,13 @@
 
 		var arc = d3.arc()
 			.innerRadius(innerRadius)
-			.outerRadius(outerRadius);
+			.outerRadius(outerRadius)
+			.cornerRadius(cornerRadius);
 
 		var arcOver = d3.arc()
 			.innerRadius(innerRadius)
-			.outerRadius(outerRadius+pieSegmentPullOut);
+			.outerRadius(outerRadius+pieSegmentPullOut)
+			.cornerRadius(cornerRadius);
 
 		var labelArc = d3.arc()
 			.innerRadius(innerRadius)
@@ -167,21 +169,23 @@
 		var currentPie = null;
 		function addPieSegments()
 		{
+			var baseOpacity = .95;
 			g.append("path")
 				.attr("d", arc)
-				.style("fill", function(d) {
+				.attr('opacity', baseOpacity)
+				.style("fill", function(d)  {
 					return color(d.data.name);
 				})
-				.on("mouseenter", function(d) {
+				.on("mouseenter", function(d)  {
+					d3.select(this).attr('opacity', 1);
 					currentPie = this;
-					innerLabelEnter(d);
 					d3.select(currentPie)
 						.transition()
 						.duration(piePullOutDuration)
 						.attr("d", arcOver);
 				})
-				.on("mouseout", function(d) {
-					innerLabelExit(d);
+				.on("mouseout", function(d)  {
+					d3.select(this).attr('opacity', baseOpacity);
 					d3.select(this)
 						.transition()
 						.duration(piePullOutDuration)
@@ -197,11 +201,11 @@
 		function addPieLabels()
 		{
 			g.append("text")
+				.classed("labelTextBox", true)
 				.attr("transform", function(d) {
 					return "translate(" + labelArc.centroid(d) + ")";
 				})
 				.attr("dy", ".35em")
-				.style("font-size", labelFontSize)
 				.text(function(d) {
 					return d.data.name;
 				})
@@ -222,30 +226,21 @@
 		function createTextBoxes(g)
 		{
 			text = g.append("text")
+				.classed("statTextBox", true)
 				.attr("dx", topXOffset)
 				.attr("dy", topYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 
 			bottomText = g.append("text")
+				.classed("statTextBox", true)
 				.attr("dx", bottomXOffset)
 				.attr("dy", bottomYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 
 			labelText = g.append("text")
+				.classed("statTextBox", true)
 				.attr("dx", labelXOffset)
 				.attr("dy", labelYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 		}
 		function setTextBoxes(data)
@@ -264,7 +259,8 @@
 		function convertToArray(original)
 		{
 			var result = [];
-			for(i = 0; i < original.length; i++)
+			var originalLength = original.length;
+			for(i = 0; i < originalLength; i++)
 			{
 				result.push(original[i].name);
 			}
@@ -277,11 +273,12 @@
 			var copy = original.slice(0);
 
 			// first loop goes over every element
-			for (var i = 0; i < original.length; i++)
+			var originalLength = original.length;
+			for(var i = 0; i < originalLength; i++)
 			{
 				var myCount = 0;
 				// loop over every element in the copy and see if it's the same
-				for (var w = 0; w < copy.length; w++)
+				for(var w = 0; w < copy.length; w++)
 				{
 					if (original[i] == copy[w])
 					{
@@ -309,7 +306,7 @@
 			return data;
 		}
 		//your visual title here
-		d3.select("#vis-title").html("");
+		d3.select("#vis-title").html("Pie Chart V2");
 	}
 
 	init_visual();

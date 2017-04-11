@@ -8,6 +8,7 @@
 	<link href="../../../dist/bootstrap.min.css" rel="stylesheet">
 	<link href="../../../css/utility.css" rel="stylesheet">
 	<link href="../../../css/dashboard.css" rel="stylesheet">
+	<link href="../../../css/piechart.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="../../../dist/d3.js"></script>
 </head>
@@ -94,6 +95,7 @@
 
 		var innerRadius = Math.min(width, height) / 4;
 		var outerRadius = Math.min(width, height) / 3 - pieSegmentPullOut;
+		var cornerRadius = 7.5;
 
 		// ---- label Text STUFF
 		var labelFontSize = "14px"
@@ -128,10 +130,12 @@
 
 		var arc = d3.arc()
 			.innerRadius(innerRadius)
-			.outerRadius(outerRadius);
+			.outerRadius(outerRadius)
+			.cornerRadius(cornerRadius);
 		var arcOver = d3.arc()
 			.innerRadius(innerRadius)
-			.outerRadius(outerRadius + pieSegmentPullOut);
+			.outerRadius(outerRadius + pieSegmentPullOut)
+			.cornerRadius(cornerRadius);
 		var labelArc = d3.arc()
 			.innerRadius(innerRadius)
 			.outerRadius(outerRadius);
@@ -149,7 +153,8 @@
 		}
 
 		var total = 0;
-
+		drawInfoPane();
+		hideInfoPane();
 		d3.csv("data.csv", type, function(error, data)
 		{
 			if (error)
@@ -170,58 +175,70 @@
 		});
 		function addPieSegments()
 		{
+			var baseOpacity = .95;
 			g.append("path")
 				.attr("d", arc)
-				.style("fill", function(d) {
+				.attr('opacity', baseOpacity)
+				.style("fill", function(d)  {
 					return color(d.data.name);
 				})
 				.on("mouseenter", function(d) {
-					addPieLabels(d);
+					d3.select(this).attr('opacity', 1);
 					addPieToLabelLine(d);
 					addPieLabelUnderLine(d);
+					addPieLabels(d, this);
 					innerLabelEnter(d);
 					changeArc(this, arcOver);
 					changeLine(d, pieSegmentPullOut);
-					drawInfoPane();
+					showInfoPane();
 				})
 				.on("mouseout", function(d) {
+					d3.select(this).attr('opacity', baseOpacity);
 					innerLabelExit(d);
 					changeArc(this, arc);
 					changeLine(d, 0);
-				})
+					hideInfoPane();
+				});
 		}
 		function drawInfoPane()
 		{
 			svg.append("rect")
+				.classed("infoPane", true)
 				.attr("x", -width/2)
 				.attr("y", -height/2)
 				.attr("rx", 5)
 				.attr("ry", 5)
 				.attr("width", width/4)
 				.attr("height", height/4)
-				.style("stroke", 'black')
-				.style("fill", 'white')
-				.on("click", function (d)
-				{
-					d3.select(this).remove();
-				});
+				.style("stroke", "black")
+				.style("fill", "white")
+				.style("fill-opacity", 0);
+		}
+		function showInfoPane()
+		{
+			d3.select(".infoPane").attr("opacity", 1);
+		}
+		function hideInfoPane()
+		{
+			d3.select(".infoPane").attr("opacity", 0);
 		}
 		function innerLabelEnter(d)
 		{
+			d3.selectAll(".infoTextBox").attr("opacity", 1);
 			d3.selectAll("." + d.data.name)
-				.transition()
-				.duration(500)
 				.style("opacity", 1);
 			text.text(d.data.count + "/" + total + " " + units);
+			infoName.text("More information about:" + " " + d.data.name);
+			infoContent1.text("Count 1:" + " " + d.data.count1);
+			infoContent2.text("Count 2:" + " " + d.data.count2);
 			bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
 			labelText.text(d.data.name);
 
 		}
 		function innerLabelExit(d)
 		{
+			d3.selectAll(".infoTextBox").attr("opacity", 0);
 			d3.selectAll("." + d.data.name)
-				.transition()
-				.duration(500)
 				.style("opacity", 0);
 			text.text(total + " " + units);
 			bottomText.text("");
@@ -249,7 +266,7 @@
 					return Math.sin(a) * (lineToLabelStart + offset);
 				})
 		}
-		function addPieLabels(d)
+		function addPieLabels(d, objName)
 		{
 			// text
 			g.append("text")
@@ -297,9 +314,7 @@
 				.attr("y2", function(d) {
 					var a = calculateAngle(d);
 					return Math.sin(a) * (outerRadius + lineToLabelEnd);
-				})
-				.style("stroke-width", 2)
-				.style("stroke", "black");
+				});
 		}
 
 		function addPieLabelUnderLine(d)
@@ -327,9 +342,7 @@
 				.attr("y2", function(d) {
 					var a = calculateAngle(d);
 					return Math.sin(a) * (outerRadius + lineToLabelEnd);
-				})
-				.style("stroke-width", 2)
-				.style("stroke", "black");
+				});
 		}
 		function calculateAngle(data)
 		{
@@ -354,31 +367,40 @@
 		function createTextBoxes(g)
 		{
 			text = g.append("text")
+				.classed("statTextBox", true)
 				.attr("transform", 0)
 				.attr("dx", topXOffset)
 				.attr("dy", topYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 
 			bottomText = g.append("text")
+				.classed("statTextBox", true)
 				.attr("dx", bottomXOffset)
 				.attr("dy", bottomYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
 				.text(" ");
 
 			labelText = g.append("text")
+				.classed("statTextBox", true)
 				.attr("dx", labelXOffset)
 				.attr("dy", labelYOffset)
-				.style("text-anchor", "middle")
-				.style("fill", "black")
-				.style("font-size", innerFontSize)
-				.attr("class", "on")
+				.text(" ");
+
+			infoName = g.append("text")
+				.classed("infoTextBox", true)
+				.attr("x", -width/2.01)
+				.attr("y", -height/2.1)
+				.text(" ");
+
+			infoContent1 = g.append("text")
+				.classed("infoTextBox", true)
+				.attr("x", -width/2.01)
+				.attr("y", -height/2.1 + 20)
+				.text(" ");
+
+			infoContent2 = g.append("text")
+				.classed("infoTextBox", true)
+				.attr("x", -width/2.01)
+				.attr("y", -height/2.1 + 40)
 				.text(" ");
 		}
 		function setTextBoxes(data)
@@ -396,10 +418,11 @@
 		function compressArray(original)
 		{
 			var copy = [original[0]]
-			for(i = 1; i < original.length; i++)
+			var originalLength = original.length;
+			for(i = 1; i < originalLength; i++)
 			{
 				var notFound = true;
-				for (j = 0; j < copy.length; j ++)
+				for(j = 0; j < copy.length; j ++)
 				{
 					if (original[i].name == copy[j].name)
 					{
@@ -422,7 +445,7 @@
 			return data;
 		}
 		//your visual title here
-		d3.select("#vis-title").html("Container Storage Test");
+		d3.select("#vis-title").html("Pie Chart V5");
 	}
 
 	init_visual();

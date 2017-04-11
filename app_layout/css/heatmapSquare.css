@@ -1,0 +1,22 @@
+rect.backGround
+{
+	fill: black;
+	fill-opacity: .25
+}
+rect.dataPoint
+{
+	stroke: black;
+	stroke-width: 2;
+}
+text.infoNode
+{
+	fill: black;
+	text-anchor: middle;
+	font-size: 14px;
+}
+rect.infoNode
+{
+	fill: white;
+	stroke: black;
+	stroke-width: 2;
+}

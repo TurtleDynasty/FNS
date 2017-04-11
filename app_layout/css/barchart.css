@@ -1,0 +1,40 @@
+svg
+{
+	top:0%;
+	bottom:100%;
+	left: 0%;
+	right: 100%;
+	transform:scale(1,1);
+	transform:translate(0%,0%);
+}
+text.axisLabel
+{
+	font-size: 20px;
+	text-anchor: middle;
+	pointer-events: none;
+}
+text.legendLabel
+{
+	font-size: 20px;
+	text-anchor: start;
+	pointer-events: none;
+}
+.axis path
+{
+	stroke: black;
+	fill-opacity: 0;
+	stroke-width: 2;
+	pointer-events: none;
+}
+.axis line
+{
+	stroke: black;
+	stroke-width: 2;
+	pointer-events: none;
+}
+.axis text
+{
+	fill: black;
+	font-size: 14px;
+	pointer-events: none;
+}
