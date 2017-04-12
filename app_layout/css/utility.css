@@ -113,6 +113,10 @@
 | Misc
 \*************/
 
+.opacity-full{
+	opacity: 1;
+}
+
 .opacity-half{
 	opacity: 0.5;
 }
