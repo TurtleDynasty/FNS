@@ -975,419 +975,294 @@ function init_pool_test() {
 }
 
 function init_heatmap() {
-  var circleInView = {"darkblue": false,
-  					"blue": false,
-  					"seagreen": false,
-  					"Turquoise": false,
-  					"SpringGreen": false,
-  					"greenyellow": false,
-  					"yellow": false,
-  					"orange": false,
-  					"orangered":false,
-  					"red": false};
 
-  var circleColors = ["darkblue",
-  					"blue",
-  					"seagreen",
-  					"Turquoise",
-  					"SpringGreen",
-  					"greenyellow",
-  					"yellow",
-  					"orange",
-  					"orangered",
-  					"red"];
+var container = d3.select(".widget2").append("div").classed("svg-container", true);
+var width = parseInt(d3.select(".svg-container").style("width"));
+var height = parseInt(d3.select(".svg-container").style("height"));
+var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+25) + " " + (height+25));
 
-  var distro = ["0 - 10",
-  			"10 - 20",
-  			"20 - 30",
-  			"30 - 40",
-  			"40 - 50",
-  			"50 - 60",
-  			"60 - 70",
-  			"70 - 80",
-  			"80 - 90",
-  			"90 - 100"];
-
-  var container = d3.select(".widget2").append("div").classed("svg-container", true);
-  var width = parseInt(d3.select(".svg-container").style("width"));
-  var height = parseInt(d3.select(".svg-container").style("height"));
-  container.append("svg").classed("heatmap", true).attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100));
-  //.attr("width", widgetwidth - 32).attr("height", widgetheight + 87)
-  var svg = d3.select("svg");
-  var bubblePadding = 3;
-  var format = d3.format(",d");
-  var legendTileSize = 50;
-  var deletionCircleSize = 10;
-  var bubbleGraphYOffset = 0;
-  var infoBubblePadding = 15;
-  var infoBubbleFontSize = "10px";
-  var legendXTextPadding = -5; // Negative shifts text to the left.
-  var r = 80;
-  var offset = 80;
-  var x = r + 1;
-  var y = height * .9;
-  var deletionCirclePadding = 25;
-  function moveCircle(offset, xCord)
-  {
-  	d3.selectAll(".bubbleCircle")
-  	.transition()
-    	.duration(50)
-  	.attr("transform", function(d) {
-  		var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
-  		var y = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["f"];
-  		if (x > xCord)
-  		{
-  			var y = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["f"];
-  			return "translate(" + (x + 2*offset) + "," + y + ")";
-  		}
-  		else if (x < xCord)
-  		{
-  			return "translate(" + x + "," + y + ")";
-  		}
-  		else
-  		{
-  			return "translate(-200,9001)";
-  		}
-
-  	});
-  }
-  function moveText(offset, xCord)
-  {
-  	d3.selectAll(".bubbleText")
-  	.transition()
-  	.duration(50)
-  	.attr("y", function (d) {
-  		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"];
-  		var y = d3.select(this)["_groups"][0][0]["y"]["baseVal"][0]["value"];
-  		if (x != xCord)
-  		{
-  			return y;
-  		}
-  		else
-  		{
-  			return 9001;
-  		}
-  	})
-  	.attr("x", function (d) {
-  		var x = d3.select(this)["_groups"][0][0]["x"]["baseVal"][0]["value"];
-  		if (x > xCord)
-  		{
-  			x = x + 2*offset;
-  			return x;
-  		}
-  		else if (x < xCord)
-  		{
-  			return x;
-  		}
-  		else
-  		{
-  			return -200;
-  		}
-  	});
-  }
-  function addCircle(d, className)
-  {
-  	addLargeCircle(d, className);
-  	addTextBackground(d, className)
-  	addTopText(d, className);
-  	addBottomText(d, className);
-  	addDeletionCircle(d, className)
-  }
-  function highlightCircle(className)
-  {
-  	var opacity = d3.select(className)["_groups"][0][0]["style"]["opacity"];
-  	var to = [1,0];
-  	var from = [0,1];
-  	if (to[opacity] != null)
-  	{
-  		d3.select(className)
-  		.style("opacity", to[opacity])
-  		.transition()
-  		.duration(200)
-  		.style("opacity", from[opacity])
-  		.transition()
-  		.duration(300);
-  	}
-  }
-  function addLargeCircle(d, className)
-  {
-  	svg.append("circle")
-  		.attr("r", r)
-  		.style("fill", grabColor(d.value, circleColors))
-  		.style("stroke", "black")
-  		.style("stroke-width", 2)
-  		.attr("transform", function(d) {
-  			return "translate(" + r + "," + (y - bubbleGraphYOffset) + ")";
-  		})
-  		.attr("class", "bubbleCircle")
-  		.on("click", function(d) {
-  			highlightCircle(className);
-  		});
-  }
-  function addDeletionCircle(d, className)
-  {
-  	svg.append("circle")
-  		.attr("r", deletionCircleSize)
-  		.style("fill", "red")
-  		.style("stroke", "black")
-  		.style("stroke-width", 2)
-  		.attr("transform", function(d) {
-  			return "translate(" + r + "," + (y - bubbleGraphYOffset + r + deletionCirclePadding) + ")";
-  		})
-  		.attr("class", "bubbleCircle")
-  		.on("click", function(d) {
-  					var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
-  					moveCircle(-offset, x);
-  					moveText(-offset, x);
-  				});
-  	var whiteWidth = 15;
-  	var whiteHeight = 7;
-  	svg.append("rect")
-  		.attr("width", whiteWidth)
-  		.attr("height", whiteHeight)
-  		.style("fill", "white")
-  		.style("stroke", "black")
-  		.style("stroke-width", 1)
-  		.attr("transform", function(d) {
-  			return "translate(" + (r - whiteWidth/2) + "," + (y + r - whiteHeight/2 + deletionCirclePadding) + ")";
-  		})
-  		.attr("class", "bubbleCircle")
-  		.on("click", function(d) {
-  					var x = d3.select(this)["_groups"][0][0]["transform"]["baseVal"][0]["matrix"]["e"];
-  					moveCircle(-offset, x);
-  					moveText(-offset, x);
-  				});
-  }
-  function addTextBackground(d, className)
-  {
-  	svg.append("circle")
-  		.attr("r", r - 10)
-  		.style("fill", "#eff3f7")
-  		.style("stroke", "black")
-  		.style("stroke-width", 2)
-  		.attr("transform", function(d) {
-  			return "translate(" + r + "," + (y - bubbleGraphYOffset) + ")";
-  		})
-  		.attr("class", "bubbleCircle")
-  		.on("click", function(d) {
-  			highlightCircle(className);
-  		});
-  }
-  function addTopText(d, className)
-  {
-  	svg.append("text")
-  		.attr("x", x)
-  		.attr("y", y - bubbleGraphYOffset)
-  		.attr("dy", - infoBubblePadding)
-  		.attr("width", legendTileSize)
-  		.attr("height", legendTileSize)
-  		.style("text-anchor", "middle")
-  		.style("font-weight", "bolder")
-  		.style("font-size", infoBubbleFontSize)
-  		.text(d.class)
-  		.style("fill", "black")
-  		.attr("class", "bubbleText")
-  		.on("click", function(d) {
-  			highlightCircle(className);
-  		});
-  }
-  function addBottomText(d, className)
-  {
-  	svg.append("text")
-  		.attr("x", x)
-  		.attr("y", y - bubbleGraphYOffset)
-  		.attr("dy", infoBubblePadding)
-  		.attr("width", legendTileSize)
-  		.attr("height", legendTileSize)
-  		.style("text-anchor", "middle")
-  		.style("font-size", infoBubbleFontSize)
-  		.text(d.value)
-  		.style("fill", "black")
-  		.attr("class", "bubbleText")
-  		.on("click", function(d) {
-  			highlightCircle(className);
-  		});
-  }
-  function grabClassColor(number)
-  {
-  	var divideColor = d3.scaleLinear().domain([minColor, maxColor+1]).range([0, 1]);
-  	var index = Math.floor(divideColor(number) * 10);
-  	return circleColors[index];
-  }
-  function grabColor(number, colors)
-  {
-  	var divideColor = d3.scaleLinear().domain([minColor, maxColor]).range([0, 1]);
-  	var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
-  	var color = divideColor(number);
-  	return pickColor(color);
-  }
-  var legendWidth = 100;
-  var pack = d3.pack()
-  .size([width - legendWidth, height/1.175])
-  .padding(bubblePadding);
-  var maxColor = 0;
-  var minColor = 9999999999999;
-  d3.csv("csvs/heatmap.csv", function(d) {
-  	d.value = +d.value;
-  	if (d.value > 1)
-  	{
-  		if (d.value < minColor)
-  		{
-  			minColor = d.value;
-  		}
-  		if (d.value > maxColor)
-  		{
-  			maxColor = d.value;
-  		}
-  		return d;
-  	}
-  }, function(error, classes)
-  	{
-  		if (error)
-  		{
-  			throw error;
-  	 	}
-
-  		var root = d3.hierarchy({children: classes})
-  		.sum(function(d) { return d.value; })
-  		.each(function(d) {
-  			if (id = d.data.id) {
-  				var id, i = id.lastIndexOf(".");
-  				d.id = id;
-  				d.package = id.slice(0, i);
-  				d.class = id.slice(i + 1);
-  			}
-  		});
-
-  		addDataCircles(root);
-  		createColorLegend();
-
-  	});
-  	function applyBoader(data, className, strokeWidth, offset)
-  	{
-  		d3.select(className).attr("r", data.r + offset)
-  		.style("stroke", "black")
-  		.style("stroke-width", strokeWidth);
-  	}
-  	function addDataCircles(root)
-  	{
-  		var node = svg.selectAll(".node")
-  		.data(pack(root).leaves())
-  		.enter().append("g")
-  		.attr("class", "node")
-  		.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-  		node.append("circle")
-  		.attr("id", function(d) { return d.id; })
-  		.attr("r", function(d) { return d.r; })
-  		.attr("transform", function (d)
-  		{
-  			return "translate(0," + bubbleGraphYOffset + ")";
-  		})
-  		.attr("class", function(d) { return grabClassColor(d.value); })
-  		.style("fill", function(d) { return grabColor(d.value, circleColors); })
-  		.style("opacity", 1)
-  		.on("dblclick", function(d) {
-  			var opacity = d3.select(this)["_groups"][0][0]["style"]["opacity"];
-  			if (opacity == 1)
-  			{
-  				moveCircle(offset, 0);
-  				moveText(offset, 0);
-  				addCircle(d, this);
-  			}
-  		})
-  		.on("mouseover", function(d) {
-  			applyBoader(d, this, 2, bubblePadding);
-  			var legendTile = "." + grabClassColor(d.value) + "L";
-  			d3.select(legendTile)
-  			.style("stroke-width", function (d)
-  			{
-  				var opacity = d3.select(legendTile)["_groups"][0][0]["style"]["fill-opacity"];
-  				if (opacity == 1)
-  				{
-  					return 5;
-  				}
-  				else
-  				{
-  					return 3;
-  				}
-  			});
-  		})
-  		.on("mouseout", function(d) {
-  			applyBoader(d, this, 0, 0);
-  			var className = "." + grabClassColor(d.value) + "L";
-  			d3.select(className)
-  			.style("stroke-width", 3);
-  		});
-  	}
-  	function createColorLegend()
-  	{
-  		var legendPadding = 20;
-  		for(i = 0; i < circleColors.length; i++)
-  		{
-  			var offset = 20;
-  			// Colored rectangles for legend
-  			legendTile = svg.append("rect")
-  			.attr("class", circleColors[i] + "L")
-  			.attr("rx", 10)
-  			.attr("ry", 10)
-  			.attr("x", width - legendTileSize-30)
-  			.attr("y", legendTileSize * i + legendPadding * i)
-  			.attr("width", legendTileSize)
-  			.attr("height", legendTileSize)
-  			.style("fill", circleColors[i])
-  			.style("stroke", circleColors[i])
-  			.style("stroke-width", 3)
-  			.style("fill-opacity", 1)
-  			.on("click", function(d) {
-  				var fillColor = d3.select(this)["_groups"][0][0]["style"]["fill"];
-  				var strokeColor = d3.select(this)["_groups"][0][0]["style"]["stroke"];
-  				toggleVisibility(d, "." + fillColor);
-  			})
-  			// Text labels for the colored rectangles.
-  			svg.append("text")
-  			.attr("x", width - legendTileSize + legendXTextPadding-30)
-  			.attr("y", (legendTileSize * i) + legendTileSize/2 + legendPadding*i)
-  			.attr("dy", ".5em")
-  			.attr("width", legendTileSize)
-  			.attr("height", legendTileSize)
-  			.style("text-anchor", "end")
-  			.text(distro[i] + "%");
-  		}
-  	}
-  	function toggleVisibility(data, color)
-  	{
-  		// Toggles whether a color is visible or not. aka makes it invisible
-  		subColor = color.substring(1);
-  		circleInView[subColor] = !circleInView[subColor];
-  		d3.selectAll(color)
-  		.style("opacity", function(d) {
-  			if (circleInView[subColor])
-  			{
-  				return 0;
-  			}
-  			else
-  			{
-  				return 1;
-  			}
-  		})
-  		.transition()
-  		.duration(0);
-  		var legendTile = color + "L";
-  		d3.select(legendTile)
-  		.style("fill-opacity", function(d) {
-  			if (circleInView[subColor])
-  			{
-  				return 0;
-  			}
-  			else
-  			{
-  				return 1;
-  			}
-  		})
-  	}
-
-  d3.select("#vis-title").html("Heat Map Test");
+// scroll-over square enlargement
+var squareColors = ["darkblue",
+					"blue",
+					"seagreen",
+					"Turquoise",
+					"SpringGreen",
+					"greenyellow",
+					"yellow",
+					"orange",
+					"orangered",
+					"red"];
+var legendTileSize = height/(squareColors.length*2);
+var legendSize = 120;
+var legendOffset = height/squareColors.length;
+var infoTileSize = width * .1;
+var infoTilePadding = 5;
+var infoTileOffset = infoTilePadding + 1;
+var heatMapWidth = width-legendSize;
+var heatMapHeight = height - infoTileSize - 2* infoTileOffset;
+var squarePadding = 2;
+var x = 0;
+var xIndex = 0;
+var y = 0;
+var yIndex = 0;
+var maxColor = -Infinity;
+var minColor = Infinity;
+svg.append("rect")
+	.classed("backGround", true)
+	.attr("x", 0)
+	.attr("width", width)
+	.attr("y", 0)
+	.attr("height", height)
+	.attr("fill", "#eff3f7")
+d3.csv("csvs/heatmap.csv", function(d) {
+	d.value = +d.value;
+	if (d.value > 1)
+	{
+		if (d.value < minColor)
+		{
+			minColor = d.value;
+		}
+		if (d.value > maxColor)
+		{
+			maxColor = d.value;
+		}
+		return d;
+	}
+}, function(error, classes)
+{
+	if (error)
+	{
+		throw error;
+	}
+	classes = parseData(classes);
+	function parseData(data)
+	{
+		function compare(a,b)
+		{
+			return a.value - b.value;
+		}
+		data = data.sort(compare);
+		return data;
+	}
+	squareRadius = Math.sqrt((heatMapWidth * heatMapHeight / classes.length));
+	squareRadius -= squarePadding;
+	var classLength = classes.length;
+	for(i = 0; i < classLength; i++)
+	{
+		svg.append("rect")
+			.classed(grabColor(classes[i]["value"])[1], true)
+			.attr("color", grabColor(classes[i]["value"])[1])
+			.classed("dataPoint", true)
+			.attr("value", classes[i]["value"])
+			.attr("id", classes[i]["id"])
+			.attr("x", x)
+			.attr("y", y)
+			.attr("rx", squareRadius)
+			.attr("ry", squareRadius)
+			.attr("width", squareRadius)
+			.attr("height", squareRadius)
+			.attr("fill-opacity", 1) // used for legend filtering
+			.attr("stroke-opacity", 0)
+			.style("fill", function() { return grabColor(classes[i]["value"], squareColors)[0]; })
+			.on("mouseover", function() {
+				mouseEnterSquare(this);
+			})
+			.on("mouseout", function() {
+				mouseExitSquare(this);
+			})
+			.on("click", function(d)
+			{
+				moveInfoSquares(infoTileSize + infoTilePadding);
+				drawInfoSquare(this, d3.select(this).attr("color"));
+			});
+		calculateNextXYCords();
+	}
+	drawLegend();
+});
+function calculateNextXYCords()
+{
+	x += squareRadius + squarePadding;
+	xIndex += 1;
+	if (x >= heatMapWidth)
+	{
+		x = 0;
+		y += squareRadius + squarePadding;
+		xIndex = 0;
+		yIndex += 1;
+	}
+}
+function grabColor(number, colors)
+{
+	colors = colors || [];
+	var divideColor = d3.scaleLinear().domain([minColor, maxColor+1]).range([0, 1]);
+	var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
+	var color = pickColor(divideColor(number));
+	var index = Math.floor(divideColor(number) * 10);
+	return [color, squareColors[index]];
+}
+function mouseEnterSquare(object)
+{
+	d3.select(object).attr('width', squareRadius + squarePadding);
+	d3.select(object).attr('height', squareRadius + squarePadding);
+	var opacity = d3.select(object).attr("fill-opacity");
+	if (opacity == 1)
+	{
+		d3.select(object).attr("stroke-opacity", 1);
+	}
+	d3.select(object).attr('x', function ()
+	{
+		var x = parseFloat(d3.select(object).attr('x'));
+		return (x-squarePadding/2);
+	})
+	.attr('y', function ()
+	{
+		var y = parseFloat(d3.select(object).attr('y'));
+		return (y-squarePadding/2);
+	})
+}
+function mouseExitSquare(object)
+{
+	d3.select(object).attr('width', squareRadius);
+	d3.select(object).attr('height', squareRadius);
+	d3.select(object).attr("stroke-opacity", 0);
+	d3.select(object).attr('x', function ()
+	{
+		var x = parseFloat(d3.select(object).attr('x'));
+		return (x+squarePadding/2);
+	})
+	.attr('y', function ()
+	{
+		var y = parseFloat(d3.select(object).attr('y'));
+		return (y+squarePadding/2);
+	})
+}
+function moveInfoSquares(offset)
+{
+	var list = [];
+	d3.selectAll(".infoNode").attr('x', function ()
+	{
+		var x = parseFloat(d3.select(this).attr('x'));
+		x += offset;
+		if (x > heatMapWidth - 2 * squareRadius)
+		{
+			list.push(this)
+			if (list.length == 4)
+			{
+				for (i = 0; i < 4; i++)
+				{
+					d3.select(list[i]).remove();
+				}
+			}
+		}
+		return x;
+	})
+}
+function drawInfoSquare(d, color)
+{
+	var value = d3.select(d).attr("value");
+	var id = d3.select(d).attr("id");
+	var id = id.split(".");
+	var id = id[id.length-1];
+	svg.append("rect")
+		.classed("infoNode", true)
+		.attr("x", 0)
+		.attr("y", heatMapHeight + infoTileOffset/2)
+		.attr("rx", 5)
+		.attr("ry", 5)
+		.attr("width", infoTileSize)
+		.attr("height", infoTileSize)
+		.style("fill", color)
+	svg.append("rect")
+		.classed("infoNode", true)
+		.attr("x", 0 + infoTilePadding)
+		.attr("y", heatMapHeight + infoTileOffset/2 + infoTilePadding)
+		.attr("rx", 5)
+		.attr("ry", 5)
+		.attr("width", infoTileSize-2*infoTilePadding)
+		.attr("height", infoTileSize-2*infoTilePadding)
+		.style("fill", "#eff3f7")
+	svg.append("text")
+		.classed("infoNode", true)
+		.attr("x", 0 + (infoTileSize-infoTilePadding)/2)
+		.attr("y", heatMapHeight + infoTileSize/2 + infoTilePadding/2)
+		.attr("dy", "-1.5em")
+		.text(id)
+	svg.append("text")
+		.classed("infoNode", true)
+		.attr("x", 0 + (infoTileSize-infoTilePadding)/2)
+		.attr("y", heatMapHeight + infoTileSize/2 + infoTilePadding/2)
+		.attr("dy", "1.5em")
+		.text(value)
+}
+function drawLegend()
+{
+	var squareColorsLength = squareColors.length;
+	var increment = ((heatMapHeight - infoTileSize) / squareColorsLength+10);
+	for (i = 0; i < squareColorsLength; i++)
+	{
+		svg.append("rect")
+			.classed("legend", true)
+			.classed(squareColors[i], true)
+			.attr("color", squareColors[i])
+			.attr("x", heatMapWidth + (width - heatMapWidth)/2)
+			.attr("y", squareRadius + i * increment)
+			.attr("fill-opacity", 1)
+			.attr("stroke", squareColors[i])
+			.attr("rx", 5)
+			.attr("ry", 5)
+			.attr("height", legendTileSize)
+			.attr("width", legendTileSize)
+			.style("fill", squareColors[i])
+			.on("mouseover", function() {
+				toggleBoarder(d3.select(this).attr("color"));
+			})
+			.on("mouseout", function() {
+				toggleBoarder(d3.select(this).attr("color"));
+			})
+			.on("click", function(d)
+			{
+				filterColor(d3.select(this).attr("color"));
+			});
+	}
+}
+function toggleBoarder(color)
+{
+	var color2filter = "." + color;
+	d3.selectAll(color2filter).attr("stroke-opacity", function()
+	{
+		var opacity = d3.select(this).attr("stroke-opacity");
+		if (opacity == 0)
+		{
+			return 1;
+		}
+		else if (opacity == 1)
+		{
+			return 0;
+		}
+	})
+}
+function filterColor(color)
+{
+	var color2filter = "." + color;
+	colorSqaureList = d3.selectAll(color2filter).attr("fill-opacity", function()
+	{
+		var opacity = d3.select(this).attr("fill-opacity");
+		if (opacity == 0)
+		{
+			return 1;
+		}
+		else if (opacity == 1)
+		{
+			return 0;
+		}
+	});
+	for (i = 0; i < colorSqaureList.length; i++)
+	{
+		var opacity = colorSqaureList[i]["fill-opacity"];
+	}
+}
+//your visual title here
+d3.select("#vis-title").html("Heatmap V2");
 }
 
 function init_scatter_test(){
