@@ -1,3 +1,8 @@
+var tempString = "";
+var tempData = null;
+var removed = [];
+var current_func;
+
 /** This function is executed when the page is odne loading*/
 $(document).ready(function(){
 
@@ -17,11 +22,30 @@ $(document).ready(function(){
       placeholder: "Click Here to Select Objects"
     });
     $(".filter-button").on("click", function(){
-      $(this).shake();
+      if ($(this).hasClass('ready')){
+        if($("#out").val() != "")
+          remove_element($("#out").val());
+        var index_to_add = $("#in option:selected").val();
+        if(index_to_add != ""){
+          add_removed_element(removed[index_to_add][0], removed[index_to_add][1], index_to_add);
+          index_to_add++;
+          $("#in option:eq(" + index_to_add + ")").remove();
+          if ($("#in option").length <= 1){
+            $(".filter-input-container:nth-of-type(2)").addClass("hidden");
+          }
+        }
+        current_func();
+        $(".filter-button").removeClass("ready");
+      } else{
+        $(this).shake();
+      }
     });
 
     $("#loader-section").fadeOut("fast");
+
 });
+
+//var csvTemp = d3.csv
 
 //On click events
 //Slide dashboard up and load in visualization
@@ -36,7 +60,10 @@ $(".generate").on("click", function(){
     var value = selected.attr("value");
     //placeholder loading till data retreived from the database
     setTimeout(clear_vis, 1500);
+
+    tempData = null;
     load_vis(value);
+    $(".filter-input-container:nth-of-type(2)").addClass("hidden");
   } else {
     $(this).shake();
   }
@@ -134,6 +161,22 @@ function change_vis_title(title){
   }
 }
 
+$("#out").on('input change', function (){
+  if($(this).val() != ""){
+    $(".filter-button").addClass("ready");
+  } else {
+    $(".filter-button").removeClass("ready");
+  }
+});
+
+$("#in").on('change', function () {
+  if($(this).val() != "" || $("#out").val() != ""){
+    $(".filter-button").addClass("ready");
+  } else {
+    $(".filter-button").removeClass("ready");
+  }
+});
+
 function clear_messages(){
   $(".messages-box").html("");
 }
@@ -185,4 +228,71 @@ function add_message(type, text){
     + "</div>"
     );
   }
+}
+
+function remove_element (entry) {
+  var index = object_index_with_attr(tempData, entry);
+  if(index >= 0){
+    var obj = tempData.splice(index, 1)[0];
+    console.log("removed element at position " + index);
+    removed.push([obj, index]);
+    if(removed.length > 0){
+      $(".filter-input-container:nth-of-type(2)").removeClass("hidden");
+      $("#in").append("<option value=" + (removed.length-1) + ">" + entry + "</option>");
+    }
+    $("#out").val("");
+
+  }
+  else {
+    console.log("failed to find an element named " + entry);
+    $(".filter-button").shake();
+  }
+  return tempData;
+}
+
+function object_index_with_attr(array, value) {
+  var property;
+  if (typeof array[0].name !== 'undefined')
+    property = 'name';
+  else if (typeof array[0].letter !== 'undefined')
+    property = 'letter';
+  else if (typeof array[0].name !== 'undefined')
+    property = 'Name';
+  else if (typeof array[0].nodeName !== 'undefined')
+    property = 'nodeName';
+  else if (typeof array[0].id !== 'undefined')
+    property = 'id';
+  else {
+    console.log("Temp storage elements are not keyd with a recognizable property.");
+  }
+
+  console.log("Finding element " + value + " in property " + property);
+    for(var i = 0; i < array.length; i += 1) {
+        if(array[i][property] == value) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function advance_removed (index) {
+  for (i = 0; i < removed.length; i++){
+    if (removed[i][1] >= index){
+      removed[i][1] += 1;
+    }
+  }
+}
+
+function add_removed_element(value, position, removed_index){
+  tempData.splice(position, 0, value);
+  removed.splice(removed_index, 1);
+  advance_removed(position);
+
+  $("#in option").each(function(){
+    var value = parseInt($(this).val());
+    if (!isNaN(value) && value > removed_index ){
+      $(this).val(value - 1);
+    }
+  });
+
 }
