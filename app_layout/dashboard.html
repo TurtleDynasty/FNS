@@ -31,10 +31,10 @@
         </div>
       </div>
     </nav>
-    <div class="container-fluid master-container col-sm-12 no-padding full-height" id="loader-section">
+    <div class="container-fluid master-container col-xs-12 no-padding full-height" id="loader-section">
     </div>
-    <div class="container-fluid master-container col-sm-12 no-padding full-height" id="buildsection">
-      <div class="container-fluid col-md-4 col-sm-12 no-padding full-height build-widget1-container">
+    <div class="container-fluid master-container col-xs-12 no-padding full-height" id="buildsection">
+      <div class="container-fluid col-xs-4 no-padding full-height build-widget1-container">
         <div class="build-widget1">
           <h3>Select a Visualization</h3>
           <div class="build-widget-content">
@@ -51,7 +51,7 @@
         </div>
       </div>
 
-      <div class="container-fluid col-md-4 col-sm-12 no-padding full-height build-widget2-container">
+      <div class="container-fluid col-xs-4 no-padding full-height build-widget2-container">
         <div class="build-widget2">
           <h3>Overview</h3>
           <div class="build-widget-content">
@@ -118,7 +118,7 @@
         </div>
       </div>
 
-      <div class="container-fluid col-md-4 col-sm-12 no-padding full-height build-widget3-container">
+      <div class="container-fluid col-xs-4 no-padding full-height build-widget3-container">
         <div class="build-widget3">
           <h3>Options</h3>
           <div class="build-widget-content">
@@ -169,30 +169,32 @@
       </div>
     </div>
 
-    <div class="container-fluid master-container col-sm-12 no-padding full-height" id="viewsection" >
-      <div class="container-fluid col-md-9 col-sm-12 no-padding full-height widget2-container">
+    <div class="container-fluid master-container col-xs-12 no-padding full-height" id="viewsection" >
+      <div class="container-fluid col-xs-9 no-padding full-height widget2-container">
         <div class="widget2">
           <h3 id="vis-title">Select a Visualization</h3>
         </div>
       </div>
 
-      <div class="container-fluid col-md-3 col-sm-12 no-padding full-height widget1-container">
+      <div class="container-fluid col-xs-3 no-padding full-height widget1-container">
         <div class="widget1 half-height-20 position-relative">
           <h3>Filter Objects</h3>
           <div class="filter-input-container padding-top-10">
             <h4>Out</h4>
             <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
-              <select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+              <input type="text" name="out" id="out" class="form-control"value="">
             </label>
           </div>
-
 
           <div class="filter-input-container padding-top-10">
             <h4>In</h4>
             <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
-              <select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
+              <select id="in" class="js-states form-control">
+                <option value=""></option>
+              </select>
             </label>
           </div>
+
 
             <div class="filter-button-container">
               <div class="filter-button noselect">
@@ -219,7 +221,7 @@
           <div class="modal-body modal-step1">
             <div class="full-width">
               <div class="row full-width">
-                <div class="modal-left col-sm-12">
+                <div class="modal-left col-xs-12">
                   <div class="form-group">
                     <label for="settings-email" class="label-settings">Send Email Notifications</label>
                     <input type="checkbox" id="settings-email" value="first_checkbox" class="settings-input">
