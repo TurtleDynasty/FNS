@@ -6,6 +6,7 @@ function type(d)
 
 function init_replicated_objects()
 {
+	clear_vis();
 	var margin = {top: 30, right: 40, bottom: 100, left: 80};
 	var container = d3.select(".widget2").append("div").classed("svg-container", true);
 	var width = parseInt(d3.select(".svg-container").style("width"));
@@ -41,97 +42,110 @@ function init_replicated_objects()
 		.append("g")
     	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  	d3.csv("csvs/replicatedObjects.csv", type, function(error, data)
-	{
-    	x.domain(data.map(function(d)
+	//build from existing temp data (filter), else fetch data for generation
+	if (tempData != null){
+		build_from_data(tempData);
+	}
+	else {
+		d3.csv("csvs/replicatedObjects.csv", type, function(error, data){
+			build_from_data(data);
+		});
+	}
+
+	function build_from_data(data){
+		tempData = data;
+		x.domain(data.map(function(d)
 		{
 			return d.nodeName;
 		}));
-    	y.domain([0, d3.max(data, function(d)
+			y.domain([0, d3.max(data, function(d)
 		{
 			return d.replCount;
 		})]);
 
 		svg.append("g")
-        	.attr("class", "x axis")
-        	.attr("transform", "translate(0," + height + ")")
-        	.call(xAxis)
-  			.selectAll("text")
-  			.style("text-anchor", "end")
-  			.attr("dx", "-.8em")
-  			.attr("dy", ".15em")
-  			.attr("transform", "rotate(-45)");
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + height + ")")
+					.call(xAxis)
+				.selectAll("text")
+				.style("text-anchor", "end")
+				.attr("dx", "-.8em")
+				.attr("dy", ".15em")
+				.attr("transform", "rotate(-45)");
 
 		svg.append("text")      // text label for the x axis
-     		.attr("x", width / 2 )
-        	.attr("y",  height + margin.bottom )
-        	.style("text-anchor", "middle")
-        	.text(xLabel);
+				.attr("x", width / 2 )
+					.attr("y",  height + margin.bottom )
+					.style("text-anchor", "middle")
+					.text(xLabel);
 
 		svg.append("g")
-        	.attr("class", "y axis")
-        	.call(yAxis)
-    		.append("text")
-        	.attr("transform", "rotate(-90)")
-        	.attr("y", 6)
-        	.attr("dy", ".71em")
-        	.style("text-anchor", "end");
+					.attr("class", "y axis")
+					.call(yAxis)
+				.append("text")
+					.attr("transform", "rotate(-90)")
+					.attr("y", 6)
+					.attr("dy", ".71em")
+					.style("text-anchor", "end");
 
 		svg.append("text")
-        	.attr("transform", "rotate(-90)")
-        	.attr("y", 0 -60)
-        	.attr("x",0 - (height / 2))
-        	.attr("dy", "1em")
-        	.style("text-anchor", "middle")
-        	.text(yLabel);
+					.attr("transform", "rotate(-90)")
+					.attr("y", 0 -60)
+					.attr("x",0 - (height / 2))
+					.attr("dy", "1em")
+					.style("text-anchor", "middle")
+					.text(yLabel);
 
 		svg.selectAll(".bar")
-        	.data(data)
-      		.enter().append("rect")
-        	.attr("class", "bar")
-        	.attr("x", function(d)
+					.data(data)
+					.enter().append("rect")
+					.attr("class", "bar")
+					.attr("x", function(d)
 			{
 				return x(d.nodeName);
 			})
-        	.attr("width", x.bandwidth())
-        	.attr("y", function(d)
+					.attr("width", x.bandwidth())
+					.attr("y", function(d)
 			{
 				return y(d.replCount);
 			})
-        	.attr("height", function(d)
+					.attr("height", function(d)
 			{
 				return height - y(d.replCount);
 			})
-        	.on('mouseover', function(d)
+					.on('mouseover', function(d)
 			{
 				tooltipBox.transition()
-  		  			.duration(20)
-    				.style("top", (d3.event.pageY - tooltipHeight) + "px")
-  					.style("left", (d3.event.pageX - tooltipWidth) + "px")
-  					.style("opacity", .9)
-  					.text(d.replCount + " " + "replicated")
-  	  		})
-        	.on('mouseout', function(d)
+							.duration(20)
+						.style("top", (d3.event.pageY - tooltipHeight) + "px")
+						.style("left", (d3.event.pageX - tooltipWidth) + "px")
+						.style("opacity", .9)
+						.text(d.replCount + " " + "replicated")
+					})
+					.on('mouseout', function(d)
 			{
-  				tooltipBox.transition()
-  		  			.duration(500)
-  					.style("opacity", 0)
-  	  		});
-  	});
-	function type(d) {
-    	d.replCount = +d.replCount;
-    	return d;
-  	}
+					tooltipBox.transition()
+							.duration(500)
+						.style("opacity", 0)
+					});
+}
 
-d3.select("#vis-title").html("Replicated Objects By Node");
+function type(d) {
+		d.replCount = +d.replCount;
+		return d;
+}
+
+current_func = init_replicated_objects;
+d3.select("#vis-title").html("Objects Replicated by Storage Pool");
 }
 
 function init_af_segments()
 {
+	clear_vis();
 	var margin = {top: 30, right: 40, bottom: 100, left: 80};
-    var container = d3.select(".widget2").append("div").classed("svg-container", true);
-    var width = parseInt(d3.select(".svg-container").style("width"));
-    var height = parseInt(d3.select(".svg-container").style("height"));
+  var container = d3.select(".widget2").append("div").classed("svg-container", true);
+  var width = parseInt(d3.select(".svg-container").style("width"));
+  var height = parseInt(d3.select(".svg-container").style("height"));
 
 	var xUnit = "";
 	var xLabel = "Volume ID's" + xUnit;
@@ -165,8 +179,19 @@ function init_af_segments()
     	.append("g")
     	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	d3.csv("csvs/af_segments.csv", type, function(error, data)
-	{
+
+	//build from existing temp data (filter), else fetch data for generation
+	if (tempData != null){
+		build_from_data(tempData);
+	}
+	else {
+		d3.csv("csvs/af_segments.csv", type, function(error, data){
+			build_from_data(data);
+		});
+	}
+
+	function build_from_data(data){
+		tempData = data;
 		x.domain(data.map(function(d)
 		{
 			return d.letter;
@@ -241,12 +266,15 @@ function init_af_segments()
 					.duration(500)
 					.style("opacity", 0)
 			});
-  	});
-d3.select("#vis-title").html("AF Segments");
+	}
+
+	current_func = init_af_segments;
+	d3.select("#vis-title").html("AF Segments");
 }
 
 function init_backup_test()
 {
+	clear_vis();
 	var margin = {top: 30, right: 40, bottom: 100, left: 80};
     var container = d3.select(".widget2")
 		.append("div")
@@ -286,8 +314,17 @@ function init_backup_test()
     	.append("g")
     	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	d3.csv("csvs/backups.csv", type, function(error, data)
-	{
+	if (tempData != null){
+		build_from_data(tempData);
+	}
+	else {
+		d3.csv("csvs/backups.csv", type, function(error, data){
+			build_from_data(data);
+		});
+	}
+
+	function build_from_data(data){
+		tempData = data;
 		x.domain(data.map(function(d)
 		{
 			return d.letter;
@@ -362,9 +399,11 @@ function init_backup_test()
 					.duration(500)
 					.style("opacity", 0)
 			});
-	});
 
-d3.select("#vis-title").html("Backup Test");
+	}
+
+	current_func = init_backup_test;
+	d3.select("#vis-title").html("Backup Test");
 }
 
 //https://bl.ocks.org/maybelinot/5552606564ef37b5de7e47ed2b7dc099
@@ -481,6 +520,7 @@ d3.select("#vis-title").html("Backup Domains Distribution");
   */
 function init_pie_test()
 {
+	clear_vis();
 	var margin = {top: 50, right: 50, bottom: 50, left: 50};
 	var container = d3.select(".widget2")
 		.append("div")
@@ -589,7 +629,6 @@ function init_pie_test()
 	}
 	function addPieSegments()
 	{
-		console.log("here");
 		g.append("path")
 			.attr("d", arc)
 			.style("fill", function(d)
@@ -695,12 +734,21 @@ function init_pie_test()
 			.attr("stroke", "black");
 	}
 	var total = 0;
-	d3.csv("csvs/data.csv", type, function(error, data)
-	{
-		if (error)
-		{
-			throw error;
-		}
+
+	if (tempData != null){
+		build_from_data(tempData);
+	}
+	else {
+		d3.csv("csvs/data.csv", type, function(error, data){
+			if(error){
+				throw error;
+			}
+			build_from_data(data);
+		});
+	}
+
+	function build_from_data (data) {
+		tempData = data;
 		data = parseData(data);
 		g = svg.selectAll(".arc")
 			.data(pie(data))
@@ -714,7 +762,8 @@ function init_pie_test()
 			addPieLabelUnderLine();
 			moveGraphToCenter();
 			setTextBoxes(data);
-	});
+	}
+
 	function createTextBoxes(g)
 	{
 		text = g.append("text")
@@ -808,10 +857,13 @@ function init_pie_test()
 		// Custom data filters go here.
 		return data;
 	}
-d3.select("#vis-title").html("Object Count by Container");
+
+	current_func = init_pie_test;
+	d3.select("#vis-title").html("Object Count by Container");
 }
 
 function init_pool_test() {
+	clear_vis();
 	var margin = {top: 30, right: 40, bottom: 65, left: 80};
 	var container = d3.select(".widget2").append("div").classed("svg-container", true);
 	var width = parseInt(d3.select(".svg-container").style("width"));
@@ -844,66 +896,80 @@ function init_pool_test() {
     	.append("g")
     	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	d3.csv("csvs/stgPool.csv", type, function(error, data) {
-    	x.domain(data.map(function(d) { return d.letter; }));
-    	y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
-		svg.append("g")
-        	.attr("class", "x axis")
-        	.attr("transform", "translate(0," + height + ")")
-        	.call(xAxis)
-  			.selectAll("text")
-  			.style("text-anchor", "end")
-  			.attr("dx", "-.8em")
-  			.attr("dy", ".15em")
-  			.attr("transform", "rotate(-45)");
-		svg.append("text")      // text label for the x axis
-     		.attr("x", width / 2 )
-        	.attr("y",  height + margin.bottom -10)
-        	.style("text-anchor", "middle")
-        	.text(xLabel);
-		svg.append("g")
-        	.attr("class", "y axis")
-        	.call(yAxis)
-    		.append("text")
-        	.attr("transform", "rotate(-90)")
-        	.attr("y", 6)
-        	.attr("dy", ".71em")
-        	.style("text-anchor", "end");
-		svg.append("text")
-        	.attr("transform", "rotate(-90)")
-        	.attr("y", 0-60)
-        	.attr("x",0 - (height / 2))
-        	.attr("dy", "1em")
-        	.style("text-anchor", "middle")
-        	.text(yLabel);
-		svg.selectAll(".bar")
-        	.data(data)
-    		.enter().append("rect")
-        	.attr("class", "bar")
-        	.attr("x", function(d) { return x(d.letter); })
-        	.attr("width", x.bandwidth())
-    		.attr("y", function(d) { return y(d.frequency); })
-        	.attr("height", function(d) { return height - y(d.frequency); })
-  			.on('mouseover', function(d) {
-  				tooltipBox.transition()
-  					.duration(20)
-  					.style("top", d3.event.pageY - tooltipHeight + "px")
-  					.style("left", d3.event.pageX - tooltipWidth + "px")
-  					.style("opacity", .9)
-  					.text(d.frequency + " " + yUnit)
-  	  		})
-  			.on('mouseout', function(d) {
-  			tooltipBox.transition()
-  				.duration(500)
-  				.style("opacity", 0)
-  	  		});
+	if (tempData != null){
+		build_from_data(tempData);
+	}
+	else {
+		d3.csv("csvs/stgPool.csv", type, function(error, data){
+			if(error){
+				throw error;
+			}
+			build_from_data(data);
+		});
+	}
 
-	});
+	function build_from_data (data) {
+		tempData = data;
+		x.domain(data.map(function(d) { return d.letter; }));
+		y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+		svg.append("g")
+				.attr("class", "x axis")
+				.attr("transform", "translate(0," + height + ")")
+				.call(xAxis)
+			.selectAll("text")
+			.style("text-anchor", "end")
+			.attr("dx", "-.8em")
+			.attr("dy", ".15em")
+			.attr("transform", "rotate(-45)");
+			svg.append("text")      // text label for the x axis
+			.attr("x", width / 2 )
+				.attr("y",  height + margin.bottom -10)
+				.style("text-anchor", "middle")
+				.text(xLabel);
+				svg.append("g")
+				.attr("class", "y axis")
+				.call(yAxis)
+			.append("text")
+				.attr("transform", "rotate(-90)")
+				.attr("y", 6)
+				.attr("dy", ".71em")
+				.style("text-anchor", "end");
+				svg.append("text")
+				.attr("transform", "rotate(-90)")
+				.attr("y", 0-60)
+				.attr("x",0 - (height / 2))
+				.attr("dy", "1em")
+				.style("text-anchor", "middle")
+				.text(yLabel);
+				svg.selectAll(".bar")
+				.data(data)
+			.enter().append("rect")
+				.attr("class", "bar")
+				.attr("x", function(d) { return x(d.letter); })
+				.attr("width", x.bandwidth())
+			.attr("y", function(d) { return y(d.frequency); })
+				.attr("height", function(d) { return height - y(d.frequency); })
+			.on('mouseover', function(d) {
+				tooltipBox.transition()
+					.duration(20)
+					.style("top", d3.event.pageY - tooltipHeight + "px")
+					.style("left", d3.event.pageX - tooltipWidth + "px")
+					.style("opacity", .9)
+					.text(d.frequency + " " + yUnit)
+				})
+			.on('mouseout', function(d) {
+			tooltipBox.transition()
+				.duration(500)
+				.style("opacity", 0)
+				});
+	}
 
 	function type(d) {
     	d.frequency = +d.frequency;
     	return d;
   	}
+
+	current_func = init_pool_test;
 
   d3.select("#vis-title").html("Storage Pool Test");
 }
@@ -1325,178 +1391,327 @@ function init_heatmap() {
 }
 
 function init_scatter_test(){
-	// scroll-over circle enlargement
-	var dotSize = 3.5;
-	var dotPadding = 5;
-	// setup margin
-    var margin = {top: 20, right: 20, bottom: 30, left: 50};
-    var margin = {top: 20, right: 20, bottom: 30, left: 50};
-    var container = d3.select(".widget2").append("div").classed("svg-container", true);
-    var width = parseInt(d3.select(".svg-container").style("width"));
-    var height = parseInt(d3.select(".svg-container").style("height"));
-    container.append("svg").classed("svg-container", true).attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100));
-	var tickPadding = "10";
-	var xUnit = "";
-	var xAxisLabel = "File Space ID" + xUnit;
-	var yUnit = "bytes";
-	var yAxisLabel = "Actual Size (" + yUnit + ")";
-	// setup x
-	var xValue = function(d) { return d.X;}, // data -> value
-    	xScale = d3.scaleLinear().range([0, width]), // value -> display
-    	xMap = function(d) { return xScale(xValue(d));}; // data -> display
-    	// xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+	/*these 4 lines set up a responsive viewbox for the visual , note the use of .widget2 instead of body.
+		Keep this and eliminate the lines in your code that set the width and height, as well as the svg var declaration up to .append(g)
+		Make sure to change the location of your csv to "/pathfromroot/.../yourcsv.csv". That should be it.
+		*/
+		var container = d3.select(".widget2").append("div").classed("svg-container", true);
+		var width = parseInt(d3.select(".svg-container").style("width"));
+		var height = parseInt(d3.select(".svg-container").style("height"));
+		var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+25) + " " + (height+25));
+		/***********************\
+		| Your visual script below
+		\***********************/
+		// scroll-over circle enlargement
+		var dotSize = 3.5;
+		var dotPadding = 5;
+		// setup margin
+		var labelPadding = 50;
+		var legendWidth = 200;
+		var tickPadding = "10";
+		var legendTileSize = 30;
+		var legendSpacing = 30;
+		var xUnit = "";
+		var xAxisLabel = "File Space ID" + xUnit;
+		var yUnit = "bytes";
+		var yAxisLabel = "Actual Size (" + yUnit + ")";
+		// setup x
+		var xValue = function(d) { return d.X;}, // data -> value
+			xScale = d3.scaleLinear().range([labelPadding, width-legendWidth]), // value -> display
+			xMap = function(d) { return xScale(xValue(d));}; // data -> display
+			// xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 		// setup y
 		var yValue = function(d) { return d["Y"];}, // data -> value
-    		yScale = d3.scaleLinear().range([height, 0]), // value -> display
-    		yMap = function(d) { return yScale(yValue(d));}; // data -> display
-    	// yAxis = d3.svg.axis().scale(yScale).orient("left");
+			yScale = d3.scaleLinear().range([height-labelPadding, labelPadding]), // value -> display
+			yMap = function(d) { return yScale(yValue(d));}; // data -> display
+			// yAxis = d3.svg.axis().scale(yScale).orient("left");
 		// setup fill color
 		var cValue = function(d) { return d.Type;},
-    		color = d3.scaleOrdinal(d3.schemeCategory10);
-		// add the graph canvas to the body of the webpage
-		var svg = d3.select("svg")
-			.append("g")
-    		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			color = d3.scaleOrdinal(d3.schemeCategory10);
+		d3.selection.prototype.moveToBack = function()
+		{
+		    return this.each(function() {
+		        var firstChild = this.parentNode.firstChild;
+		        if (firstChild) {
+		            this.parentNode.insertBefore(this, firstChild);
+		        }
+		    });
+		};
+		var inDragBox = [];
+		var drag = d3.drag()
+			.on('start', function()
+			{
+				d3.select(".dragBar").remove();
+				firstX = d3.event.x;
+				firstY = d3.event.y;
+				svg.append("rect")
+					.classed("dragBar", true)
+					.attr("x", firstX)
+					.attr("y", firstY)
+					.attr("rx", 5)
+					.attr("ry", 5)
+					.attr("width", 0)
+					.attr("height", 0)
+					.call(drag)
+					.on("click", function ()
+					{
+						d3.select(this).remove();
+					});
+				d3.select(".dragBar").moveToBack();
+			})
+			.on('drag', function() {
+				d3.select(".dragBar").attr('width', function() {
+						return (d3.event.x-firstX);
+				});
+				d3.select(".dragBar").attr('height', function() {
+					return (d3.event.y-firstY);
+				});
+				var dragWidth = d3.select(".dragBar").attr("width");
+				var dragHeight = d3.select(".dragBar").attr("height");
+				if (dragWidth < 0 && dragHeight < 0)
+				{
+					d3.select(".dragBar").attr("transform", function() {
+						return "translate(" + (dragWidth) + "," + (dragHeight) + ")";
+					});
+				}
+				else if (dragWidth < 0)
+				{
+					d3.select(".dragBar").attr("transform", function() {
+						return "translate(" + (dragWidth) + ",0)";
+					});
+				}
+				else if (dragHeight < 0)
+				{
+					d3.select(".dragBar").attr("transform", function() {
+						return "translate(0," + (dragHeight) + ")";
+					});
+				}
+				d3.select(".dragBar").attr("width", Math.abs(dragWidth));
+				d3.select(".dragBar").attr("height", Math.abs(dragHeight));
+			})
+			.on('end', function() {
+				var dragBoxLength = inDragBox.length;
+				for (i = 0; i < dragBoxLength; i++)
+				{
+					inDragBox[i].style("stroke-width", 0);
+				}
+				inDragBox = [];
+				secondX = d3.event.x;
+				secondY = d3.event.y;
+				function compare(a,b)
+				{
+					return a-b;
+				}
+				var XCords = [firstX, secondX].sort(compare);
+				var YCords = [firstY, secondY].sort(compare);
+				d3.selectAll(".dataDot")
+				.attr("cx", function ()
+				{
+					var x = d3.select(this).attr("cx");
+					var y = d3.select(this).attr("cy");
+					if (x >= XCords[0] && x <= XCords[1] && y >= YCords[0] && y <= YCords[1])
+					{
+						d3.select(this)
+							.style("stroke-width", 1)
+							.style("stroke", "black")
+						inDragBox.push(d3.select(this));
+					}
+					return x;
+				})
+			});
+		// Dragable area for drag filtering
+		svg.append("rect")
+			.attr("x", 0)
+			.attr("y", 0)
+			.attr("width", width)
+			.attr("height", height)
+			.style("fill-opacity", 0)
+			.call(drag);
 		// add the tooltip area to the webpage
 		var tooltip = d3.select("body").append("div")
 			.attr("class", "tooltip")
 			.style("opacity", 0);
 		// load data
-		d3.csv("csvs/cereal.csv", function(error, data) {
+		d3.csv("csvs/cereal.csv", function(error, data)
+		{
 			if (error)
 			{
 				throw error;
 			}
-		// change string (from CSV) into number format
-		data.forEach(function(d) {
-			d.X = +d.X;
-			d["Y"] = +d["Y"];
-		// comment out this line before going live
-		});
- 		// don't want dots overlapping axis, so add in buffer to data domain
-		xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
-		yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
-		createXAxis();
-		createYAxis();
-		drawDots(data);
-		drawLegend();
-	});
-	function drawLegend()
-	{
-		// draw legend
-		var legend = svg.selectAll(".legend")
-			.data(color.domain())
-			.enter().append("g")
-			.attr("class", "legend")
-			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-		// draw legend colored rectangles
-		legend.append("rect")
-			.attr("class", color)
-			.attr("fill-opacity", 1)
-			.attr("x", width - 18)
-			.attr("width", 18)
-			.attr("height", 18)
-			.style("stroke", "black")
-			.style("stroke-fill", 2)
-			.style("fill", color)
-			.on("click", function (d)
+			// change string (from CSV) into number format
+			data.forEach(function(d)
 			{
-				var dotType = "." + d.replace(/\s/g, '');
-				var dotList = d3.selectAll(dotType)
-				.style("fill-opacity", function (d)
+				d.X = +d.X;
+				d["Y"] = +d["Y"];
+			// comment out this line before going live
+			});
+			// don't want dots overlapping axis, so add in buffer to data domain
+			xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
+			yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
+			createXAxis();
+			createYAxis();
+			drawDots(data);
+			drawLegend();
+		});
+		function createXAxis()
+		{
+			// x-axis
+			svg.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(0," + (height-labelPadding) + ")")
+				.call(d3.axisBottom(xScale).tickPadding([10]))
+			// add X Axis label
+			svg.append("text")
+					.attr("class", "axisLabel")
+					.attr("transform", "rotate(0)")
+					.attr("y", height-labelPadding/2 + 10 )
+					.attr("x", width/2)
+					.attr("dy", "1em")
+					.text(xAxisLabel);
+		}
+		function createYAxis()
+		{
+			// y-axis
+			svg.append("g")
+				.call(d3.axisLeft(yScale).tickPadding([15]))
+				.attr("class", "axis")
+				.attr("transform", "translate(" + labelPadding + ",0)")
+			// add Y Axis label
+			svg.append("text")
+					.attr("class", "axisLabel")
+					.attr("transform", "rotate(-90)")
+					.attr("y", -10)
+					.attr("x", -height/2)
+					.attr("dy", ".75em")
+					.text(yAxisLabel);
+		}
+		function drawDots(data)
+		{
+			// draw dots
+			svg.selectAll(".dot")
+				.data(data)
+				.enter().append("circle")
+				.attr("type", function(d)
 				{
-					var opacity = d3.selectAll(this)["_groups"][0]["style"]["fill-opacity"];
+					type =  d.Type.replace(/\s/g, '');
+					d3.select(this).classed(type, true);
+					return type;
+				})
+				.classed("dataDot", true)
+				.attr("r", dotSize)
+				.attr("cx", function(d)
+				{
+					return xScale(d.X);
+				})
+				.attr("cy", function(d)
+				{
+					return yScale(d.Y);
+				})
+				.style("fill", function(d)
+				{
+					return color(cValue(d));
+				})
+				.style("fill-opacity", 1)
+				.on("mouseover", function(d)
+				{
+					d3.select(this).attr("r", dotSize + dotPadding);
+					var test = d3.select(this)["_groups"][0][0]["style"]["fill-opacity"];
+					if (test != 0)
+					{
+						tooltip.transition()
+							.duration(200)
+							.style("opacity", .9);
+						tooltip.html(d["Name"] + "<br/> (" + xValue(d) + ", " + yValue(d) + ")")
+							.style("left", (d3.event.pageX + dotSize + dotPadding + 10) + "px")
+							.style("top", (d3.event.pageY - 28) + "px");
+					}
+				})
+				.on("mouseout", function(d)
+				{
+					d3.select(this).attr("r", dotSize);
+					tooltip.transition()
+						.duration(500)
+						.style("opacity", 0);
+				})
+		}
+		function drawLegend()
+		{
+			// draw legend
+			var legend = svg.selectAll(".legend")
+				.data(color.domain())
+				.enter().append("g")
+				.attr("class", "legend")
+				.attr("transform", function(d, i)
+				{
+					return "translate(" + 0 + "," + i * legendSpacing + ")";
+				});
+			var i = 0;
+			// draw legend colored rectangles
+			legend.append("rect")
+				.classed(color, true)
+				.classed("legend", true)
+				.attr("fill-opacity", 1)
+				.attr("x", width - legendTileSize)
+				.attr("y", function ()
+				{
+					i += 1;
+					return i * legendTileSize;
+				})
+				.attr("rx", 5)
+				.attr("ry", 5)
+				.attr("width", legendTileSize)
+				.attr("height", legendTileSize)
+				.style("stroke", color)
+				.style("fill", color)
+				.on("click", function (d)
+				{
+					var dotType = "." + d.replace(/\s/g, '');
+					var dotList = d3.selectAll(dotType)
+					.style("fill-opacity", function (d)
+					{
+						var opacity = d3.selectAll(this)["_groups"][0]["style"]["fill-opacity"];
+						if (opacity == 1)
+						{
+							d3.select(this).attr("r", 0);
+							return 0;
+						}
+						else
+						{
+							d3.select(this).attr("r", dotSize);
+							return 1;
+						}
+					});
+					var opacity = d3.select(this).attr("fill-opacity");
 					if (opacity == 1)
 					{
-						d3.select(this).attr("r", 0);
-						return 0;
+						opacity = d3.select(this).attr("fill-opacity", 0);
 					}
 					else
 					{
-						d3.select(this).attr("r", dotSize);
-						return 1;
+						opacity = d3.select(this).attr("fill-opacity", 1);
 					}
+					//.style("opacity", 0);
 				});
-				//.style("opacity", 0);
-			});
-		// draw legend text
-		legend.append("text")
-			.attr("x", width - 24)
-			.attr("y", 9)
-			.attr("dy", ".35em")
-			.style("text-anchor", "end")
-			.text(function(d) { return d;})
-	}
-	function createXAxis()
-	{
-		// x-axis
-		svg.append("g")
-			.attr("class", "x axis")
-			.attr("transform", "translate(0," + height + ")")
-			.call(d3.axisBottom(xScale))
-		svg.append("text")
-			.attr("class", "label")
-			.attr("transform", "rotate(0)")
-			.attr("y", height + 20)
-			.attr("x", width/2)
-			.attr("dy", "1em")
-			.style("text-anchor", "middle")
-			.text(xAxisLabel);
-	}
-	function createYAxis()
-	{
-		// y-axis
-		svg.append("g")
-			.call(d3.axisLeft(yScale).tickPadding(["10"]))
-			.attr("class", "y axis");
-		svg.append("text")
-			.attr("class", "label")
-			.attr("transform", "rotate(-90)")
-			.attr("y", 0 - margin.left)
-			.attr("x", 0 - (height / 2) - 5)
-			.attr("dy", "1em")
-			.style("text-anchor", "middle")
-			.text(yAxisLabel);
-	}
-	function drawDots(data)
-	{
-		// draw dots
-		svg.selectAll(".dot")
-			.data(data)
-			.enter().append("circle")
-			.attr("class", function(d) { return d.Type.replace(/\s/g, '');})
-			.attr("r", dotSize)
-			.attr("cx", function(d) { return xScale(d.X);})
-			.attr("cy", function(d) { return yScale(d.Y);})
-			.style("fill", function(d) { return color(cValue(d));})
-			.style("fill-opacity", 1)
-			.on("mouseover", function(d) {
-				console.log(d3.select(this)["_groups"][0][0]);
-				d3.select(this).attr("r", dotSize + dotPadding);
-				var test = d3.select(this)["_groups"][0][0]["style"]["fill-opacity"];
-				console.log(test);
-				if (test != 0)
-				{
-					tooltip.transition()
-						.duration(200)
-						.style("opacity", .9);
-					tooltip.html(d["Name"] + "<br/> (" + xValue(d) + ", " + yValue(d) + ")")
-						.style("left", (d3.event.pageX + dotSize + dotPadding + 10) + "px")
-						.style("top", (d3.event.pageY - 28) + "px");
-				}
-			})
-			.on("mouseout", function(d) {
-				d3.select(this).attr("r", dotSize);
-				tooltip.transition()
-					.duration(500)
-					.style("opacity", 0);
-			});
-	}
-
-  d3.select("#vis-title").html("Scatter Plot Test");
+			var i = 0;
+			// draw legend text
+			legend.append("text")
+				.classed("legend", true)
+				.attr("x", width - legendTileSize - 7)
+				.attr("y", function () {
+					i += 1;
+					return i * legendTileSize;
+				})
+				.attr("dy", legendTileSize/2 + 1)
+				.text(function(d) {
+					return d;
+				})
+		}
+		//your visual title here
+		d3.select("#vis-title").html("Scatter Plot V1");
 }
 
 function init_occupancy_test(){
+		clear_vis();
     var margin = {top: 30, right: 40, bottom: 100, left: 80};
     var container = d3.select(".widget2").append("div").classed("svg-container", true);
     var width = parseInt(d3.select(".svg-container").style("width"));
@@ -1523,64 +1738,77 @@ function init_occupancy_test(){
   	var svg = d3.select("svg")
     	.append("g")
       	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-  	d3.csv("csvs/occupancy.csv", type, function(error, data) {
-    	x.domain(data.map(function(d) { return d.nodeName; }));
-    	y.domain([0, d3.max(data, function(d) { return d.numFiles; })]);
-   		svg.append("g")
-        	.attr("class", "x axis")
-        	.attr("transform", "translate(0," + height + ")")
-        	.call(xAxis)
-  			.selectAll("text")
-  			.style("text-anchor", "end")
-  			.attr("dx", "-.8em")
-  			.attr("dy", ".15em")
-  			.attr("transform", "rotate(-45)");
-  		svg.append("text")      // text label for the x axis
-     		.attr("x", width / 2 )
-          	.attr("y",  height + margin.bottom )
-          	.style("text-anchor", "middle")
-          	.text(xLabel);
-    	svg.append("g")
-        	.attr("class", "y axis")
-        	.call(yAxis)
-      		.append("text")
-        	.attr("transform", "rotate(-90)")
-        	.attr("y", 6)
-        	.attr("dy", ".71em")
-        	.style("text-anchor", "end");
-  		svg.append("text")
-          	.attr("transform", "rotate(-90)")
-          	.attr("y", 0 -60)
-          	.attr("x",0 - (height / 2))
-          	.attr("dy", "1em")
-          	.style("text-anchor", "middle")
-          	.text(yLabel);
-  		svg.selectAll(".bar")
-        	.data(data)
-      		.enter().append("rect")
-        	.attr("class", "bar")
-        	.attr("x", function(d) { return x(d.nodeName); })
-        	.attr("width", x.bandwidth())
-        	.attr("y", function(d) { return y(d.numFiles); })
-        	.attr("height", function(d) { return height - y(d.numFiles); })
-        	.on('mouseover', function(d) {
-  				tooltipBox.transition()
-  		  			.duration(20)
-    				.style("top", (d3.event.pageY - tooltipHeight) + "px")
-  					.style("left", (d3.event.pageX - tooltipWidth) + "px")
-  					.style("opacity", .9)
-  					.text(d.numFiles + " " + "Files")
-  	  		})
-        	.on('mouseout', function(d) {
-  				tooltipBox
-  		    	.transition()
-  		  		.duration(500)
-  				.style("opacity", 0)
-  	  		});
-  	});
+
+		if (tempData != null){
+			build_from_data(tempData);
+		}
+		else {
+			d3.csv("csvs/occupancy.csv", type, function(error, data){
+				build_from_data(data);
+			});
+		}
+
+		function build_from_data(data){
+			tempData = data;
+			x.domain(data.map(function(d) { return d.nodeName; }));
+			y.domain([0, d3.max(data, function(d) { return d.numFiles; })]);
+			svg.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + height + ")")
+					.call(xAxis)
+				.selectAll("text")
+				.style("text-anchor", "end")
+				.attr("dx", "-.8em")
+				.attr("dy", ".15em")
+				.attr("transform", "rotate(-45)");
+			svg.append("text")      // text label for the x axis
+				.attr("x", width / 2 )
+						.attr("y",  height + margin.bottom )
+						.style("text-anchor", "middle")
+						.text(xLabel);
+			svg.append("g")
+					.attr("class", "y axis")
+					.call(yAxis)
+					.append("text")
+					.attr("transform", "rotate(-90)")
+					.attr("y", 6)
+					.attr("dy", ".71em")
+					.style("text-anchor", "end");
+			svg.append("text")
+						.attr("transform", "rotate(-90)")
+						.attr("y", 0 -60)
+						.attr("x",0 - (height / 2))
+						.attr("dy", "1em")
+						.style("text-anchor", "middle")
+						.text(yLabel);
+			svg.selectAll(".bar")
+					.data(data)
+					.enter().append("rect")
+					.attr("class", "bar")
+					.attr("x", function(d) { return x(d.nodeName); })
+					.attr("width", x.bandwidth())
+					.attr("y", function(d) { return y(d.numFiles); })
+					.attr("height", function(d) { return height - y(d.numFiles); })
+					.on('mouseover', function(d) {
+					tooltipBox.transition()
+							.duration(20)
+						.style("top", (d3.event.pageY - tooltipHeight) + "px")
+						.style("left", (d3.event.pageX - tooltipWidth) + "px")
+						.style("opacity", .9)
+						.text(d.numFiles + " " + "Files")
+					})
+					.on('mouseout', function(d) {
+					tooltipBox
+						.transition()
+						.duration(500)
+					.style("opacity", 0)
+					});
+		}
+
 	function type(d) {
 		d.numFiles = +d.numFiles;
 	    return d;
   	}
- d3.select("#vis-title").html("Occupancy Test");
+		current_func = init_occupancy_test;
+		d3.select("#vis-title").html("Occupancy Test");
 }
