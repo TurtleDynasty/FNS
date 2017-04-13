@@ -239,6 +239,7 @@ function remove_element (entry) {
     if(removed.length > 0){
       $(".filter-input-container:nth-of-type(2)").removeClass("hidden");
       $("#in").append("<option value=" + (removed.length-1) + ">" + entry + "</option>");
+      advance_removed_out(index);
     }
     $("#out").val("");
 
@@ -275,10 +276,18 @@ function object_index_with_attr(array, value) {
     return -1;
 }
 
-function advance_removed (index) {
+function advance_removed_in (index) {
   for (i = 0; i < removed.length; i++){
-    if (removed[i][1] >= index){
+    if (removed[i][1] > index){
       removed[i][1] += 1;
+    }
+  }
+}
+
+function advance_removed_out (index) {
+  for (i = 0; i < removed.length; i++){
+    if (removed[i][1] > index){
+      removed[i][1] -= 1;
     }
   }
 }
@@ -286,7 +295,7 @@ function advance_removed (index) {
 function add_removed_element(value, position, removed_index){
   tempData.splice(position, 0, value);
   removed.splice(removed_index, 1);
-  advance_removed(position);
+  advance_removed_in(position);
 
   $("#in option").each(function(){
     var value = parseInt($(this).val());
@@ -296,3 +305,18 @@ function add_removed_element(value, position, removed_index){
   });
 
 }
+
+/*
+[A, B, C, D, E]
+
+[A, E]
+{C:2, D:2, B:1}
+
+[A, B, C, D, E]
+
+[A, E]
+{C:2, B:1, D:1}
+
+
+
+*/

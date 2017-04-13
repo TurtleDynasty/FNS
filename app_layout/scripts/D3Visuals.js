@@ -38,7 +38,7 @@ function init_replicated_objects()
 		.attr("width", width)
 		.attr("height", height)
 		.attr("preserveAspectRatio", "xMidYMid meet")
-		.attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
+		.attr("viewBox", "0  0 " + (width+100) + " " + (height+180))
 		.append("g")
     	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -136,7 +136,7 @@ function type(d) {
 }
 
 current_func = init_replicated_objects;
-d3.select("#vis-title").html("Objects Replicated by Nodes");
+d3.select("#vis-title").html("Objects Replicated by Node");
 }
 
 function init_af_segments()
@@ -535,7 +535,7 @@ function init_pie_test()
 	// ---- Inner Text STUFF
 	var units = "objects";
 	var numDecimalPlaces = 3;
-	var innerFontSize = "35px";
+	var innerFontSize = "25px";
 	var labelXOffset = "0em";
 	var labelYOffset = "-.5em";
 	var topXOffset = "0em";
@@ -740,6 +740,7 @@ function init_pie_test()
 	}
 	else {
 		d3.csv("csvs/data.csv", type, function(error, data){
+			//console.log(data)
 			if(error){
 				throw error;
 			}
@@ -749,6 +750,7 @@ function init_pie_test()
 
 	function build_from_data (data) {
 		tempData = data;
+		console.log(tempData)
 		data = parseData(data);
 		g = svg.selectAll(".arc")
 			.data(pie(data))
@@ -859,7 +861,7 @@ function init_pie_test()
 	}
 
 	current_func = init_pie_test;
-	d3.select("#vis-title").html("Object Count by Container");
+	d3.select("#vis-title").html("Object Count by Storage Pool");
 }
 
 function init_pool_test() {
