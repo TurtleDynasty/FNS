@@ -136,7 +136,7 @@ function type(d) {
 }
 
 current_func = init_replicated_objects;
-d3.select("#vis-title").html("Objects Replicated by Storage Pool");
+d3.select("#vis-title").html("Objects Replicated by Nodes");
 }
 
 function init_af_segments()
