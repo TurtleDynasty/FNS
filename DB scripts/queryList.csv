@@ -12,4 +12,4 @@
 "11","capstone_datavis", "SELECT NODE_NAME, SUM(NUM_FILES) FROM `occupancy` GROUP BY NODE_NAME","nodeName,numFiles"
 "12","capstone_datavis","SELECT POOLID, FILESIZE, MAXSIZE FROM `sd_containers` GROUP BY POOLID","name,value1,value2"
 "13","capstone_datavis","SELECT CNTRNAME, FREESPACE FROM `sd_containers` WHERE 1 GROUP BY CNTRNAME","name,count"
-"14","capstone_datavis","SELECT STGPOOL_NAME, PHYSICAL_MB , LOGICAL_MB ,REPORTING_MB FROM `occupancy` GROUP BY STGPOOL_NAME","name,value1,value2,value3"
+"14","capstone_datavis","SELECT STGPOOL_NAME,REPORTING_MB, PHYSICAL_MB , LOGICAL_MB  FROM `occupancy` GROUP BY STGPOOL_NAME","name,value1,value2,value3"
