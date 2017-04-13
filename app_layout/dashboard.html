@@ -11,6 +11,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
   <script type="text/javascript" src="dist/d3.js"></script>
   <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+  <link href="css/piechart.css" rel="stylesheet">
 </head>
 <body>
   <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -42,7 +43,7 @@
             <div class="vis-select-container" value="2">Objects Replicated by Node</div>
             <div class="vis-select-container" value="3">AF Segments</div>
             <div class="vis-select-container" value="4">Backup Test</div>
-            <div class="vis-select-container" value="5">Object Count by Container</div>
+            <div class="vis-select-container" value="5">Object Count by Storage Pool</div>
             <div class="vis-select-container" value="6">Storage Pool Test</div>
             <div class="vis-select-container" value="7">Heat Map Test</div>
             <div class="vis-select-container" value="8">Scatter Plot Test</div>
@@ -149,14 +150,25 @@
 
             <div class="vis-options">
               <div class="build-widget-content">
-                <h4>Dropdown Option</h4>
-                <select class="form-control" id="sel1">
-                  <option value=""></option>
-                  <option value="1">Option 1</option>
-                  <option value="2">Option 2</option>
-                  <option value="3">Option 3</option>
-                  <option value="4">Option 4</option>
-                </select>
+                <h4>Number of Objects</h4>
+                <input type="number" id="range1" value="0" min="0" max="50" class="form-control options-range-left">
+                <h4 class="range-text">to</h4>
+                <input type="number" id="range2" value="" min="0" max="50" class="form-control options-range-right">
+              </div>
+            </div>
+
+            <div class="vis-options">
+              <div class="build-widget-content">
+              </div>
+            </div>
+            <div class="vis-options">
+              <div class="build-widget-content">
+              </div>
+            </div>
+            <div class="vis-options">
+              <div class="build-widget-content">
+                <h4>Display Top</h4>
+                <input type="number" id="range1" value="" min="0" max="50" class="form-control">
               </div>
             </div>
           </div>
