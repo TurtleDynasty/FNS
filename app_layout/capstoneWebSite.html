@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {font-family: "Times New Roman", Times, serif;}
+
+/* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;   
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    margin:auto;
+}
+
+div.gallery {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ccc;
+    float:none;
+    width: 200px;
+}
+
+div.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+h3{
+    text-align: center; 
+    font-size: 32px;
+}
+.tech{
+   margin-bottom:10px;
+}
+
+td{text-align:center;}
+
+</style>
+</head>
+<body>
+
+<!-- Create all of the tabs that will be used below -->
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'Intro')" id="defaultOpen">Home</button>
+  <button class="tablinks" onclick="openCity(event, 'Requirements')">High Level Requirements</button>
+  <button class="tablinks" onclick="openCity(event, 'Design')">Design Philosophy and Concept</button>
+  <button class="tablinks" onclick="openCity(event, 'Tech')">Technologies</button>
+  <button class="tablinks" onclick="openCity(event, 'Sched')">Schedule and Resources</button>
+  <button class="tablinks" onclick="openCity(event, 'Code')">Codebase</button>
+  <button class="tablinks" onclick="openCity(event, 'Demo')">Demo</button>
+  <button class="tablinks" onclick="openCity(event, 'About')">About Us</button>
+</div>
+
+<!--
+##############################################################################################################
+#                                           Home Tab                                                        #
+##############################################################################################################-->
+<div id="Intro" class="tabcontent">
+ <img src="Resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left">
+ <img src="Resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right"> 
+ <h3>Data Visualization for Enterprise Storage</h3>
+
+<table width="100%"><td>
+<img src="Resources/dash.png" alt="Dashboard" style="width:720px;height:400px;">
+</td></table>
+<p style="text-indent: 2em;"> 
+Our project was really to create a way for system administrators to look at all of
+the information being created by IBM's Spectrum Protect product, and interpret that
+information in a meaningful way. Their interpretation of this information would
+inherently lead to managing their use of Spectrum Protect in a cost effective and
+efficient manner.
+</p><p style="text-indent: 2em;"> 
+The idea to help system administrators understand how to better manage the data
+that is being stored on Spectrum Protect servers stemmed from the idea of data visualization
+or to be more precise the lack of it. In IBM's case they did not have a sure method to visually
+show a system administrator the status of their company/businesses’ information on
+these servers. While the system administrator were provided this information, it was provided in 
+a manner that even veteran users of the Spectrum Protect product had difficulty deciphering
+what was or was not important for their management needs. In other words,
+is there an accessible and easy to use tool that the system administrators can 
+use to make informed decisions regarding the storage of their information
+on Spectrum Protect servers? That is where team FNS came in.
+</p><p style="text-indent: 2em;"> 
+Our task was to solve this problem and to create a tool for the system administrators
+who use Spectrum Protect. In order to solve this problem we first asked ourselves 
+"What kind of information, that IBM provides, is most useful in properly
+managing data on a Spectrum Protect server?" With this in mind we were able to take
+all of the relevant information given by IBM and create meaningful and intuitive visuals
+for that information. These visuals would in turn be the tools that a system administrator would
+use to gain a better grasp on the current status of the information that they store
+on Spectrum Protect servers. Each of the different visuals provide an immediate grasp 
+of the status of different aspects how their data is handled and stored on Spectrum Protect
+servers which leads to being able to better manage that same data.
+</p><p style="text-indent: 2em;"> 
+In the end we were able to create a variety of visuals for system administrators.
+This in turn shows IBM that creating visual representations for important data
+can have a real impact on how a system administrator goes about managing the data
+on IBM's Spectrum Protect servers. </p>
+
+<p><b>NOTE:</b> The initial concept for this project was provided by our sponsor, in the form of a <a href="Resources/Data_Visualization_Project_Description.pdf" download>Capstone project proposal</a>.</p>
+</div>
+
+<!--
+##############################################################################################################
+#                                           Requirements Tab                                                 #
+##############################################################################################################-->
+<div id="Requirements" class="tabcontent">
+ <img src="Resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left">
+ <img src="Resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right">   
+ <h3>Requirements</h3>
+ <p>To ensure success of the project, we identified a number of functional, 
+    performance, and environmental requirements. This development path was used to both guide 
+    and measure implementation. In terms of functional requirements we identified all parts of the application
+    that were crucial to achieving the end of goal of this project. The performance based requirements
+    were used to gain a grasp on how efficient the application would be, specifically how quick the system is
+    in generating visualizations based on large data sets. Finally the environmental  requirements
+    allowed us to hone in on all outside dependancies that we do not have control over; ranging from external libraries
+    being used to if a user has disabled JavaScript. 
+    
+
+ </p>
+ <p>The core list of requirements for our application are as follows:</p>
+  <ul> 
+	<li>Data Filtration:</li>
+	<ul><li>A visualization must be filterable, allowing the user to include or exclude specific objects from the visualization.</li></ul>
+        <li>Graph Selection:</dt>
+	<ul><li>The application should have multiple clear, responsive, interactive visualizations.</li></ul>
+	<li>Notifications/Messages:</dt>
+	<ul><li>The application should communicate critical notifications and suggested actions through a message center.</li></ul>
+	<li>Login Page:</dt>
+	<ul><li>The application should have a simple security system to prevent unauthorized access.</li></ul>
+	<li>Familiar User Interface:</dt>
+	<ul><li>The application should provide a simple, interactive, and easy to navigate user-interface that feels familiar to the user.</li></ul>
+	<li>Quick Load Times:</dt>
+	<ul><li>The application should fetch and visualize data from the database quickly and efficiently.</li></ul>
+   </ul> 	
+</div>
+
+<!--
+##############################################################################################################
+#                                           Design and Concept Tab                                           #
+##############################################################################################################-->
+<div id="Design" class="tabcontent"> 
+ <img src="Resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left">
+ <img src="Resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right"> 
+  <h3>Design and Concept</h3>
+
+  <p>what is your architecture and design concept and what are your best ideas on the architecture details and any of the views you have created. Can be a combination of text and graphics. Then talk briefly about the design paradigm (i.e. waterfall, spiral, etc.) you decided to use and why. In general, your goal is to give an overview discussion of how you tackled the problem and convince us that this was a reasonable way to go about it.</p> 
+</div>
+
+<!--
+##############################################################################################################
+#                                           Technologies Tab                                                 #
+##############################################################################################################-->
+<div id="Tech" class="tabcontent">
+ <img src="Resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left">
+ <img src="Resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right">   
+ <h3>Technologies Used</h3>
+
+  <div class="tech"><h2>Git Hub</h2>
+  <img src="Resources/github.jpg" alt="git hub" style="width:100px;height:100px;float:left;margin-right:40px">
+  <p> GitHub is a web based version control repository. This was chosen because team FNS was familiar with this
+      specific repository. Every member of team FNS is knowledgeable in version control and has consistently used GitHub throughout 
+      the development of this application.
+</p>
+  </div>
+
+   <div class="tech" style="clear:left"><h2>Atom Text Editor</h2>
+  <img src="Resources/AtomLogo.png" alt="atom" style="width:100px;height:100px;float:left;margin-right:40px">
+  <p> Atom is an open source text editor that is available all on platforms. Atom was specifically chosen as our primary IDE because of
+      the fact that it is easy to use and it supports a majority of all the current and popular languages used in the Computer Science field.
+  </p>
+  </div> 
+
+  <div class="tech" style="clear:left"><h2>MySQL</h2>
+  <img src="Resources/mysql.jpg" alt="mysql" style="width:100px;height:100px;float:left;margin-right:40px">
+  <p> MySQL is an open source database that Web sites and Enterprise level companies alike. We chose MySQL because we are both familiar with using
+      MySQL and we were given no restriction on which database technology to use with all test data given to us.
+      The point of using MySQL was to store all of the test data that our sponsors gave to us to use. Specifically this data was analyzed in order
+      to find information that was relevant to a system administrator making informed decisions when managing their data on the Spectrum Protect servers,
+      and to visualize that information. After we found the proper visuals for said data we used queries to communicate with the database and feed the 
+      data returned by the database to the visuals.
+      </p>
+  </div>
+
+  <div class="tech" style="clear:left"><h2 >HTML & Bootstrap</h2>
+  <img src="Resources/bootstrap.jpg" alt="php" style="width:100px;height:100px;float:left;margin-right:40px">
+  <p> HTML was used as the underlying frame used to create this web application. This conforms to the standards of web applications that all use HTML.
+      In order to give the application a unique yet familiar look we used Bootstrap which is a great framework for fast front-end development. In particular
+      Bootstrap allowed us to provide the system administrator with a familiar user interface which is akin to the current version (as of 2017) of the Spectrum Protect product.
+
+   </p>
+  </div> 
+
+  <div class="tech" style="clear:left"><h2 >Backbone</h2>
+  <img src="Resources/backboneLogo.png" alt="php" style="width:100px;height:100px;float:left;margin-right:40px">
+  <p> Backbone is a JavaScript library that provides a framework for key-value binding and custom events. This is critical for our application as
+      dashboard of this application removes and modularizes all the pieces of this application to increase its flexibility.
+   </p>
+  </div> 
+
+  <div class="tech" style="clear:left"><h2 >PHP</h2>
+  <img src="Resources/php.jpg" alt="php" style="width:100px;height:100px;float:left;margin-right:40px">
+  <p> PHP was used for a few separate reasons. Apart from being familiar with PHP,
+      PHP allowed us to create scripts that would run in the background of our application in different cases.
+      For example, in order to actually retrieve the data needed for a visual, a script runs in the background
+      that communicates with the MySQL database and returns that data to the visualization. We also used this script to
+      take care of the login page; this includes a validation page that checks against the database to make sure that 
+      no unwanted access occurs. Lastly we used a PHP script to quickly load the test data into the MySQL database.
+   </p>
+  </div>
+  
+  <div class="tech" style="clear:left"><h2 >JavaScript</h2>
+  <img src="Resources/js.jpg" alt="javascript" style="width:100px;height:100px;float:left;margin-right:40px">
+  <p> JavaScript was used specifically to improve upon the initial functionality of our original application prototype.
+      JavaScript allowed team FNS to introduce and expand the ways that a system administrator navigates the application.
+      </p>
+  </div>
+ 
+  <div class="tech" style="clear:left"><h2 >D3.js</h2>
+  <img src="Resources/d3js.png" alt="d3" style="width:100px;height:125px;float:left;margin-right:40px">
+  <p> D3 is a JavaScript library that is specifically used to visualize data. This was our primary choice because it was recommended to us by our sponsors.
+      All of the visuals used by team FNS on this project stemmed from an initial base visual; the initial visuals can be found at <a href="https://d3js.org/">D3js.org</a>
+      where there is a lot of various example of different visualizations for different kinds of data ranging from basic bar graphs to intricate heat maps.
+      Team FNS then proceeded to modify and expand upon all of the different visuals that were used in order to add different features to the visual for both
+      the requirements of this project as well as to increase the usability of the visualizations. This included adding a way to filter out data from the visual,
+      adding legends to the visual, increasing all sizes for increased readability, and modifying these visuals so that they can handle large amounts of data at a time.
+      Finally all of the D3 visuals are taken and placed in the dashboard where it uses a php script to fill in the visual with relevant data.</p>
+  </div>
+
+</div>
+
+<!--
+##############################################################################################################
+#                                           Schedule Tab                                                     #
+##############################################################################################################-->
+<div id="Sched" class="tabcontent">
+ <img src="Resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left">
+ <img src="Resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right"> 
+  <h3>Development Plan</h3>
+
+<table width="100%"><td>
+<img src="Resources/FNS_Schedule.jpg" alt="Dashboard" style="width:720px;height:400px;">
+</td></table>
+  <h2>Current Status</h2>
+  <p>As shown in the figure above team FNS is currently approaching finishing up the final requirements of the Data Visualization project. We have gone through all of the information produced from the Spectrum Protect servers and found all
+     relevant and imperative information that is necessary to analyze when managing your data on the Spectrum Protect server.
+     Every single piece of information has a predetermined visual that best represents that data. The filtering system is the final stages of development, but currently works properly on a few of the different data sets.
+     Lastly all of the data that is used for the visualizations is stored in a secure location which provides more than enough space for additional data.
+  </p>
+  
+  <h2>Future Completions</h2>
+  <p>Team FNS is currently in the process of updating all the visuals so that they are clean and easily readable. As mentioned in the previous section we are in the just about done with the
+     filtering system, which will be done within the next week. The messaging system will also be completed as we within the next couple of weeks. Finally the email system will also be done within the
+     next couple of weeks.
+  </p>
+<br>
+  
+</div>
+
+<!--
+##############################################################################################################
+#                                           Code Base Tab                                                    #
+##############################################################################################################-->
+<div id="Code" class="tabcontent">
+ <img src="Resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left">
+ <img src="Resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right"> 
+  <h3>Code Base</h3>
+
+  <p>You can download the <a href="Resources/website.html" download>Application Code</a> here.</p>
+  <p>Unless your sponsor specifically stated that they'd like to keep the codebase for themselves, you should go ahead and publish your code. Sure it's sitting safely in a repo somewhere...but will that account exist in the future? Will you or a team member delete it in five years when on a clean-up binge. Archive your repo into a zip file, store it in your website folder, and provide a link to the code plus documentation on your website!</p> 
+</div>
+
+<!--
+##############################################################################################################
+#                                           Demo Tab 	                                                     #
+##############################################################################################################-->
+<div id="Demo" class="tabcontent">
+ <img src="Resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left">
+ <img src="Resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right">  
+ <h3>Demo goes HERE!</h3>
+ 
+  <p>Link to a demo? Some teams that were producing web-apps or similar web-based products have tried including a link to a running demo in their website. This is super-cool...but very fragile. The demo site usually gets abandoned or goes off line, and then you have a dead link. Much much (!!) better is to include a "screen shot walkthrough" of your final product that shows key pages along with maybe some quick explanation of what you're seeing in the image. </p> 
+</div>
+
+<!--
+##############################################################################################################
+#                                           About Tab                                                        #
+##############################################################################################################-->
+<div id="About" class="tabcontent">
+ <img src="Resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left">
+ <img src="Resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right">   
+ <h3>Team FNS</h3>
+
+<table width="100%" >
+<td width="20%"><div class="gallery">
+    <img src="Resources/AT icon.png" alt="Mondo" width="300" height="200">
+  <div class="desc">Armondo - Team Leader</div>
+</div>
+</td><td width="20%">
+<div class="gallery">
+    <img src="Resources/AV icon.png" alt="Alejandro" width="300" height="200">
+  <div class="desc">Alejandro Varela - Database Analyst</div>
+</div></td><td width="20%">
+<div class="gallery">
+    <img src="Resources/DM icon.png" alt="David" width="300" height="200">
+  <div class="desc">David Miller - Editor in Chief</div>
+</div></td><td width="20%">
+<div class="gallery">
+    <img src="Resources/JM icon.png" alt="Josh" width="300" height="200">
+  <div class="desc">Joshua Melton - Back end Developer</div>
+</div></td><td width="20%">
+<div class="gallery">
+    <img src="Resources/JT icon.png" alt="JT" width="300" height="200">
+  <div class="desc">Jack Barrett - Front end Developer</div>
+</div></td>
+</table>
+
+<br><h3>IBM Sponsors</h3><br>
+
+<table width="100%">
+<td width="33%" >
+<div class="gallery">
+    <img src="Resources/Forrest.png" alt="forrest" width="300" height="200"> 
+  <div class="desc">Forrest Townsend - NAU Alumnus, BS CS Software Developer</div>
+</div>
+</td><td width="33%">
+<div class="gallery">
+    <img src="Resources/Dan.png" alt="dan" width="300" height="200">
+  <div class="desc">Daniel Boros - NAU Alumnus, BS CS Software Engineer</div>
+</div></td><td width="33%">
+<div class="gallery">
+    <img src="Resources/Christopher.png" alt="chris" width="300" height="200">
+  <div class="desc">Christopher Ruskay - Friend of the ACM of NAU Software Development Manager</div>
+</div></td>
+</table>
+  <p> 
+Team information: team members, project roles, picture of the team. This would be a great place to re-use the material that you already put together for your Team Inventory assignment.
+Project sponsor information: name, address, etc (with your sponsor's approval )
+A link to your sponsor's home page, if applicable 
+Technical advisor information (if applicable)</p>
+</div>
+
+
+<script>
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+     
+</body>
+</html> 
