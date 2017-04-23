@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {font-family: "Times New Roman", Times, serif;}
+
+/* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;   
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    margin:auto;
+}
+
+div.gallery {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ccc;
+    float:none;
+    width: 200px;
+}
+
+div.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+h3{
+    text-align: center; 
+    font-size: 32px;
+}
+.tech{
+   margin-bottom:10px;
+}
+
+td{text-align:center;}
+
+</style>
+</head>
+<body>
+
+
+<!-- Create all of the tabs that will be used below -->
+<div class="tab">
+  <button class="tablinks"><a href="capstoneWebSite.html">Home</a></button>
+  <button class="tablinks"><a href="requirements.html">High Level Requirements</a></button>
+  <button class="tablinks"><a href="design.html">Design Philosophy and Concept</a></button>
+  <button class="tablinks"><a href="technologies.html">Technologies</a></button>
+  <button class="tablinks"><a href="schedule.html">Schedule and Resources</a></button>
+  <button class="tablinks"><a href="code.html">Code Base</a></button>
+  <button class="tablinks"><a href="demo.html">Demo</a></button>
+  <button class="tablinks"><a href="aboutUs.html">About Us</a></button>
+</div>
+
+<!--
+##############################################################################################################
+#                                           Requirements Tab                                                 #
+##############################################################################################################-->
+<div class="tabcontent">
+<img src="../Resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left;margin-left:10px;margin-top:10px">
+ <img src="../Resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right;margin-right:10px;margin-top:10px">  
+ <h3>Requirements</h3>
+ 
+<p style="margin-left:10px;margin-right:10px">To ensure success of the project, we identified a number of functional, 
+    performance, and environmental requirements. This development path was used to both guide 
+    and measure implementation. In terms of functional requirements we identified all parts of the application
+    that were crucial to achieving the end of goal of this project. The performance based requirements
+    were used to gain a grasp on how efficient the application would be, specifically how quick the system is
+    in generating visualizations based on large data sets. Finally the environmental  requirements
+    allowed us to hone in on all outside dependancies that we do not have control over; ranging from external libraries
+    being used to if a user has disabled JavaScript. 
+    
+
+ </p>
+ <p style="margin-left:10px;margin-right:10px">The core list of requirements for our application are as follows:</p>
+  <ul style="margin-left:10px;margin-right:10px"> 
+	<li>Data Filtration:</li>
+	<ul><li>A visualization must be filterable, allowing the user to include or exclude specific objects from the visualization.</li></ul>
+        <li>Graph Selection:</dt>
+	<ul><li>The application should have multiple clear, responsive, interactive visualizations.</li></ul>
+	<li>Notifications/Messages:</dt>
+	<ul><li>The application should communicate critical notifications and suggested actions through a message center.</li></ul>
+	<li>Login Page:</dt>
+	<ul><li>The application should have a simple security system to prevent unauthorized access.</li></ul>
+	<li>Familiar User Interface:</dt>
+	<ul><li>The application should provide a simple, interactive, and easy to navigate user-interface that feels familiar to the user.</li></ul>
+	<li>Quick Load Times:</dt>
+	<ul><li>The application should fetch and visualize data from the database quickly and efficiently.</li></ul>
+   </ul> 	
+
+</div>
+
+</body>
+</html> 

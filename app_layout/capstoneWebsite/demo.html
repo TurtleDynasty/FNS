@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {font-family: "Times New Roman", Times, serif;}
+
+/* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;   
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    margin:auto;
+}
+
+div.gallery {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ccc;
+    float:none;
+    width: 200px;
+}
+
+div.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+h3{
+    text-align: center; 
+    font-size: 32px;
+}
+.tech{
+   margin-bottom:10px;
+}
+
+td{text-align:center;}
+
+</style>
+</head>
+<body>
+
+
+<!-- Create all of the tabs that will be used below -->
+<div class="tab">
+  <button class="tablinks"><a href="capstoneWebSite.html">Home</a></button>
+  <button class="tablinks"><a href="requirements.html">High Level Requirements</a></button>
+  <button class="tablinks"><a href="design.html">Design Philosophy and Concept</a></button>
+  <button class="tablinks"><a href="technologies.html">Technologies</a></button>
+  <button class="tablinks"><a href="schedule.html">Schedule and Resources</a></button>
+  <button class="tablinks"><a href="code.html">Code Base</a></button>
+  <button class="tablinks"><a href="demo.html">Demo</a></button>
+  <button class="tablinks"><a href="aboutUs.html">About Us</a></button>
+</div>
+
+<!--
+##############################################################################################################
+#                                           Demo Tab 	                                                     #
+##############################################################################################################-->
+<div class="tabcontent">
+ <img src="../Resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left;margin-left:10px;margin-top:10px">
+ <img src="../Resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right;margin-right:10px;margin-top:10px">   
+ <h3>Demo Walkthrough</h3>
+
+ <table width="100%"><tr><div class="gal2"><td>
+<img src="../Resources/dash.png" alt="Dashboard" style="width:720px;height:375px;">
+  <div class="desc">Figure 1-1 - Dashboard</div>
+</td></table> 
+<p style="margin-left:10px;margin-right:10px">The dashboard, as shown in figure 1-1, is the main page of the application. Here is a system administrator is able to accomplish several tasks
+First, on the left hand side of the image is a modal that is titled "Select a Data Set", here the user can choose a data set to visualize.
+Once a visual has been selected the center modal will give a brief description about the data set that will be visualized. 
+Next, the third modal on the right hand side of the image will allow the system administrator to change how much of the data set will be visualized at
+a time. If no options are chosen on the third modal then the visual will generate with the complete data set.
+When a system administrator is ready to see the data they can click on the generate button at the bottom right corner of the dashboard.
+</p>
+
+<br><br>
+ <table width="100%"><tr><div class="gal2"><td>
+<img src="../Resources/visualPopUp.png" alt="visual" style="width:100%;height:325px;">
+  <div class="desc">Figure 1-2 - Generated Visual</div></td><td>
+<img src="../Resources/visualFiltered.jpg" alt="visual" style="width:100%;height:325px;">
+  <div class="desc">Figure 1-3 - Filtered Generated Visual</div></td>
+</table> 
+<p style="margin-left:10px;margin-right:10px">The generated visual, as shown in figure 1-2, is page where the generated visual will be displayed. The visual itself will encompass the majority of the screen on
+the left hand side. If the user hovers over the visual something event will trigger depending on the type of visual being used. In this case more in depth information
+regarding the section of the pie graph will be displayed. Now in the event that there are too many objects in the visual
+the user can copy the name of the object in the visual and paste it in the upper right modal. In this modal the user can filter out objects. Once filtered out newly
+filtered out visual will appear as shown in figure 1-3. As you can see the "Clever-2" object was filtered out of the visual and it readjusted itself to properly show
+the remaining information. If a user would like that object back into the visual then they can use the new option in the filter modal; this new option will be a drop
+down menu that houses all objects that have been filtered out. Once selected they can choose to re-visualize the object, and the original visual will reappear.
+Now in the bottom right modal of both figure 1-2 and 1-3 we have the messages modal. Here a user can look to find out any immediate errors or system alerts 
+that the user may want to attend to. This will normally be related to the current visual being analyzed but will also include other important alerts.
+Lastly, when a user wants to choose a new data set to visualize they can go to the top left corner of the screen and click on the button called "Select Another Visual".
+</p>
+
+<br><br>
+ <table width="100%"><tr><div class="gal2"><td>
+<img src="../Resources/userSet.jpg" alt="settings" style="width:720px;height:375px;">
+  <div class="desc">Figure 1-4 - User Settings</div>
+</td></table> 
+<p style="margin-left:10px;margin-right:10px">The user settings, as shown in figure 1-4, 
+gives a user a few different options; specifically options regarding the delivery and visibility of 
+notifications. First, if a user would like to receive the more important notifications while they are away from the dashboard
+then they can choose to have that option checked. This will send periodical notifications to the users preferred email address.
+Next, a user can choose whether or not they want the notifications to be displayed when they visual a data set.
+</p>
+</div>
+
+
+
+</body>
+</html> 
