@@ -42,7 +42,7 @@ $userERR = $passERR = "";
 
 	/* scan the POST array and validate the fields */
 	foreach ($_POST as $field => $value) //This loop will now check each key along with their fields to see
-		/* handle free-form text fields */ // if they meet their validation criteria
+	{	/* handle free-form text fields */ // if they meet their validation criteria
 		if ($field === "user")           //If at any point the validation fails than the switch will be flipped regardless if all
 		{
 			if(empty($value))             //other validation passes through
@@ -86,10 +86,10 @@ $userERR = $passERR = "";
 		/* HEY LOOK HERE */
 		/*REMEMBER TO CHANGE CONNECTION INFORMATION*/
 		/* first, connect to the database as the script */
-		$host = "localhost";
-		$user = "av638";
-		$sqlpswd = "Al20044921";
-		$dbase = "av638";
+		$host = "mysql.cefns.nau.edu";//localhost
+		$user = "capstone-datavis";
+		$sqlpswd = "Fns1234";
+		$dbase = "capstone_datavis";
 
 		echo "<h2>Connecting to server.</h2>";
 		$cxn = mysql_connect($host,$user,$sqlpswd) or die ("No connection possible");
@@ -109,28 +109,73 @@ $userERR = $passERR = "";
 		else /*echo "<h6>Database selected. Trying to login user.</h6>";*/
 		/* At this point we will log the user into the page */
 		//Before we check to see if the password and userID match we will check to see if that user ID is locked
-		$squl = "SELECT lockOut FROM users WHERE userID = '$userid'";
+		$squl = "SELECT lockOut FROM users WHERE userName = '$userid'";
 		//
 		$result = mysql_query($squl,$cxn) or die(mysql_error());
 		$rowLock = mysql_fetch_assoc($result);
-		if($rowLock['lockOut'] == 5)
+		
+		if($rowLock['lockOut'] >= 3)
 		{
-			echo"You have been locked out after 5 failed login attempts. Please contact the IT help desk.
-			Click <a href=../logIn/index.php> Here </a> to login with a different userID.";
+			$userERR = "Out of Attempts, Contact IT";
 
 
+			/* $_SERVER(PHP_SELF) means 'use this file on SUBMIT' */
+
+			echo " <nav class='navbar navbar-inverse navbar-fixed-top'>
+			<div class='container-fluid no-padding'>
+			<div class='navbar-header'>
+			<div class='navbar-brand no-padding no-margin padding-left-10'>
+			<img src='resources/logo.png' style='width:50px;height:50px; display: block; margin: auto;' id='brand'>
+			</div>
+			</div>
+			</div>
+			</nav>
+			<fieldset class='center'>
+			<h3 class='noselect'>Spectrum Protect Login</h3>
+			<form action='$_SERVER[PHP_SELF]' method='POST'>";
+		
+				/* Loop that displays the form fields */
+				foreach ($labels as $field => $label) {
+				/* echo the label */
+				echo "<div class='field'>\n
+				<label for='$field'>$label</label>\n";
+
+				/* echo the appropriate field */
+				if ($field === "user")
+				{
+					echo "<input type='text' name='$field' id='$field'
+						size='30' maxlength='65' value='$userid' />
+						<span class='error'>* $userERR</span>\n";
+				}
+				if ($field === "password")
+				{
+					echo "<input type='password' name='$field' id='$field'
+						size='30' maxlength='65' value='$password' />
+						<span class='error'></span>\n";
+				}
+						/* echo the end of the field div */
+						echo "</div>\n";
+			}
+
+			/* Display the submit button */
+			echo "<div id='submit'>\n
+			<input type='submit' value='Log in'>\n
+			</div>
+			</form></fieldset>";
+			
 		}
 		else//Since the user is not locked we will now check to see if the password and userID match
 		{
-			$sql = "SELECT password FROM users WHERE userID = '$userid'";
-			//After grabbing teh proper userID we will match the passwords
+
+			$sql = "SELECT password FROM users WHERE userName = '$userid'";
+			//After grabbing the proper userID we will match the passwords
 			$result = mysql_query($sql,$cxn) or die(mysql_error());
 			$row = mysql_fetch_assoc($result);
 			if($password == $row['password'])//The is will make sure that the passwords do match
 			{
 
 				echo"Login Successful!";
-				$sql = "UPDATE log SET timeIn=SYSDATE() WHERE userID = '$userid'";
+				$sql = "UPDATE log SET timeIn=SYSDATE() WHERE userName = '$userid'";
 				$result = mysql_query($sql,$cxn);
 				session_start(); //starting the session for user profile page if(!empty($_POST['user'])) //checking the 'user' name which is from Sign-In.html, is it empty or have some text {
 
@@ -140,62 +185,66 @@ $userERR = $passERR = "";
 					/* Never, ever store a password in $_SESSION!!! */
 
 					/* Ok, NOW they are logged in, let them know */
-					header('Location: dashboard_v3.html');
+					header('Location: dashboard.html');
 
 					echo "Click the link to return to our <a href='../index.php'>Home Page</a> and browse from there.<p>";
 				}
 
-				else /* Redisplay the page with the proper error message*/
+			else /* Redisplay the page with the proper error message*/
+			{
+				$userERR = "User ID and Password did not match";
+				//update lockout number and let the user try again
+				$sql = "SELECT userName FROM users WHERE userName = '$userid'";
+				$result = mysql_query($sql,$cxn);
+				$row = mysql_fetch_assoc($result);
+				if($userid == $row['userName'])
 				{
-					$userERR = "User ID does not exist";
-					$passERR = "Password did not match with User ID";
+					$sql = "UPDATE users SET  lockOut = lockOut + 1 WHERE userName = 'teamFNS'";	
+					$result = mysql_query($sql,$cxn);
+				}
+				/* $_SERVER(PHP_SELF) means 'use this file on SUBMIT' */
 
-					/* $_SERVER(PHP_SELF) means 'use this file on SUBMIT' */
-
-					echo " <nav class='navbar navbar-inverse navbar-fixed-top'>
-					<div class='container-fluid no-padding'>
-					<div class='navbar-header'>
-					<div class='navbar-brand no-padding no-margin padding-left-10'>
-					<img src='resources/logo.png' style='width:50px;height:50px; display: block; margin: auto;' id='brand'>
-					</div>
-					</div>
-					</div>
-					</nav>
-					<fieldset class='center'>
-					<h3 class='noselect'>Spectrum Protect Login</h3>
-					<form action='$_SERVER[PHP_SELF]' method='POST'>";
-
+				echo " <nav class='navbar navbar-inverse navbar-fixed-top'>
+				<div class='container-fluid no-padding'>
+				<div class='navbar-header'>
+				<div class='navbar-brand no-padding no-margin padding-left-10'>
+				<img src='resources/logo.png' style='width:50px;height:50px; display: block; margin: auto;' id='brand'>
+				</div>
+				</div>
+				</div>
+				</nav>
+				<fieldset class='center'>
+				<h3 class='noselect'>Spectrum Protect Login</h3>
+				<form action='$_SERVER[PHP_SELF]' method='POST'>";
 					/* Loop that displays the form fields */
-					foreach ($labels as $field => $label) {
-						/* echo the label */
-						echo "<div class='field'>\n
-						<label for='$field'>$label</label>\n";
-
-						/* echo the appropriate field */
-						if ($field === "user")
-						{
-							echo "<input type='text' name='$field' id='$field'
-							size='30' maxlength='65' value='$userid' />
-							<span class='error'>* $userERR</span>\n";
-						}
-						if ($field === "password")
-						{
-							echo "<input type='password' name='$field' id='$field'
-							size='30' maxlength='65' value='$password' />
-							<span class='error'>* $passERR</span>\n";
-						}
-						/* echo the end of the field div */
-						echo "</div>\n";
+				foreach ($labels as $field => $label) {
+					/* echo the label */
+					echo "<div class='field'>\n
+					<label for='$field'>$label</label>\n";
+			
+					/* echo the appropriate field */
+					if ($field === "user")
+					{
+						echo "<input type='text' name='$field' id='$field'
+						size='30' maxlength='65' value='$userid' />
+						<span class='error'>* $userERR</span>\n";
 					}
+					if ($field === "password")
+					{
+						echo "<input type='password' name='$field' id='$field'
+						size='30' maxlength='65' value='$password' />
+						<span class='error'></span>\n";
+					}
+					/* echo the end of the field div */
+					echo "</div>\n";
+				}
 
-					/* Display the submit button */
-					echo "<div id='submit'>\n
-					<input type='submit' value='Log in'>\n
-					</div>
-					</form></fieldset>";
-
-					/* echo"The password and userID did not match please try again.";
-					echo" Click <a href=../logIn/index.php> Here </a> to login.";*/
+				/* Display the submit button */
+				echo "<div id='submit'>\n
+				<input type='submit' value='Log in'>\n
+				</div>
+				</form></fieldset>";
+				
 				}
 
 			}

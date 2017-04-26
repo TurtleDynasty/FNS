@@ -33,7 +33,7 @@ $labels = array("user" => "UserID:",//This is where I create the differet labels
 	</nav>
 	<fieldset class="center">
 		<h3 class="noselect">Spectrum Protect Login</h3>
-		<form action="dashboard.html" method="POST">
+		<form action="loginValidator.php" method="POST">
 			<?php
 			/* Loop that displays the form fields */
 			foreach ($labels as $field => $label) { //This loop will go through the array looking at each key in order to create the fields
