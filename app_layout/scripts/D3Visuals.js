@@ -403,7 +403,7 @@ function init_backup_test()
 	}
 
 	current_func = init_backup_test;
-	d3.select("#vis-title").html("Backup Test");
+	d3.select("#vis-title").html("Objects Deduplicated by Backup");
 }
 
 //https://bl.ocks.org/maybelinot/5552606564ef37b5de7e47ed2b7dc099
@@ -973,7 +973,7 @@ function init_pool_test() {
 
 	current_func = init_pool_test;
 
-  d3.select("#vis-title").html("Storage Pool Test");
+  d3.select("#vis-title").html("Storage Pool Space");
 }
 
 function init_heatmap() {
@@ -1264,7 +1264,7 @@ function filterColor(color)
 	}
 }
 //your visual title here
-d3.select("#vis-title").html("Heatmap V2");
+d3.select("#vis-title").html("Object References by Container");
 }
 
 function init_scatter_test(){
@@ -1687,5 +1687,5 @@ function init_occupancy_test(){
 	    return d;
   	}
 		current_func = init_occupancy_test;
-		d3.select("#vis-title").html("Occupancy Test");
+		d3.select("#vis-title").html("File Occupancy by Storage Pool");
 }

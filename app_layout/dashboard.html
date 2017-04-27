@@ -37,17 +37,17 @@
     <div class="container-fluid master-container col-xs-12 no-padding full-height" id="buildsection">
       <div class="container-fluid col-xs-4 no-padding full-height build-widget1-container">
         <div class="build-widget1">
-          <h3>Select a Visualization</h3>
+          <h3>Select a Data Set</h3>
           <div class="build-widget-content">
-            <div class="vis-select-container" value="1">Backup Domains Distribution</div>
+           <!-- <div class="vis-select-container" value="1">Backup Domains Distribution</div> -->
             <div class="vis-select-container" value="2">Objects Replicated by Node</div>
-            <div class="vis-select-container" value="3">AF Segments</div>
-            <div class="vis-select-container" value="4">Backup Test</div>
+            <!-- <div class="vis-select-container" value="3">AF Segments</div> -->
+            <div class="vis-select-container" value="4">Objects Deduplicated by Backup</div>
             <div class="vis-select-container" value="5">Object Count by Storage Pool</div>
-            <div class="vis-select-container" value="6">Storage Pool Test</div>
-            <div class="vis-select-container" value="7">Heat Map Test</div>
+            <div class="vis-select-container" value="6">Storage Pool Space</div>
+            <div class="vis-select-container" value="7">Object References by Container</div>
             <div class="vis-select-container" value="8">Scatter Plot Test</div>
-            <div class="vis-select-container" value="9">Occupancy Test</div>
+            <div class="vis-select-container" value="9">File Occupancy by Storage Pool</div>
           </div>
         </div>
       </div>
@@ -94,13 +94,13 @@
             <div class="overview">
               <img class="overview-icon" src="resources/bargraph.png" alt="" style="height:200px;width:200px;">
               <div class="overview-description">
-                Storage Pool: The current size of each storage pool that is currently in use.
+                Storage Pool Space: The current size of each storage pool that is currently in use.
               </div>
             </div>
             <div class="overview">
               <img class="overview-icon" src="resources/heatmap.png" alt="" style="height:200px;width:200px;">
               <div class="overview-description">
-                Heat Map: The current number of references in each container that is currently in use.
+                Container References: The current number of references in each container that is currently in use.
               </div>
             </div>
             <div class="overview">
@@ -112,7 +112,7 @@
             <div class="overview">
               <img class="overview-icon" src="resources/bargraph.png" alt="" style="height:200px;width:200px;">
               <div class="overview-description">
-                Occupancy Test: The number of files in each storage pool that is currently in use.
+                File Occupancy: The number of files in each storage pool that is currently in use.
               </div>
             </div>
           </div>
