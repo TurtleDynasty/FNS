@@ -234,7 +234,7 @@ function remove_element (entry) {
   var index = object_index_with_attr(tempData, entry);
   if(index >= 0){
     var obj = tempData.splice(index, 1)[0];
-    console.log("removed element at position " + index);
+    add_message("Suggestion", "removed " + entry + " at position " + index);
     removed.push([obj, index]);
     if(removed.length > 0){
       $(".filter-input-container:nth-of-type(2)").removeClass("hidden");
@@ -245,7 +245,7 @@ function remove_element (entry) {
 
   }
   else {
-    console.log("failed to find an element named " + entry);
+    add_message("Warning", "failed to find an element named " + entry);
     $(".filter-button").shake();
   }
   return tempData;
