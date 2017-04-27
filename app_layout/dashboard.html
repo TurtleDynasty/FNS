@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+al<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -217,6 +217,9 @@
 
         <div class="widget1 half-height margin-top-20">
           <h3>Messages</h3>
+          <img class="message-icon msg-warning-filter" src="resources/clear.svg" alt="" style="width: 20px;height:20px;margin-top:5px; float: right;">
+          <img class="message-icon msg-suggestion-filter" src="resources/thought.svg" alt="" style="width:20px;height:20px;margin-right:6px;margin-top:5px; float: right;">
+          <img class="message-icon msg-clear-filter" src="resources/warning.svg" alt="" style="width:20px;height:20px;margin-right:6px;margin-top:5px; float: right;">
           <div class="messages-box">
           </div>
         </div>
@@ -235,12 +238,12 @@
               <div class="row full-width">
                 <div class="modal-left col-xs-12">
                   <div class="form-group">
-                    <label for="settings-email" class="label-settings">Send Email Notifications</label>
                     <input type="checkbox" id="settings-email" value="first_checkbox" class="settings-input">
+                    <label for="settings-email" class="label-settings">Send Email Notifications</label>
                   </div>
                   <div class="form-group">
+                    <input type="checkbox" id="settings-messages" value="second_checkbox" class="settings-input" checked>
                     <label for="settings-messages" class="label-settings">Display Messages</label>
-                    <input type="checkbox" id="settings-messages" value="second_checkbox" class="settings-input">
                   </div>
                 </div>
               </div>
@@ -274,9 +277,6 @@
       // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello TutorialsPoint in this case.
       render: function(){
         //$('#myModal').modal('show');
-        clear_messages();
-        add_message("Warning", "This Warning was added via API.");
-        add_message("Suggestion", "This Suggestion was added via API.");
         //init_spinner();
         //clear_vis();
         //init_sunburst();
