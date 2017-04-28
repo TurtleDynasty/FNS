@@ -191,6 +191,7 @@
 						.transition()
 						.duration(piePullOutDuration)
 						.attr("d", arcOver);
+					innerLabelEnter(d);
 				})
 				.on("mouseout", function(d)  {
 					d3.select(this)
@@ -198,6 +199,7 @@
 						.duration(piePullOutDuration)
 						.attr("d", arc)
 						.attr('opacity', baseOpacity);
+					innerLabelExit(d)
 				});
 		}
 		function innerLabelEnter(d)
