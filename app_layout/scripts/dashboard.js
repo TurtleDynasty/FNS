@@ -72,6 +72,8 @@ $(".generate").on("click", function(){
 //Back to Selection button animations
 $(".return-to-selection").on("click", function(){
   goto_build();
+  $(".filter-button").removeClass("ready");
+  $("#out").val("");
 });
 
 //Back to schedule page, address may be different on your machine
@@ -177,6 +179,44 @@ $("#in").on('change', function () {
   }
 });
 
+$(".widget2").on('dblclick', '.arc path', function () {
+  console.log("hello");
+  var name = $(this).prevAll(':eq(2)').html();
+  $("#out").val(name);
+  $(".filter-button").addClass("ready");
+});
+
+$(".widget2").on('dblclick', 'rect.bar', function () {
+  var n = $(this).prevAll(".bar").length;
+  var name = $(".x.axis text:eq(" + n + ")").html();
+  $("#out").val(name);
+  $(".filter-button").addClass("ready");
+});
+
+$(".msg-clear-filter").on('click', function () {
+  clear_messages();
+});
+
+$(".msg-warning-filter").on('click', function () {
+  if ($(this).hasClass('opacity-half')) {
+    $(this).removeClass('opacity-half');
+    $(".msg-warning").show();
+  } else {
+    $(this).addClass('opacity-half');
+    $(".msg-warning").hide();
+  }
+});
+
+$(".msg-suggestion-filter").on('click', function () {
+  if ($(this).hasClass('opacity-half')) {
+    $(this).removeClass('opacity-half');
+    $(".msg-suggestion").show();
+  } else {
+    $(this).addClass('opacity-half');
+    $(".msg-suggestion").hide();
+  }
+});
+
 function clear_messages(){
   $(".messages-box").html("");
 }
@@ -211,18 +251,20 @@ function load_vis(value){
   else {
     change_vis_title("A visualization with that index could not be found...");
   }
+
+  $("#out").val("")
 }
 
 function add_message(type, text){
   if (type == "Warning") {
-    $(".messages-box").append("<div class=\"message\">"
+    $(".messages-box").append("<div class=\"message msg-warning\">"
     + "<img class=\"message-icon\" src=\"resources/warning.svg\" alt=\"\" style=\"width:16px;height:16px;padding-right:3px;\">"
     + text
     + "</div>"
     );
   }
   else if (type == "Suggestion") {
-    $(".messages-box").append("<div class=\"message\">"
+    $(".messages-box").append("<div class=\"message msg-suggestion\">"
     + "<img class=\"message-icon\" src=\"resources/thought.svg\" alt=\"\" style=\"width:16px;height:16px;padding-right:3px;\">"
     + text
     + "</div>"

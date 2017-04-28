@@ -128,6 +128,13 @@ function init_replicated_objects()
 							.duration(500)
 						.style("opacity", 0)
 					});
+
+			$("rect.bar").dblclick( function () {
+			  var n = $(this).prevAll(".bar").length;
+				var name = $(".x.axis text:eq(" + n + ")").html();
+			  $("#out").val(name);
+				$(".filter-button").addClass("ready");
+			});
 }
 
 function type(d) {
@@ -310,7 +317,7 @@ function init_backup_test()
 		.attr("width", width)
 		.attr("height", height)
 		.attr("preserveAspectRatio", "xMidYMid meet")
-		.attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
+		.attr("viewBox", "0  0 " + (width+100) + " " + (height+150))
     	.append("g")
     	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -520,22 +527,27 @@ d3.select("#vis-title").html("Backup Domains Distribution");
   */
 function init_pie_test()
 {
+	/*these 4 lines set up a responsive viewbox for the visual , note the use of .widget2 instead of body.
+	Keep this and eliminate the lines in your code that set the width and height, as well as the svg var declaration up to .append(g)
+	Make sure to change the location of your csv to "/pathfromroot/.../yourcsv.csv". That should be it.
+	*/
 	clear_vis();
-	var margin = {top: 50, right: 50, bottom: 50, left: 50};
-	var container = d3.select(".widget2")
-		.append("div")
-		.classed("svg-container", true);
+	var container = d3.select(".widget2").append("div").classed("svg-container", true);
 	var width = parseInt(d3.select(".svg-container").style("width"));
 	var height = parseInt(d3.select(".svg-container").style("height"));
+	var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+25) + " " + (height+25));
+	/***********************\
+	| Your visual script below
+	\***********************/
+	var pieSegmentPullOut = 15;
+	var piePullOutDuration = 500;
 	var innerRadius = Math.min(width, height) / 4;
-	var outerRadius = Math.min(width, height) / 3;
-	// ---- label Text STUFF
-	var labelFontSize = "14px"
+	var outerRadius = Math.min(width, height) / 3 - pieSegmentPullOut;
+	var cornerRadius = 7.5;
 	// -------------------
 	// ---- Inner Text STUFF
 	var units = "objects";
 	var numDecimalPlaces = 3;
-	var innerFontSize = "25px";
 	var labelXOffset = "0em";
 	var labelYOffset = "-.5em";
 	var topXOffset = "0em";
@@ -543,195 +555,43 @@ function init_pie_test()
 	var bottomXOffset = "0em";
 	var bottomYOffset = "1.5em";
 	// --------------------
-
 	// --------------------
 	// --- linelabels STUFF
 	var letterLineLength = 11;
 	var lineToLabelEnd = outerRadius * .2;
 	var lineToLabelStart = outerRadius;
-	var pieSegmentPullOut = 5;
-	var piePullOutDuration = 500;
 	// --------------------
-
 	var color = d3.scaleOrdinal()
 		.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 	var arc = d3.arc()
 		.innerRadius(innerRadius)
-		.outerRadius(outerRadius);
+		.outerRadius(outerRadius)
+		.cornerRadius(cornerRadius);
 	var arcOver = d3.arc()
 		.innerRadius(innerRadius)
-		.outerRadius(outerRadius + pieSegmentPullOut);
+		.outerRadius(outerRadius + pieSegmentPullOut)
+		.cornerRadius(cornerRadius);
 	var labelArc = d3.arc()
 		.innerRadius(innerRadius)
 		.outerRadius(outerRadius);
 	var pie = d3.pie()
 		.sort(null)
-		.value(function(d)
-		{
+		.value(function(d) {
 			return d.count;
 		});
-
-	var svg = container.append("svg")
-		.attr("width", width)
-		.attr("height", height)
-		.attr("preserveAspectRatio", "xMidYMid meet")
-		.attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
-		.attr("width", width)
-		.attr("height", height)
-		.append("g")
-		.attr("transform", "translate(" + width / 2  + "," + height / 2 + ")");
+	d3.selection.prototype.moveToBack = function()
+	{
+			return this.each(function() {
+					var firstChild = this.parentNode.firstChild;
+					if (firstChild) {
+							this.parentNode.insertBefore(this, firstChild);
+					}
+			});
+	};
 	function type(d)
 	{
 		d.count = +d.count;
 		return d;
-	}
-	//outer most circle
-	svg.append("circle")
-		.attr("r", outerRadius + pieSegmentPullOut)
-		.style("fill", "#eff3f7")
-		.attr("transform", function(d)
-		{
-			return "translate(" + 0 + "," + 0 + ")";
-		});
-	//white circle within the pie
-	svg.append("circle")
-		.attr("r", innerRadius + 1)
-		.style("fill", "#eff3f7")
-		.style("stroke", "black")
-		.style("stroke-width", 2)
-		.attr("transform", function(d)
-		{
-			return "translate(" + 0 + "," + 0 + ")";
-		});
-	function changeArc(className, arc)
-	{
-		d3.select(className)
-			.transition()
-			.duration(piePullOutDuration)
-			.attr("d", arc);
-	}
-	function changeLine(d, offset)
-	{
-		className = "." + d.data.name;
-		d3.select(className)
-			.transition()
-			.duration(piePullOutDuration)
-			.attr("x1", function(d)
-			{
-				var a = calculateAngle(d);
-				return Math.cos(a) * (lineToLabelStart + offset);
-			})
-			.attr("y1", function(d)
-			{
-				var a = calculateAngle(d);
-				return Math.sin(a) * (lineToLabelStart + offset);
-			})
-	}
-	function addPieSegments()
-	{
-		g.append("path")
-			.attr("d", arc)
-			.style("fill", function(d)
-			{
-				return color(d.data.name);
-			})
-			.on("mouseenter", function(d)
-			{
-				innerLabelEnter(d);
-				changeArc(this, arcOver);
-				changeLine(d, pieSegmentPullOut);
-			})
-			.on("mouseout", function(d)
-			{
-				innerLabelExit(d);
-				changeArc(this, arc);
-				changeLine(d, 0);
-			});
-	}
-	function addLabel()
-	{
-		// text
-		g.append("text")
-			.attr("text-anchor", "middle")
-			.attr("x", function(d)
-			{
-				var a = calculateAngle(d);
-				var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
-				return quadrantCalculator(quadrant, letterLineLength*d.data.name.length/2);
-			})
-			.attr("y", function(d)
-			{
-				var a = calculateAngle(d);
-				return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
-			})
-			.style("font-size", labelFontSize)
-			.text(function(d)
-			{
-				return d.data.name;
-			});
-	}
-	function addPieToLabelLine()
-	{
-		// pie2labelline
-		g.append("line")
-			.attr("class", function (d)
-			{
-				return d.data.name;
-			})
-			.attr("x1", function(d)
-			{
-				var a = calculateAngle(d);
-				return Math.cos(a) * (lineToLabelStart);
-			})
-			.attr("y1", function(d)
-			{
-				var a = calculateAngle(d);
-				return Math.sin(a) * (lineToLabelStart);
-			})
-			.attr("x2", function(d)
-			{
-				var a = calculateAngle(d);
-				return Math.cos(a) * (outerRadius + lineToLabelEnd);
-			})
-			.attr("y2", function(d)
-			{
-				var a = calculateAngle(d);
-				return Math.sin(a) * (outerRadius + lineToLabelEnd);
-			})
-			.attr("stroke-width", 2)
-			.attr("stroke", "black");
-	}
-	function moveGraphToCenter()
-	{
-		svg.attr("transform", "translate(" + (width/ 2 + margin.left) + "," + (height/ 2 + margin.top) + ")");
-	}
-	function addPieLabelUnderLine()
-	{
-		// label underline
-		g.append("line")
-			.attr("x1", function(d)
-			{
-				var a = calculateAngle(d);
-				return Math.cos(a) * (outerRadius + lineToLabelEnd);
-			})
-			.attr("y1", function(d)
-			{
-				var a = calculateAngle(d);
-				return Math.sin(a) * (outerRadius + lineToLabelEnd);
-			})
-			.attr("x2", function(d)
-			{
-				var a = calculateAngle(d);
-				var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
-				return quadrantCalculator(quadrant, letterLineLength*d.data.name.length);
-			})
-			.attr("y2", function(d)
-			{
-				var a = calculateAngle(d);
-				return Math.sin(a) * (outerRadius + lineToLabelEnd);
-			})
-			.attr("stroke-width", 2)
-			.attr("stroke", "black");
 	}
 	var total = 0;
 
@@ -740,78 +600,55 @@ function init_pie_test()
 	}
 	else {
 		d3.csv("csvs/data.csv", type, function(error, data){
-			//console.log(data)
-			if(error){
+			if (error)
+			{
 				throw error;
 			}
 			build_from_data(data);
 		});
 	}
 
-	function build_from_data (data) {
+	function build_from_data (data){
 		tempData = data;
-		console.log(tempData)
 		data = parseData(data);
 		g = svg.selectAll(".arc")
 			.data(pie(data))
 			.enter().append("g")
 			.attr("class", "arc");
-
-			createTextBoxes(g);
-			addPieSegments();
-			addLabel();
-			addPieToLabelLine();
-			addPieLabelUnderLine();
-			moveGraphToCenter();
-			setTextBoxes(data);
+		addPieLabels();
+		addPieToLabelLine();
+		addPieLabelUnderLine();
+		addPieSegments();
+		moveGraphToCenter();
+		createTextBoxes(g);
+		setTextBoxes(data);
 	}
 
-	function createTextBoxes(g)
+	function addPieSegments()
 	{
-		text = g.append("text")
-			.attr("transform", 0)
-			.attr("dx", topXOffset)
-			.attr("dy", topYOffset)
-			.style("text-anchor", "middle")
-			.style("fill", "black")
-			.style("font-size", innerFontSize)
-			.attr("class", "on")
-			.text(" ");
-		bottomText = g.append("text")
-			.attr("dx", bottomXOffset)
-			.attr("dy", bottomYOffset)
-			.style("text-anchor", "middle")
-			.style("fill", "black")
-			.style("font-size", innerFontSize)
-			.attr("class", "on")
-			.text(" ");
-		labelText = g.append("text")
-			.attr("dx", labelXOffset)
-			.attr("dy", labelYOffset)
-			.style("text-anchor", "middle")
-			.style("fill", "black")
-			.style("font-size", innerFontSize)
-			.attr("class", "on")
-			.text(" ");
-	}
-	function setTextBoxes(data)
-	{
-		text.text(total + " " + units);
-	}
-	function quadrantCalculator(quadrant, offset)
-	{
-		if (quadrant > 0)
-		{
-			return quadrant + offset;
-		}
-		else
-		{
-			return quadrant - offset;
-		}
-	}
-	function calculateAngle(data)
-	{
-		return data.startAngle + (data.endAngle - data.startAngle)/2 - Math.PI/2;
+		var baseOpacity = .95;
+		g.append("path")
+			.attr("d", arc)
+			.attr('opacity', baseOpacity)
+			.style("fill", function(d)  {
+				return color(d.data.name);
+			})
+			.on("mouseenter", function(d)  {
+				d3.select(this)
+					.attr('opacity', 1)
+					.transition()
+					.duration(piePullOutDuration)
+					.attr("d", arcOver);
+				innerLabelEnter(d);
+			})
+			.on("mouseout", function(d)  {
+				d3.select(this)
+					.transition()
+					.duration(piePullOutDuration)
+					.attr("d", arc)
+					.attr('opacity', baseOpacity);
+				innerLabelExit(d);
+			});
 	}
 	function innerLabelEnter(d)
 	{
@@ -825,6 +662,120 @@ function init_pie_test()
 		bottomText.text("");
 		labelText.text("");
 	}
+	function changeArc(className, arc)
+	{
+		d3.select(className)
+			.transition()
+			.duration(piePullOutDuration)
+			.attr("d", arc);
+	}
+	function addPieLabels()
+	{
+		// text
+		g.append("text")
+			.classed("labelTextBox", true)
+			.attr("x", function(d) {
+				var a = calculateAngle(d);
+				var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
+				return quadrantCalculator(quadrant, letterLineLength*d.data.name.length/2);
+			})
+			.attr("y", function(d) {
+				var a = calculateAngle(d);
+				return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
+			})
+			.text(function(d) {
+				return d.data.name;
+			});
+	}
+	function addPieToLabelLine()
+	{
+		// pie2labelline
+		g.append("line")
+			.attr("class", function (d)
+			{
+				return d.data.name;
+			})
+			.attr("x1", function(d) {
+				var a = calculateAngle(d);
+				return Math.cos(a) * (lineToLabelStart);
+			})
+			.attr("y1", function(d) {
+				var a = calculateAngle(d);
+				return Math.sin(a) * (lineToLabelStart);
+			})
+			.attr("x2", function(d) {
+				var a = calculateAngle(d);
+				return Math.cos(a) * (outerRadius + lineToLabelEnd);
+			})
+			.attr("y2", function(d) {
+				var a = calculateAngle(d);
+				return Math.sin(a) * (outerRadius + lineToLabelEnd);
+			})
+	}
+	function addPieLabelUnderLine()
+	{
+		// label underline
+		g.append("line")
+			.attr("x1", function(d) {
+				var a = calculateAngle(d);
+				return Math.cos(a) * (outerRadius + lineToLabelEnd);
+			})
+			.attr("y1", function(d) {
+				var a = calculateAngle(d);
+				return Math.sin(a) * (outerRadius + lineToLabelEnd);
+			})
+			.attr("x2", function(d) {
+				var a = calculateAngle(d);
+				var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
+				return quadrantCalculator(quadrant, letterLineLength*d.data.name.length);
+			})
+			.attr("y2", function(d) {
+				var a = calculateAngle(d);
+				return Math.sin(a) * (outerRadius + lineToLabelEnd);
+			})
+	}
+	function calculateAngle(data)
+	{
+		return data.startAngle + (data.endAngle - data.startAngle)/2 - Math.PI/2;
+	}
+	function quadrantCalculator(quadrant, offset)
+	{
+		if (quadrant > 0)
+		{
+			return quadrant + offset;
+		}
+		else
+		{
+			return quadrant - offset;
+		}
+	}
+	function moveGraphToCenter()
+	{
+		svg.attr("transform", "translate(" + (width/ 2) + "," + (height/ 2) + ")");
+	}
+	function createTextBoxes(g)
+	{
+		text = g.append("text")
+			.classed("statTextBox", true)
+			.attr("transform", 0)
+			.attr("dx", topXOffset)
+			.attr("dy", topYOffset)
+			.text(" ");
+		bottomText = g.append("text")
+			.classed("statTextBox", true)
+			.attr("dx", bottomXOffset)
+			.attr("dy", bottomYOffset)
+			.text(" ");
+		labelText = g.append("text")
+			.classed("statTextBox", true)
+			.attr("dx", labelXOffset)
+			.attr("dy", labelYOffset)
+			.text(" ");
+	}
+	function setTextBoxes(data)
+	{
+		text.text(total + " " + units);
+	}
 	function parseData(data)
 	{
 		var compressed = compressArray(data);
@@ -834,10 +785,11 @@ function init_pie_test()
 	function compressArray(original)
 	{
 		var copy = [original[0]]
-		for(i = 1; i < original.length; i++)
+		var originalLength = original.length;
+		for(i = 1; i < originalLength; i++)
 		{
 			var notFound = true;
-			for (j = 0; j < copy.length; j ++)
+			for(j = 0; j < copy.length; j ++)
 			{
 				if (original[i].name == copy[j].name)
 				{
@@ -860,8 +812,8 @@ function init_pie_test()
 		return data;
 	}
 
-	current_func = init_pie_test;
-	d3.select("#vis-title").html("Object Count by Storage Pool");
+		current_func = init_pie_test;
+		d3.select("#vis-title").html("Object Count by Storage Pool");
 }
 
 function init_pool_test() {
@@ -894,7 +846,7 @@ function init_pool_test() {
 		.attr("width", width)
 		.attr("height", height)
 		.attr("preserveAspectRatio", "xMidYMid meet")
-		.attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
+		.attr("viewBox", "0  0 " + (width+100) + " " + (height+120))
     	.append("g")
     	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -1016,7 +968,7 @@ svg.append("rect")
 	.attr("y", 0)
 	.attr("height", height)
 	.attr("fill", "#eff3f7")
-d3.csv("csvs/heatmap.csv", function(d) {
+d3.csv("csvs/heatmapContainersRef.csv", function(d) {
 	d.value = +d.value;
 	if (d.value > 1)
 	{
@@ -1593,7 +1545,7 @@ function init_occupancy_test(){
     var container = d3.select(".widget2").append("div").classed("svg-container", true);
     var width = parseInt(d3.select(".svg-container").style("width"));
     var height = parseInt(d3.select(".svg-container").style("height"));
-    container.append("svg").classed("svg-container", true).attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100));
+    container.append("svg").classed("svg-container", true).attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+130));
   	var xLabel = "Node Names";
   	var yLabel = "Number of Files";
   	var tickPadding = "20";
