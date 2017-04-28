@@ -187,7 +187,7 @@
 						.transition()
 						.duration(piePullOutDuration)
 						.attr("d", arcOver);
-					innerLabelEnter(d)
+					innerLabelEnter(d);
 				})
 				.on("mouseout", function(d)  {
 					d3.select(this)
