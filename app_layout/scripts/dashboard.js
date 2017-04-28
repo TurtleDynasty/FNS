@@ -74,6 +74,7 @@ $(".return-to-selection").on("click", function(){
   goto_build();
   $(".filter-button").removeClass("ready");
   $("#out").val("");
+  clear_messages();
 });
 
 //Back to schedule page, address may be different on your machine
