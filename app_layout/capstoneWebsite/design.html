@@ -95,8 +95,27 @@ td{text-align:center;}
  <img src="../resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right;margin-right:10px;margin-top:10px">  
   <h3>Design and Concept</h3>
 
-  <p>what is your architecture and design concept and what are your best ideas on the architecture details and any of the views you have created. Can be a combination of text and graphics. Then talk briefly about the design paradigm (i.e. waterfall, spiral, etc.) you decided to use and why. In general, your goal is to give an overview discussion of how you tackled the problem and convince us that this was a reasonable way to go about it.</p> 
+ <table width="100%"><tr><div class="gal2"><td>
+<img src="../resources/architecture.JPG" alt="Dashboard" style="width:720px;height:375px;">
+</td></table> 
 
+  <p style="margin-left:10px;margin-right:10px">
+We used a Model View Controller architecture to build the core components of our
+system. Models define visualization types and data storage. Views define elements of
+the graphical user interface, supported by styling and control features. Controllers are
+the “brains of the system,” directing the flow of the application and responding to user
+input and events. This specific architecture was ultimately chosen due to the fact that 
+it allowed us to create an application that was highly modular. That is to say, we wanted  to
+be able to create visuals that were independent of any data set. No matter how the data set would 
+change in the future, the visuals that we created would still work properly. 
+Using an MVC approach we were able to separate many components of the system.
+In one case we separated how the data was grabbed for the visualizations and in another 
+we modularized the components of the dashboard itself; this further allowed us to interchange
+new visuals that were developed without creating a dependency on any one component of the system.
+Ultimately separating components of the application was a key part of this project and as such
+the MVC architecture was the best choice to complete this project.
+
+  </p>
 </div>
 
 </body>
