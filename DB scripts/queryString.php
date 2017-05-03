@@ -30,6 +30,21 @@
         echo mysql_error();
         die;
     }
+	$i = 0;
+	while ($i < mysql_num_fields($query))
+	{
+		$meta = mysql_fetch_field($query, $i);
+		if ($i < mysql_num_fields($query)-1)
+		{
+			echo $meta->name . ",";
+		}
+		else
+		{
+			echo $meta->name . "\n";
+		}
+
+		$i++;
+	}
     $data = array();
 	for ($x = 0; $x < mysql_num_rows($query); $x++)
 	{
