@@ -5,7 +5,7 @@
 	ini_set('memory_limit', '512M');
 	header('Access-Control-Allow-Origin: *');
 	$queryString = $_GET["queryString"];
-	$queryDatabase = $_GET["database"];
+	$queryDatabase = $_GET["queryDatabase"];
 	if (isset($queryString) == False)
 	{
 		echo "queryString not passed to pullString.php!";
@@ -16,7 +16,8 @@
 		echo "queryDatabase not passed to pullString.php!";
 		die;
 	}
-	$username = "FNS";
+
+	$username = "TESTER";
 	$password = "666666";
 	$host = "127.0.0.1";
 
@@ -24,7 +25,8 @@
 	$connection = mysql_select_db($queryDatabase, $server);
 
     $query = mysql_query($queryString);
-    if ( ! $queryString ) {
+    if ( ! $queryString )
+	{
         echo mysql_error();
         die;
     }
