@@ -25,6 +25,7 @@
 			<div id="navbar" class="navbar-collapse collapse"></div>
 		</div>
 	</nav>
+
 	<div class="container-fluid master-container col-sm-12 no-padding full-height" id="viewsection" style="display: inline" >
 		<div class="container-fluid col-md-9 col-sm-12 no-padding full-height widget2-container">
 			<div class="widget2">
@@ -41,7 +42,6 @@
 						<select class="select-objects js-states form-control" id="id_label_multiple" multiple="multiple" style="height: 100%"></select>
 					</label>
 				</div>
-
 
 				<div class="filter-input-container padding-top-10">
 					<h4>In</h4>
@@ -64,7 +64,6 @@
 			</div>
 		</div>
 	</div>
-
 	<script type="text/javascript">
 	/**********************************************\
 	| Insert your visual code inside this function!
@@ -137,13 +136,11 @@
 			.value(function(d) {
 				return d.count;
 			});
-
 		function type(d)
 		{
 			d.count = +d.count;
 			return d;
 		}
-
 		var total = 0;
 		drawInfoPane();
 		hideInfoPane();
@@ -153,7 +150,6 @@
 			{
 				throw error;
 			}
-
 			data = parseData(data);
 			g = svg.selectAll(".arc")
 				.data(pie(data))
@@ -222,7 +218,6 @@
 			infoContent2.text("Count 2:" + " " + d.data.count2 + " " + units);
 			bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%" + " " + innerPieText);
 			labelText.text(d.data.name);
-
 		}
 		function innerLabelExit(d)
 		{
@@ -240,12 +235,10 @@
 				.duration(piePullOutDuration)
 				.attr("d", arc);
 		}
-
 		function moveGraphToCenter()
 		{
 			svg.attr("transform", "translate(" + (width/ 2) + "," + (height/ 2) + ")");
 		}
-
 		function createTextBoxes(g)
 		{
 			text = g.append("text")
@@ -289,13 +282,11 @@
 		{
 			text.text(total + " " + units + " " + innerPieText);
 		}
-
 		function parseData(data)
 		{
 			var compressed = compressArray(data);
 			var parsedData = customFilterData(compressed);
 			return parsedData;
-
 		}
 		function compressArray(original)
 		{
@@ -329,9 +320,7 @@
 		//your visual title here
 		d3.select("#vis-title").html("Pie Chart V5");
 	}
-
 	init_visual();
 	</script>
-
 </body>
 </html>
