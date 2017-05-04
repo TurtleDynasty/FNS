@@ -97,9 +97,6 @@
 		var outerRadius = Math.min(width, height) / 3 - pieSegmentPullOut;
 		var cornerRadius = 7.5;
 
-		// ---- label Text STUFF
-		var labelFontSize = "14px"
-
 		// -------------------
 		// ---- Inner Text STUFF
 		var units = "objects";
@@ -116,13 +113,6 @@
 
 		var bottomXOffset = "0em";
 		var bottomYOffset = "1.5em";
-		// --------------------
-
-		// --------------------
-		// --- linelabels STUFF
-		var letterLineLength = 11;
-		var lineToLabelEnd = outerRadius * .2;
-		var lineToLabelStart = outerRadius;
 		// --------------------
 
 		var color = d3.scaleOrdinal()
@@ -184,19 +174,14 @@
 				})
 				.on("mouseenter", function(d) {
 					d3.select(this).attr('opacity', 1);
-					addPieToLabelLine(d);
-					addPieLabelUnderLine(d);
-					addPieLabels(d, this);
 					innerLabelEnter(d);
 					changeArc(this, arcOver);
-					changeLine(d, pieSegmentPullOut);
 					showInfoPane();
 				})
 				.on("mouseout", function(d) {
 					d3.select(this).attr('opacity', baseOpacity);
 					innerLabelExit(d);
 					changeArc(this, arc);
-					changeLine(d, 0);
 					hideInfoPane();
 				});
 		}
@@ -251,114 +236,7 @@
 				.duration(piePullOutDuration)
 				.attr("d", arc);
 		}
-		function changeLine(d, offset)
-		{
-			className = "." + d.data.name;
-			d3.select(className)
-				.transition()
-				.duration(piePullOutDuration)
-				.attr("x1", function(d) {
-					var a = calculateAngle(d);
-					return Math.cos(a) * (lineToLabelStart + offset);
-				})
-				.attr("y1", function(d) {
-					var a = calculateAngle(d);
-					return Math.sin(a) * (lineToLabelStart + offset);
-				})
-		}
-		function addPieLabels(d, objName)
-		{
-			// text
-			g.append("text")
-				.style("opacity", 0)
-				.attr("class", function (d)
-				{
-					return d.data.name;
-				})
-				.attr("text-anchor", "middle")
-				.attr("x", function(d) {
-					var a = calculateAngle(d);
-					var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
-					return quadrantCalculator(quadrant, letterLineLength*d.data.name.length/2);
-				})
-				.attr("y", function(d) {
-					var a = calculateAngle(d);
-					return Math.sin(a) * (outerRadius + lineToLabelEnd) - 5;
-				})
-				.style("font-size", labelFontSize)
-				.text(function(d) {
-					return d.data.name;
-				});
-		}
-		function addPieToLabelLine(d)
-		{
-			// pie2labelline
-			g.append("line")
-				.style("opacity", 0)
-				.attr("class", function (d)
-				{
-					return d.data.name;
-				})
-				.attr("x1", function(d) {
-					var a = calculateAngle(d);
-					return Math.cos(a) * (lineToLabelStart);
-				})
-				.attr("y1", function(d) {
-					var a = calculateAngle(d);
-					return Math.sin(a) * (lineToLabelStart);
-				})
-				.attr("x2", function(d) {
-					var a = calculateAngle(d);
-					return Math.cos(a) * (outerRadius + lineToLabelEnd);
-				})
-				.attr("y2", function(d) {
-					var a = calculateAngle(d);
-					return Math.sin(a) * (outerRadius + lineToLabelEnd);
-				});
-		}
 
-		function addPieLabelUnderLine(d)
-		{
-			// label underline
-			g.append("line")
-				.style("opacity", 0)
-				.attr("class", function (d)
-				{
-					return d.data.name;
-				})
-				.attr("x1", function(d) {
-					var a = calculateAngle(d);
-					return Math.cos(a) * (outerRadius + lineToLabelEnd);
-				})
-				.attr("y1", function(d) {
-					var a = calculateAngle(d);
-					return Math.sin(a) * (outerRadius + lineToLabelEnd);
-				})
-				.attr("x2", function(d) {
-					var a = calculateAngle(d);
-					var quadrant = Math.cos(a) * (outerRadius + lineToLabelEnd);
-					return quadrantCalculator(quadrant, letterLineLength*d.data.name.length);
-				})
-				.attr("y2", function(d) {
-					var a = calculateAngle(d);
-					return Math.sin(a) * (outerRadius + lineToLabelEnd);
-				});
-		}
-		function calculateAngle(data)
-		{
-			return data.startAngle + (data.endAngle - data.startAngle)/2 - Math.PI/2;
-		}
-		function quadrantCalculator(quadrant, offset)
-		{
-			if (quadrant > 0)
-			{
-				return quadrant + offset;
-			}
-			else
-			{
-				return quadrant - offset;
-			}
-		}
 		function moveGraphToCenter()
 		{
 			svg.attr("transform", "translate(" + (width/ 2) + "," + (height/ 2) + ")");
