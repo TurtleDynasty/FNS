@@ -59,7 +59,6 @@ $(".generate").on("click", function(){
 
     var value = selected.attr("value");
     //placeholder loading till data retreived from the database
-    setTimeout(clear_vis, 1500);
 
     tempData = null;
     load_vis(value);
@@ -117,6 +116,7 @@ $(".vis-select-container").click(function () {
 
 function clear_vis(){
     $( ".spinner" ).remove();
+    $( ".longload" ).remove();
     $( ".svg-container" ).remove();
 }
 

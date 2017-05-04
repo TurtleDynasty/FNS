@@ -4,6 +4,19 @@ function init_spinner(){
     }
     var target = document.getElementsByClassName('widget2');
     var spinner = new Spinner(opts).spin(target[0]);
+    $('.spinner').after("<div class=\"longload\" style=\"display:none;\"><p><h4>Custom options were selected,</h4></p><p><h4>this may take a minute.</h4></p></div>");
+    setTimeout(show_longload, 5000);
+    //show_longload();
+
+    function show_longload() {
+      var pos = $(".spinner").position();
+      console.log(pos.top + 200);
+      var width = $(".spinner").outerWidth();
+      $(".longload").css({
+        position: "absolute",
+        top: pos.top + 50 + "px"
+      }).show();
+    }
 }
 
 (function ($) {
