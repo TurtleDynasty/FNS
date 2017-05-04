@@ -211,8 +211,6 @@
 				.style("opacity", 1);
 			text.text(d.data.count + "/" + total + " " + units);
 			infoName.text(d.data.name);
-			//TODO: change Count 1&2 to represent data with unit
-			// i.e. Local Storage: 1000 MB
 			infoContent1.text("Physical:" + " " + d.data.count1 + " " + units);
 			infoContent2.text("Logical:" + " " + d.data.count2 + " " + units);
 			bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%" + " " + innerPieText);
