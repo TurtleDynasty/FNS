@@ -386,6 +386,13 @@ input[type="checkbox"].settings-input {
 	overflow: hidden;
 }
 
+.longload {
+	text-align: center;
+	position:absolute;
+	left: calc(50% - 118px);
+	opacity: 0.5
+}
+
 
 /***************
 * Moblie Styles
