@@ -99,7 +99,9 @@
 
 		// -------------------
 		// ---- Inner Text STUFF
-		var units = "objects";
+		var innerPieText = "of total storage";
+		//TODO: give appropriate unit i.e. MB, GB, TB
+		var units = "MB";
 
 		var numDecimalPlaces = 3;
 
@@ -194,7 +196,7 @@
 				.attr("rx", 5)
 				.attr("ry", 5)
 				.attr("width", width/4)
-				.attr("height", height/4)
+				.attr("height", height/8)
 				.style("stroke", "black")
 				.style("fill", "white")
 				.style("fill-opacity", 0);
@@ -212,11 +214,13 @@
 			d3.selectAll(".infoTextBox").attr("opacity", 1);
 			d3.selectAll("." + d.data.name)
 				.style("opacity", 1);
-			text.text(d.data.count + "/" + total + " " + units);
-			infoName.text("More information about:" + " " + d.data.name);
-			infoContent1.text("Count 1:" + " " + d.data.count1);
-			infoContent2.text("Count 2:" + " " + d.data.count2);
-			bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%");
+			text.text(d.data.count + " " + units + "/" + total + " " + units);
+			infoName.text(d.data.name);
+			//TODO: change Count 1&2 to represent data with unit
+			// i.e. Local Storage: 1000 MB
+			infoContent1.text("Count 1:" + " " + d.data.count1 + " " + units);
+			infoContent2.text("Count 2:" + " " + d.data.count2 + " " + units);
+			bottomText.text(((d.data.count/total)*100).toFixed(numDecimalPlaces) + "%" + " " + innerPieText);
 			labelText.text(d.data.name);
 
 		}
@@ -225,7 +229,7 @@
 			d3.selectAll(".infoTextBox").attr("opacity", 0);
 			d3.selectAll("." + d.data.name)
 				.style("opacity", 0);
-			text.text(total + " " + units);
+			text.text(total + " " + units + " " + innerPieText);
 			bottomText.text("");
 			labelText.text("");
 		}
@@ -283,7 +287,7 @@
 		}
 		function setTextBoxes(data)
 		{
-			text.text(total + " " + units);
+			text.text(total + " " + units + " " + innerPieText);
 		}
 
 		function parseData(data)
