@@ -88,34 +88,34 @@ td{text-align:center;}
 
 <!--
 ##############################################################################################################
-#                                           Schedule Tab                                                     #
+#                                           Design and Concept Tab                                           #
 ##############################################################################################################-->
 <div class="tabcontent">
-<img src="../resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left;margin-left:10px;margin-top:10px">
- <img src="../resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right;margin-right:10px;margin-top:10px">  
-  <h3>Development Plan</h3>
+<img src="resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left;margin-left:10px;margin-top:10px">
+ <img src="resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right;margin-right:10px;margin-top:10px">  
+  <h3>Design and Concept</h3>
 
-<table width="100%"><td>
-<img src="../resources/FNS_Schedule.JPG" alt="Dashboard" style="width:65%;height:400px;">
-</td></table>
-  <h2 style="margin-left:10px;margin-right:10px">Current Status</h2>
-  <p style="margin-left:10px;margin-right:10px">As shown in the figure above team FNS is currently approaching finishing up the final requirements of the Data Visualization project. We have gone through all of the information produced from the Spectrum Protect servers and found all
-     relevant and imperative information that is necessary to analyze when managing your data on the Spectrum Protect server.
-     Every single piece of information has a predetermined visual that best represents that data. The filtering system is the final stages of development, but currently works properly on a few of the different data sets.
-     Lastly all of the data that is used for the visualizations is stored in a secure location which provides more than enough space for additional data.
-  </p>
-  
-  <h2 style="margin-left:10px;margin-right:10px">Further Development</h2>
-  <p style="margin-left:10px;margin-right:10px">Our system was built to complement the IBM Spectrum
-Protect application, but was developed without intimate
-knowledge of its implementation. Our sponsors see our
-work as a prototype of ideas they wish to implement
-themselves using their own technologies. Ideas and
-mechanisms we have developed will be re-implemented by
-IBM engineers to improve IBM Spectrum Protect.
-  </p>
-<br>
+ <table width="100%"><tr><div class="gal2"><td>
+<img src="resources/architecture.JPG" alt="Dashboard" style="width:720px;height:375px;">
+</td></table> 
 
+  <p style="margin-left:10px;margin-right:10px">
+We used a Model View Controller architecture to build the core components of our system. 
+Models define visualization types and data storage. Views define elements of
+the graphical user interface, supported by styling and control features. Controllers are
+the “brains of the system,” directing the flow of the application and responding to user
+input and events. This architecture was chosen to keep our design as modular and flexible
+as possible. 
+That is to say, we wanted to be able to create visuals that were independent of any data set. 
+No matter how the data set would change in the future, the visuals that we created would still work properly. 
+Using an MVC approach we were able to separate many components of the system.
+In one case we decoupled data retrieval from visualization models. In another enhancement,
+we modularized the components of the dashboard itself. This further allows us to interchange
+new visuals that were developed without creating a dependency on any one component of the system.
+Decoupling components of the application with respect to an MVC mindset was a key part of 
+producing the quality of this project.
+
+  </p>
 </div>
 
 </body>

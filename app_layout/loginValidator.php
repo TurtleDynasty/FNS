@@ -197,6 +197,7 @@ $userERR = $passERR = "";
 				$sql = "SELECT userName FROM users WHERE userName = '$userid'";
 				$result = mysql_query($sql,$cxn);
 				$row = mysql_fetch_assoc($result);
+
 				if($userid == $row['userName'])
 				{
 					$sql = "UPDATE users SET  lockOut = lockOut + 1 WHERE userName = 'teamFNS'";	

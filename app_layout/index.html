@@ -1,26 +1,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>FNS Schedule</title>
+<style>
+body {font-family: "Times New Roman", Times, serif;}
+
+/* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;   
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    margin:auto;
+}
+
+div.gallery {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ccc;
+    float:none;
+    width: 200px;
+}
+
+div.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+h3{
+    text-align: center; 
+    font-size: 32px;
+}
+.tech{
+   margin-bottom:10px;
+}
+
+td{text-align:center;}
+
+</style>
 </head>
+<body>
 
-<body style = "background-color: #3b4554; color: #404041; font-family: Helvetica;">
+<!-- Create all of the tabs that will be used below -->
+<div class="tab">
+  <button class="tablinks"><a href="index.html">Home</a></button>
+  <button class="tablinks"><a href="requirements.html">High Level Requirements</a></button>
+  <button class="tablinks"><a href="design.html">Design Philosophy and Concept</a></button>
+  <button class="tablinks"><a href="technologies.html">Technologies</a></button>
+  <button class="tablinks"><a href="schedule.html">Schedule and Resources</a></button>
+  <button class="tablinks"><a href="code.html">Code Base</a></button>
+  <button class="tablinks"><a href="demo.html">Demo</a></button>
+  <button class="tablinks"><a href="aboutUs.html">About Us</a></button>
+</div>
 
-  <div style= "padding: 20px; background-color: #ffffff; display: block; margin: auto; border-radius: 5px; width: 850px">
-    <h1 style="text-align: center;">
-      FNS Capstone Website
-    </h1>
+<!--
+##############################################################################################################
+#                                           Home Tab                                                        #
+##############################################################################################################-->
+<div class="tabcontent">
+<img src="resources/fnsLogo.png" alt="fns" style="width:125px;height:75px;float:left;margin-left:10px;margin-top:10px">
+ <img src="resources/IBM_Large.png" alt="ibm" style="width:175px;height:75px;float:right;margin-right:10px;margin-top:10px">  
+ <h3>Data Visualization on Enterprise Storage</h3>
 
-  	<h2 style="text-align: center;">
-  		FNS Schedule
-  	</h2>
+<table width="100%"><td>
+<img src="resources/dash.png" alt="Dashboard" style="width:100%;height:325px;">
+</td><td>
+<img src="resources/visualPopUp.png" alt="visual" style="width:100%;height:325px;">
+</td></table>
+<p style="margin-left:10px;margin-right:10px"> 
+Our project was to create a way for system administrators who use IBM Spectrum Protect 
+to more easility understand information on their system. Improving their understand and ease of use
+should lead to more efficient and cost-effective management. 
+</p><p style="margin-left:10px;margin-right:10px"> 
+The idea to use data visualization comes from the fact that the IBM SPectrum Protect interface 
+displays a lot of data in table form, with not much help to interpret and manage the data.
+In IBM's case they did not have a sure method to visually show a system administrator the status 
+of their company/business information on these servers. 
+Even some veteran users of IBM Spectrum Protect have difficulty deciphering what is or is not 
+important for their management needs. In other words, IBM needs an easy to use visualization system 
+to provide to their customers who use Spectrum Protect. This should allow administrators to make 
+better informed decisions regarding the storage of their information
+on Spectrum Protect servers. That is where team FNS comes in.
+</p><p style="margin-left:10px;margin-right:10px"> 
+Our task was to solve this problem and to create a tool for the system administrators
+who use Spectrum Protect. In order to solve this problem we first asked ourselves 
+"What kind of information, that IBM provides, is most useful in properly
+managing data on a Spectrum Protect server?" With this in mind we were able to take
+all of the relevant information given by IBM and create meaningful and intuitive visuals
+for that information. These visuals would in turn be the tools that a system administrator would
+use to gain a better grasp on the current status of the information that they store
+on Spectrum Protect servers. Each of the different visuals provide an immediate grasp 
+of the status of different aspects how their data is handled and stored on Spectrum Protect
+servers which leads to being able to better manage that same data.
+</p><p style="margin-left:10px;margin-right:10px"> 
+In the end we were able to create a variety of visuals for system administrators.
+This in turn shows IBM that creating visual representations for important data
+can have a real impact on how a system administrator goes about managing the data
+on IBM's Spectrum Protect servers. </p>
 
-  	<iframe src="https://calendar.google.com/calendar/embed?mode=WEEK&showTitle=0&src=dm667%40nau.edu&src=nau.edu_rd9s3r92olj2lhprf1i6bo9jh8%40group.calendar.google.com&src=aat78%40nau.edu&src=alejandro051varela%40gmail.com&src=jtb274%40nau.edu&ctz=America/Phoenix" style="display: block; margin: auto;" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-
-    <button onclick="window.location.href='dashboard_v1.html'" style="display: block; margin: auto; margin-top: 30px;">To Prototype Dashboard v1</a>
-    <button onclick="window.location.href='dashboard_v2.html'" style="display: block; margin: auto; margin-top: 30px;">To Prototype Dashboard v2</a>
-      <button onclick="window.location.href='login.php'" style="display: block; margin: auto; margin-top: 30px;">To Prototype Dashboard v3</a>
-  </div>
+<p style="margin-left:10px;margin-right:10px"><b>NOTE:</b> The initial concept for this project was provided by our sponsor, in the form of a <a href="resources/Data_Visualization_Project_Description.pdf" download>Capstone project proposal</a>.</p>
+</div>
 
 </body>
-</html>
+</html> 
