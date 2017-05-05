@@ -1,7 +1,7 @@
 
 <?php
 	/*
-		Author: Joshua Melton
+		Author: Joshua Melton & JT Barrett
     //SELECT `VisualName`, `VisualDescription`, `VisualThumbnail` FROM `visuals` WHERE `VisualActiveFlag` = 1
 	*/
 	ini_set('memory_limit', '512M');
@@ -14,9 +14,11 @@
 	}
 
 	$username = "capstone-datavis";
+  //change this to the username on your system
 	$password = "Fns1234";
+  //change this to the host on your system
 	$host = "mysql.cefns.nau.edu";
-  $queryString = "SELECT `VisualName`, `VisualDescription`, `VisualThumbnail` FROM `visuals` WHERE `VisualActiveFlag` = 1";
+  $queryString = "SELECT `VisualID`, `VisualName`, `VisualDescription`, `VisualThumbnail` FROM `visuals` WHERE `VisualActiveFlag` = 1";
 
 	$server = mysqli_connect($host, $username, $password, $queryDatabase);
 	if (!$server)

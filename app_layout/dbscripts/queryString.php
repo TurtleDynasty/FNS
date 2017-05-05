@@ -18,7 +18,9 @@
 	}
 
 	$username = "capstone-datavis";
+  //change this to the username on your system
 	$password = "Fns1234";
+  //change this to the host on your system
 	$host = "mysql.cefns.nau.edu";
 
 	$server = mysqli_connect($host, $username, $password, $queryDatabase);
