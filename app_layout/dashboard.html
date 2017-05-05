@@ -40,14 +40,12 @@ al<!DOCTYPE html>
         <div class="build-widget1">
           <h3>Select a Data Set</h3>
           <div class="build-widget-content">
-           <!-- <div class="vis-select-container" value="1">Backup Domains Distribution</div> -->
-            <div class="vis-select-container" value="2">Objects Replicated by Node</div>
-            <!-- <div class="vis-select-container" value="3">AF Segments</div> -->
-            <div class="vis-select-container" value="4">Objects Deduplicated by Backup</div>
-            <div class="vis-select-container" value="5">Object Count by Storage Pool</div>
-            <div class="vis-select-container" value="6">Storage Pool Space</div>
-            <div class="vis-select-container" value="7">Object References by Container</div>
-            <div class="vis-select-container" value="9">File Occupancy by Storage Pool</div>
+            <!--<div class="vis-select-container" value="1">Objects Replicated by Node</div>
+            <div class="vis-select-container" value="2">Objects Deduplicated by Backup</div>
+            <div class="vis-select-container" value="3">Object Count by Storage Pool</div>
+            <div class="vis-select-container" value="4">Storage Pool Space</div>
+            <div class="vis-select-container" value="5">Object References by Container</div>
+            <div class="vis-select-container" value="7">File Occupancy by Storage Pool</div>-->
           </div>
         </div>
       </div>
@@ -58,63 +56,51 @@ al<!DOCTYPE html>
           <div class="build-widget-content">
             <div class="overview overview-selected opacity-half none-selected">
               <div class="overview-description text-align-center">
-                Select a visualization.
+                Select a data set.
               </div>
             </div>
-            <div class="overview">
-              <img class="overview-icon" src="resources/sunburst-thumb.png" alt="" style="height:200px;width:200px;">
-              <div class="overview-description">
-                Sunburst: The layered locations of different domains within Spectrum Protect. Specifically the different servers, domains, and nodes that are currently active. This includes the current size of each of the servers.
-              </div>
-            </div>
-            <div class="overview">
+            <!--<div class="overview" value="1">
               <img class="overview-icon" src="resources/bargraph.png" alt="" style="height:200px;width:200px;">
               <div class="overview-description">
                 Replicated Objects: The total amount of objects being replicated in a single node that is currently in use.
               </div>
             </div>
-            <div class="overview">
-              <img class="overview-icon" src="resources/bargraph.png" alt="" style="height:200px;width:200px;">
-              <div class="overview-description">
-                AF Segments: The total number of split segments located within in each of the volumes currently in use.
-              </div>
-            </div>
-            <div class="overview">
+            <div class="overview" value="2">
               <img class="overview-icon" src="resources/bargraph.png" alt="" style="height:200px;width:200px;">
               <div class="overview-description">
                 Deduplication Backups: The total amount of deduplication objects being backed up on currently active nodes.
               </div>
             </div>
-            <div class="overview">
+            <div class="overview" value="3">
               <img class="overview-icon" src="resources/piechart.png" alt="" style="height:200px;width:200px;">
               <div class="overview-description">
                 Storage Pool Objects: The total amount of objects in each storage pool that is currently in use.
               </div>
             </div>
-            <div class="overview">
+            <div class="overview" value="4">
               <img class="overview-icon" src="resources/bargraph.png" alt="" style="height:200px;width:200px;">
               <div class="overview-description">
                 Storage Pool Space: The current size of each storage pool that is currently in use.
               </div>
             </div>
-            <div class="overview">
+            <div class="overview" value="5">
               <img class="overview-icon" src="resources/heatmap.png" alt="" style="height:200px;width:200px;">
               <div class="overview-description">
                 Container References: The current number of references in each container that is currently in use.
               </div>
             </div>
-            <div class="overview">
+            <div class="overview" value="6">
               <img class="overview-icon" src="resources/scatter.png" alt="" style="height:200px;width:200px;">
               <div class="overview-description">
                 Scatter Test: This is the Scatter Plot Test description.
               </div>
             </div>
-            <div class="overview">
+            <div class="overview" value="7">
               <img class="overview-icon" src="resources/bargraph.png" alt="" style="height:200px;width:200px;">
               <div class="overview-description">
                 File Occupancy: The number of files in each storage pool that is currently in use.
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
@@ -125,7 +111,7 @@ al<!DOCTYPE html>
           <div class="build-widget-content">
             <div class="vis-options vis-options-selected opacity-half none-selected">
               <div class="overview-description text-align-center">
-                Select a visualization.
+                Select a data set.
               </div>
             </div>
             <div class="vis-options">
@@ -267,6 +253,21 @@ al<!DOCTYPE html>
   <script src="scripts/dashboard.js"></script>
   <script src="scripts/D3Visuals.js"></script>
   <script type="text/javascript">
+    var Visual = Backbone.Model.extend({
+        initialize: function(){
+
+        }
+    });
+    //Comment out the following 7 lines and uncomment the relevant blocks above to load staticly.
+    //change the database name as needed at the last url parameter
+    var visuals = [];
+    $.ajax({
+      url: 'dbscripts/loadVisInfo.php?queryDatabase=capstone_datavis',
+      success: function (result) {
+        parse_visual_csv(result);
+      }
+    });
+
     var AppView = Backbone.View.extend({
       // el - stands for element. Every view has an element associated with HTML content, will be rendered.
       el: '#container',
@@ -276,11 +277,10 @@ al<!DOCTYPE html>
       },
       // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello TutorialsPoint in this case.
       render: function(){
-        //$('#myModal').modal('show');
+      }
         //init_spinner();
         //clear_vis();
         //init_sunburst();
-      }
     });
     var appView = new AppView();
   </script>
