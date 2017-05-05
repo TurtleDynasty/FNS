@@ -245,6 +245,9 @@ function load_vis(value){
   else if (value == 5) {
     init_heatmap();
   }
+  else if (value == 6) {
+    init_scatter_test();
+  }
   else if (value == 7) {
     init_occupancy_test();
   }

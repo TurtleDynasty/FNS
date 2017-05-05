@@ -1,0 +1,134 @@
+Message,Type,X,Y
+ANR0990I Server restart-recovery in progress. ,Info,18,3
+ANR1636W The server machine GUID changed.,Warning,19,4
+ANR2100I Activity log process has started. ,Info,19,16
+ANR8578E The IBM Spectrum Protect database does not have a password for the SSL key-ring file. ,Error,19,1
+ANR2825I License audit process 2 completed successfully.,Info,20,9
+ANR0098W This system does not meet the minimum memory requirements. ,Warning,20,4
+ANR4898W This is a pre-release 8.1.1.0 IBM Spectrum Protect server.  It is not supported for commercial or production use. ,Warning,21,1
+ANR2017I Administrator SERVER_CONSOLE issued command REGISTER NODE.,Info,21,4
+ANR2017I Administrator SERVER_CONSOLE issued command: DEFINE STGPOOL.,Info,22,4
+ANR2022E UPDATE COPYGROUP: One or more parameters are missing. ,Error,23,2
+ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE COPYGROUP.,Info,24,5
+ANR2017I Administrator SERVER_CONSOLE issued command: QUERY ADMIN  ,Info,25,2
+ANR2156E GRANT AUTHORITY: Administrator ADMIN has already been granted system privilege. ,Error,26,2
+ANR2017I Administrator SERVER_CONSOLE issued command: QUERY ADMIN admin f=d  ,Info,26,5
+ANR2017I Administrator SERVER_CONSOLE issued command: QUERY SERVER  ,Info,26,3
+ANR2034E QUERY SERVER: No match found using this criteria. ,Error,26,4
+ANR2017I Administrator SERVER_CONSOLE issued command: ALT  ,Info,30,2
+ANR2000E Unknown command - ALT. ,Error,30,1
+ANR4726I The ICC support module has been loaded. ,Info,31,4
+ANR1635I The server machine GUID has initialized. ,Info,32,9
+ANR3733W The master encryption key cannot be generated because the server password is not set. ,Warning,32,3
+ANR8578E The IBM Spectrum Protect database does not have a password for the SSL key-ring file. ,Error,32,1
+ANR4726I The NAS-NDMP support module has been loaded. ,Info,32,6
+ANR0167I Inventory file expiration process 1 processed for 0 minutes.,Info,33,5
+ANR0098W This system does not meet the minimum memory requirements. ,Warning,33,4
+ANR4726I The ICC support module has been loaded. ,Info,40,3
+ANR1628I The database manager is using port 51500 for server connections. ,Info,41,4
+ANR3733W The master encryption key cannot be generated because the server password is not set. ,Warning,41,3
+ANR8578E The IBM Spectrum Protect database does not have a password for the SSL key-ring file. ,Error,41,1
+ANR0984I Process 1 for EXPIRE INVENTORY (Automatic) started in the BACKGROUND.,Info,42,10
+ANR0098W This system does not meet the minimum memory requirements. ,Warning,42,3
+ANR4898W This is a pre-release 8.1.1.0 IBM Spectrum Protect server.  It is not supported for commercial or production use. ,Warning,43,1
+ANR2017I Administrator SERVER_CONSOLE issued command: QUERY ADMIN  ,Info,43,6
+ANR0406I Session 5 started for node CAPSTONENODE.,Info,44,3
+ANR0424W Session 5 for node CAPSTONENODE refused - invalid password submitted.,Warning,44,1
+ANR0406I Session 8 started for node CAPSTONENODE.,Info,45,11
+ANR0480W Session 7 for node CAPSTONENODE terminated - connection with client severed.,Warning,45,10
+ANR0406I Session 17 started for node CAPSTONENODE.,Info,46,9
+ANR0950I Session 17 for node CAPSTONENODE is using inline server data deduplication or inline compression.,Info,50,4
+"ANR0951I Session 3 for node WIN-LAPTOP-01 processed 20,507 files by using inline data deduplication or compression, or both.",Info,51,23
+ANR2841W Server is NOT IN COMPLIANCE with license terms. (SESSION: 3),Warning,51,1
+ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  ,Info,52,1
+ANR0317I Reorganization of indices for table COPY_GROUPS started. ,Info,53,2
+ANR0319W The file system for the database archive log has insufficient free space. ,Warning,53,1
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,53,1
+ANR0403I Session 23 ended for node CAPSTONENODE.,Info,55,3
+ANR0403I Session 24 ended for node CAPSTONENODE.,Info,56,3
+ANR0336I Runstats for table COPY_GROUPS started. ,Info,58,30
+ANR0317I Reorganization of indices for table SD_CHUNK_LOCATIONS started. ,Info,63,2
+"ANR2992W The database uses 73,936 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. ",Warning,63,1
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,63,1
+ANR2017I Administrator SERVER_CONSOLE issued command: DEFINE STGPOOL.,Info,67,2
+ANR2017I Administrator SERVER_CONSOLE issued command: DEFINE STGPOOLDIRECTORY. ,Info,68,6
+ANR0406I Session 25 started for node WIN-LAPTOP-01.,Info,70,2
+ANR0406I Session 26 started for node WIN-LAPTOP-01.,Info,71,26
+ANR0482W Session 16 for node CAPSTONENODE (WinNT) terminated - idle for more than 15 minutes.,Warning,73,2
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,73,1
+ANR0984I Process 2 for Local to Cloud Transfer started in the BACKGROUND.,Info,74,4
+ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. ,Error,74,2
+ANR0984I Process 3 for Local to Cloud Transfer started in the BACKGROUND.,Info,75,4
+ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. ,Error,75,2
+ANR0984I Process 4 for Local to Cloud Transfer started in the BACKGROUND.,Info,76,2
+ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. ,Error,76,1
+ANR3833I Local to Cloud Transfer process 4 for storage pool CLEVERSAFE has completed.,Info,77,2
+ANR1893E Process 4 for Local to Cloud Transfer completed with a completion state of FAILURE.,Error,77,1
+ANR0984I Process 5 for Local to Cloud Transfer started in the BACKGROUND.,Info,78,4
+ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. ,Error,78,2
+ANR0984I Process 6 for Local to Cloud Transfer started in the BACKGROUND.,Info,79,4
+ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. ,Error,79,2
+ANR0984I Process 7 for Local to Cloud Transfer started in the BACKGROUND.,Info,80,4
+ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. ,Error,80,2
+ANR0984I Process 8 for Local to Cloud Transfer started in the BACKGROUND.,Info,81,5
+ANR4137E Container creation failed because the current credentials do not have permission for create bucket operations on the bucket or vault. ,Error,81,3
+ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE STGPOOL.,Info,82,4
+ANR3833I Local to Cloud Transfer process 9 for storage pool CLEVERSAFE has completed.,Info,83,4
+"ANR2992W The database uses 73,938 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. ",Warning,83,1
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,83,1
+ANR0336I Runstats for table SD_INFLIGHT_CONTAINERS started. ,Info,88,2
+"ANR2992W The database uses 73,939 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. ",Warning,93,1
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,93,1
+ANR2841W Server is NOT IN COMPLIANCE with license terms. ,Warning,102,1
+"ANR2992W The database uses 73,937 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. ",Warning,103,1
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,103,1
+ANR0319W The file system for the database archive log has insufficient free space. ,Warning,113,2
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,113,1
+"ANR2992W The database uses 73,936 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. ",Warning,123,1
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,123,1
+"ANR2992W The database uses 73,934 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. ",Warning,133,1
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,133,1
+"ANR2992W The database uses 73,936 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. ",Warning,143,1
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,143,1
+ANR0406I Session 28 started for node CAPSTONENODE.,Info,146,7
+ANR0984I Process 10 for Local to Cloud Transfer started in the BACKGROUND.,Info,148,4
+ANR0522W Transaction failed for session 29 for node CAPSTONENODE (WinNT) - no space available in storage pool CLEVERSAFE and all successor pools. (SESSION: 29),Warning,149,1
+ANR0403I Session 30 ended for node CAPSTONENODE (WinNT).,Info,149,31
+ANR3833I Local to Cloud Transfer process 11 for storage pool CLEVERSAFE has completed.,Info,150,2
+ANR0984I Process 12 for Local to Cloud Transfer started in the BACKGROUND.,Info,152,4
+ANR0293I Reorganization for table SD_CONTAINERS started. ,Info,153,1
+"ANR2992W The database uses 73,937 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. ",Warning,154,1
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,154,1
+ANR0294I Reorganization for table SD_CONTAINERS ended. ,Info,158,1
+ANR2841W Server is NOT IN COMPLIANCE with license terms. ,Warning,162,1
+ANR0336I Runstats for table SD_CONTAINERS started. ,Info,163,2
+"ANR2992W The database uses 73,937 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. ",Warning,164,2
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,164,1
+ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  ,Info,166,1
+ANR0293I Reorganization for table TSMMON_ALERT_TRIGGER started. ,Info,168,1
+ANR0294I Reorganization for table TSMMON_ALERT_TRIGGER ended. ,Info,173,1
+ANR0319W The file system for the database archive log has insufficient free space. ,Warning,174,2
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,174,1
+ANR0336I Runstats for table TSMMON_ALERT_TRIGGER started. ,Info,178,2
+ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  ,Info,181,1
+"ANR2992W The database uses 73,935 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. ",Warning,184,1
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,184,1
+ANR2017I Administrator SERVER_CONSOLE issued command: UPDATE COPYGROUP.,Info,188,4
+ANR2017I Administrator SERVER_CONSOLE issued command: QUERY OCCUPANCY  ,Info,190,1
+ANR0406I Session 35 started for node CAPSTONENODE.,Info,192,7
+"ANR2992W The database uses 74,802 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.92. ",Warning,194,1
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,194,1
+ANR0984I Process 13 for Local to Cloud Transfer started in the BACKGROUND.,Info,194,2
+ANR3833I Local to Cloud Transfer process 13 for storage pool CLEVERSAFE has completed.,Info,195,2
+ANR0984I Process 14 for Local to Cloud Transfer started in the BACKGROUND.,Info,196,4
+ANR0984I Process 15 for Local to Cloud Transfer started in the BACKGROUND.,Info,197,2
+ANR3833I Local to Cloud Transfer process 15 for storage pool CLEVERSAFE has completed.,Info,198,2
+ANR0984I Process 16 for Local to Cloud Transfer started in the BACKGROUND.,Info,199,4
+ANR0984I Process 17 for Local to Cloud Transfer started in the BACKGROUND.,Info,200,2
+ANR3833I Local to Cloud Transfer process 17 for storage pool CLEVERSAFE has completed.,Info,201,29
+ANR0984I Process 18 for Local to Cloud Transfer started in the BACKGROUND.,Info,202,4
+ANR0984I Process 19 for Local to Cloud Transfer started in the BACKGROUND.,Info,203,4
+"ANR2992W The database uses 74,066 megabytes of file-system space. The amount of available file-system space is 81,565 megabytes. The ratio is 0.91. ",Warning,204,1
+ANR2989E Database TSMDB1 backup failed - Missing volume history file. ,Error,204,1
+ANR2017I Administrator SERVER_CONSOLE issued command: QUERY PROCESS  ,Info,208,1
+ANR0944E QUERY PROCESS: No active processes found. ,Error,208,1

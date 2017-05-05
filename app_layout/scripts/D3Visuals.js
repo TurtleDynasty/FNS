@@ -1390,7 +1390,7 @@ function init_scatter_test(){
 			.attr("class", "tooltip")
 			.style("opacity", 0);
 		// load data
-		d3.csv("csvs/cereal.csv", function(error, data)
+		d3.csv("csvs/activity_test.csv", function(error, data)
 		{
 			if (error)
 			{
@@ -1565,7 +1565,7 @@ function init_scatter_test(){
 				})
 		}
 		//your visual title here
-		d3.select("#vis-title").html("Scatter Plot V1");
+		d3.select("#vis-title").html("Error, Info, and Warning Messages over time");
 }
 
 function init_occupancy_test(){
