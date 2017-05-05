@@ -47,7 +47,7 @@ function init_replicated_objects()
 		build_from_data(tempData);
 	}
 	else {
-		d3.csv(url, type, function(error, data){
+		d3.csv("csvs/replicatedObjects.csv", type, function(error, data){
 			if (error)
 		{
 			throw error;
@@ -538,6 +538,8 @@ function init_pie_test()
 	}
 	else {
 		if(options){
+
+			//change the database name at the end as needed
 			var url = "dbscripts/getBaseQuery.php?visualName=Object Count by Storage Pool&queryDatabase=capstone_datavis";
 			$.ajax({
 	  		url: url,
@@ -565,6 +567,12 @@ function init_pie_test()
 				build_from_data(data);
 			});
 		}
+	}
+
+	function type(d)
+	{
+		d.count = +d.count;
+		return d;
 	}
 
 	function build_from_data (data){
@@ -629,11 +637,6 @@ function init_pie_test()
 						}
 				});
 		};
-		function type(d)
-		{
-			d.count = +d.count;
-			return d;
-		}
 		var total = 0;
 
 		tempData = data;

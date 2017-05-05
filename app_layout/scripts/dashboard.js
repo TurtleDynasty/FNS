@@ -41,7 +41,15 @@ $(document).ready(function(){
       }
     });
 
-    $("#loader-section").fadeOut("fast");
+    //this checks periodically if the dashboard is ready
+    var loadTimer = setInterval(reveal_dashboard, 200);
+
+    function reveal_dashboard(){
+      if($(".vis-select-container").length > 0){
+        $("#loader-section").fadeOut("fast");
+        clearInterval(loadTimer);
+      }
+    }
 
 });
 
@@ -94,7 +102,7 @@ $(".save").click(function () {
 });
 
 //Selection list on the build section
-$(".vis-select-container").click(function () {
+$(".build-widget-content").on("click", ".vis-select-container", function () {
   $(".vis-list-selected").removeClass("vis-list-selected");
   $(this).addClass("vis-list-selected");
 
@@ -102,7 +110,7 @@ $(".vis-select-container").click(function () {
   var selected = d3.select(".vis-select-container.vis-list-selected");
   var value = selected.attr("value");
   $(".overview.overview-selected").removeClass("overview-selected").hide();
-  $(".overview:eq(" + value +")").show().addClass("overview-selected");
+  $(".overview[value=" + value + "]").show().addClass("overview-selected");
 
   //switch out options
   $(".vis-options.vis-options-selected").removeClass("vis-options-selected").hide();
@@ -181,7 +189,6 @@ $("#in").on('change', function () {
 });
 
 $(".widget2").on('dblclick', '.arc path', function () {
-  console.log("hello");
   var name = $(this).prevAll(':eq(2)').html();
   $("#out").val(name);
   $(".filter-button").addClass("ready");
@@ -223,31 +230,23 @@ function clear_messages(){
 }
 
 function load_vis(value){
-  if (value == 1)
-    setTimeout(init_sunburst, 1500)
+  if (value == 1) {
+    init_replicated_objects();
+  }
   else if (value == 2) {
-    setTimeout(init_replicated_objects, 1500)
+    init_backup_test();
   }
   else if (value == 3) {
-    setTimeout(init_af_segments, 1500)
+    init_pie_test();
   }
   else if (value == 4) {
-    setTimeout(init_backup_test, 1500)
+    init_pool_test();
   }
   else if (value == 5) {
-    setTimeout(init_pie_test, 1500)
-  }
-  else if (value == 6) {
-    setTimeout(init_pool_test, 1500)
+    init_heatmap();
   }
   else if (value == 7) {
-    setTimeout(init_heatmap, 1500)
-  }
-  else if (value == 8) {
-    setTimeout(init_scatter_test, 1500)
-  }
-  else if (value == 9) {
-    setTimeout(init_occupancy_test, 1500)
+    init_occupancy_test();
   }
   else {
     change_vis_title("A visualization with that index could not be found...");
@@ -347,6 +346,24 @@ function add_removed_element(value, position, removed_index){
     }
   });
 
+}
+
+function parse_visual_csv (data) {
+  var allRows = data.split(/\r?\n|\r/);
+  for (var singleRow = 2; singleRow < allRows.length; singleRow++){
+    var rowCells = allRows[singleRow].split(',');
+    var vis = new Visual({ id: rowCells[0], name: rowCells[1], description: rowCells[2], thumbnail: rowCells[3], options: null});
+    visuals.push(vis);
+  }
+  visuals.forEach(function (d){
+    $(".build-widget-content:eq(0)").append("<div class=\"vis-select-container\" value=\"" + d.attributes.id + "\">" + d.attributes.name + "</div>");
+    $(".build-widget-content:eq(1)").append("<div class=\"overview\" value=\"" + d.attributes.id + "\">"
+              + "<img class=\"overview-icon\" src=\"resources/" + d.attributes.thumbnail + "\" alt=\"\" style=\"height:200px;width:200px;\">"
+              + "<div class=\"overview-description\">"
+                + d.attributes.description
+              + "</div>"
+            + "</div>");
+  });
 }
 
 /*

@@ -9,13 +9,14 @@ function init_spinner(){
     //show_longload();
 
     function show_longload() {
-      var pos = $(".spinner").position();
-      console.log(pos.top + 200);
-      var width = $(".spinner").outerWidth();
-      $(".longload").css({
-        position: "absolute",
-        top: pos.top + 50 + "px"
-      }).show();
+      if ($('.spinner').length > 0){
+        var pos = $(".spinner").position();
+        var width = $(".spinner").outerWidth();
+        $(".longload").css({
+          position: "absolute",
+          top: pos.top + 50 + "px"
+        }).show();
+      }
     }
 }
 
