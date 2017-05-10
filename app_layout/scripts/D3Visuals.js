@@ -1,63 +1,84 @@
-function type(d)
-{
-	d.frequency = +d.frequency;
-	return d;
-}
-
 function init_replicated_objects()
 {
-	clear_vis();
-	var margin = {top: 30, right: 40, bottom: 100, left: 80};
-	var container = d3.select(".widget2").append("div").classed("svg-container", true);
-	var width = parseInt(d3.select(".svg-container").style("width"));
-	var height = parseInt(d3.select(".svg-container").style("height"));
-
-	var xLabel = "Node Names";
-	var yLabel = "Number of Replicated Objects";
-	var tickPadding = "20";
-
-	var tooltipHeight = 32;
-	var tooltipWidth = 0;
-	var tooltipBox = d3.select("body").append("div")
-    	.attr("class", "tooltip")
-    	.style("opacity", 0);
-
-	var formatPercent = d3.format("");
-
-	var x = d3.scaleBand()
-    	.rangeRound([0, width])
-  		.padding(0.1);
-	var y = d3.scaleLinear()
-    	.range([height, 0]);
-	var xAxis = d3.axisBottom(x);
-	var yAxis = d3.axisLeft(y)
-    	.tickFormat(formatPercent)
-  		.tickPadding(tickPadding);
-
-	var svg = container.append("svg")
-		.attr("width", width)
-		.attr("height", height)
-		.attr("preserveAspectRatio", "xMidYMid meet")
-		.attr("viewBox", "0  0 " + (width+100) + " " + (height+180))
-		.append("g")
-    	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 	//build from existing temp data (filter), else fetch data for generation
 	if (tempData != null){
 		build_from_data(tempData);
 	}
 	else {
-		d3.csv("csvs/replicatedObjects.csv", type, function(error, data){
-			if (error)
-		{
-			throw error;
+		if(load_from_server){
+
+			//change the database name at the end as needed
+			var url = "dbscripts/getBaseQuery.php?visualName=Objects Replicated by Node&queryDatabase=capstone_datavis";
+			$.ajax({
+				url: url,
+				async: true,
+				success: function (result) {
+					url = "dbscripts/queryString.php?queryString=" + result + "&queryDatabase=capstone_datavis"
+					d3.csv(url, type, function(error, data){
+						if (error)
+						{
+							throw error;
+						}
+						build_from_data(data);
+
+					});
+				},
+			});
+		} else {
+			d3.csv("csvs/replicatedObjects.csv", type, function(error, data){
+				if (error)
+				{
+					throw error;
+				}
+				build_from_data(data);
+			});
 		}
-			build_from_data(data);
-		});
+	}
+
+	function type(d) {
+			d.replCount = +d.replCount;
+			return d;
 	}
 
 	function build_from_data(data){
 		tempData = data;
+
+		clear_vis();
+		var margin = {top: 30, right: 40, bottom: 100, left: 80};
+		var container = d3.select(".widget2").append("div").classed("svg-container", true);
+		var width = parseInt(d3.select(".svg-container").style("width"));
+		var height = parseInt(d3.select(".svg-container").style("height"));
+
+		var xLabel = "Node Names";
+		var yLabel = "Number of Replicated Objects";
+		var tickPadding = "20";
+
+		var tooltipHeight = 32;
+		var tooltipWidth = 0;
+		var tooltipBox = d3.select("body").append("div")
+				.attr("class", "tooltip")
+				.style("opacity", 0);
+
+		var formatPercent = d3.format("");
+
+		var x = d3.scaleBand()
+				.rangeRound([0, width])
+				.padding(0.1);
+		var y = d3.scaleLinear()
+				.range([height, 0]);
+		var xAxis = d3.axisBottom(x);
+		var yAxis = d3.axisLeft(y)
+				.tickFormat(formatPercent)
+				.tickPadding(tickPadding);
+
+		var svg = container.append("svg")
+			.attr("width", width)
+			.attr("height", height)
+			.attr("preserveAspectRatio", "xMidYMid meet")
+			.attr("viewBox", "0  0 " + (width+100) + " " + (height+180))
+			.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 		x.domain(data.map(function(d)
 		{
 			return d.nodeName;
@@ -139,203 +160,97 @@ function init_replicated_objects()
 			  $("#out").val(name);
 				$(".filter-button").addClass("ready");
 			});
+		}
+
+		current_func = init_replicated_objects;
+		d3.select("#vis-title").html("Objects Replicated by Node");
 }
 
-function type(d) {
-		d.replCount = +d.replCount;
-		return d;
-}
-
-current_func = init_replicated_objects;
-d3.select("#vis-title").html("Objects Replicated by Node");
-}
-
-function init_af_segments()
+function init_backup_test()
 {
-	clear_vis();
-	var margin = {top: 30, right: 40, bottom: 100, left: 80};
-  var container = d3.select(".widget2").append("div").classed("svg-container", true);
-  var width = parseInt(d3.select(".svg-container").style("width"));
-  var height = parseInt(d3.select(".svg-container").style("height"));
-
-	var xUnit = "";
-	var xLabel = "Volume ID's" + xUnit;
-	var yUnit = "MB";
-    var yLabel = "Segment Size (" + yUnit + ")";
-    var tickPadding = "20";
-
-	var tooltipHeight = 32;
-    var tooltipWidth = 0;
-    var tooltipBox = d3.select("body").append("div")
-  		.attr("class", "tooltip")
-  		.style("opacity", 0);
-
-	var formatPercent = d3.format("");
-
-	var x = d3.scaleBand()
-  		.rangeRound([0, width])
-  		.padding(0.1);
-    var y = d3.scaleLinear()
-  		.range([height, 0]);
-    var xAxis = d3.axisBottom(x);
-    var yAxis = d3.axisLeft(y)
-  		.tickFormat(formatPercent)
-  		.tickPadding(tickPadding);
-
-	var svg = container.append("svg")
-		.attr("width", width)
-		.attr("height", height)
-		.attr("preserveAspectRatio", "xMidYMid meet")
-		.attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
-    	.append("g")
-    	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
 	//build from existing temp data (filter), else fetch data for generation
 	if (tempData != null){
 		build_from_data(tempData);
 	}
 	else {
-		d3.csv("csvs/af_segments.csv", type, function(error, data){
-			build_from_data(data);
-		});
-	}
+		if(load_from_server){
 
-	function build_from_data(data){
-		tempData = data;
-		x.domain(data.map(function(d)
-		{
-			return d.letter;
-		}));
-		y.domain([0, d3.max(data, function(d)
-		{
-			return d.frequency;
-		})]);
+			//change the database name at the end as needed
+			var url = "dbscripts/getBaseQuery.php?visualName=Objects Deduplicated by Backup&queryDatabase=capstone_datavis";
+			$.ajax({
+				url: url,
+				async: true,
+				success: function (result) {
+					url = "dbscripts/queryString.php?queryString=" + result + "&queryDatabase=capstone_datavis"
+					d3.csv(url, type, function(error, data){
+						if (error)
+						{
+							throw error;
+						}
+						build_from_data(data);
 
-		svg.append("g")
-    		.attr("class", "x axis")
-        	.attr("transform", "translate(0," + height + ")")
-        	.call(xAxis)
-			.selectAll("text")
-  			.style("text-anchor", "end")
-  			.attr("dx", "-.8em")
-  			.attr("dy", ".15em")
-  			.attr("transform", "rotate(-45)");
-
-		svg.append("text")      // text label for the x axis
-     		.attr("x", width / 2 )
-        	.attr("y",  height + (margin.bottom/2))
-        	.style("text-anchor", "middle")
-        	.text(xLabel);
-
-		svg.append("g")
-        	.attr("class", "y axis")
-        	.call(yAxis)
-    		.append("text")
-        	.attr("transform", "rotate(-90)")
-        	.attr("y", 6)
-        	.attr("dy", ".71em")
-        	.style("text-anchor", "end");
-
-		svg.append("text")
-        	.attr("transform", "rotate(-90)")
-        	.attr("y", 0-60)
-        	.attr("x",0 - (height / 2))
-        	.attr("dy", "1em")
-        	.style("text-anchor", "middle")
-        	.text(yLabel);
-
-		svg.selectAll(".bar")
-        	.data(data)
-    		.enter().append("rect")
-        	.attr("class", "bar")
-        	.attr("x", function(d)
-			{
-				return x(d.letter);
-			})
-        	.attr("width", x.bandwidth())
-        	.attr("y", function(d)
-			{
-				return y(d.frequency);
-			})
-        	.attr("height", function(d)
-			{
-				return height - y(d.frequency);
-			})
-			.on('mouseover', function(d)
-			{
-				tooltipBox.transition()
-					.duration(20)
-					.style("top", (d3.event.pageY - tooltipHeight) + "px")
-					.style("left", (d3.event.pageX - tooltipWidth) + "px")
-					.style("opacity", .9)
-					.text(d.frequency + " " + yUnit)
-			})
-			.on('mouseout', function(d)
-			{
-				tooltipBox.transition()
-					.duration(500)
-					.style("opacity", 0)
+					});
+				},
 			});
+		} else {
+			d3.csv("csvs/backups.csv", type, function(error, data){
+				if (error)
+				{
+					throw error;
+				}
+				build_from_data(data);
+			});
+		}
 	}
 
-	current_func = init_af_segments;
-	d3.select("#vis-title").html("AF Segments");
-}
-
-function init_backup_test()
-{
-	clear_vis();
-	var margin = {top: 30, right: 40, bottom: 100, left: 80};
-    var container = d3.select(".widget2")
-		.append("div")
-		.classed("svg-container", true);
-    var width = parseInt(d3.select(".svg-container").style("width"));
-    var height = parseInt(d3.select(".svg-container").style("height"));
-
-    var xUnit = "";
-    var xLabel = "File Space" + xUnit;
-    var yUnit = "MB";
-    var yLabel = "Actual Size (" + yUnit + ")";
-    var tickPadding = "20";
-
-    var tooltipHeight = 32;
-    var tooltipWidth = 0;
-    var tooltipBox = d3.select("body").append("div")
-  		.attr("class", "tooltip")
-  		.style("opacity", 0);
-
-    var formatPercent = d3.format
-
-    var x = d3.scaleBand()
-  		.rangeRound([0, width])
-  		.padding(0.1);
-    var y = d3.scaleLinear()
-  		.range([height, 0]);
-    var xAxis = d3.axisBottom(x);
-    var yAxis = d3.axisLeft(y)
-  		.tickFormat(formatPercent)
-  		.tickPadding(tickPadding);
-
-	var svg = container.append("svg")
-		.attr("width", width)
-		.attr("height", height)
-		.attr("preserveAspectRatio", "xMidYMid meet")
-		.attr("viewBox", "0  0 " + (width+100) + " " + (height+150))
-    	.append("g")
-    	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-	if (tempData != null){
-		build_from_data(tempData);
-	}
-	else {
-		d3.csv("csvs/backups.csv", type, function(error, data){
-			build_from_data(data);
-		});
+	function type(d)
+	{
+		d.frequency = +d.frequency;
+		return d;
 	}
 
 	function build_from_data(data){
 		tempData = data;
+		clear_vis();
+		var margin = {top: 30, right: 40, bottom: 100, left: 80};
+	    var container = d3.select(".widget2")
+			.append("div")
+			.classed("svg-container", true);
+	    var width = parseInt(d3.select(".svg-container").style("width"));
+	    var height = parseInt(d3.select(".svg-container").style("height"));
+
+	    var xUnit = "";
+	    var xLabel = "File Space" + xUnit;
+	    var yUnit = "MB";
+	    var yLabel = "Actual Size (" + yUnit + ")";
+	    var tickPadding = "20";
+
+	    var tooltipHeight = 32;
+	    var tooltipWidth = 0;
+	    var tooltipBox = d3.select("body").append("div")
+	  		.attr("class", "tooltip")
+	  		.style("opacity", 0);
+
+	    var formatPercent = d3.format
+
+	    var x = d3.scaleBand()
+	  		.rangeRound([0, width])
+	  		.padding(0.1);
+	    var y = d3.scaleLinear()
+	  		.range([height, 0]);
+	    var xAxis = d3.axisBottom(x);
+	    var yAxis = d3.axisLeft(y)
+	  		.tickFormat(formatPercent)
+	  		.tickPadding(tickPadding);
+
+		var svg = container.append("svg")
+			.attr("width", width)
+			.attr("height", height)
+			.attr("preserveAspectRatio", "xMidYMid meet")
+			.attr("viewBox", "0  0 " + (width+100) + " " + (height+150))
+	    	.append("g")
+	    	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 		x.domain(data.map(function(d)
 		{
 			return d.letter;
@@ -417,127 +332,13 @@ function init_backup_test()
 	d3.select("#vis-title").html("Objects Deduplicated by Backup");
 }
 
-//https://bl.ocks.org/maybelinot/5552606564ef37b5de7e47ed2b7dc099
-function init_sunburst()
-{
-    clear_vis();
-    var container = d3.select(".widget2")
-		.append("div")
-		.classed("svg-container", true);
-    var width = parseInt(d3.select(".svg-container").style("width"));
-    var height = parseInt(d3.select(".svg-container").style("height"));
-    var radius = (Math.min(width, height) / 2) - 10;
-
-    var formatNumber = d3.format(",d");
-
-    var x = d3.scaleLinear()
-        .range([0, 2 * Math.PI]);
-
-    var y = d3.scaleSqrt()
-        .range([0, radius]);
-
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
-
-    var partition = d3.partition();
-
-    var arc = d3.arc()
-	    .startAngle(function(d)
-		{
-			return Math.max(0, Math.min(2 * Math.PI, x(d.x0)));
-		})
-	    .endAngle(function(d)
-		{
-			return Math.max(0, Math.min(2 * Math.PI, x(d.x1)));
-		})
-	    .innerRadius(function(d)
-		{
-			return Math.max(0, y(d.y0));
-		})
-	    .outerRadius(function(d)
-		{
-			return Math.max(0, y(d.y1));
-		});
-
-    var svg = container.append("svg")
-		.attr("width", width)
-		.attr("height", height)
-		.attr("preserveAspectRatio", "xMidYMid meet")
-		.attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
-        .attr("id", "vis")
-        .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
-
-    d3.json("scripts/falseData.json", function(error, root)
-	{
-     	if (error)
-		{
-			throw error;
-		}
-		root = d3.hierarchy(root);
-		root.sum(function(d)
-		{
-			return d.size;
-		});
-		svg.selectAll("path")
-			.data(partition(root).descendants())
-			.enter().append("path")
-			.attr("d", arc)
-			.style("fill", function(d)
-			{
-				return color((d.children ? d : d.parent).data.name);
-			})
-			.on("click", click)
-			.append("title")
-  			.text(function(d)
-			{
-				return d.data.name + "\n" + formatNumber(d.value);
-			});
-    });
-
-    function click(d)
-	{
-      svg.transition()
-        	.duration(750)
-        	.tween("scale", function()
-			{
-            	var xd = d3.interpolate(x.domain(), [d.x0, d.x1]);
-                var yd = d3.interpolate(y.domain(), [d.y0, 1]);
-                var	yr = d3.interpolate(y.range(), [d.y0 ? 20 : 0, radius]);
-            	return function(t)
-				{
-					x.domain(xd(t)); y.domain(yd(t)).range(yr(t));
-				};
-          	})
-	        .selectAll("path")
-	        .attrTween("d", function(d)
-			{
-				return function()
-				{
-					return arc(d);
-				};
-			});
-    }
-
-d3.select(self.frameElement).style("height", height + "px");
-
-//change vis title
-d3.select("#vis-title").html("Backup Domains Distribution");
-}
-
-/*    var container = d3.select(".widget2").append("div").classed("svg-container", true);
-    var width = parseInt(d3.select(".svg-container").style("width"));
-    var height = parseInt(d3.select(".svg-container").style("height"));
-    var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+100))
-  */
 function init_pie_test()
 {
-	var options = true;
-
 	if (tempData != null){
 		build_from_data(tempData);
 	}
 	else {
-		if(options){
+		if(load_from_server){
 
 			//change the database name at the end as needed
 			var url = "dbscripts/getBaseQuery.php?visualName=Object Count by Storage Pool&queryDatabase=capstone_datavis";
@@ -846,53 +647,78 @@ function init_pie_test()
 }
 
 function init_pool_test() {
-	clear_vis();
-	var margin = {top: 30, right: 40, bottom: 65, left: 80};
-	var container = d3.select(".widget2").append("div").classed("svg-container", true);
-	var width = parseInt(d3.select(".svg-container").style("width"));
-	var height = parseInt(d3.select(".svg-container").style("height"));
-	var xUnit = "";
-	var xLabel = "Storage Pool" + xUnit;
-	var yUnit = "MB"
-	var yLabel = "Actual Size" + " " + "(" + yUnit + ")";
-	var tickPadding = "15";
-	var tooltipHeight = 32;
-	var tooltipWidth = 0;
-	var tooltipBox = d3.select("body").append("div")
-    	.attr("class", "tooltip")
-    	.style("opacity", 0);
-	var formatPercent = d3.format("");
-	var x = d3.scaleBand()
-    	.rangeRound([0, width])
-  		.padding(0.1);
-	var y = d3.scaleLinear()
-    	.range([height, 0]);
-	var xAxis = d3.axisBottom(x);
-	var yAxis = d3.axisLeft(y)
-    	.tickFormat(formatPercent)
-  		.tickPadding(tickPadding);
-    var svg = container.append("svg")
-		.attr("width", width)
-		.attr("height", height)
-		.attr("preserveAspectRatio", "xMidYMid meet")
-		.attr("viewBox", "0  0 " + (width+100) + " " + (height+120))
-    	.append("g")
-    	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+	//build from existing temp data (filter), else fetch data for generation
 	if (tempData != null){
 		build_from_data(tempData);
 	}
 	else {
-		d3.csv("csvs/stgPool.csv", type, function(error, data){
-			if(error){
-				throw error;
-			}
-			build_from_data(data);
-		});
+		if(load_from_server){
+
+			//change the database name at the end as needed
+			var url = "dbscripts/getBaseQuery.php?visualName=Storage Pool Space&queryDatabase=capstone_datavis";
+			$.ajax({
+				url: url,
+				async: true,
+				success: function (result) {
+					url = "dbscripts/queryString.php?queryString=" + result + "&queryDatabase=capstone_datavis"
+					d3.csv(url, type, function(error, data){
+						if (error)
+						{
+							throw error;
+						}
+						build_from_data(data);
+
+					});
+				},
+			});
+		} else {
+			d3.csv("csvs/stgPool.csv", type, function(error, data){
+				if (error)
+				{
+					throw error;
+				}
+				build_from_data(data);
+			});
+		}
 	}
+
 
 	function build_from_data (data) {
 		tempData = data;
+		clear_vis();
+		var margin = {top: 30, right: 40, bottom: 65, left: 80};
+		var container = d3.select(".widget2").append("div").classed("svg-container", true);
+		var width = parseInt(d3.select(".svg-container").style("width"));
+		var height = parseInt(d3.select(".svg-container").style("height"));
+		var xUnit = "";
+		var xLabel = "Storage Pool" + xUnit;
+		var yUnit = "MB"
+		var yLabel = "Actual Size" + " " + "(" + yUnit + ")";
+		var tickPadding = "15";
+		var tooltipHeight = 32;
+		var tooltipWidth = 0;
+		var tooltipBox = d3.select("body").append("div")
+				.attr("class", "tooltip")
+				.style("opacity", 0);
+		var formatPercent = d3.format("");
+		var x = d3.scaleBand()
+				.rangeRound([0, width])
+				.padding(0.1);
+		var y = d3.scaleLinear()
+				.range([height, 0]);
+		var xAxis = d3.axisBottom(x);
+		var yAxis = d3.axisLeft(y)
+				.tickFormat(formatPercent)
+				.tickPadding(tickPadding);
+			var svg = container.append("svg")
+			.attr("width", width)
+			.attr("height", height)
+			.attr("preserveAspectRatio", "xMidYMid meet")
+			.attr("viewBox", "0  0 " + (width+100) + " " + (height+120))
+				.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 		x.domain(data.map(function(d) { return d.letter; }));
 		y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
 		svg.append("g")
@@ -950,7 +776,7 @@ function init_pool_test() {
 	function type(d) {
     	d.frequency = +d.frequency;
     	return d;
-  	}
+  }
 
 	current_func = init_pool_test;
 
@@ -959,64 +785,110 @@ function init_pool_test() {
 
 function init_heatmap() {
 
-var container = d3.select(".widget2").append("div").classed("svg-container", true);
-var width = parseInt(d3.select(".svg-container").style("width"));
-var height = parseInt(d3.select(".svg-container").style("height"));
-var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+25) + " " + (height+25));
+		var maxColor = -Infinity;
+		var minColor = Infinity;
 
-// scroll-over square enlargement
-var squareColors = ["darkblue",
-					"blue",
-					"seagreen",
-					"Turquoise",
-					"SpringGreen",
-					"greenyellow",
-					"yellow",
-					"orange",
-					"orangered",
-					"red"];
-var legendTileSize = height/(squareColors.length*2);
-var legendSize = 120;
-var legendOffset = height/squareColors.length;
-var infoTileSize = width * .1;
-var infoTilePadding = 5;
-var infoTileOffset = infoTilePadding + 1;
-var heatMapWidth = width-legendSize;
-var heatMapHeight = height - infoTileSize - 2* infoTileOffset;
-var squarePadding = 2;
-var x = 0;
-var xIndex = 0;
-var y = 0;
-var yIndex = 0;
-var maxColor = -Infinity;
-var minColor = Infinity;
-svg.append("rect")
-	.classed("backGround", true)
-	.attr("x", 0)
-	.attr("width", width)
-	.attr("y", 0)
-	.attr("height", height)
-	.attr("fill", "#eff3f7")
-d3.csv("csvs/heatmapContainersRef.csv", function(d) {
-	d.value = +d.value;
-	if (d.value > 1)
-	{
-		if (d.value < minColor)
-		{
-			minColor = d.value;
+		//build from existing temp data (filter), else fetch data for generation
+		if (tempData != null){
+			build_from_data(tempData);
 		}
-		if (d.value > maxColor)
-		{
-			maxColor = d.value;
+		else {
+			if(load_from_server){
+
+				//change the database name at the end as needed
+				var url = "dbscripts/getBaseQuery.php?visualName=Object References by Container&queryDatabase=capstone_datavis";
+				$.ajax({
+					url: url,
+					async: true,
+					success: function (result) {
+						url = "dbscripts/queryString.php?queryString=" + result + "&queryDatabase=capstone_datavis"
+						d3.csv(url, function(d) {
+							d.value = +d.value;
+							if (d.value > 1)
+							{
+								if (d.value < minColor)
+								{
+									minColor = d.value;
+								}
+								if (d.value > maxColor)
+								{
+									maxColor = d.value;
+								}
+								return d;
+							}
+						}, function(error, data){
+							if (error)
+							{
+								throw error;
+							}
+							build_from_data(data);
+
+						});
+					},
+				});
+			} else {
+				d3.csv("csvs/heatmapContainersRef.csv", function(d) {
+					d.value = +d.value;
+					if (d.value > 1)
+					{
+						if (d.value < minColor)
+						{
+							minColor = d.value;
+						}
+						if (d.value > maxColor)
+						{
+							maxColor = d.value;
+						}
+						return d;
+					}
+				}, function(error, data){
+					if (error)
+					{
+						throw error;
+					}
+					build_from_data(data);
+				});
+			}
 		}
-		return d;
-	}
-}, function(error, classes)
-{
-	if (error)
-	{
-		throw error;
-	}
+
+function build_from_data(classes){
+	clear_vis();
+	var container = d3.select(".widget2").append("div").classed("svg-container", true);
+	var width = parseInt(d3.select(".svg-container").style("width"));
+	var height = parseInt(d3.select(".svg-container").style("height"));
+	var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+25) + " " + (height+25));
+
+	// scroll-over square enlargement
+	var squareColors = ["darkblue",
+						"blue",
+						"seagreen",
+						"Turquoise",
+						"SpringGreen",
+						"greenyellow",
+						"yellow",
+						"orange",
+						"orangered",
+						"red"];
+	var legendTileSize = height/(squareColors.length*2);
+	var legendSize = 120;
+	var legendOffset = height/squareColors.length;
+	var infoTileSize = width * .1;
+	var infoTilePadding = 5;
+	var infoTileOffset = infoTilePadding + 1;
+	var heatMapWidth = width-legendSize;
+	var heatMapHeight = height - infoTileSize - 2* infoTileOffset;
+	var squarePadding = 2;
+	var x = 0;
+	var xIndex = 0;
+	var y = 0;
+	var yIndex = 0;
+	svg.append("rect")
+		.classed("backGround", true)
+		.attr("x", 0)
+		.attr("width", width)
+		.attr("y", 0)
+		.attr("height", height)
+		.attr("fill", "#eff3f7")
 	classes = parseData(classes);
 	function parseData(data)
 	{
@@ -1061,202 +933,206 @@ d3.csv("csvs/heatmapContainersRef.csv", function(d) {
 		calculateNextXYCords();
 	}
 	drawLegend();
-});
-function calculateNextXYCords()
-{
-	x += squareRadius + squarePadding;
-	xIndex += 1;
-	if (x >= heatMapWidth)
+
+	function calculateNextXYCords()
 	{
-		x = 0;
-		y += squareRadius + squarePadding;
-		xIndex = 0;
-		yIndex += 1;
-	}
-}
-function grabColor(number, colors)
-{
-	colors = colors || [];
-	var divideColor = d3.scaleLinear().domain([minColor, maxColor+1]).range([0, 1]);
-	var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
-	var color = pickColor(divideColor(number));
-	var index = Math.floor(divideColor(number) * 10);
-	return [color, squareColors[index]];
-}
-function mouseEnterSquare(object)
-{
-	d3.select(object).attr('width', squareRadius + squarePadding);
-	d3.select(object).attr('height', squareRadius + squarePadding);
-	var opacity = d3.select(object).attr("fill-opacity");
-	if (opacity == 1)
-	{
-		d3.select(object).attr("stroke-opacity", 1);
-	}
-	d3.select(object).attr('x', function ()
-	{
-		var x = parseFloat(d3.select(object).attr('x'));
-		return (x-squarePadding/2);
-	})
-	.attr('y', function ()
-	{
-		var y = parseFloat(d3.select(object).attr('y'));
-		return (y-squarePadding/2);
-	})
-}
-function mouseExitSquare(object)
-{
-	d3.select(object).attr('width', squareRadius);
-	d3.select(object).attr('height', squareRadius);
-	d3.select(object).attr("stroke-opacity", 0);
-	d3.select(object).attr('x', function ()
-	{
-		var x = parseFloat(d3.select(object).attr('x'));
-		return (x+squarePadding/2);
-	})
-	.attr('y', function ()
-	{
-		var y = parseFloat(d3.select(object).attr('y'));
-		return (y+squarePadding/2);
-	})
-}
-function moveInfoSquares(offset)
-{
-	var list = [];
-	d3.selectAll(".infoNode").attr('x', function ()
-	{
-		var x = parseFloat(d3.select(this).attr('x'));
-		x += offset;
-		if (x > heatMapWidth - 2 * squareRadius)
+		x += squareRadius + squarePadding;
+		xIndex += 1;
+		if (x >= heatMapWidth)
 		{
-			list.push(this)
-			if (list.length == 4)
+			x = 0;
+			y += squareRadius + squarePadding;
+			xIndex = 0;
+			yIndex += 1;
+		}
+	}
+	function grabColor(number, colors)
+	{
+		colors = colors || [];
+		var divideColor = d3.scaleLinear().domain([minColor, maxColor+1]).range([0, 1]);
+		var pickColor = d3.scaleLinear().domain([0, .1, .2, .3, .4, .5, .6, .7, .8, .9]).range(colors);
+		var color = pickColor(divideColor(number));
+		var index = Math.floor(divideColor(number) * 10);
+		return [color, squareColors[index]];
+	}
+	function mouseEnterSquare(object)
+	{
+		d3.select(object).attr('width', squareRadius + squarePadding);
+		d3.select(object).attr('height', squareRadius + squarePadding);
+		var opacity = d3.select(object).attr("fill-opacity");
+		if (opacity == 1)
+		{
+			d3.select(object).attr("stroke-opacity", 1);
+		}
+		d3.select(object).attr('x', function ()
+		{
+			var x = parseFloat(d3.select(object).attr('x'));
+			return (x-squarePadding/2);
+		})
+		.attr('y', function ()
+		{
+			var y = parseFloat(d3.select(object).attr('y'));
+			return (y-squarePadding/2);
+		})
+	}
+	function mouseExitSquare(object)
+	{
+		d3.select(object).attr('width', squareRadius);
+		d3.select(object).attr('height', squareRadius);
+		d3.select(object).attr("stroke-opacity", 0);
+		d3.select(object).attr('x', function ()
+		{
+			var x = parseFloat(d3.select(object).attr('x'));
+			return (x+squarePadding/2);
+		})
+		.attr('y', function ()
+		{
+			var y = parseFloat(d3.select(object).attr('y'));
+			return (y+squarePadding/2);
+		})
+	}
+	function moveInfoSquares(offset)
+	{
+		var list = [];
+		d3.selectAll(".infoNode").attr('x', function ()
+		{
+			var x = parseFloat(d3.select(this).attr('x'));
+			x += offset;
+			if (x > heatMapWidth - 2 * squareRadius)
 			{
-				for (i = 0; i < 4; i++)
+				list.push(this)
+				if (list.length == 4)
 				{
-					d3.select(list[i]).remove();
+					for (i = 0; i < 4; i++)
+					{
+						d3.select(list[i]).remove();
+					}
 				}
 			}
-		}
-		return x;
-	})
-}
-function drawInfoSquare(d, color)
-{
-	var value = d3.select(d).attr("value");
-	var id = d3.select(d).attr("id");
-	var id = id.split(".");
-	var id = id[id.length-1];
-	svg.append("rect")
-		.classed("infoNode", true)
-		.attr("x", 0)
-		.attr("y", heatMapHeight + infoTileOffset/2)
-		.attr("rx", 5)
-		.attr("ry", 5)
-		.attr("width", infoTileSize)
-		.attr("height", infoTileSize)
-		.style("fill", color)
-	svg.append("rect")
-		.classed("infoNode", true)
-		.attr("x", 0 + infoTilePadding)
-		.attr("y", heatMapHeight + infoTileOffset/2 + infoTilePadding)
-		.attr("rx", 5)
-		.attr("ry", 5)
-		.attr("width", infoTileSize-2*infoTilePadding)
-		.attr("height", infoTileSize-2*infoTilePadding)
-		.style("fill", "#eff3f7")
-	svg.append("text")
-		.classed("infoNode", true)
-		.attr("x", 0 + (infoTileSize-infoTilePadding)/2)
-		.attr("y", heatMapHeight + infoTileSize/2 + infoTilePadding/2)
-		.attr("dy", "-1.5em")
-		.text(id)
-	svg.append("text")
-		.classed("infoNode", true)
-		.attr("x", 0 + (infoTileSize-infoTilePadding)/2)
-		.attr("y", heatMapHeight + infoTileSize/2 + infoTilePadding/2)
-		.attr("dy", "1.5em")
-		.text(value)
-}
-function drawLegend()
-{
-	var squareColorsLength = squareColors.length;
-	var increment = ((heatMapHeight - infoTileSize) / squareColorsLength+10);
-	for (i = 0; i < squareColorsLength; i++)
+			return x;
+		})
+	}
+	function drawInfoSquare(d, color)
 	{
+		var value = d3.select(d).attr("value");
+		var id = d3.select(d).attr("id");
+		var id = id.split(".");
+		var id = id[id.length-1];
 		svg.append("rect")
-			.classed("legend", true)
-			.classed(squareColors[i], true)
-			.attr("color", squareColors[i])
-			.attr("x", heatMapWidth + (width - heatMapWidth)/2)
-			.attr("y", squareRadius + i * increment)
-			.attr("fill-opacity", 1)
-			.attr("stroke", squareColors[i])
+			.classed("infoNode", true)
+			.attr("x", 0)
+			.attr("y", heatMapHeight + infoTileOffset/2)
 			.attr("rx", 5)
 			.attr("ry", 5)
-			.attr("height", legendTileSize)
-			.attr("width", legendTileSize)
-			.style("fill", squareColors[i])
-			.on("mouseover", function() {
-				toggleBoarder(d3.select(this).attr("color"));
-			})
-			.on("mouseout", function() {
-				toggleBoarder(d3.select(this).attr("color"));
-			})
-			.on("click", function(d)
+			.attr("width", infoTileSize)
+			.attr("height", infoTileSize)
+			.style("fill", color)
+		svg.append("rect")
+			.classed("infoNode", true)
+			.attr("x", 0 + infoTilePadding)
+			.attr("y", heatMapHeight + infoTileOffset/2 + infoTilePadding)
+			.attr("rx", 5)
+			.attr("ry", 5)
+			.attr("width", infoTileSize-2*infoTilePadding)
+			.attr("height", infoTileSize-2*infoTilePadding)
+			.style("fill", "#eff3f7")
+		svg.append("text")
+			.classed("infoNode", true)
+			.attr("x", 0 + (infoTileSize-infoTilePadding)/2)
+			.attr("y", heatMapHeight + infoTileSize/2 + infoTilePadding/2)
+			.attr("dy", "-1.5em")
+			.text(id)
+		svg.append("text")
+			.classed("infoNode", true)
+			.attr("x", 0 + (infoTileSize-infoTilePadding)/2)
+			.attr("y", heatMapHeight + infoTileSize/2 + infoTilePadding/2)
+			.attr("dy", "1.5em")
+			.text(value)
+	}
+	function drawLegend()
+	{
+		var squareColorsLength = squareColors.length;
+		var increment = ((heatMapHeight - infoTileSize) / squareColorsLength+10);
+		for (i = 0; i < squareColorsLength; i++)
+		{
+			svg.append("rect")
+				.classed("legend", true)
+				.classed(squareColors[i], true)
+				.attr("color", squareColors[i])
+				.attr("x", heatMapWidth + (width - heatMapWidth)/2)
+				.attr("y", squareRadius + i * increment)
+				.attr("fill-opacity", 1)
+				.attr("stroke", squareColors[i])
+				.attr("rx", 5)
+				.attr("ry", 5)
+				.attr("height", legendTileSize)
+				.attr("width", legendTileSize)
+				.style("fill", squareColors[i])
+				.on("mouseover", function() {
+					toggleBoarder(d3.select(this).attr("color"));
+				})
+				.on("mouseout", function() {
+					toggleBoarder(d3.select(this).attr("color"));
+				})
+				.on("click", function(d)
+				{
+					filterColor(d3.select(this).attr("color"));
+				});
+		}
+	}
+	function toggleBoarder(color)
+	{
+		var color2filter = "." + color;
+		d3.selectAll(color2filter).attr("stroke-opacity", function()
+		{
+			var opacity = d3.select(this).attr("stroke-opacity");
+			if (opacity == 0)
 			{
-				filterColor(d3.select(this).attr("color"));
-			});
+				return 1;
+			}
+			else if (opacity == 1)
+			{
+				return 0;
+			}
+		})
+	}
+	function filterColor(color)
+	{
+		var color2filter = "." + color;
+		colorSqaureList = d3.selectAll(color2filter).attr("fill-opacity", function()
+		{
+			var opacity = d3.select(this).attr("fill-opacity");
+			if (opacity == 0)
+			{
+				return 1;
+			}
+			else if (opacity == 1)
+			{
+				return 0;
+			}
+		});
+		for (i = 0; i < colorSqaureList.length; i++)
+		{
+			var opacity = colorSqaureList[i]["fill-opacity"];
+		}
 	}
 }
-function toggleBoarder(color)
-{
-	var color2filter = "." + color;
-	d3.selectAll(color2filter).attr("stroke-opacity", function()
-	{
-		var opacity = d3.select(this).attr("stroke-opacity");
-		if (opacity == 0)
-		{
-			return 1;
-		}
-		else if (opacity == 1)
-		{
-			return 0;
-		}
-	})
-}
-function filterColor(color)
-{
-	var color2filter = "." + color;
-	colorSqaureList = d3.selectAll(color2filter).attr("fill-opacity", function()
-	{
-		var opacity = d3.select(this).attr("fill-opacity");
-		if (opacity == 0)
-		{
-			return 1;
-		}
-		else if (opacity == 1)
-		{
-			return 0;
-		}
-	});
-	for (i = 0; i < colorSqaureList.length; i++)
-	{
-		var opacity = colorSqaureList[i]["fill-opacity"];
-	}
-}
+
+
 //your visual title here
 d3.select("#vis-title").html("Object References by Container");
+hide_filtering();
 }
 
 function init_scatter_test(){
-	/*these 4 lines set up a responsive viewbox for the visual , note the use of .widget2 instead of body.
-		Keep this and eliminate the lines in your code that set the width and height, as well as the svg var declaration up to .append(g)
-		Make sure to change the location of your csv to "/pathfromroot/.../yourcsv.csv". That should be it.
-		*/
+		//this visual does not have a live query, so it looks a bit different
+
+		clear_vis();
+
 		var container = d3.select(".widget2").append("div").classed("svg-container", true);
 		var width = parseInt(d3.select(".svg-container").style("width"));
 		var height = parseInt(d3.select(".svg-container").style("height"));
-		var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+25) + " " + (height+25));
+		var svg = container.append("svg").attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width) + " " + (height+25));
 		/***********************\
 		| Your visual script below
 		\***********************/
@@ -1566,48 +1442,81 @@ function init_scatter_test(){
 		}
 		//your visual title here
 		d3.select("#vis-title").html("Error, Info, and Warning Messages over time");
+		hide_filtering();
 }
 
 function init_occupancy_test(){
-		clear_vis();
-    var margin = {top: 30, right: 40, bottom: 100, left: 80};
-    var container = d3.select(".widget2").append("div").classed("svg-container", true);
-    var width = parseInt(d3.select(".svg-container").style("width"));
-    var height = parseInt(d3.select(".svg-container").style("height"));
-    container.append("svg").classed("svg-container", true).attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+130));
-  	var xLabel = "Node Names";
-  	var yLabel = "Number of Files";
-  	var tickPadding = "20";
-  	var tooltipHeight = 32;
-  	var tooltipWidth = 0;
-  	var tooltipBox = d3.select("body").append("div")
-      	.attr("class", "tooltip")
-      	.style("opacity", 0);
-  	var formatPercent = d3.format("");
-  	var x = d3.scaleBand()
-      	.rangeRound([0, width])
-  		.padding(0.1);
-  	var y = d3.scaleLinear()
-      	.range([height, 0]);
-  	var xAxis = d3.axisBottom(x);
-  	var yAxis = d3.axisLeft(y)
-      	.tickFormat(formatPercent)
-  		.tickPadding(tickPadding);
-  	var svg = d3.select("svg")
-    	.append("g")
-      	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+	//build from existing temp data (filter), else fetch data for generation
 		if (tempData != null){
 			build_from_data(tempData);
 		}
 		else {
-			d3.csv("csvs/occupancy.csv", type, function(error, data){
-				build_from_data(data);
-			});
+			if(load_from_server){
+
+				//change the database name at the end as needed
+				var url = "dbscripts/getBaseQuery.php?visualName=File Occupancy by Storage Pool&queryDatabase=capstone_datavis";
+				$.ajax({
+					url: url,
+					async: true,
+					success: function (result) {
+						url = "dbscripts/queryString.php?queryString=" + result + "&queryDatabase=capstone_datavis"
+						d3.csv(url, type, function(error, data){
+							if (error)
+							{
+								throw error;
+							}
+							build_from_data(data);
+
+						});
+					},
+				});
+			} else {
+				d3.csv("csvs/occupancy.csv", type, function(error, data){
+					if (error)
+					{
+						throw error;
+					}
+					build_from_data(data);
+				});
+			}
+		}
+
+		function type(d) {
+				d.numFiles = +d.numFiles;
+				return d;
 		}
 
 		function build_from_data(data){
 			tempData = data;
+			clear_vis();
+			var margin = {top: 30, right: 40, bottom: 100, left: 80};
+			var container = d3.select(".widget2").append("div").classed("svg-container", true);
+			var width = parseInt(d3.select(".svg-container").style("width"));
+			var height = parseInt(d3.select(".svg-container").style("height"));
+			container.append("svg").classed("svg-container", true).attr("width", width).attr("height", height).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0  0 " + (width+100) + " " + (height+130));
+			var xLabel = "Node Names";
+			var yLabel = "Number of Files";
+			var tickPadding = "20";
+			var tooltipHeight = 32;
+			var tooltipWidth = 0;
+			var tooltipBox = d3.select("body").append("div")
+					.attr("class", "tooltip")
+					.style("opacity", 0);
+			var formatPercent = d3.format("");
+			var x = d3.scaleBand()
+					.rangeRound([0, width])
+				.padding(0.1);
+			var y = d3.scaleLinear()
+					.range([height, 0]);
+			var xAxis = d3.axisBottom(x);
+			var yAxis = d3.axisLeft(y)
+					.tickFormat(formatPercent)
+				.tickPadding(tickPadding);
+			var svg = d3.select("svg")
+				.append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 			x.domain(data.map(function(d) { return d.nodeName; }));
 			y.domain([0, d3.max(data, function(d) { return d.numFiles; })]);
 			svg.append("g")
@@ -1663,10 +1572,6 @@ function init_occupancy_test(){
 					});
 		}
 
-	function type(d) {
-		d.numFiles = +d.numFiles;
-	    return d;
-  	}
 		current_func = init_occupancy_test;
 		d3.select("#vis-title").html("File Occupancy by Storage Pool");
 }
