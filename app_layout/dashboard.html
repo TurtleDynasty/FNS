@@ -114,49 +114,6 @@ al<!DOCTYPE html>
                 Select a data set.
               </div>
             </div>
-            <div class="vis-options">
-              <div class="build-widget-content">
-                <h4>Dropdown Option</h4>
-
-                <select class="form-control" id="sel1">
-                  <option value=""></option>
-                  <option value="1">Option 1</option>
-                  <option value="2">Option 2</option>
-                  <option value="3">Option 3</option>
-                  <option value="4">Option 4</option>
-                </select>
-                <h4>Checkbox Option</h4>
-                <input type="checkbox" id="checkbox-option" value="checkbox-option" class="options-checkbox">
-                <h4>Range Option</h4>
-                <input type="number" id="range1" value="" min="0" max="50" class="form-control options-range-left">
-                <h4 class="range-text">to</h4>
-                <input type="number" id="range2" value="" min="0" max="50" class="form-control options-range-right">
-              </div>
-            </div>
-
-            <div class="vis-options">
-              <div class="build-widget-content">
-                <h4>Number of Objects</h4>
-                <input type="number" id="range1" value="0" min="0" max="50" class="form-control options-range-left">
-                <h4 class="range-text">to</h4>
-                <input type="number" id="range2" value="" min="0" max="50" class="form-control options-range-right">
-              </div>
-            </div>
-
-            <div class="vis-options">
-              <div class="build-widget-content">
-              </div>
-            </div>
-            <div class="vis-options">
-              <div class="build-widget-content">
-              </div>
-            </div>
-            <div class="vis-options">
-              <div class="build-widget-content">
-                <h4>Display Top</h4>
-                <input type="number" id="range1" value="" min="0" max="50" class="form-control">
-              </div>
-            </div>
           </div>
           <div class="generate-button-container">
             <div class="generate-button generate noselect">
@@ -177,20 +134,27 @@ al<!DOCTYPE html>
       <div class="container-fluid col-xs-3 no-padding full-height widget1-container">
         <div class="widget1 half-height-20 position-relative">
           <h3>Filter Objects</h3>
-          <div class="filter-input-container padding-top-10">
-            <h4>Out</h4>
-            <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
-              <input type="text" name="out" id="out" class="form-control"value="">
-            </label>
-          </div>
+          <div class="filter-widget-content">
+            <div class="filter-input-container padding-top-10">
+              <h4>Out</h4>
+              <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
+                <input type="text" name="out" id="out" class="form-control"value="">
+              </label>
+            </div>
 
-          <div class="filter-input-container padding-top-10">
-            <h4>In</h4>
-            <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
-              <select id="in" class="js-states form-control">
-                <option value=""></option>
-              </select>
-            </label>
+            <div class="filter-input-container padding-top-10">
+              <h4>In</h4>
+              <label for="id_label_multiple" style="width: 100%; margin-top: 20px;">
+                <select id="in" class="js-states form-control">
+                  <option value=""></option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="filter-widget-content">
+            <div class="filter-input-container opacity-half padding-top-10">
+              <h4>This visual is limited to legend filtering.</h4>
+            </div>
           </div>
 
 
