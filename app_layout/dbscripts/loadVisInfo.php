@@ -18,7 +18,7 @@
 	$password = "Fns1234";
   //change this to the host on your system
 	$host = "mysql.cefns.nau.edu";
-  $queryString = "SELECT `VisualID`, `VisualName`, `VisualDescription`, `VisualThumbnail` FROM `visuals` WHERE `VisualActiveFlag` = 1";
+  $queryString = "SELECT `VisualID`, `VisualName`, `VisualFunction`, `VisualDescription`, `VisualThumbnail` FROM `visuals` WHERE `VisualActiveFlag` = 1";
 
 	$server = mysqli_connect($host, $username, $password, $queryDatabase);
 	if (!$server)
