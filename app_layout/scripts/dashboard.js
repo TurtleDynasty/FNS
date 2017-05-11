@@ -52,7 +52,7 @@ $(".filter-button").on("click", function(){
       }
 
     //call the function name stored by D3Visuals.js
-    current_func();
+    $.getScript("visualscripts/" + current_func + ".js");
     $(".filter-button").removeClass("ready");
   } else{
     $(this).shake();
@@ -134,7 +134,7 @@ function clear_vis(){
     $( ".svg-container" ).remove();
 }
 
-// Logic to go b
+//animations and logic for switching to the view panel
 function goto_view(){
   $("#viewsection").show();
   $("#buildsection").animate({top:'-' + window.innerHeight + 'px'}, 500);
@@ -149,6 +149,7 @@ function goto_view(){
   }, 500);
 }
 
+//animations and logic for returning to the build panel
 function goto_build(){
   $("#buildsection").show();
   refresh_build();
@@ -161,6 +162,7 @@ function goto_build(){
   }, 500);
 }
 
+//refreshes the state of the build panel after switching back to it
 function refresh_build(){
   $(".vis-list-selected").removeClass("vis-list-selected");
   $(".generate-button").removeClass("ready");
@@ -170,6 +172,7 @@ function refresh_build(){
   $(".vis-options").first().addClass("vis-options-selected").show();
 }
 
+//Changes the title in the visualization view widget
 function change_vis_title(title){
   if ((typeof title === 'string' || title instanceof String) && title.length < 50){
     $("#vis-title").html(title);
@@ -179,6 +182,7 @@ function change_vis_title(title){
   }
 }
 
+//adds access to the filter button if fields are populated
 $("#out").on('input change', function (){
   if($(this).val() != ""){
     $(".filter-button").addClass("ready");
@@ -186,7 +190,6 @@ $("#out").on('input change', function (){
     $(".filter-button").removeClass("ready");
   }
 });
-
 $("#in").on('change', function () {
   if($(this).val() != "" || $("#out").val() != ""){
     $(".filter-button").addClass("ready");
@@ -223,7 +226,6 @@ $(".msg-warning-filter").on('click', function () {
     $(".msg-warning").hide();
   }
 });
-
 $(".msg-suggestion-filter").on('click', function () {
   if ($(this).hasClass('opacity-half')) {
     $(this).removeClass('opacity-half');
@@ -238,38 +240,16 @@ function clear_messages(){
   $(".messages-box").html("");
 }
 
+//this function dynamically fetches the gneration script for a visual given its function name
 function load_vis(value){
-  /*
-  if (value == 1) {
-    init_replicated_objects();
-  }
-  else if (value == 2) {
-    init_backup_test();
-  }
-  else if (value == 3) {
-    init_pie_test();
-  }
-  else if (value == 4) {
-    init_pool_test();
-  }
-  else if (value == 5) {
-    init_heatmap();
-  }
-  else if (value == 6) {
-    init_occupancy_test();
-  }
-  else if (value == 7) {
-    init_occupancy_test();
-  }
-  else {
-    change_vis_title("A visualization with that index could not be found...");
-  }
-  */
-  window[value]();
+
+  $.getScript( "visualscripts/" + value + ".js" );
+  current_func = value;
 
   $("#out").val("")
 }
 
+//this function adds messages to the message board given a type and the text for the message
 function add_message(type, text){
   if (type == "Warning") {
     $(".messages-box").append("<div class=\"message msg-warning\">"
@@ -287,6 +267,7 @@ function add_message(type, text){
   }
 }
 
+//This function removes an element from the current visual given an index and returns the new data set for regeneration
 function remove_element (entry) {
   var index = object_index_with_attr(tempData, entry);
   if(index >= 0){
@@ -308,6 +289,7 @@ function remove_element (entry) {
   return tempData;
 }
 
+//This function searches the visual elements for an element of a specified name returning its index value
 function object_index_with_attr(array, value) {
   var property;
   if (typeof array[0].name !== 'undefined')
@@ -333,6 +315,7 @@ function object_index_with_attr(array, value) {
     return -1;
 }
 
+//this function advances index items in the removed list, to preserve ordering on filtering in
 function advance_removed_in (index) {
   for (i = 0; i < removed.length; i++){
     if (removed[i][1] > index){
@@ -341,6 +324,7 @@ function advance_removed_in (index) {
   }
 }
 
+//this function advances index items in the removed list, to preserve ordering on filtering out
 function advance_removed_out (index) {
   for (i = 0; i < removed.length; i++){
     if (removed[i][1] > index){
@@ -349,6 +333,7 @@ function advance_removed_out (index) {
   }
 }
 
+//This adds items filtered out to a list for filtering back in
 function add_removed_element(value, position, removed_index){
   tempData.splice(position, 0, value);
   removed.splice(removed_index, 1);
@@ -363,6 +348,7 @@ function add_removed_element(value, position, removed_index){
 
 }
 
+//This function uses data fetched from the server to load in the visuals into the selection panel
 function parse_visual_csv (data) {
   var allRows = data.split(/\r?\n|\r/);
   for (var singleRow = 2; singleRow < allRows.length; singleRow++){
@@ -371,6 +357,7 @@ function parse_visual_csv (data) {
     visuals.push(vis);
   }
   visuals.forEach(function (d){
+    //Put in all the selection bars
     $(".build-widget-content:eq(0)").append("<div class=\"vis-select-container\" value=\"" + d.attributes.id + "\" name=\"" + d.attributes.func + "\">" + d.attributes.name + "</div>");
 
     //Put in all the content for each visual overview
@@ -397,6 +384,7 @@ function parse_visual_csv (data) {
   });
 }
 
+//For use in each visual script if it needs to disable the filtering widget
 function hide_filtering() {
   $(".filter-widget-content:eq(0)").hide();
   $(".filter-widget-content:eq(1)").show();

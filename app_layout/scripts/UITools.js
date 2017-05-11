@@ -4,10 +4,10 @@ function init_spinner(){
     }
     var target = document.getElementsByClassName('widget2');
     var spinner = new Spinner(opts).spin(target[0]);
-    $('.spinner').after("<div class=\"longload\" style=\"display:none;\"><p><h4>Custom options were selected,</h4></p><p><h4>this may take a minute.</h4></p></div>");
+    $('.spinner').after("<div class=\"longload\" style=\"display:none;\"><p><h4>This visual is still loading, be patient.</h4></p></div>");
     setTimeout(show_longload, 5000);
-    //show_longload();
 
+    //after 5 seconds show a message to reassure the user the visual is still loading
     function show_longload() {
       if ($('.spinner').length > 0){
         var pos = $(".spinner").position();
@@ -20,6 +20,7 @@ function init_spinner(){
     }
 }
 
+//function for shaking an element, used when clicking a non-ready filter or generate button
 (function ($) {
     $.fn.shake = function (options) {
         // defaults
