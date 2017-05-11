@@ -217,34 +217,32 @@ al<!DOCTYPE html>
   <script src="scripts/dashboard.js"></script>
   <script src="scripts/D3Visuals.js"></script>
   <script type="text/javascript">
+    //Model item for storing visual information for the build panel
     var Visual = Backbone.Model.extend({
         initialize: function(){
 
         }
     });
-    //Comment out the following 7 lines and uncomment the relevant blocks above to load staticly.
-    //change the database name as needed at the last url parameter
-    var visuals = [];
+
     $.ajax({
       url: 'dbscripts/loadVisInfo.php?queryDatabase=capstone_datavis',
       success: function (result) {
+        //create Visual model items and add each's relevant content to the DOM
         parse_visual_csv(result);
       }
     });
 
     var AppView = Backbone.View.extend({
-      // el - stands for element. Every view has an element associated with HTML content, will be rendered.
       el: '#container',
-      // It's the first function called when this view is instantiated.
+
       initialize: function(){
         this.render();
       },
-      // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello TutorialsPoint in this case.
+
+      //do something when the page is rendered
       render: function(){
       }
-        //init_spinner();
-        //clear_vis();
-        //init_sunburst();
+
     });
     var appView = new AppView();
   </script>
