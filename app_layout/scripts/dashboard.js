@@ -83,8 +83,14 @@ $(".generate").on("click", function(){
 $(".return-to-selection").on("click", function(){
   goto_build();
   $(".filter-button").removeClass("ready");
-  $("#out").val("");
   clear_messages();
+
+  //remove filter widget data
+  $("#out").val("");
+  $("#in option").not(':first').remove();
+  removed = [];
+
+  //unrestrict filter widget if it was restricted
   $(".filter-widget-content:eq(1)").hide();
   $(".filter-widget-content:eq(0)").show();
 });
